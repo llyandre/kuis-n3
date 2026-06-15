@@ -1,1 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kuis Bahasa Jepang N3</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
 
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #eeeeee;
+    }
+
+    button:hover {
+      background: #dddddd;
+    }
+
+    .correct {
+      background: #b7f7c1 !important;
+    }
+
+    .wrong {
+      background: #ffb6b6 !important;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #nextBtn {
+      background: #4CAF50;
+      color: white;
+      margin-top: 20px;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Kuis Bahasa Jepang JLPT N3</h1>
+
+    <div id="quizBox">
+      <p class="question" id="question"></p>
+      <div id="options"></div>
+      <p id="feedback"></p>
+      <p id="score"></p>
+      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+  <script>
+    const quiz = [
+      {
+        question: "彼は忙しい＿＿、毎日日本語を勉強しています。",
+        options: ["ながら", "のに", "ために", "ばかり"],
+        answer: "のに",
+        explanation: "「のに」 digunakan untuk menunjukkan pertentangan: meskipun sibuk, ia tetap belajar."
+      },
+      {
+        question: "この薬を飲めば、すぐに痛みが＿＿でしょう。",
+        options: ["なおる", "なおした", "なおして", "なおれば"],
+        answer: "なおる",
+        explanation: "「痛みがなおる」 berarti rasa sakit hilang atau sembuh."
+      },
+      {
+        question: "Arti kata 「予約」 adalah...",
+        options: ["Pembayaran", "Pemesanan / reservasi", "Perjalanan", "Pendaftaran sekolah"],
+        answer: "Pemesanan / reservasi",
+        explanation: "「予約」 dibaca よやく, artinya reservasi atau pemesanan."
+      },
+      {
+        question: "先生に作文を＿＿いただきました。",
+        options: ["見て", "見る", "見た", "見ます"],
+        answer: "見て",
+        explanation: "Pola 「ていただく」 berarti menerima bantuan dari orang lain dengan sopan."
+      },
+      {
+        question: "電車が遅れた＿＿、会議に遅刻しました。",
+        options: ["ため", "のに", "ながら", "そう"],
+        answer: "ため",
+        explanation: "「ため」 menunjukkan sebab atau alasan: karena kereta terlambat."
+      },
+      {
+        question: "Arti 「就職」 adalah...",
+        options: ["Masuk kerja / mendapat pekerjaan", "Berhenti bekerja", "Liburan panjang", "Wawancara sekolah"],
+        answer: "Masuk kerja / mendapat pekerjaan",
+        explanation: "「就職」 dibaca しゅうしょく, artinya mendapat pekerjaan atau mulai bekerja."
+      },
+      {
+        question: "雨が降りそうです berarti...",
+        options: ["Hujan sudah turun", "Sepertinya akan hujan", "Saya ingin hujan", "Hujan tidak turun"],
+        answer: "Sepertinya akan hujan",
+        explanation: "「そうです」 menunjukkan perkiraan berdasarkan tanda yang terlihat."
+      },
+      {
+        question: "この漢字は難しすぎて、＿＿ません。",
+        options: ["読め", "読む", "読んで", "読んだ"],
+        answer: "読め",
+        explanation: "「読めません」 adalah bentuk potensial negatif dari 読む, artinya tidak bisa membaca."
+      },
+      {
+        question: "日本に住んでいる＿＿、日本語が上手になるとは限らない。",
+        options: ["だけで", "だけでは", "ばかり", "ながら"],
+        answer: "だけでは",
+        explanation: "「だけでは」 berarti hanya dengan itu saja belum tentu cukup."
+      },
+      {
+        question: "Arti 「故障」 adalah...",
+        options: ["Perbaikan", "Kerusakan", "Perubahan", "Kecelakaan"],
+        answer: "Kerusakan",
+        explanation: "「故障」 dibaca こしょう, artinya kerusakan, biasanya untuk mesin atau alat."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function showQuestion() {
+      answered = false;
+
+      const q = quiz[currentQuestion];
+      document.getElementById("question").innerHTML =
+        "Soal " + (currentQuestion + 1) + ". " + q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("score").innerHTML =
+        "Skor: " + score + " / " + quiz.length;
+
+      q.options.forEach(function(option) {
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.onclick = function() {
+          checkAnswer(btn, option);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, selected) {
+      if (answered) return;
+
+      answered = true;
+      const q = quiz[currentQuestion];
+
+      if (selected === q.answer) {
+        score++;
+        button.classList.add("correct");
+        document.getElementById("feedback").innerHTML =
+          "Benar!<br>" + q.explanation;
+      } else {
+        button.classList.add("wrong");
+        document.getElementById("feedback").innerHTML =
+          "Salah. Jawaban yang benar: " + q.answer + "<br>" + q.explanation;
+      }
+
+      document.getElementById("score").innerHTML =
+        "Skor: " + score + " / " + quiz.length;
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+
+      if (currentQuestion < quiz.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let message = "";
+      const percentage = (score / quiz.length) * 100;
+
+      if (percentage >= 85) {
+        message = "Sangat baik. Pemahaman N3 kamu kuat.";
+      } else if (percentage >= 70) {
+        message = "Baik. Masih perlu latihan grammar dan kosakata.";
+      } else if (percentage >= 50) {
+        message = "Cukup. Perbanyak latihan bunpou dan dokkai N3.";
+      } else {
+        message = "Perlu belajar ulang dasar N4 menuju N3.";
+      }
+
+      document.getElementById("quizBox").innerHTML = `
+        <h2>Hasil Akhir</h2>
+        <p>Skor kamu: <strong>${score} dari ${quiz.length}</strong></p>
+        <p>${message}</p>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+      `;
+    }
+
+    showQuestion();
+  </script>
+
+</body>
+</html>
