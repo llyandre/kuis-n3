@@ -2,85 +2,287 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Kuis Bahasa Jepang N3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Bahasa Jepang JLPT N3</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      margin: 0;
       padding: 20px;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 196, 211, 0.45) 0 8%, transparent 9%),
+        radial-gradient(circle at 85% 15%, rgba(255, 222, 230, 0.55) 0 9%, transparent 10%),
+        linear-gradient(135deg, #fff7f7, #f8f1e9);
+      color: #2b2b2b;
+    }
+
+    .sakura-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 22px,
+          rgba(180, 32, 42, 0.12) 23px,
+          rgba(180, 32, 42, 0.12) 24px
+        );
+      z-index: 0;
     }
 
     .container {
-      max-width: 700px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(99, 38, 38, 0.18);
+      border: 2px solid #f1c7c7;
+    }
+
+    .header {
+      position: relative;
+      padding: 35px 25px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(152, 23, 35, 0.88), rgba(152, 23, 35, 0.88)),
+        repeating-radial-gradient(circle at center, transparent 0 13px, rgba(255,255,255,0.2) 14px 15px);
+      color: white;
+    }
+
+    .sun {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b91c1c;
+      font-size: 38px;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.18);
     }
 
     h1 {
-      text-align: center;
-      color: #333;
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: 1px;
     }
 
-    .question {
+    .jp-title {
       font-size: 20px;
-      margin-bottom: 20px;
+      margin-top: 8px;
+      letter-spacing: 3px;
     }
 
-    button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #eeeeee;
+    .subtitle {
+      margin-top: 10px;
+      font-size: 15px;
+      opacity: 0.95;
     }
 
-    button:hover {
-      background: #dddddd;
+    .quiz-area {
+      padding: 28px;
     }
 
-    .correct {
-      background: #b7f7c1 !important;
+    .tag {
+      display: inline-block;
+      padding: 7px 13px;
+      background: #fff0f0;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
 
-    .wrong {
-      background: #ffb6b6 !important;
-    }
-
-    #feedback {
-      margin-top: 15px;
+    .progress {
+      font-size: 15px;
+      color: #7f1d1d;
+      margin-bottom: 10px;
       font-weight: bold;
     }
 
-    #nextBtn {
-      background: #4CAF50;
-      color: white;
-      margin-top: 20px;
+    .question-card {
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-left: 6px solid #b91c1c;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin: 11px 0;
+      border: 2px solid #ead7d7;
+      border-radius: 14px;
+      background: #ffffff;
+      font-size: 17px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+    }
+
+    .option:hover {
+      background: #fff1f2;
+      border-color: #fb7185;
+      transform: translateY(-1px);
+    }
+
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #166534;
+    }
+
+    .wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b;
+    }
+
+    #feedback {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #fef2f2;
+      color: #7f1d1d;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: bold;
+      min-height: 20px;
     }
 
     #score {
       margin-top: 15px;
-      font-size: 18px;
+      font-size: 17px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    #nextBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #b91c1c, #e11d48);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(185, 28, 28, 0.25);
+    }
+
+    #nextBtn:hover {
+      background: linear-gradient(135deg, #991b1b, #be123c);
+    }
+
+    .result-box {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .result-score {
+      font-size: 54px;
+      color: #b91c1c;
+      margin: 10px 0;
+    }
+
+    .restart {
+      background: linear-gradient(135deg, #166534, #22c55e) !important;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 18px;
+      background: #fff7f7;
+      color: #7f1d1d;
+      font-size: 14px;
+      border-top: 1px solid #f3d2d2;
+    }
+
+    .decor {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .question {
+        font-size: 19px;
+      }
+
+      .quiz-area {
+        padding: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Kuis Bahasa Jepang JLPT N3</h1>
+  <div class="sakura-bg"></div>
 
-    <div id="quizBox">
-      <p class="question" id="question"></p>
+  <div class="container">
+    <div class="header">
+      <div class="sun">日</div>
+      <h1>Kuis Bahasa Jepang JLPT N3</h1>
+      <div class="jp-title">日本語クイズ</div>
+      <p class="subtitle">Latihan grammar, kosakata, dan pemahaman kalimat</p>
+      <div class="decor">🌸 ⛩️ 🌸</div>
+    </div>
+
+    <div class="quiz-area" id="quizBox">
+      <span class="tag">JLPT N3 Practice</span>
+      <p class="progress" id="progress"></p>
+
+      <div class="question-card">
+        <p class="question" id="question"></p>
+      </div>
+
       <div id="options"></div>
+
       <p id="feedback"></p>
       <p id="score"></p>
-      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya</button>
+
+      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➜</button>
+    </div>
+
+    <div class="footer">
+      🌸 Ganbatte! 頑張ってください 🌸
     </div>
   </div>
 
@@ -90,13 +292,13 @@
         question: "彼は忙しい＿＿、毎日日本語を勉強しています。",
         options: ["ながら", "のに", "ために", "ばかり"],
         answer: "のに",
-        explanation: "「のに」 digunakan untuk menunjukkan pertentangan: meskipun sibuk, ia tetap belajar."
+        explanation: "「のに」 digunakan untuk pertentangan. Artinya: meskipun sibuk, ia tetap belajar bahasa Jepang."
       },
       {
         question: "この薬を飲めば、すぐに痛みが＿＿でしょう。",
         options: ["なおる", "なおした", "なおして", "なおれば"],
         answer: "なおる",
-        explanation: "「痛みがなおる」 berarti rasa sakit hilang atau sembuh."
+        explanation: "「痛みがなおる」 berarti rasa sakit hilang atau sembuh. Bentuk kamus cocok sebelum 「でしょう」."
       },
       {
         question: "Arti kata 「予約」 adalah...",
@@ -108,43 +310,73 @@
         question: "先生に作文を＿＿いただきました。",
         options: ["見て", "見る", "見た", "見ます"],
         answer: "見て",
-        explanation: "Pola 「ていただく」 berarti menerima bantuan dari orang lain dengan sopan."
+        explanation: "Pola 「ていただく」 digunakan saat menerima bantuan dari orang lain dengan sopan."
       },
       {
         question: "電車が遅れた＿＿、会議に遅刻しました。",
         options: ["ため", "のに", "ながら", "そう"],
         answer: "ため",
-        explanation: "「ため」 menunjukkan sebab atau alasan: karena kereta terlambat."
+        explanation: "「ため」 menunjukkan sebab atau alasan. Artinya: karena kereta terlambat, saya terlambat ke rapat."
       },
       {
         question: "Arti 「就職」 adalah...",
-        options: ["Masuk kerja / mendapat pekerjaan", "Berhenti bekerja", "Liburan panjang", "Wawancara sekolah"],
-        answer: "Masuk kerja / mendapat pekerjaan",
-        explanation: "「就職」 dibaca しゅうしょく, artinya mendapat pekerjaan atau mulai bekerja."
+        options: ["Mendapat pekerjaan / mulai bekerja", "Berhenti bekerja", "Liburan panjang", "Wawancara sekolah"],
+        answer: "Mendapat pekerjaan / mulai bekerja",
+        explanation: "「就職」 dibaca しゅうしょく, artinya mendapatkan pekerjaan atau mulai bekerja."
       },
       {
-        question: "雨が降りそうです berarti...",
+        question: "「雨が降りそうです」 berarti...",
         options: ["Hujan sudah turun", "Sepertinya akan hujan", "Saya ingin hujan", "Hujan tidak turun"],
         answer: "Sepertinya akan hujan",
-        explanation: "「そうです」 menunjukkan perkiraan berdasarkan tanda yang terlihat."
+        explanation: "「そうです」 setelah bentuk masu-stem menunjukkan perkiraan berdasarkan tanda yang terlihat."
       },
       {
         question: "この漢字は難しすぎて、＿＿ません。",
         options: ["読め", "読む", "読んで", "読んだ"],
         answer: "読め",
-        explanation: "「読めません」 adalah bentuk potensial negatif dari 読む, artinya tidak bisa membaca."
+        explanation: "「読めません」 adalah bentuk potensial negatif dari 「読む」, artinya tidak bisa membaca."
       },
       {
         question: "日本に住んでいる＿＿、日本語が上手になるとは限らない。",
         options: ["だけで", "だけでは", "ばかり", "ながら"],
         answer: "だけでは",
-        explanation: "「だけでは」 berarti hanya dengan itu saja belum tentu cukup."
+        explanation: "「だけでは」 berarti hanya dengan itu saja belum cukup. Tinggal di Jepang saja belum tentu membuat bahasa Jepang menjadi mahir."
       },
       {
         question: "Arti 「故障」 adalah...",
         options: ["Perbaikan", "Kerusakan", "Perubahan", "Kecelakaan"],
         answer: "Kerusakan",
-        explanation: "「故障」 dibaca こしょう, artinya kerusakan, biasanya untuk mesin atau alat."
+        explanation: "「故障」 dibaca こしょう, artinya kerusakan, biasanya untuk mesin, kendaraan, atau alat."
+      },
+      {
+        question: "弟はゲームを＿＿ながら、ご飯を食べています。",
+        options: ["する", "して", "し", "した"],
+        answer: "し",
+        explanation: "Pola 「masu-stem + ながら」 menunjukkan dua kegiatan dilakukan bersamaan. 「します」 menjadi 「し」."
+      },
+      {
+        question: "試験に合格する＿＿、毎日練習しています。",
+        options: ["ために", "のに", "そうに", "ばかりに"],
+        answer: "ために",
+        explanation: "「ために」 menunjukkan tujuan. Artinya: untuk lulus ujian, saya berlatih setiap hari."
+      },
+      {
+        question: "この仕事は一人では＿＿きれません。",
+        options: ["やり", "やる", "やって", "やった"],
+        answer: "やり",
+        explanation: "Pola 「masu-stem + きれない」 berarti tidak mampu menyelesaikan sesuatu sepenuhnya."
+      },
+      {
+        question: "Arti 「増える」 adalah...",
+        options: ["Berkurang", "Bertambah", "Berhenti", "Menjadi kecil"],
+        answer: "Bertambah",
+        explanation: "「増える」 dibaca ふえる, artinya bertambah atau meningkat."
+      },
+      {
+        question: "部長はもう帰られました。 Kalimat ini memakai bentuk...",
+        options: ["Larangan", "Pasif", "Hormat / sonkeigo", "Perintah"],
+        answer: "Hormat / sonkeigo",
+        explanation: "「帰られました」 di sini adalah bentuk hormat untuk tindakan atasan atau orang yang dihormati."
       }
     ];
 
@@ -156,19 +388,23 @@
       answered = false;
 
       const q = quiz[currentQuestion];
-      document.getElementById("question").innerHTML =
-        "Soal " + (currentQuestion + 1) + ". " + q.question;
+
+      document.getElementById("progress").innerHTML =
+        "Soal " + (currentQuestion + 1) + " dari " + quiz.length;
+
+      document.getElementById("question").innerHTML = q.question;
 
       const optionsDiv = document.getElementById("options");
       optionsDiv.innerHTML = "";
 
       document.getElementById("feedback").innerHTML = "";
       document.getElementById("score").innerHTML =
-        "Skor: " + score + " / " + quiz.length;
+        "Skor sementara: " + score + " / " + quiz.length;
 
-      q.options.forEach(function(option) {
+      q.options.forEach(function(option, index) {
         const btn = document.createElement("button");
-        btn.innerText = option;
+        btn.className = "option";
+        btn.innerHTML = String.fromCharCode(65 + index) + ". " + option;
         btn.onclick = function() {
           checkAnswer(btn, option);
         };
@@ -181,23 +417,36 @@
 
       answered = true;
       const q = quiz[currentQuestion];
+      const allButtons = document.querySelectorAll(".option");
+
+      allButtons.forEach(function(btn) {
+        btn.disabled = true;
+        if (btn.innerHTML.includes(q.answer)) {
+          btn.classList.add("correct");
+        }
+      });
 
       if (selected === q.answer) {
         score++;
         button.classList.add("correct");
         document.getElementById("feedback").innerHTML =
-          "Benar!<br>" + q.explanation;
+          "正解！ Benar!<br>" + q.explanation;
       } else {
         button.classList.add("wrong");
         document.getElementById("feedback").innerHTML =
-          "Salah. Jawaban yang benar: " + q.answer + "<br>" + q.explanation;
+          "不正解。Salah. Jawaban yang benar adalah: <strong>" + q.answer + "</strong><br>" + q.explanation;
       }
 
       document.getElementById("score").innerHTML =
-        "Skor: " + score + " / " + quiz.length;
+        "Skor sementara: " + score + " / " + quiz.length;
     }
 
     function nextQuestion() {
+      if (!answered) {
+        alert("Pilih jawaban dulu sebelum lanjut.");
+        return;
+      }
+
       currentQuestion++;
 
       if (currentQuestion < quiz.length) {
@@ -208,24 +457,28 @@
     }
 
     function showResult() {
-      let message = "";
       const percentage = (score / quiz.length) * 100;
+      let message = "";
 
       if (percentage >= 85) {
-        message = "Sangat baik. Pemahaman N3 kamu kuat.";
+        message = "すごい！ Sangat baik. Pemahaman JLPT N3 kamu sudah kuat.";
       } else if (percentage >= 70) {
-        message = "Baik. Masih perlu latihan grammar dan kosakata.";
+        message = "いいですね！ Baik. Kamu sudah cukup paham, tetapi masih perlu latihan grammar dan kosakata.";
       } else if (percentage >= 50) {
-        message = "Cukup. Perbanyak latihan bunpou dan dokkai N3.";
+        message = "もう少し！ Cukup. Perbanyak latihan bunpou, kosakata, dan membaca kalimat N3.";
       } else {
-        message = "Perlu belajar ulang dasar N4 menuju N3.";
+        message = "頑張って！ Masih perlu belajar ulang materi N4 menuju N3 secara bertahap.";
       }
 
       document.getElementById("quizBox").innerHTML = `
-        <h2>Hasil Akhir</h2>
-        <p>Skor kamu: <strong>${score} dari ${quiz.length}</strong></p>
-        <p>${message}</p>
-        <button onclick="location.reload()">Ulangi Kuis</button>
+        <div class="result-box">
+          <div class="decor">🌸 ⛩️ 🌸</div>
+          <h2>Hasil Akhir</h2>
+          <p>Skor kamu:</p>
+          <div class="result-score">${score} / ${quiz.length}</div>
+          <p>${message}</p>
+          <button class="option restart" onclick="location.reload()">Ulangi Kuis</button>
+        </div>
       `;
     }
 
