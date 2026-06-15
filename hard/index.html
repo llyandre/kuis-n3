@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Bahasa Jepang JLPT N3 Hard Level</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 196, 211, 0.45) 0 8%, transparent 9%),
+        radial-gradient(circle at 88% 12%, rgba(255, 222, 230, 0.55) 0 9%, transparent 10%),
+        linear-gradient(135deg, #fff7f7, #f8f1e9);
+      color: #2b2b2b;
+    }
+
+    .sakura-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 22px,
+          rgba(180, 32, 42, 0.12) 23px,
+          rgba(180, 32, 42, 0.12) 24px
+        );
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(99, 38, 38, 0.18);
+      border: 2px solid #f1c7c7;
+    }
+
+    .header {
+      padding: 35px 25px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(152, 23, 35, 0.91), rgba(152, 23, 35, 0.91)),
+        repeating-radial-gradient(circle at center, transparent 0 13px, rgba(255,255,255,0.2) 14px 15px);
+      color: white;
+    }
+
+    .sun {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b91c1c;
+      font-size: 38px;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+      letter-spacing: 1px;
+    }
+
+    .jp-title {
+      font-size: 20px;
+      margin-top: 8px;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .quiz-area { padding: 28px; }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 13px;
+      background: #fff0f0;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .progress {
+      font-size: 15px;
+      color: #7f1d1d;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .question-card {
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-left: 6px solid #b91c1c;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.7;
+      margin: 0;
+      white-space: pre-line;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin: 11px 0;
+      border: 2px solid #ead7d7;
+      border-radius: 14px;
+      background: #ffffff;
+      font-size: 17px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+      line-height: 1.5;
+    }
+
+    .option:hover:not(:disabled) {
+      background: #fff1f2;
+      border-color: #fb7185;
+      transform: translateY(-1px);
+    }
+
+    .option:disabled {
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #166534;
+    }
+
+    .wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b;
+    }
+
+    #feedback {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #fef2f2;
+      color: #7f1d1d;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 17px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    #nextBtn, #restartBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #b91c1c, #e11d48);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(185, 28, 28, 0.25);
+    }
+
+    #nextBtn:hover, #restartBtn:hover {
+      background: linear-gradient(135deg, #991b1b, #be123c);
+    }
+
+    .result-box {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .result-score {
+      font-size: 54px;
+      color: #b91c1c;
+      margin: 10px 0;
+    }
+
+    .review {
+      text-align: left;
+      margin-top: 25px;
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-radius: 16px;
+      padding: 15px;
+      line-height: 1.6;
+    }
+
+    .review h3 {
+      color: #7f1d1d;
+      margin-top: 0;
+    }
+
+    .review-item {
+      border-bottom: 1px solid #f3d2c1;
+      padding: 12px 0;
+    }
+
+    .review-item:last-child {
+      border-bottom: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 18px;
+      background: #fff7f7;
+      color: #7f1d1d;
+      font-size: 14px;
+      border-top: 1px solid #f3d2d2;
+    }
+
+    .decor {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      h1 { font-size: 24px; }
+      .question { font-size: 19px; }
+      .quiz-area { padding: 20px; }
+      .option { font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sakura-bg"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="sun">日</div>
+      <h1>Kuis Bahasa Jepang JLPT N3</h1>
+      <div class="jp-title">難しい日本語クイズ</div>
+      <p class="subtitle">50 soal sulit: grammar, kosakata, dan pemahaman kalimat</p>
+      <div class="decor">🌸 ⛩️ 🌸</div>
+    </div>
+
+    <div class="quiz-area" id="quizBox">
+      <span class="tag">JLPT N3 Hard Practice</span>
+      <p class="progress" id="progress"></p>
+
+      <div class="question-card">
+        <p class="question" id="question"></p>
+      </div>
+
+      <div id="options"></div>
+      <p id="feedback"></p>
+      <p id="score"></p>
+
+      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➜</button>
+    </div>
+
+    <div class="footer">
+      🌸 Ganbatte! 頑張ってください 🌸
+    </div>
+  </div>
+
+  <script>
+    const originalQuiz = [
+      {
+        question: "彼は日本語が話せる＿＿、漢字が読めるわけではない。",
+        options: ["からには", "といっても", "ほど", "ばかりに"],
+        answer: "といっても",
+        explanation: "「AといってもB」 berarti walaupun dikatakan A, bukan berarti B sepenuhnya benar. Ia bisa bicara Jepang, tetapi belum tentu bisa membaca kanji."
+      },
+      {
+        question: "忙しい＿＿、健康のために運動する時間は作るべきだ。",
+        options: ["からこそ", "とはいえ", "ばかりか", "たびに"],
+        answer: "とはいえ",
+        explanation: "「とはいえ」 berarti meskipun begitu. Walaupun sibuk, tetap perlu membuat waktu untuk olahraga."
+      },
+      {
+        question: "この問題は簡単そうに見えるが、考えれば考える＿＿難しくなる。",
+        options: ["ほど", "だけ", "しか", "こそ"],
+        answer: "ほど",
+        explanation: "Pola 「ば〜ほど」 berarti semakin..., semakin.... Semakin dipikirkan, semakin sulit."
+      },
+      {
+        question: "試験の前日になって、急に不安＿＿きた。",
+        options: ["にして", "として", "がして", "をして"],
+        answer: "がして",
+        explanation: "「不安がしてきた」 berarti mulai merasa cemas. Pola 「〜がする」 dipakai untuk rasa, bau, suara, atau perasaan."
+      },
+      {
+        question: "約束した以上、どんなに忙しくても行かない＿＿。",
+        options: ["わけではない", "わけにはいかない", "ことはない", "ものではない"],
+        answer: "わけにはいかない",
+        explanation: "「〜ないわけにはいかない」 berarti harus melakukan. Karena sudah berjanji, tidak bisa tidak pergi."
+      },
+      {
+        question: "彼女は泣き＿＿話していたので、内容がよく分からなかった。",
+        options: ["ながら", "つつ", "かけて", "きって"],
+        answer: "ながら",
+        explanation: "「泣きながら話す」 berarti berbicara sambil menangis. Dua kegiatan berlangsung bersamaan."
+      },
+      {
+        question: "この本は難しい＿＿、説明が丁寧なので最後まで読める。",
+        options: ["ものの", "ために", "ばかりで", "ように"],
+        answer: "ものの",
+        explanation: "「ものの」 berarti walaupun. Walaupun bukunya sulit, penjelasannya rinci sehingga bisa dibaca sampai selesai."
+      },
+      {
+        question: "彼は仕事が速い＿＿、ミスも少ない。",
+        options: ["ばかりか", "だけに", "ほどに", "せいで"],
+        answer: "ばかりか",
+        explanation: "「AばかりかBも」 berarti bukan hanya A, tetapi juga B. Ia bukan hanya cepat, tetapi juga sedikit kesalahan."
+      },
+      {
+        question: "部屋を出る＿＿、電気を消してください。",
+        options: ["うちに", "際に", "ところに", "最中に"],
+        answer: "際に",
+        explanation: "「〜際に」 berarti pada saat/ketika. Bentuk ini lebih formal daripada 「とき」."
+      },
+      {
+        question: "彼の説明は分かりにくい。つまり、話が＿＿いないのだ。",
+        options: ["まとまって", "集まって", "決まって", "比べて"],
+        answer: "まとまって",
+        explanation: "「話がまとまっていない」 berarti pembicaraan tidak tersusun atau tidak terarah dengan baik."
+      },
+      {
+        question: "日本に来て以来、毎朝ジョギングする＿＿している。",
+        options: ["ことに", "ように", "ために", "ものに"],
+        answer: "ように",
+        explanation: "「〜ようにしている」 berarti berusaha membiasakan diri melakukan sesuatu."
+      },
+      {
+        question: "この資料は会議で使う＿＿、今すぐ印刷しておいてください。",
+        options: ["ことに", "ために", "ものの", "ばかりに"],
+        answer: "ために",
+        explanation: "「〜ために」 menunjukkan tujuan. Dokumen dicetak untuk digunakan dalam rapat."
+      },
+      {
+        question: "彼は注意された＿＿、同じミスを繰り返した。",
+        options: ["にもかかわらず", "にしたがって", "につれて", "によって"],
+        answer: "にもかかわらず",
+        explanation: "「にもかかわらず」 berarti meskipun. Meskipun sudah diperingatkan, ia mengulang kesalahan yang sama."
+      },
+      {
+        question: "年を取る＿＿、健康の大切さが分かってきた。",
+        options: ["に対して", "につれて", "に限って", "に関して"],
+        answer: "につれて",
+        explanation: "「〜につれて」 berarti seiring dengan perubahan A, B juga berubah. Seiring bertambah usia, makin memahami pentingnya kesehatan."
+      },
+      {
+        question: "失敗したからといって、夢をあきらめる＿＿。",
+        options: ["ことはない", "わけがない", "しかない", "に違いない"],
+        answer: "ことはない",
+        explanation: "「〜ことはない」 berarti tidak perlu. Hanya karena gagal, tidak perlu menyerah."
+      },
+      {
+        question: "この料理は辛い＿＿、一度食べると忘れられない味だ。",
+        options: ["反面", "最中", "きり", "次第"],
+        answer: "反面",
+        explanation: "「反面」 menunjukkan sisi lain yang berlawanan. Masakan ini pedas, tetapi rasanya sulit dilupakan."
+      },
+      {
+        question: "会議が始まる＿＿、資料を確認しておきましょう。",
+        options: ["までに", "まで", "ほど", "きり"],
+        answer: "までに",
+        explanation: "「までに」 berarti batas waktu sebelum sesuatu terjadi. Harus mengecek dokumen sebelum rapat dimulai."
+      },
+      {
+        question: "彼は何度説明しても分からない＿＿をしている。",
+        options: ["ふり", "つもり", "はず", "わけ"],
+        answer: "ふり",
+        explanation: "「分からないふりをする」 berarti berpura-pura tidak mengerti."
+      },
+      {
+        question: "この薬は人＿＿効果が違うことがあります。",
+        options: ["によって", "に対して", "について", "に関して"],
+        answer: "によって",
+        explanation: "「人によって」 berarti tergantung orangnya. Efek obat bisa berbeda pada tiap orang."
+      },
+      {
+        question: "彼は急いでいた＿＿、財布を家に忘れてしまった。",
+        options: ["せいで", "おかげで", "わけで", "くせに"],
+        answer: "せいで",
+        explanation: "「せいで」 menunjukkan sebab negatif. Karena terburu-buru, ia lupa membawa dompet."
+      },
+      {
+        question: "この映画は子ども＿＿大人まで楽しめる。",
+        options: ["から", "まで", "ほど", "しか"],
+        answer: "から",
+        explanation: "Pola 「AからBまで」 berarti dari A sampai B. Dari anak-anak sampai orang dewasa bisa menikmati film ini."
+      },
+      {
+        question: "日本語を勉強する＿＿、文化も理解することが大切だ。",
+        options: ["うえで", "うちに", "うえに", "うえは"],
+        answer: "うえで",
+        explanation: "「〜うえで」 berarti dalam hal/untuk melakukan sesuatu. Dalam belajar bahasa Jepang, budaya juga penting."
+      },
+      {
+        question: "彼は寝坊した＿＿、朝ご飯も食べずに家を出た。",
+        options: ["あげく", "結果", "せいか", "ところ"],
+        answer: "あげく",
+        explanation: "「〜あげく」 menunjukkan hasil buruk setelah suatu proses atau keadaan. Karena bangun kesiangan, akhirnya keluar tanpa sarapan."
+      },
+      {
+        question: "今さら後悔した＿＿、もう何も変わらない。",
+        options: ["ところで", "ところが", "ところを", "ところに"],
+        answer: "ところで",
+        explanation: "「〜たところで」 berarti meskipun melakukan sesuatu, hasilnya tetap tidak berubah. Menyesal sekarang pun tidak mengubah apa-apa."
+      },
+      {
+        question: "この仕事は経験者＿＿、初心者には少し難しい。",
+        options: ["向けで", "向きで", "らしく", "っぽく"],
+        answer: "向けで",
+        explanation: "「〜向け」 berarti ditujukan untuk. Pekerjaan ini untuk orang berpengalaman, jadi sulit untuk pemula."
+      },
+      {
+        question: "この靴は長く歩くの＿＿、旅行にぴったりだ。",
+        options: ["向きで", "向けで", "として", "に対して"],
+        answer: "向きで",
+        explanation: "「〜向き」 berarti cocok untuk. Sepatu ini cocok untuk berjalan lama, jadi pas untuk perjalanan."
+      },
+      {
+        question: "彼は日本に10年住んでいる＿＿、日本人の考え方をよく理解している。",
+        options: ["だけあって", "だけでは", "だけにして", "だけのことはなく"],
+        answer: "だけあって",
+        explanation: "「〜だけあって」 berarti pantas saja/karena memang. Karena sudah tinggal 10 tahun, wajar ia memahami cara berpikir orang Jepang."
+      },
+      {
+        question: "この町は昔＿＿静かではなくなった。",
+        options: ["ほど", "より", "さえ", "こそ"],
+        answer: "ほど",
+        explanation: "「昔ほど〜ない」 berarti tidak se... dulu. Kota ini tidak setenang dulu."
+      },
+      {
+        question: "そんな大事なことを忘れる＿＿ない。",
+        options: ["わけが", "ことが", "ものが", "ところが"],
+        answer: "わけが",
+        explanation: "「〜わけがない」 berarti tidak mungkin. Tidak mungkin melupakan hal sepenting itu."
+      },
+      {
+        question: "彼の話を聞いて、もう一度挑戦してみる＿＿になった。",
+        options: ["こと", "気", "つもり", "はず"],
+        answer: "気",
+        explanation: "「〜気になる」 berarti menjadi ingin/terdorong untuk melakukan sesuatu. Setelah mendengar ceritanya, jadi ingin mencoba lagi."
+      },
+      {
+        question: "この問題については、専門家＿＿意見が分かれている。",
+        options: ["の間でも", "に向けても", "に比べても", "を通しても"],
+        answer: "の間でも",
+        explanation: "「専門家の間でも」 berarti bahkan di antara para ahli. Pilihan ini paling alami untuk menyatakan perbedaan pendapat."
+      },
+      {
+        question: "彼は疲れている＿＿、最後まで笑顔で対応してくれた。",
+        options: ["くせに", "にもかかわらず", "せいで", "おかげで"],
+        answer: "にもかかわらず",
+        explanation: "「にもかかわらず」 berarti meskipun. Netral dan formal. 「くせに」 bernada menyalahkan, kurang cocok untuk kalimat positif."
+      },
+      {
+        question: "説明書を読んだ＿＿、使い方がよく分からない。",
+        options: ["ものの", "ものなら", "ものだから", "ものか"],
+        answer: "ものの",
+        explanation: "「〜ものの」 berarti walaupun. Walaupun sudah membaca manual, tetap tidak mengerti cara pakainya."
+      },
+      {
+        question: "新しい生活に慣れる＿＿、時間がかかる。",
+        options: ["には", "では", "とは", "へは"],
+        answer: "には",
+        explanation: "「〜するには時間がかかる」 berarti untuk melakukan/menjadi sesuatu membutuhkan waktu."
+      },
+      {
+        question: "この店は安い＿＿、味も悪くない。",
+        options: ["うえに", "うえで", "うちは", "うちに"],
+        answer: "うえに",
+        explanation: "「〜うえに」 berarti selain itu/terlebih lagi. Tokonya murah, selain itu rasanya juga tidak buruk."
+      },
+      {
+        question: "彼は忙しいと言っている＿＿、毎日ゲームをしている。",
+        options: ["わりに", "くせに", "だけに", "ことに"],
+        answer: "わりに",
+        explanation: "「〜わりに」 berarti jika dibandingkan dengan dugaan dari kondisi A, hasilnya berbeda. Katanya sibuk, tetapi tetap bermain game."
+      },
+      {
+        question: "あの人は学生＿＿、まるで先生のように説明が上手だ。",
+        options: ["にしては", "としては", "に対して", "について"],
+        answer: "にしては",
+        explanation: "「〜にしては」 berarti untuk ukuran/sebagai seorang.... Untuk ukuran pelajar, penjelasannya sangat bagus."
+      },
+      {
+        question: "このレポートは、内容＿＿構成にも問題がある。",
+        options: ["だけでなく", "だけなら", "だけしか", "だけほど"],
+        answer: "だけでなく",
+        explanation: "「AだけでなくBも」 berarti bukan hanya A, tetapi juga B. Bukan hanya isi, struktur juga bermasalah."
+      },
+      {
+        question: "努力した＿＿、必ず成功するとは限らない。",
+        options: ["からには", "からといって", "からこそ", "からして"],
+        answer: "からといって",
+        explanation: "「〜からといって、必ず〜とは限らない」 berarti hanya karena A, belum tentu B pasti terjadi."
+      },
+      {
+        question: "日本語が上手になる＿＿、毎日少しずつでも使うことが大切だ。",
+        options: ["には", "まで", "ほど", "ばかり"],
+        answer: "には",
+        explanation: "「〜するには」 berarti untuk mencapai/ melakukan sesuatu. Untuk menjadi mahir, penting memakai bahasa Jepang tiap hari."
+      },
+      {
+        question: "彼は怒っている＿＿、声の調子で分かった。",
+        options: ["ことが", "ことを", "ものが", "ものを"],
+        answer: "ことが",
+        explanation: "「〜ことが分かる」 berarti mengetahui bahwa.... Dari nada suaranya, diketahui bahwa ia sedang marah."
+      },
+      {
+        question: "試験が近づく＿＿、クラス全体が緊張してきた。",
+        options: ["にしたがって", "に対して", "について", "に限って"],
+        answer: "にしたがって",
+        explanation: "「〜にしたがって」 berarti seiring dengan. Semakin ujian mendekat, seluruh kelas semakin tegang."
+      },
+      {
+        question: "この道具は使い方＿＿は簡単だが、正確に使うのは難しい。",
+        options: ["そのもの", "自体", "向け", "次第"],
+        answer: "自体",
+        explanation: "「使い方自体は」 berarti cara pakainya sendiri. Cara pakainya sederhana, tetapi menggunakannya secara akurat sulit."
+      },
+      {
+        question: "友達に相談した＿＿、少し気持ちが楽になった。",
+        options: ["おかげで", "せいで", "ためで", "わけで"],
+        answer: "おかげで",
+        explanation: "「おかげで」 menunjukkan sebab positif. Berkat berkonsultasi dengan teman, perasaan menjadi lebih ringan."
+      },
+      {
+        question: "彼は何も言わずに帰ってしまった。＿＿、何か怒っていたのかもしれない。",
+        options: ["つまり", "もしかすると", "たとえば", "ところで"],
+        answer: "もしかすると",
+        explanation: "「もしかすると」 berarti mungkin saja/barangkali. Cocok untuk dugaan."
+      },
+      {
+        question: "メールを送った＿＿、返事が来ない。",
+        options: ["きり", "まま", "ところ", "ばかり"],
+        answer: "きり",
+        explanation: "「〜たきり」 berarti setelah melakukan sesuatu, keadaan berikutnya tidak terjadi/terputus. Setelah mengirim email, balasan tidak datang."
+      },
+      {
+        question: "窓を開けた＿＿寝てしまったので、朝とても寒かった。",
+        options: ["まま", "きり", "ところ", "うち"],
+        answer: "まま",
+        explanation: "「〜たまま」 berarti keadaan dibiarkan seperti itu. Tidur dalam keadaan jendela masih terbuka."
+      },
+      {
+        question: "努力を続ける＿＿、結果は少しずつ変わってくるはずだ。",
+        options: ["うちに", "ところに", "最中に", "一方で"],
+        answer: "うちに",
+        explanation: "「〜するうちに」 berarti selama proses melakukan sesuatu, perlahan terjadi perubahan."
+      },
+      {
+        question: "彼は英語＿＿、フランス語も話せる。",
+        options: ["ばかりか", "だけなら", "しか", "ほど"],
+        answer: "ばかりか",
+        explanation: "「AばかりかBも」 berarti bukan hanya A, tetapi juga B. Ia bukan hanya bisa bahasa Inggris, tetapi juga bahasa Prancis."
+      },
+      {
+        question: "この会社では、年齢＿＿能力で評価される。",
+        options: ["によらず", "によって", "にしたがって", "に比べて"],
+        answer: "によらず",
+        explanation: "「〜によらず」 berarti tanpa bergantung pada. Dinilai berdasarkan kemampuan, bukan berdasarkan usia."
+      },
+      {
+        question: "交通事故＿＿、電車が止まっている。",
+        options: ["のため", "のおかげ", "のわけ", "のふり"],
+        answer: "のため",
+        explanation: "「〜のため」 menunjukkan sebab/alasan. Karena kecelakaan lalu lintas, kereta berhenti."
+      },
+      {
+        question: "せっかく料理を作った＿＿、誰も食べてくれなかった。",
+        options: ["のに", "ので", "なら", "ても"],
+        answer: "のに",
+        explanation: "「せっかく〜のに」 menunjukkan rasa kecewa: padahal sudah repot membuat masakan, tetapi tidak ada yang makan."
+      }
+    ];
+
+    let quiz = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let wrongAnswers = [];
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz() {
+      quiz = shuffleArray(originalQuiz).map(q => ({
+        ...q,
+        options: shuffleArray(q.options)
+      }));
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      wrongAnswers = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = quiz[currentQuestion];
+
+      document.getElementById("progress").innerHTML =
+        "Soal " + (currentQuestion + 1) + " dari " + quiz.length;
+
+      document.getElementById("question").innerText = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+
+      q.options.forEach(function(option, index) {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.innerText = String.fromCharCode(65 + index) + ". " + option;
+        btn.dataset.option = option;
+        btn.onclick = function() {
+          checkAnswer(btn, option);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, selected) {
+      if (answered) return;
+
+      answered = true;
+      const q = quiz[currentQuestion];
+      const allButtons = document.querySelectorAll(".option");
+
+      allButtons.forEach(function(btn) {
+        btn.disabled = true;
+        if (btn.dataset.option === q.answer) {
+          btn.classList.add("correct");
+        }
+      });
+
+      if (selected === q.answer) {
+        score++;
+        button.classList.add("correct");
+        document.getElementById("feedback").innerHTML =
+          "正解！ Benar!<br>" + q.explanation;
+      } else {
+        button.classList.add("wrong");
+        wrongAnswers.push({
+          question: q.question,
+          selected: selected,
+          answer: q.answer,
+          explanation: q.explanation
+        });
+
+        document.getElementById("feedback").innerHTML =
+          "不正解。Salah. Jawaban yang benar adalah: <strong>" + q.answer + "</strong><br>" + q.explanation;
+      }
+
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+    }
+
+    function nextQuestion() {
+      if (!answered) {
+        alert("Pilih jawaban dulu sebelum lanjut.");
+        return;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quiz.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const percentage = (score / quiz.length) * 100;
+      let message = "";
+
+      if (percentage >= 90) {
+        message = "すごい！ Sangat kuat. Kamu siap menghadapi soal N3 yang menuntut logika grammar.";
+      } else if (percentage >= 75) {
+        message = "いいですね！ Bagus. Pemahamanmu kuat, tetapi masih perlu mengasah perbedaan pola yang mirip.";
+      } else if (percentage >= 60) {
+        message = "もう少し！ Cukup baik. Fokus ulang pada grammar N3 seperti ものの, にしたがって, だけあって, dan わけにはいかない.";
+      } else {
+        message = "頑張って！ Masih perlu penguatan dari N4 menuju N3, terutama pola kalimat dan kosakata konteks."
+      }
+
+      let reviewHtml = "";
+
+      if (wrongAnswers.length > 0) {
+        reviewHtml = `
+          <div class="review">
+            <h3>Review Jawaban Salah</h3>
+            ${wrongAnswers.map((item, index) => `
+              <div class="review-item">
+                <strong>${index + 1}. ${item.question}</strong><br>
+                Jawaban kamu: ${item.selected}<br>
+                Jawaban benar: <strong>${item.answer}</strong><br>
+                ${item.explanation}
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else {
+        reviewHtml = `
+          <div class="review">
+            <h3>完璧！ Semua jawaban benar.</h3>
+            <p>Kamu berhasil menjawab semua soal tanpa kesalahan.</p>
+          </div>
+        `;
+      }
+
+      document.getElementById("quizBox").innerHTML = `
+        <div class="result-box">
+          <div class="decor">🌸 ⛩️ 🌸</div>
+          <h2>Hasil Akhir</h2>
+          <p>Skor kamu:</p>
+          <div class="result-score">${score} / ${quiz.length}</div>
+          <p>${message}</p>
+          <button id="restartBtn" onclick="location.reload()">Ulangi Kuis</button>
+          ${reviewHtml}
+        </div>
+      `;
+    }
+
+    startQuiz();
+  </script>
+</body>
+</html>
