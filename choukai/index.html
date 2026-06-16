@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Choukai JLPT N3</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 196, 211, 0.45) 0 8%, transparent 9%),
+        radial-gradient(circle at 88% 12%, rgba(255, 222, 230, 0.55) 0 9%, transparent 10%),
+        linear-gradient(135deg, #fff7f7, #f8f1e9);
+      color: #2b2b2b;
+    }
+
+    .sakura-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 22px,
+          rgba(180, 32, 42, 0.12) 23px,
+          rgba(180, 32, 42, 0.12) 24px
+        );
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(99, 38, 38, 0.18);
+      border: 2px solid #f1c7c7;
+    }
+
+    .header {
+      padding: 35px 25px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(152, 23, 35, 0.91), rgba(152, 23, 35, 0.91)),
+        repeating-radial-gradient(circle at center, transparent 0 13px, rgba(255,255,255,0.2) 14px 15px);
+      color: white;
+    }
+
+    .sun {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b91c1c;
+      font-size: 39px;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+      letter-spacing: 1px;
+    }
+
+    .jp-title {
+      font-size: 20px;
+      margin-top: 8px;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .quiz-area { padding: 28px; }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 13px;
+      background: #fff0f0;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .progress {
+      font-size: 15px;
+      color: #7f1d1d;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .instruction-card {
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-left: 6px solid #b91c1c;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .audio-box {
+      background: #ffffff;
+      border: 2px dashed #f0b7b7;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .audio-btn, .script-btn {
+      padding: 11px 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #b91c1c, #e11d48);
+    }
+
+    .script-btn {
+      background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+    }
+
+    .script {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #fff7f7;
+      color: #4b2b2b;
+      line-height: 1.8;
+      white-space: pre-line;
+      display: none;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 1px solid #ead7d7;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin: 11px 0;
+      border: 2px solid #ead7d7;
+      border-radius: 14px;
+      background: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+      line-height: 1.5;
+    }
+
+    .option:hover:not(:disabled) {
+      background: #fff1f2;
+      border-color: #fb7185;
+      transform: translateY(-1px);
+    }
+
+    .option:disabled {
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #166534;
+    }
+
+    .wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b;
+    }
+
+    #feedback {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #fef2f2;
+      color: #7f1d1d;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 17px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    #nextBtn, #restartBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #b91c1c, #e11d48);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(185, 28, 28, 0.25);
+    }
+
+    #nextBtn:hover, #restartBtn:hover, .audio-btn:hover, .script-btn:hover {
+      filter: brightness(0.95);
+    }
+
+    .result-box {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .result-score {
+      font-size: 54px;
+      color: #b91c1c;
+      margin: 10px 0;
+    }
+
+    .review {
+      text-align: left;
+      margin-top: 25px;
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-radius: 16px;
+      padding: 15px;
+      line-height: 1.6;
+    }
+
+    .review h3 {
+      color: #7f1d1d;
+      margin-top: 0;
+    }
+
+    .review-item {
+      border-bottom: 1px solid #f3d2c1;
+      padding: 12px 0;
+    }
+
+    .review-item:last-child {
+      border-bottom: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 18px;
+      background: #fff7f7;
+      color: #7f1d1d;
+      font-size: 14px;
+      border-top: 1px solid #f3d2d2;
+    }
+
+    .decor {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      h1 { font-size: 24px; }
+      .quiz-area { padding: 20px; }
+      .instruction-card { font-size: 15px; }
+      .question { font-size: 18px; }
+      .option { font-size: 15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sakura-bg"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="sun">聴</div>
+      <h1>Kuis Choukai JLPT N3</h1>
+      <div class="jp-title">聴解練習</div>
+      <p class="subtitle">30 soal sesuai format JLPT N3: 課題理解・ポイント理解・概要理解・発話表現・即時応答</p>
+      <div class="decor">🌸 🎧 ⛩️</div>
+    </div>
+
+    <div class="quiz-area" id="quizBox">
+      <span class="tag" id="categoryTag">JLPT N3 Choukai</span>
+      <p class="progress" id="progress"></p>
+
+      <div class="instruction-card" id="visibleText"></div>
+
+      <div class="audio-box">
+        <div class="audio-controls">
+          <button class="audio-btn" onclick="playAudio()">▶ Putar Audio Jepang</button>
+          <button class="audio-btn" onclick="stopAudio()">■ Stop</button>
+          <button class="script-btn" onclick="toggleScript()">Lihat/Sembunyikan Script</button>
+        </div>
+        <div class="script" id="scriptBox"></div>
+      </div>
+
+      <div class="question-card">
+        <p class="question" id="question"></p>
+      </div>
+
+      <div id="options"></div>
+      <p id="feedback"></p>
+      <p id="score"></p>
+
+      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➜</button>
+    </div>
+
+    <div class="footer">
+      🌸 Audio memakai suara otomatis browser. Jika tidak bersuara, aktifkan volume atau coba browser lain. 🌸
+    </div>
+  </div>
+
+  <script>
+    const originalQuiz = [
+      {
+            "category": "問題1：課題理解",
+            "visible": "会社で男の人と女の人が話しています。男の人はこの後、何をしなければなりませんか。",
+            "audio": "会社で男の人と女の人が話しています。女の人：田中さん、明日の会議で使う資料、もうできていますか。男の人：はい、内容はできました。でも、まだ部長に見てもらっていません。女の人：じゃあ、今日中に部長に確認してもらってから、20部印刷してください。男の人：分かりました。部長に見てもらってから印刷します。",
+            "question": "男の人はこの後、まず何をしますか。",
+            "options": [
+                  "資料を20部印刷する",
+                  "部長に資料を確認してもらう",
+                  "会議の内容を考える",
+                  "女の人に資料を渡す"
+            ],
+            "answer": "部長に資料を確認してもらう",
+            "explanation": "女の人は「部長に確認してもらってから、20部印刷」と言っているので、まず部長に確認してもらう。"
+      },
+      {
+            "category": "問題1：課題理解",
+            "visible": "大学で学生二人が話しています。女の学生はこの後、何をしますか。",
+            "audio": "大学で学生二人が話しています。男の学生：レポート、もう出した？女の学生：ううん、まだ。先生の部屋に持って行ったんだけど、先生がいなかったの。男の学生：じゃあ、事務室に出せばいいんじゃない？女の学生：そう思って聞いたら、今日は先生に直接渡さなきゃいけないって。男の学生：先生、午後3時には戻るって言ってたよ。女の学生：じゃあ、3時ごろもう一度行ってみる。",
+            "question": "女の学生はこの後、何をしますか。",
+            "options": [
+                  "事務室にレポートを出す",
+                  "先生の部屋へもう一度行く",
+                  "男の学生にレポートを渡す",
+                  "レポートを書き直す"
+            ],
+            "answer": "先生の部屋へもう一度行く",
+            "explanation": "先生に直接渡す必要があり、3時ごろもう一度行くと言っている。"
+      },
+      {
+            "category": "問題1：課題理解",
+            "visible": "駅で男の人が駅員と話しています。男の人はどうしますか。",
+            "audio": "駅で男の人が駅員と話しています。男の人：すみません、空港行きの電車はどのホームですか。駅員：今の時間は工事のため、空港行きはここから出ていません。男の人：えっ、どうすればいいですか。駅員：2番ホームの電車で中央駅まで行って、そこで空港線に乗り換えてください。男の人：分かりました。中央駅で乗り換えるんですね。",
+            "question": "男の人はどうしますか。",
+            "options": [
+                  "この駅から空港行きに乗る",
+                  "2番ホームから中央駅へ行く",
+                  "工事が終わるまで待つ",
+                  "駅員と一緒に空港へ行く"
+            ],
+            "answer": "2番ホームから中央駅へ行く",
+            "explanation": "駅員は2番ホームの電車で中央駅へ行き、そこで乗り換えるように言っている。"
+      },
+      {
+            "category": "問題1：課題理解",
+            "visible": "スーパーで店長とアルバイトの人が話しています。アルバイトの人は何をしますか。",
+            "audio": "スーパーで店長とアルバイトの人が話しています。店長：今日は雨だから、お客さんが少ないね。レジは一人で大丈夫そうだ。アルバイト：では、私は品物を並べましょうか。店長：うん。でもその前に、入口の床がぬれていて危ないから、先にふいておいて。アルバイト：はい。床をふいてから、品物を並べます。",
+            "question": "アルバイトの人はまず何をしますか。",
+            "options": [
+                  "レジを手伝う",
+                  "品物を並べる",
+                  "入口の床をふく",
+                  "雨の日のポスターを貼る"
+            ],
+            "answer": "入口の床をふく",
+            "explanation": "店長は「その前に、入口の床を先にふいて」と言っている。"
+      },
+      {
+            "category": "問題1：課題理解",
+            "visible": "病院で受付の人と女の人が話しています。女の人は何をしますか。",
+            "audio": "病院で受付の人と女の人が話しています。女の人：すみません、予約は10時なんですが、少し遅れてしまいました。受付：大丈夫です。ただ、先にこの紙に住所と電話番号を書いてください。女の人：保険証はいつ出せばいいですか。受付：紙を書いたあとでお願いします。女の人：分かりました。先にこれを書きます。",
+            "question": "女の人はまず何をしますか。",
+            "options": [
+                  "保険証を出す",
+                  "住所と電話番号を書く",
+                  "診察室に入る",
+                  "予約時間を変える"
+            ],
+            "answer": "住所と電話番号を書く",
+            "explanation": "受付の人は先に紙に住所と電話番号を書くように言っている。"
+      },
+      {
+            "category": "問題1：課題理解",
+            "visible": "会社で女の人と男の人が話しています。男の人はこの後、何をしますか。",
+            "audio": "会社で女の人と男の人が話しています。女の人：すみません、明日の出張のホテル、予約してくれましたか。男の人：はい、駅前のホテルを予約しました。女の人：ありがとう。では、予約番号をメールで送ってください。それから、地図も一緒に添付してもらえますか。男の人：はい、予約番号と地図ですね。すぐ送ります。",
+            "question": "男の人はこの後、何をしますか。",
+            "options": [
+                  "ホテルを予約する",
+                  "駅へ行く",
+                  "予約番号と地図をメールで送る",
+                  "出張を中止する"
+            ],
+            "answer": "予約番号と地図をメールで送る",
+            "explanation": "女の人は予約番号と地図をメールで送るように頼んでいる。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "男の人と女の人が週末の予定について話しています。女の人はなぜ映画に行けませんか。",
+            "audio": "男の人：今週の土曜日、映画を見に行かない？女の人：ごめん、土曜日は妹の引っ越しを手伝うことになっているの。男の人：日曜日は？女の人：日曜日なら午後は空いているよ。男の人：じゃあ、日曜の午後にしよう。",
+            "question": "女の人が土曜日に映画へ行けない理由は何ですか。",
+            "options": [
+                  "仕事があるから",
+                  "妹の引っ越しを手伝うから",
+                  "映画が好きではないから",
+                  "日曜日に試験があるから"
+            ],
+            "answer": "妹の引っ越しを手伝うから",
+            "explanation": "女の人は「妹の引っ越しを手伝う」と言っている。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "二人がレストランについて話しています。このレストランで一番よかったことは何ですか。",
+            "audio": "女の人：昨日行ったレストラン、どうだった？男の人：料理はまあまあだったけど、店員さんの対応がとてもよかったよ。女の人：値段は？男の人：少し高かった。でも、静かで話しやすかったし、特にサービスがよかったね。",
+            "question": "男の人が特によかったと言っていることは何ですか。",
+            "options": [
+                  "料理の味",
+                  "値段の安さ",
+                  "店員のサービス",
+                  "駅からの近さ"
+            ],
+            "answer": "店員のサービス",
+            "explanation": "男の人は「特にサービスがよかった」と言っている。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "先生が学生に話しています。レポートで一番大切なことは何ですか。",
+            "audio": "先生：来週までにレポートを出してください。長さは三ページぐらいでいいです。ただし、インターネットからコピーするだけではだめです。自分の意見を必ず入れてください。漢字の間違いより、自分の考えが書いてあるかどうかを重視します。",
+            "question": "先生はレポートで何を一番重視しますか。",
+            "options": [
+                  "ページ数が多いこと",
+                  "漢字を一つも間違えないこと",
+                  "自分の意見を書くこと",
+                  "インターネットの文を使うこと"
+            ],
+            "answer": "自分の意見を書くこと",
+            "explanation": "先生は「自分の意見を必ず入れて」「自分の考えが書いてあるかどうかを重視」と言っている。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "男の人が新しいアパートについて話しています。男の人が困っていることは何ですか。",
+            "audio": "男の人：新しいアパートは駅に近くて便利です。部屋も前より広いです。ただ、道路のそばにあるので、夜でも車の音が少し気になります。家賃は少し高いですが、会社に近いので助かっています。",
+            "question": "男の人が困っていることは何ですか。",
+            "options": [
+                  "部屋が狭いこと",
+                  "駅から遠いこと",
+                  "車の音が気になること",
+                  "会社から遠いこと"
+            ],
+            "answer": "車の音が気になること",
+            "explanation": "男の人は道路のそばで、夜でも車の音が気になると言っている。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "女の人が旅行について話しています。女の人はなぜ旅行先を変えましたか。",
+            "audio": "女の人：最初は海へ行くつもりでした。でも、天気予報を見たら、週末は雨が強く降るそうです。それで、外を歩かなくても楽しめる美術館の多い町へ行くことにしました。",
+            "question": "女の人が旅行先を変えた理由は何ですか。",
+            "options": [
+                  "海が遠すぎるから",
+                  "ホテルが取れなかったから",
+                  "週末は雨が強そうだから",
+                  "美術館が休みだから"
+            ],
+            "answer": "週末は雨が強そうだから",
+            "explanation": "天気予報で週末に雨が強く降ると分かり、旅行先を変えた。"
+      },
+      {
+            "category": "問題2：ポイント理解",
+            "visible": "男の人と女の人がプレゼントについて話しています。二人は何を買うことにしましたか。",
+            "audio": "男の人：山本さんの誕生日プレゼント、何がいいかな。女の人：花はどう？男の人：前にもあげたよね。女の人：じゃあ、仕事で使えるものは？男の人：ペンはもう持っているし…。女の人：毎日コーヒーを飲んでいるから、マグカップは？男の人：いいね。それにしよう。",
+            "question": "二人は何を買うことにしましたか。",
+            "options": [
+                  "花",
+                  "ペン",
+                  "マグカップ",
+                  "コーヒー豆"
+            ],
+            "answer": "マグカップ",
+            "explanation": "最後に男の人がマグカップについて「それにしよう」と言っている。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "女の人が日本語の勉強について話しています。この話の内容に合っているものはどれですか。",
+            "audio": "私は日本語を勉強するとき、毎日長い時間勉強するより、短い時間でも続けることが大切だと思っています。以前は週末だけ三時間勉強していましたが、すぐ疲れてしまい、あまり覚えられませんでした。今は毎日20分だけ単語を復習しています。そのほうが忘れにくくなりました。",
+            "question": "女の人が一番言いたいことは何ですか。",
+            "options": [
+                  "週末だけ長く勉強するのが一番よい",
+                  "短い時間でも毎日続けることが大切だ",
+                  "単語の勉強は必要ない",
+                  "長い時間勉強しないと覚えられない"
+            ],
+            "answer": "短い時間でも毎日続けることが大切だ",
+            "explanation": "話の中心は、短時間でも毎日続けるほうが忘れにくいということ。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "男の人が昼休みの過ごし方について話しています。この話の内容に合っているものはどれですか。",
+            "audio": "会社の昼休みは一時間あります。以前は急いで昼ご飯を食べて、残った時間も仕事のメールを見ていました。でも、それでは午後に疲れてしまいます。最近は食事のあと、10分ぐらい外を歩くようにしています。短い時間でも気分が変わり、午後の仕事に集中しやすくなりました。",
+            "question": "男の人は最近、昼休みに何をしていますか。",
+            "options": [
+                  "ずっと仕事のメールを見ている",
+                  "食事のあと少し外を歩いている",
+                  "昼ご飯を食べないようにしている",
+                  "午後の仕事を先に終わらせている"
+            ],
+            "answer": "食事のあと少し外を歩いている",
+            "explanation": "最近は食事のあと10分ぐらい外を歩くと言っている。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "女の人が買い物について話しています。この話の内容に合っているものはどれですか。",
+            "audio": "私は安いからという理由だけで物を買わないようにしています。安くても使わなければ、結局無駄になるからです。最近は買う前に、本当に必要か、家に似たものがないかを考えます。そうすると、物が増えすぎないし、お金も大切に使えるようになりました。",
+            "question": "女の人は買い物で何を大切にしていますか。",
+            "options": [
+                  "安い物をできるだけたくさん買うこと",
+                  "必要かどうか考えてから買うこと",
+                  "新しい物をすぐ買うこと",
+                  "家にある物を全部捨てること"
+            ],
+            "answer": "必要かどうか考えてから買うこと",
+            "explanation": "買う前に本当に必要か、似たものがないかを考えると言っている。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "男の人がメールについて話しています。この話の内容に合っているものはどれですか。",
+            "audio": "仕事のメールは、早く返事をすることも大切ですが、急ぎすぎて間違えると、かえって相手に迷惑をかけることがあります。私は、返事を書く前に、相手が何を知りたいのかを確認するようにしています。少し時間がかかっても、分かりやすい返事をすることが大切だと思います。",
+            "question": "男の人が一番言いたいことは何ですか。",
+            "options": [
+                  "メールは短ければ短いほどよい",
+                  "返事は必ず一分以内にするべきだ",
+                  "相手が知りたいことを確認して分かりやすく返事するべきだ",
+                  "仕事のメールには返事をしなくてもよい"
+            ],
+            "answer": "相手が知りたいことを確認して分かりやすく返事するべきだ",
+            "explanation": "話の中心は、急ぐだけでなく、相手の知りたいことを確認し、分かりやすく返事すること。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "女の人が図書館について話しています。この話の内容に合っているものはどれですか。",
+            "audio": "最近の図書館は、本を借りるだけの場所ではなくなってきました。私の町の図書館には、勉強できる机や、子どもが絵本を読める部屋があります。月に一度、地域の人の話を聞くイベントもあります。本を読まない人でも、まず図書館に来てみると、いろいろな使い方が見つかると思います。",
+            "question": "女の人は図書館についてどう考えていますか。",
+            "options": [
+                  "本を借りる人だけが行く場所だ",
+                  "いろいろな使い方ができる場所だ",
+                  "子どもは利用しないほうがいい",
+                  "イベントは必要ない"
+            ],
+            "answer": "いろいろな使い方ができる場所だ",
+            "explanation": "図書館は本を借りるだけでなく、勉強やイベントなど多様な使い方ができると話している。"
+      },
+      {
+            "category": "問題3：概要理解",
+            "visible": "男の人が自転車通勤について話しています。この話の内容に合っているものはどれですか。",
+            "audio": "私は最近、自転車で会社に行っています。電車より少し時間がかかることもありますが、朝から体を動かすと気分がよくなります。ただし、雨の日や風が強い日は無理をしません。続けるためには、頑張りすぎないことも大切だと思います。",
+            "question": "男の人が自転車通勤について言いたいことは何ですか。",
+            "options": [
+                  "毎日必ず自転車で行くべきだ",
+                  "無理をせず続けることが大切だ",
+                  "電車より必ず早い",
+                  "雨の日こそ自転車がよい"
+            ],
+            "answer": "無理をせず続けることが大切だ",
+            "explanation": "最後に「続けるためには、頑張りすぎないことも大切」と言っている。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "あなたは友だちにノートを借りたいです。何と言いますか。",
+            "audio": "あなたは友だちにノートを借りたいです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "ノート、借りてもいい？",
+                  "ノート、借りてあげる？",
+                  "ノート、借りたほうがいいよ。",
+                  "ノート、借りられた？"
+            ],
+            "answer": "ノート、借りてもいい？",
+            "explanation": "友だちに許可を求める場面なので「借りてもいい？」が自然。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "先生にレポートの締め切りを確認したいです。何と言いますか。",
+            "audio": "先生にレポートの締め切りを確認したいです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "レポートはいつまでに出せばよろしいですか。",
+                  "レポート、いつ出すの？",
+                  "レポートを出してくれませんか。",
+                  "レポートはもう出しましたか。"
+            ],
+            "answer": "レポートはいつまでに出せばよろしいですか。",
+            "explanation": "先生に丁寧に締め切りを確認する表現として最も適切。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "店で、サイズの違う服を試着したいです。何と言いますか。",
+            "audio": "店で、サイズの違う服を試着したいです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "すみません、別のサイズを試着してもいいですか。",
+                  "別のサイズを着てください。",
+                  "このサイズは着ませんでした。",
+                  "サイズが違うと思いました。"
+            ],
+            "answer": "すみません、別のサイズを試着してもいいですか。",
+            "explanation": "店で許可を求める丁寧な表現として自然。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "同僚が重そうな荷物を持っています。手伝いたいです。何と言いますか。",
+            "audio": "同僚が重そうな荷物を持っています。手伝いたいです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "手伝いましょうか。",
+                  "手伝ってください。",
+                  "手伝わないでください。",
+                  "手伝ってもらいましたか。"
+            ],
+            "answer": "手伝いましょうか。",
+            "explanation": "相手に手伝いを申し出る表現は「手伝いましょうか」が自然。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "友だちの家に行く予定でしたが、少し遅れそうです。何と言いますか。",
+            "audio": "友だちの家に行く予定でしたが、少し遅れそうです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "ごめん、10分ぐらい遅れそう。",
+                  "ごめん、10分ぐらい早かった。",
+                  "10分ぐらい遅れたほうがいい。",
+                  "10分ぐらい待たせてくれる？"
+            ],
+            "answer": "ごめん、10分ぐらい遅れそう。",
+            "explanation": "友だちに遅れることを知らせる自然な表現。"
+      },
+      {
+            "category": "問題4：発話表現",
+            "visible": "レストランで注文した料理がまだ来ません。店員に丁寧に聞きたいです。",
+            "audio": "レストランで注文した料理がまだ来ません。店員に丁寧に聞きたいです。",
+            "question": "この場面で一番よい表現はどれですか。",
+            "options": [
+                  "すみません、注文した料理はまだでしょうか。",
+                  "料理が遅いよ。",
+                  "料理を忘れましたか。",
+                  "料理はもう食べましたか。"
+            ],
+            "answer": "すみません、注文した料理はまだでしょうか。",
+            "explanation": "店員に丁寧に状況を確認する表現として適切。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "すみません、この席、空いていますか。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "はい、どうぞ。",
+                  "いいえ、座ります。",
+                  "はい、空きました。",
+                  "いいえ、空いてください。"
+            ],
+            "answer": "はい、どうぞ。",
+            "explanation": "席が空いているか聞かれたとき、座ってよいなら「はい、どうぞ」が自然。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "明日の会議、何時からでしたっけ。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "10時からですよ。",
+                  "10時まで行きました。",
+                  "10時に終わりました。",
+                  "10時からでしたいです。"
+            ],
+            "answer": "10時からですよ。",
+            "explanation": "開始時間を聞かれているので「10時からですよ」が適切。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "このコピー機、使い方が分からないんですが。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "じゃあ、説明しましょうか。",
+                  "はい、分かりませんでした。",
+                  "使わないほうが使います。",
+                  "コピー機が分かりました。"
+            ],
+            "answer": "じゃあ、説明しましょうか。",
+            "explanation": "相手が使い方が分からないと言っているので、説明を申し出る返事が自然。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "よかったら、駅まで車で送りましょうか。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "ありがとうございます。お願いします。",
+                  "いいえ、送ってください。",
+                  "はい、送りません。",
+                  "ありがとうございます。送りましょう。"
+            ],
+            "answer": "ありがとうございます。お願いします。",
+            "explanation": "相手の申し出を受ける場合は「ありがとうございます。お願いします」が自然。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "すみません、窓を開けてもいいですか。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "ええ、いいですよ。",
+                  "はい、開けています。",
+                  "いいえ、開けました。",
+                  "ええ、開けてくださいません。"
+            ],
+            "answer": "ええ、いいですよ。",
+            "explanation": "許可を求められているので、許可するなら「ええ、いいですよ」が自然。"
+      },
+      {
+            "category": "問題5：即時応答",
+            "visible": "音声を聞いて、返事として一番よいものを選んでください。",
+            "audio": "この資料、今日中に確認していただけますか。",
+            "question": "一番よい返事はどれですか。",
+            "options": [
+                  "はい、確認しておきます。",
+                  "はい、確認してありますか。",
+                  "いいえ、確認してくれます。",
+                  "はい、確認されました。"
+            ],
+            "answer": "はい、確認しておきます。",
+            "explanation": "依頼を受けて、準備として確認する場合「確認しておきます」が自然。"
+      }
+];
+
+    let quiz = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let wrongAnswers = [];
+    let currentUtterance = null;
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz() {
+      quiz = originalQuiz.map(q => ({
+        ...q,
+        options: shuffleArray(q.options)
+      }));
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      wrongAnswers = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      stopAudio();
+      answered = false;
+      const q = quiz[currentQuestion];
+
+      document.getElementById("categoryTag").innerText = q.category;
+      document.getElementById("progress").innerHTML =
+        "Soal " + (currentQuestion + 1) + " dari " + quiz.length;
+
+      document.getElementById("visibleText").innerText = q.visible;
+      document.getElementById("scriptBox").innerText = q.audio;
+      document.getElementById("scriptBox").style.display = "none";
+      document.getElementById("question").innerText = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+
+      q.options.forEach(function(option, index) {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.innerText = String.fromCharCode(65 + index) + ". " + option;
+        btn.dataset.option = option;
+        btn.onclick = function() {
+          checkAnswer(btn, option);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function playAudio() {
+      stopAudio();
+      const q = quiz[currentQuestion];
+
+      if (!("speechSynthesis" in window)) {
+        alert("Browser ini tidak mendukung audio otomatis. Gunakan tombol 'Lihat Script' untuk membaca teks.");
+        return;
+      }
+
+      currentUtterance = new SpeechSynthesisUtterance(q.audio);
+      currentUtterance.lang = "ja-JP";
+      currentUtterance.rate = 0.82;
+      currentUtterance.pitch = 1;
+      window.speechSynthesis.speak(currentUtterance);
+    }
+
+    function stopAudio() {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function toggleScript() {
+      const box = document.getElementById("scriptBox");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function checkAnswer(button, selected) {
+      if (answered) return;
+
+      answered = true;
+      const q = quiz[currentQuestion];
+      const allButtons = document.querySelectorAll(".option");
+
+      allButtons.forEach(function(btn) {
+        btn.disabled = true;
+        if (btn.dataset.option === q.answer) {
+          btn.classList.add("correct");
+        }
+      });
+
+      if (selected === q.answer) {
+        score++;
+        button.classList.add("correct");
+        document.getElementById("feedback").innerHTML =
+          "正解！ Benar!<br>" + q.explanation;
+      } else {
+        button.classList.add("wrong");
+        wrongAnswers.push({
+          category: q.category,
+          question: q.question,
+          selected: selected,
+          answer: q.answer,
+          explanation: q.explanation
+        });
+
+        document.getElementById("feedback").innerHTML =
+          "不正解。Salah. Jawaban yang benar adalah: <strong>" + q.answer + "</strong><br>" + q.explanation;
+      }
+
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+    }
+
+    function nextQuestion() {
+      if (!answered) {
+        alert("Pilih jawaban dulu sebelum lanjut.");
+        return;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quiz.length) {
+        showQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      stopAudio();
+      const percentage = (score / quiz.length) * 100;
+      let message = "";
+
+      if (percentage >= 90) {
+        message = "すごい！ Kemampuan choukai N3 kamu sangat kuat.";
+      } else if (percentage >= 75) {
+        message = "いいですね！ Bagus. Kamu cukup kuat, tinggal melatih kecepatan menangkap detail.";
+      } else if (percentage >= 60) {
+        message = "もう少し！ Cukup baik. Latih lagi menangkap instruksi, alasan, dan maksud pembicara.";
+      } else {
+        message = "頑張って！ Perlu latihan lagi mendengar kata kunci, urutan tindakan, dan respons cepat.";
+      }
+
+      let reviewHtml = "";
+
+      if (wrongAnswers.length > 0) {
+        reviewHtml = `
+          <div class="review">
+            <h3>Review Jawaban Salah</h3>
+            ${wrongAnswers.map((item, index) => `
+              <div class="review-item">
+                <strong>${index + 1}. [${item.category}] ${item.question}</strong><br>
+                Jawaban kamu: ${item.selected}<br>
+                Jawaban benar: <strong>${item.answer}</strong><br>
+                ${item.explanation}
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else {
+        reviewHtml = `
+          <div class="review">
+            <h3>完璧！ Semua jawaban benar.</h3>
+            <p>Kamu berhasil menjawab semua soal choukai tanpa kesalahan.</p>
+          </div>
+        `;
+      }
+
+      document.getElementById("quizBox").innerHTML = `
+        <div class="result-box">
+          <div class="decor">🌸 🎧 ⛩️</div>
+          <h2>Hasil Akhir</h2>
+          <p>Skor kamu:</p>
+          <div class="result-score">${score} / ${quiz.length}</div>
+          <p>${message}</p>
+          <button id="restartBtn" onclick="location.reload()">Ulangi Kuis</button>
+          ${reviewHtml}
+        </div>
+      `;
+    }
+
+    startQuiz();
+  </script>
+</body>
+</html>
