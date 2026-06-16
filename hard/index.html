@@ -1018,6 +1018,149 @@
       background: var(--wrong);
     }
 
+    /* Tambahan kecil: animasi feedback + ikon ✓/× lebih center.
+       Desain utama tetap sama. */
+    .option.correct {
+      animation: optionCorrectPop 0.28s ease both;
+    }
+
+    .option.wrong {
+      animation: optionWrongShake 0.38s ease both;
+    }
+
+    .status-ring {
+      position: relative;
+      line-height: 1;
+      transform-origin: center;
+    }
+
+    .status-ring.correct-state {
+      animation: ringGoodPulse 1.15s ease 0.08s 1 both;
+    }
+
+    .status-ring.wrong-state {
+      animation: ringWrongPulse 1s ease 0.08s 1 both;
+    }
+
+    .status-symbol {
+      display: inline-grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      font-weight: 900;
+      transform-origin: center;
+    }
+
+    .symbol-check {
+      font-size: 43px;
+      transform: translateY(-1px);
+      animation:
+        symbolPop 0.42s cubic-bezier(.18, .89, .32, 1.28) both,
+        symbolPulse 1.1s ease 0.42s 1 both;
+    }
+
+    .symbol-x {
+      font-size: 44px;
+      transform: translateY(-2px);
+      animation:
+        symbolPop 0.36s cubic-bezier(.18, .89, .32, 1.28) both,
+        symbolShake 0.42s ease 0.36s 1 both;
+    }
+
+    .badge {
+      line-height: 1;
+    }
+
+    .badge.no {
+      font-size: 16px;
+    }
+
+    @keyframes symbolPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.45) translateY(2px);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.12) translateY(-1px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(-1px);
+      }
+    }
+
+    @keyframes symbolPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(111, 147, 111, 0));
+      }
+      50% {
+        filter: drop-shadow(0 8px 12px rgba(111, 147, 111, 0.22));
+      }
+    }
+
+    @keyframes symbolShake {
+      0%, 100% {
+        transform: translateY(-2px) translateX(0) rotate(0deg);
+      }
+      20% {
+        transform: translateY(-2px) translateX(-3px) rotate(-4deg);
+      }
+      40% {
+        transform: translateY(-2px) translateX(3px) rotate(4deg);
+      }
+      60% {
+        transform: translateY(-2px) translateX(-2px) rotate(-2deg);
+      }
+      80% {
+        transform: translateY(-2px) translateX(2px) rotate(2deg);
+      }
+    }
+
+    @keyframes ringGoodPulse {
+      0% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(111, 147, 111, 0.22);
+      }
+      55% {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 14px rgba(111, 147, 111, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(111, 147, 111, 0);
+      }
+    }
+
+    @keyframes ringWrongPulse {
+      0% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(199, 109, 94, 0.22);
+      }
+      55% {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 14px rgba(199, 109, 94, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(199, 109, 94, 0);
+      }
+    }
+
+    @keyframes optionCorrectPop {
+      0% { transform: scale(0.985); }
+      60% { transform: scale(1.018); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes optionWrongShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
     @media (max-width: 520px) {
       body {
         padding: 0;
@@ -1631,10 +1774,8 @@
       quizNextBtn.innerHTML = getNextButtonLabel();
       quizNextBtn.classList.add("show");
 
-      window.setTimeout(() => {
-        renderFeedback(isCorrect, q.answer, q.explanation);
-        setScreen("feedback");
-      }, 350);
+      renderFeedback(isCorrect, q.answer, q.explanation);
+      setScreen("feedback");
     }
 
     function renderFeedback(isCorrect, answer, explanation) {
@@ -1643,7 +1784,11 @@
       const text = document.getElementById("feedbackExplanation");
       const nextBtn = document.getElementById("nextBtn");
 
-      statusRing.textContent = isCorrect ? "✓" : "×";
+      statusRing.className = "status-ring";
+      statusRing.innerHTML = isCorrect
+        ? '<span class="status-symbol symbol-check">✓</span>'
+        : '<span class="status-symbol symbol-x">×</span>';
+      void statusRing.offsetWidth;
       statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
       title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
       title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
