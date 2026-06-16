@@ -1169,6 +1169,12 @@
       }
     }
 
+
+    /* Tambahan: kanji berada di bawah kalimat soal yomikata */
+    .question {
+      white-space: pre-line;
+    }
+
   </style>
 </head>
 
@@ -1319,7 +1325,7 @@
   <script>
     const quiz = [
       {
-            "question": "読み方はどれですか。「経験」",
+            "question": "読み方はどれですか。\n「経験」",
             "options": [
                   "けいけん",
                   "きょうけん",
@@ -1330,7 +1336,7 @@
             "explanation": "「経験」 dibaca けいけん, artinya pengalaman."
       },
       {
-            "question": "読み方はどれですか。「生活」",
+            "question": "読み方はどれですか。\n「生活」",
             "options": [
                   "せいかつ",
                   "しょうかつ",
@@ -1341,7 +1347,7 @@
             "explanation": "「生活」 dibaca せいかつ, artinya kehidupan sehari-hari."
       },
       {
-            "question": "読み方はどれですか。「文化」",
+            "question": "読み方はどれですか。\n「文化」",
             "options": [
                   "ぶんか",
                   "もんか",
@@ -1352,7 +1358,7 @@
             "explanation": "「文化」 dibaca ぶんか, artinya budaya."
       },
       {
-            "question": "読み方はどれですか。「研究」",
+            "question": "読み方はどれですか。\n「研究」",
             "options": [
                   "けんきゅう",
                   "げんきゅう",
@@ -1363,7 +1369,7 @@
             "explanation": "「研究」 dibaca けんきゅう, artinya penelitian."
       },
       {
-            "question": "読み方はどれですか。「将来」",
+            "question": "読み方はどれですか。\n「将来」",
             "options": [
                   "しょうらい",
                   "じょうらい",
@@ -1374,7 +1380,7 @@
             "explanation": "「将来」 dibaca しょうらい, artinya masa depan."
       },
       {
-            "question": "読み方はどれですか。「努力」",
+            "question": "読み方はどれですか。\n「努力」",
             "options": [
                   "どりょく",
                   "どうりょく",
@@ -1385,7 +1391,7 @@
             "explanation": "「努力」 dibaca どりょく, artinya usaha keras."
       },
       {
-            "question": "読み方はどれですか。「経済」",
+            "question": "読み方はどれですか。\n「経済」",
             "options": [
                   "けいざい",
                   "けいさい",
@@ -1396,7 +1402,7 @@
             "explanation": "「経済」 dibaca けいざい, artinya ekonomi."
       },
       {
-            "question": "読み方はどれですか。「政治」",
+            "question": "読み方はどれですか。\n「政治」",
             "options": [
                   "せいじ",
                   "せいち",
@@ -1407,7 +1413,7 @@
             "explanation": "「政治」 dibaca せいじ, artinya politik/pemerintahan."
       },
       {
-            "question": "読み方はどれですか。「国際」",
+            "question": "読み方はどれですか。\n「国際」",
             "options": [
                   "こくさい",
                   "こくざい",
@@ -1418,7 +1424,7 @@
             "explanation": "「国際」 dibaca こくさい, artinya internasional."
       },
       {
-            "question": "読み方はどれですか。「安全」",
+            "question": "読み方はどれですか。\n「安全」",
             "options": [
                   "あんぜん",
                   "あんせん",
@@ -1429,7 +1435,7 @@
             "explanation": "「安全」 dibaca あんぜん, artinya aman/keselamatan."
       },
       {
-            "question": "読み方はどれですか。「危険」",
+            "question": "読み方はどれですか。\n「危険」",
             "options": [
                   "きけん",
                   "きげん",
@@ -1440,7 +1446,7 @@
             "explanation": "「危険」 dibaca きけん, artinya bahaya."
       },
       {
-            "question": "読み方はどれですか。「関係」",
+            "question": "読み方はどれですか。\n「関係」",
             "options": [
                   "かんけい",
                   "かんげい",
@@ -1451,7 +1457,7 @@
             "explanation": "「関係」 dibaca かんけい, artinya hubungan."
       },
       {
-            "question": "読み方はどれですか。「原因」",
+            "question": "読み方はどれですか。\n「原因」",
             "options": [
                   "げんいん",
                   "けんいん",
@@ -1462,7 +1468,7 @@
             "explanation": "「原因」 dibaca げんいん, artinya penyebab."
       },
       {
-            "question": "読み方はどれですか。「結果」",
+            "question": "読み方はどれですか。\n「結果」",
             "options": [
                   "けっか",
                   "げっか",
@@ -1473,7 +1479,7 @@
             "explanation": "「結果」 dibaca けっか, artinya hasil."
       },
       {
-            "question": "読み方はどれですか。「目的」",
+            "question": "読み方はどれですか。\n「目的」",
             "options": [
                   "もくてき",
                   "もくでき",
@@ -1484,7 +1490,7 @@
             "explanation": "「目的」 dibaca もくてき, artinya tujuan."
       },
       {
-            "question": "読み方はどれですか。「方法」",
+            "question": "読み方はどれですか。\n「方法」",
             "options": [
                   "ほうほう",
                   "ほほう",
@@ -1495,7 +1501,7 @@
             "explanation": "「方法」 dibaca ほうほう, artinya cara/metode."
       },
       {
-            "question": "読み方はどれですか。「必要」",
+            "question": "読み方はどれですか。\n「必要」",
             "options": [
                   "ひつよう",
                   "ひっよう",
@@ -1506,7 +1512,7 @@
             "explanation": "「必要」 dibaca ひつよう, artinya perlu."
       },
       {
-            "question": "読み方はどれですか。「重要」",
+            "question": "読み方はどれですか。\n「重要」",
             "options": [
                   "じゅうよう",
                   "ちゅうよう",
@@ -1517,7 +1523,7 @@
             "explanation": "「重要」 dibaca じゅうよう, artinya penting."
       },
       {
-            "question": "読み方はどれですか。「普通」",
+            "question": "読み方はどれですか。\n「普通」",
             "options": [
                   "ふつう",
                   "ふとう",
@@ -1528,7 +1534,7 @@
             "explanation": "「普通」 dibaca ふつう, artinya biasa/umum."
       },
       {
-            "question": "読み方はどれですか。「特別」",
+            "question": "読み方はどれですか。\n「特別」",
             "options": [
                   "とくべつ",
                   "どくべつ",
@@ -1539,7 +1545,7 @@
             "explanation": "「特別」 dibaca とくべつ, artinya khusus/istimewa."
       },
       {
-            "question": "読み方はどれですか。「説明」",
+            "question": "読み方はどれですか。\n「説明」",
             "options": [
                   "せつめい",
                   "せつみょう",
@@ -1550,7 +1556,7 @@
             "explanation": "「説明」 dibaca せつめい, artinya penjelasan."
       },
       {
-            "question": "読み方はどれですか。「連絡」",
+            "question": "読み方はどれですか。\n「連絡」",
             "options": [
                   "れんらく",
                   "れんがく",
@@ -1561,7 +1567,7 @@
             "explanation": "「連絡」 dibaca れんらく, artinya menghubungi/kontak."
       },
       {
-            "question": "読み方はどれですか。「予約」",
+            "question": "読み方はどれですか。\n「予約」",
             "options": [
                   "よやく",
                   "ようやく",
@@ -1572,7 +1578,7 @@
             "explanation": "「予約」 dibaca よやく, artinya reservasi/pemesanan."
       },
       {
-            "question": "読み方はどれですか。「準備」",
+            "question": "読み方はどれですか。\n「準備」",
             "options": [
                   "じゅんび",
                   "じゅび",
@@ -1583,7 +1589,7 @@
             "explanation": "「準備」 dibaca じゅんび, artinya persiapan."
       },
       {
-            "question": "読み方はどれですか。「参加」",
+            "question": "読み方はどれですか。\n「参加」",
             "options": [
                   "さんか",
                   "さんが",
@@ -1594,7 +1600,7 @@
             "explanation": "「参加」 dibaca さんか, artinya ikut serta/partisipasi."
       },
       {
-            "question": "読み方はどれですか。「予定」",
+            "question": "読み方はどれですか。\n「予定」",
             "options": [
                   "よてい",
                   "ようてい",
@@ -1605,7 +1611,7 @@
             "explanation": "「予定」 dibaca よてい, artinya rencana/jadwal."
       },
       {
-            "question": "読み方はどれですか。「変更」",
+            "question": "読み方はどれですか。\n「変更」",
             "options": [
                   "へんこう",
                   "へんごう",
@@ -1616,7 +1622,7 @@
             "explanation": "「変更」 dibaca へんこう, artinya perubahan."
       },
       {
-            "question": "読み方はどれですか。「決定」",
+            "question": "読み方はどれですか。\n「決定」",
             "options": [
                   "けってい",
                   "けつてい",
@@ -1627,7 +1633,7 @@
             "explanation": "「決定」 dibaca けってい, artinya keputusan/penetapan."
       },
       {
-            "question": "読み方はどれですか。「確認」",
+            "question": "読み方はどれですか。\n「確認」",
             "options": [
                   "かくにん",
                   "かくねん",
@@ -1638,7 +1644,7 @@
             "explanation": "「確認」 dibaca かくにん, artinya konfirmasi/memeriksa."
       },
       {
-            "question": "読み方はどれですか。「相談」",
+            "question": "読み方はどれですか。\n「相談」",
             "options": [
                   "そうだん",
                   "しょうだん",
@@ -1649,7 +1655,7 @@
             "explanation": "「相談」 dibaca そうだん, artinya konsultasi/berdiskusi."
       },
       {
-            "question": "読み方はどれですか。「失敗」",
+            "question": "読み方はどれですか。\n「失敗」",
             "options": [
                   "しっぱい",
                   "しつはい",
@@ -1660,7 +1666,7 @@
             "explanation": "「失敗」 dibaca しっぱい, artinya gagal/kegagalan."
       },
       {
-            "question": "読み方はどれですか。「成功」",
+            "question": "読み方はどれですか。\n「成功」",
             "options": [
                   "せいこう",
                   "せいごう",
@@ -1671,7 +1677,7 @@
             "explanation": "「成功」 dibaca せいこう, artinya berhasil/kesuksesan."
       },
       {
-            "question": "読み方はどれですか。「増える」",
+            "question": "読み方はどれですか。\n「増える」",
             "options": [
                   "ふえる",
                   "へる",
@@ -1682,7 +1688,7 @@
             "explanation": "「増える」 dibaca ふえる, artinya bertambah."
       },
       {
-            "question": "読み方はどれですか。「減る」",
+            "question": "読み方はどれですか。\n「減る」",
             "options": [
                   "へる",
                   "ふる",
@@ -1693,7 +1699,7 @@
             "explanation": "「減る」 dibaca へる, artinya berkurang."
       },
       {
-            "question": "読み方はどれですか。「選ぶ」",
+            "question": "読み方はどれですか。\n「選ぶ」",
             "options": [
                   "えらぶ",
                   "えぶ",
@@ -1704,7 +1710,7 @@
             "explanation": "「選ぶ」 dibaca えらぶ, artinya memilih."
       },
       {
-            "question": "読み方はどれですか。「比べる」",
+            "question": "読み方はどれですか。\n「比べる」",
             "options": [
                   "くらべる",
                   "ならべる",
@@ -1715,7 +1721,7 @@
             "explanation": "「比べる」 dibaca くらべる, artinya membandingkan."
       },
       {
-            "question": "読み方はどれですか。「伝える」",
+            "question": "読み方はどれですか。\n「伝える」",
             "options": [
                   "つたえる",
                   "でんえる",
@@ -1726,7 +1732,7 @@
             "explanation": "「伝える」 dibaca つたえる, artinya menyampaikan."
       },
       {
-            "question": "読み方はどれですか。「運ぶ」",
+            "question": "読み方はどれですか。\n「運ぶ」",
             "options": [
                   "はこぶ",
                   "うんぶ",
@@ -1737,7 +1743,7 @@
             "explanation": "「運ぶ」 dibaca はこぶ, artinya membawa/mengangkut."
       },
       {
-            "question": "読み方はどれですか。「続ける」",
+            "question": "読み方はどれですか。\n「続ける」",
             "options": [
                   "つづける",
                   "つずける",
@@ -1748,7 +1754,7 @@
             "explanation": "「続ける」 dibaca つづける, artinya melanjutkan."
       },
       {
-            "question": "読み方はどれですか。「戻る」",
+            "question": "読み方はどれですか。\n「戻る」",
             "options": [
                   "もどる",
                   "もとる",
@@ -1979,7 +1985,7 @@
             "explanation": "「近所」 berarti lingkungan sekitar atau tetangga."
       },
       {
-            "question": "読み方はどれですか。「住所」",
+            "question": "読み方はどれですか。\n「住所」",
             "options": [
                   "じゅうしょ",
                   "じゅしょ",
@@ -1990,7 +1996,7 @@
             "explanation": "「住所」 dibaca じゅうしょ, artinya alamat."
       },
       {
-            "question": "読み方はどれですか。「引っ越し」",
+            "question": "読み方はどれですか。\n「引っ越し」",
             "options": [
                   "ひっこし",
                   "ひきこし",
@@ -2001,7 +2007,7 @@
             "explanation": "「引っ越し」 dibaca ひっこし, artinya pindah rumah."
       },
       {
-            "question": "読み方はどれですか。「出席」",
+            "question": "読み方はどれですか。\n「出席」",
             "options": [
                   "しゅっせき",
                   "しゅせき",
@@ -2012,7 +2018,7 @@
             "explanation": "「出席」 dibaca しゅっせき, artinya hadir."
       },
       {
-            "question": "読み方はどれですか。「欠席」",
+            "question": "読み方はどれですか。\n「欠席」",
             "options": [
                   "けっせき",
                   "けつせき",
@@ -2023,7 +2029,7 @@
             "explanation": "「欠席」 dibaca けっせき, artinya absen/tidak hadir."
       },
       {
-            "question": "読み方はどれですか。「卒業」",
+            "question": "読み方はどれですか。\n「卒業」",
             "options": [
                   "そつぎょう",
                   "そっぎょう",
@@ -2034,7 +2040,7 @@
             "explanation": "「卒業」 dibaca そつぎょう, artinya lulus."
       },
       {
-            "question": "読み方はどれですか。「入学」",
+            "question": "読み方はどれですか。\n「入学」",
             "options": [
                   "にゅうがく",
                   "にゅがく",
@@ -2045,7 +2051,7 @@
             "explanation": "「入学」 dibaca にゅうがく, artinya masuk sekolah/kampus."
       },
       {
-            "question": "読み方はどれですか。「就職」",
+            "question": "読み方はどれですか。\n「就職」",
             "options": [
                   "しゅうしょく",
                   "しゅしょく",
@@ -2056,7 +2062,7 @@
             "explanation": "「就職」 dibaca しゅうしょく, artinya mendapatkan pekerjaan."
       },
       {
-            "question": "読み方はどれですか。「転職」",
+            "question": "読み方はどれですか。\n「転職」",
             "options": [
                   "てんしょく",
                   "てんそく",
@@ -2067,7 +2073,7 @@
             "explanation": "「転職」 dibaca てんしょく, artinya pindah pekerjaan."
       },
       {
-            "question": "読み方はどれですか。「残業」",
+            "question": "読み方はどれですか。\n「残業」",
             "options": [
                   "ざんぎょう",
                   "さんぎょう",
@@ -2078,7 +2084,7 @@
             "explanation": "「残業」 dibaca ざんぎょう, artinya lembur."
       },
       {
-            "question": "読み方はどれですか。「給料」",
+            "question": "読み方はどれですか。\n「給料」",
             "options": [
                   "きゅうりょう",
                   "きゅりょう",
@@ -2089,7 +2095,7 @@
             "explanation": "「給料」 dibaca きゅうりょう, artinya gaji."
       },
       {
-            "question": "読み方はどれですか。「受付」",
+            "question": "読み方はどれですか。\n「受付」",
             "options": [
                   "うけつけ",
                   "うけづけ",
@@ -2100,7 +2106,7 @@
             "explanation": "「受付」 dibaca うけつけ, artinya resepsionis/loket penerimaan."
       },
       {
-            "question": "読み方はどれですか。「案内」",
+            "question": "読み方はどれですか。\n「案内」",
             "options": [
                   "あんない",
                   "あんだい",
@@ -2111,7 +2117,7 @@
             "explanation": "「案内」 dibaca あんない, artinya informasi/panduan."
       },
       {
-            "question": "読み方はどれですか。「連れる」",
+            "question": "読み方はどれですか。\n「連れる」",
             "options": [
                   "つれる",
                   "れんれる",
@@ -2122,7 +2128,7 @@
             "explanation": "「連れる」 dibaca つれる, artinya membawa/mengajak orang."
       },
       {
-            "question": "読み方はどれですか。「贈り物」",
+            "question": "読み方はどれですか。\n「贈り物」",
             "options": [
                   "おくりもの",
                   "おりもの",
@@ -2133,7 +2139,7 @@
             "explanation": "「贈り物」 dibaca おくりもの, artinya hadiah."
       },
       {
-            "question": "読み方はどれですか。「お土産」",
+            "question": "読み方はどれですか。\n「お土産」",
             "options": [
                   "おみやげ",
                   "おどさん",
@@ -2144,7 +2150,7 @@
             "explanation": "「お土産」 dibaca おみやげ, artinya oleh-oleh."
       },
       {
-            "question": "読み方はどれですか。「興味」",
+            "question": "読み方はどれですか。\n「興味」",
             "options": [
                   "きょうみ",
                   "こうみ",
@@ -2155,7 +2161,7 @@
             "explanation": "「興味」 dibaca きょうみ, artinya minat/ketertarikan."
       },
       {
-            "question": "読み方はどれですか。「趣味」",
+            "question": "読み方はどれですか。\n「趣味」",
             "options": [
                   "しゅみ",
                   "しゅあじ",
@@ -2166,7 +2172,7 @@
             "explanation": "「趣味」 dibaca しゅみ, artinya hobi."
       },
       {
-            "question": "読み方はどれですか。「習慣」",
+            "question": "読み方はどれですか。\n「習慣」",
             "options": [
                   "しゅうかん",
                   "しゅかん",
@@ -2177,7 +2183,7 @@
             "explanation": "「習慣」 dibaca しゅうかん, artinya kebiasaan."
       },
       {
-            "question": "読み方はどれですか。「健康」",
+            "question": "読み方はどれですか。\n「健康」",
             "options": [
                   "けんこう",
                   "げんこう",
@@ -2188,7 +2194,7 @@
             "explanation": "「健康」 dibaca けんこう, artinya kesehatan/sehat."
       },
       {
-            "question": "読み方はどれですか。「病気」",
+            "question": "読み方はどれですか。\n「病気」",
             "options": [
                   "びょうき",
                   "びょき",
