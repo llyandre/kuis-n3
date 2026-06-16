@@ -712,27 +712,41 @@
       color: white;
     }
 
-    .score-pill {
-      margin: -6px 0 16px auto;
+    .meta-right {
       display: inline-flex;
-      align-self: flex-end;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .level-label {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      width: fit-content;
-      padding: 8px 12px;
+      gap: 6px;
+      padding: 7px 11px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(234, 223, 210, 0.9);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(49, 36, 23, 0.045);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.055);
     }
 
     .quiz-next-btn {
       display: none;
-      margin: 18px 0 0;
+      margin-top: 18px;
+      min-height: 52px;
       flex: 0 0 auto;
     }
 
@@ -1075,13 +1089,14 @@
 
       <div class="meta-row">
         <span id="progressText">Soal 1 dari 15</span>
-        <span>JLPT N3</span>
+        <div class="meta-right">
+          <span class="level-label">JLPT N3</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 15</span>
+        </div>
       </div>
       <div class="progress-track" aria-hidden="true">
         <div class="progress-fill" id="progressFill"></div>
       </div>
-
-      <div class="score-pill" id="scorePill">Skor sementara: 0 / 15</div>
 
       <article class="question-card">
         <p class="question" id="questionText"></p>
@@ -1288,7 +1303,7 @@
       document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
       document.getElementById("progressFill").style.width = `${progressPercent}%`;
       document.getElementById("questionText").textContent = q.question;
-      document.getElementById("scorePill").textContent = `Skor sementara: ${score} / ${quiz.length}`;
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
 
       const quizNextBtn = document.getElementById("quizNextBtn");
       quizNextBtn.style.display = "none";
