@@ -13,13 +13,119 @@
 .home-art{height:330px!important;margin:-28px -24px 18px!important;overflow:hidden!important;background:radial-gradient(circle at 50% 49%,rgba(200,75,49,.10),transparent 34%),linear-gradient(180deg,#fffdf8 0%,#fffaf2 76%,rgba(255,253,248,0) 100%)!important}
 .home-art::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 86%,rgba(47,72,88,.08),transparent 44%),radial-gradient(ellipse at 18% 74%,rgba(47,72,88,.08),transparent 30%),radial-gradient(ellipse at 84% 77%,rgba(47,72,88,.07),transparent 32%);filter:blur(3px);opacity:.86;pointer-events:none}.vertical-copy{position:absolute;left:28px!important;top:54px!important;z-index:5;writing-mode:vertical-rl;color:rgba(168,58,38,.82);font-family:"Noto Serif JP",serif;font-size:13px;line-height:1.75;letter-spacing:.18em}.birds{position:absolute;top:76px;right:82px;width:72px;height:34px;z-index:4;opacity:.72}.birds span{position:absolute;width:18px;height:9px;border-top:2px solid rgba(47,72,88,.82);border-radius:50% 50% 0 0;transform:rotate(14deg)}.birds span::after{content:"";position:absolute;left:10px;top:-2px;width:18px;height:9px;border-top:2px solid rgba(47,72,88,.82);border-radius:50% 50% 0 0;transform:rotate(-28deg);transform-origin:left center}.birds span:nth-child(1){left:6px;top:4px;transform:scale(.78) rotate(12deg)}.birds span:nth-child(2){left:36px;top:0;transform:scale(.64) rotate(10deg)}.birds span:nth-child(3){left:24px;top:22px;transform:scale(.55) rotate(8deg)}.mountains{position:absolute;left:-30px;right:-30px;bottom:26px;height:104px;z-index:1;opacity:.54;filter:blur(.4px)}.mountain{position:absolute;bottom:0;display:block;width:210px;height:96px;background:linear-gradient(180deg,rgba(47,72,88,.18),rgba(47,72,88,.02));clip-path:polygon(0 100%,40% 36%,60% 52%,100% 100%)}.mountain.m1{left:0}.mountain.m2{left:115px;height:118px;width:250px;opacity:.92}.mountain.m3{right:0;height:92px;width:210px;opacity:.82}.sun-circle{width:150px!important;height:150px!important;top:112px!important;z-index:2;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.24),transparent 20%),linear-gradient(145deg,#e36b50,#c84b31)!important;box-shadow:0 20px 44px rgba(200,75,49,.18)!important}.torii{top:190px!important;z-index:4;transform:translateX(-50%) scale(1.08)!important}.sakura-branch{right:26px!important;top:168px!important;z-index:5;opacity:.85}.mist{left:-12px!important;right:-12px!important;bottom:-4px!important;height:92px!important;z-index:3;background:radial-gradient(50% 88% at 50% 100%,transparent 61%,rgba(47,72,88,.12) 63% 66%,transparent 68%) 0 30px/72px 42px repeat-x,radial-gradient(50% 88% at 50% 100%,transparent 61%,rgba(200,75,49,.10) 63% 66%,transparent 68%) 36px 45px/72px 42px repeat-x,linear-gradient(180deg,rgba(255,253,248,0),rgba(255,253,248,.97) 78%)!important}.score-pill{margin:0!important;align-self:auto!important}@media(max-width:480px){.home-art{height:320px!important;margin:-24px -18px 18px!important}.vertical-copy{left:24px!important;top:48px!important;font-size:12px!important}.sun-circle{top:106px!important;width:144px!important;height:144px!important}.torii{top:182px!important;transform:translateX(-50%) scale(1.02)!important}.birds{right:70px;top:68px}.sakura-branch{right:18px!important;top:160px!important;width:116px}.mountains{bottom:25px}}
 
+
+/* Animasi feedback + posisi ikon ✓/× tanpa mengubah desain utama */
+.feedback-card {
+  animation: feedbackSoftIn .26s ease both;
+}
+
+.status-ring {
+  position: relative;
+  line-height: 1 !important;
+  overflow: visible;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.status-ring .status-symbol {
+  display: block;
+  line-height: 1;
+  font-family: "Plus Jakarta Sans", "Noto Serif JP", system-ui, sans-serif;
+  font-weight: 900;
+  text-align: center;
+  transform: translateY(-1px);
+}
+
+.status-ring .status-check {
+  font-size: .98em;
+}
+
+.status-ring .status-x {
+  font-size: .98em;
+  transform: translateY(-4px);
+}
+
+.status-ring.correct-state {
+  animation: statusPop .34s cubic-bezier(.18,.9,.28,1.2) both,
+             statusPulseGreen 1.25s ease-in-out .34s infinite alternate;
+}
+
+.status-ring.wrong-state {
+  animation: statusPop .34s cubic-bezier(.18,.9,.28,1.2) both,
+             statusShake .42s ease .22s both;
+}
+
+.option.correct {
+  animation: optionCorrectPop .24s ease both;
+}
+
+.option.wrong {
+  animation: optionWrongShake .34s ease both;
+}
+
+.badge {
+  line-height: 1;
+}
+
+.badge.no,
+.review-item .badge {
+  display: grid;
+  place-items: center;
+}
+
+@keyframes feedbackSoftIn {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes statusPop {
+  0% { transform: scale(.72); opacity: 0; }
+  65% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes statusPulseGreen {
+  from { box-shadow: 0 0 0 rgba(111,147,111,0); }
+  to { box-shadow: 0 0 0 8px rgba(111,147,111,.08); }
+}
+
+@keyframes statusShake {
+  0%, 100% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-5px) scale(1.02); }
+  40% { transform: translateX(5px) scale(1.02); }
+  60% { transform: translateX(-3px) scale(1.01); }
+  80% { transform: translateX(3px) scale(1.01); }
+}
+
+@keyframes optionCorrectPop {
+  0% { transform: scale(.985); }
+  100% { transform: scale(1); }
+}
+
+@keyframes optionWrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback-card,
+  .status-ring.correct-state,
+  .status-ring.wrong-state,
+  .option.correct,
+  .option.wrong {
+    animation: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
   <main class="phone-frame" aria-label="Aplikasi Kuis Dokkai Jepang">
     <section class="screen active" id="startScreen"><div class="home-art" aria-hidden="true"><div class="vertical-copy">文章を読んで<br>答えを見つけましょう。</div><div class="birds"><span></span><span></span><span></span></div><div class="mountains"><span class="mountain m1"></span><span class="mountain m2"></span><span class="mountain m3"></span></div><div class="sun-circle"></div><div class="torii"><span class="beam-top"></span><span class="beam-main"></span><span class="beam-mid"></span><span class="pillar left"></span><span class="pillar right"></span><span class="base left"></span><span class="base right"></span></div><div class="mist"></div><div class="sakura-branch"><span></span><span></span><span></span><span></span></div></div><div class="home-info-panel" aria-label="Informasi kuis"><div class="home-info-item"><span>N3</span><strong>JLPT N3</strong><small>Level latihan</small></div><div class="home-info-item"><span>20</span><strong>20 Soal</strong><small>Dokkai</small></div><div class="home-info-item"><span>読</span><strong>Membaca</strong><small>Bacaan & poster</small></div></div><div class="brand"><div class="brand-mark">JLPT N3 Dokkai</div><h1>NihongoGO</h1><p>Latihan membaca N3 dengan bacaan pendek, panjang, dan informasi poster.</p><div class="home-chips"><span>読解 Dokkai</span><span>Bacaan</span><span>Poster</span></div><button class="primary-btn" type="button" onclick="startQuiz()">Mulai Kuis&nbsp; →</button><div class="home-footer">日本語を学ぼう</div></div></section>
     <section class="screen" id="quizScreen"><div class="topbar"><button class="icon-btn" type="button" onclick="goHome()">←</button><h2 class="screen-title">Kuis Dokkai</h2><div class="logo-mark"><svg viewBox="0 0 64 64"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div></div><div class="meta-row"><span id="progressText">Soal 1 dari 20</span><div class="meta-right"><span id="categoryText">Bacaan</span><span class="score-pill" id="scorePill">Skor: 0 / 20</span></div></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><article class="passage-card" id="passageText"></article><article class="question-card"><p class="question" id="questionText"></p></article><div class="options" id="optionsBox"></div><button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya →</button></section>
-    <section class="screen" id="feedbackScreen"><div class="topbar"><button class="icon-btn" type="button" onclick="showQuizAgain()">←</button><h2 class="screen-title">Kuis Dokkai</h2><div class="logo-mark"><svg viewBox="0 0 64 64"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div></div><div class="feedback-card"><div class="status-ring" id="statusRing">✓</div><h2 class="feedback-title" id="feedbackTitle">Benar!</h2><p class="feedback-explanation" id="feedbackExplanation"></p><button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya →</button></div></section>
+    <section class="screen" id="feedbackScreen"><div class="topbar"><button class="icon-btn" type="button" onclick="showQuizAgain()">←</button><h2 class="screen-title">Kuis Dokkai</h2><div class="logo-mark"><svg viewBox="0 0 64 64"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div></div><div class="feedback-card"><div class="status-ring" id="statusRing"><span class="status-symbol status-check">✓</span></div><h2 class="feedback-title" id="feedbackTitle">Benar!</h2><p class="feedback-explanation" id="feedbackExplanation"></p><button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya →</button></div></section>
     <section class="screen" id="resultScreen"><div class="topbar"><span></span><h2 class="screen-title">Hasil Kuis</h2><div class="logo-mark"><svg viewBox="0 0 64 64"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div></div><div class="result-art"><div class="fuji"><div class="sun-small"></div><div class="ground"></div><div class="mountain"></div></div></div><h2 class="result-heading">Skor Kamu</h2><div class="result-score" id="finalScore">0 / 20</div><p class="result-message" id="resultMessage"></p><div class="stats-card"><div class="stat">Benar<strong id="correctCount">0</strong></div><div class="stat">Salah<strong id="wrongCount">0</strong></div></div><div class="button-row"><button class="ghost-btn" type="button" onclick="showReview()">Lihat Review</button><button class="primary-btn" type="button" onclick="restartQuiz()">Ulangi</button></div></section>
     <section class="screen review-screen" id="reviewScreen"><div class="topbar"><button class="icon-btn" type="button" onclick="setScreen('result')">←</button><h2 class="screen-title">Review Jawaban</h2><div class="logo-mark"><svg viewBox="0 0 64 64"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div></div><div class="review-list" id="reviewList"></div></section>
   </main>
@@ -292,7 +398,7 @@ function setScreen(name){document.querySelectorAll('.screen').forEach(s=>s.class
 function startQuiz(){quiz=originalQuiz.map(q=>({...q,options:shuffleArray(q.options)}));currentQuestion=0;score=0;selectedAnswers=[];renderQuestion();setScreen('quiz')}
 function goHome(){if(confirm('Kembali ke awal? Progres kuis akan hilang.'))restartQuiz()}
 function renderQuestion(){const q=quiz[currentQuestion],progress=((currentQuestion+1)/quiz.length)*100;document.getElementById('progressText').textContent=`Soal ${currentQuestion+1} dari ${quiz.length}`;document.getElementById('categoryText').textContent=q.category;document.getElementById('progressFill').style.width=`${progress}%`;document.getElementById('scorePill').textContent=`Skor: ${score} / ${quiz.length}`;const quizNextBtn=document.getElementById('quizNextBtn');quizNextBtn.style.display='none';quizNextBtn.textContent=currentQuestion===quiz.length-1?'Lihat Hasil →':'Soal Berikutnya →';document.getElementById('passageText').textContent=q.passage;document.getElementById('questionText').textContent=q.question;const box=document.getElementById('optionsBox');box.innerHTML='';q.options.forEach((option,index)=>{const button=document.createElement('button');button.className='option';button.type='button';button.dataset.option=option;button.innerHTML=`<span class="choice-letter">${String.fromCharCode(65+index)}</span><span>${option}</span>`;button.onclick=()=>checkAnswer(option,button);box.appendChild(button)})}
-function checkAnswer(selected,button){const q=quiz[currentQuestion],ok=selected===q.answer;document.querySelectorAll('.option').forEach(btn=>{btn.disabled=true;if(btn.dataset.option===q.answer)btn.classList.add('correct')});if(!ok)button.classList.add('wrong');if(ok)score++;document.getElementById('scorePill').textContent=`Skor: ${score} / ${quiz.length}`;const quizNextBtn=document.getElementById('quizNextBtn');quizNextBtn.style.display='block';quizNextBtn.textContent=currentQuestion===quiz.length-1?'Lihat Hasil →':'Soal Berikutnya →';selectedAnswers[currentQuestion]={...q,selected,isCorrect:ok};document.getElementById('statusRing').className='status-ring '+(ok?'correct-state':'wrong-state');document.getElementById('statusRing').textContent=ok?'✓':'×';const title=document.getElementById('feedbackTitle');title.textContent=ok?'Benar!':'Belum Tepat';title.className='feedback-title '+(ok?'correct-text':'');document.getElementById('feedbackExplanation').innerHTML=ok?q.explanation:`Jawaban benar: <strong>${q.answer}</strong><br>${q.explanation}`;document.getElementById('nextBtn').textContent=currentQuestion===quiz.length-1?'Lihat Hasil →':'Soal Berikutnya →';setTimeout(()=>setScreen('feedback'),220)}
+function checkAnswer(selected,button){const q=quiz[currentQuestion],ok=selected===q.answer;document.querySelectorAll('.option').forEach(btn=>{btn.disabled=true;if(btn.dataset.option===q.answer)btn.classList.add('correct')});if(!ok)button.classList.add('wrong');if(ok)score++;document.getElementById('scorePill').textContent=`Skor: ${score} / ${quiz.length}`;const quizNextBtn=document.getElementById('quizNextBtn');quizNextBtn.style.display='block';quizNextBtn.textContent=currentQuestion===quiz.length-1?'Lihat Hasil →':'Soal Berikutnya →';selectedAnswers[currentQuestion]={...q,selected,isCorrect:ok};const statusRing=document.getElementById('statusRing');statusRing.className='status-ring';statusRing.innerHTML='';void statusRing.offsetWidth;statusRing.className='status-ring '+(ok?'correct-state':'wrong-state');statusRing.innerHTML=ok?'<span class="status-symbol status-check">✓</span>':'<span class="status-symbol status-x">×</span>';const title=document.getElementById('feedbackTitle');title.textContent=ok?'Benar!':'Belum Tepat';title.className='feedback-title '+(ok?'correct-text':'');document.getElementById('feedbackExplanation').innerHTML=ok?q.explanation:`Jawaban benar: <strong>${q.answer}</strong><br>${q.explanation}`;document.getElementById('nextBtn').textContent=currentQuestion===quiz.length-1?'Lihat Hasil →':'Soal Berikutnya →';setScreen('feedback')}
 function showQuizAgain(){setScreen('quiz')}
 function nextQuestion(){currentQuestion++;if(currentQuestion<quiz.length){renderQuestion();setScreen('quiz')}else showResult()}
 function showResult(){const wrong=quiz.length-score,pct=score/quiz.length*100;let msg=pct>=90?'すごい！ Kemampuan membaca kamu sangat kuat.':pct>=75?'Bagus! Tinggal latih kecepatan membaca dan detail kecil.':pct>=60?'Cukup baik. Latih lagi mencari informasi utama dalam teks.':'Tetap semangat. Mulai dari bacaan pendek dan poster dulu.';document.getElementById('finalScore').textContent=`${score} / ${quiz.length}`;document.getElementById('resultMessage').textContent=msg;document.getElementById('correctCount').textContent=score;document.getElementById('wrongCount').textContent=wrong;setScreen('result')}
