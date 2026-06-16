@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NihongoGO - Kosakata JLPT N3</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f7f3ea;
+      --paper: #fffdf8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #7c7468;
+      --line: #eadfd2;
+      --red: #c84b31;
+      --red-dark: #a83a26;
+      --indigo: #2f4858;
+      --green: #6f936f;
+      --green-soft: #edf5ec;
+      --wrong: #c76d5e;
+      --wrong-soft: #fff0ed;
+      --shadow: 0 24px 70px rgba(49, 36, 23, 0.12);
+      --soft-shadow: 0 10px 28px rgba(49, 36, 23, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(200, 75, 49, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 72, 88, 0.09), transparent 22%),
+        linear-gradient(135deg, #fbf7ef 0%, var(--bg) 44%, #f1eadf 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(200, 75, 49, 0.12) 1.4px, transparent 1.6px),
+        radial-gradient(circle at 32px 32px, rgba(47, 72, 88, 0.07) 1px, transparent 1.3px);
+      background-size: 48px 48px;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: 760px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 210px;
+      opacity: 0.65;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(47, 72, 88, 0.08) 59% 62%, transparent 63%) 0 0 / 64px 38px repeat-x,
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(200, 75, 49, 0.08) 59% 62%, transparent 63%) 32px 22px / 64px 38px repeat-x;
+      z-index: -1;
+    }
+
+    .screen {
+      display: none;
+      min-height: 760px;
+      padding: 28px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      margin-bottom: 22px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--indigo);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(47, 72, 88, 0.07);
+    }
+
+    .screen-title {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: #182531;
+      text-align: center;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.08);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .logo-mark svg {
+      width: 27px;
+      height: 27px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-mark .enso-main {
+      fill: none;
+      stroke: #1f2933;
+      stroke-width: 7.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-mark .enso-soft {
+      fill: none;
+      stroke: rgba(31, 41, 51, 0.34);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .logo-mark .enso-red {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      opacity: 0.92;
+    }
+
+    .home-art {
+      position: relative;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 305px;
+      margin: 4px 0 4px;
+    }
+
+    .vertical-copy {
+      position: absolute;
+      left: 8px;
+      top: 22px;
+      writing-mode: vertical-rl;
+      color: rgba(168, 58, 38, 0.78);
+      font-family: "Noto Serif JP", serif;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .mini-card {
+      position: absolute;
+      right: 6px;
+      top: 42px;
+      width: 132px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 12px 28px rgba(49, 36, 23, 0.08);
+      backdrop-filter: blur(10px);
+      text-align: left;
+    }
+
+    .mini-card .seal {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fffdf8;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .home-info-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 255, 255, 0.72)),
+        radial-gradient(circle at 92% 20%, rgba(200, 75, 49, 0.08), transparent 34%);
+      box-shadow: 0 12px 30px rgba(49, 36, 23, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .home-info-item {
+      min-height: 86px;
+      padding: 10px 6px 9px;
+      border-radius: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(234, 223, 210, 0.72);
+    }
+
+    .home-info-item span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.11);
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .home-info-item strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .home-info-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .sakura-branch {
+      position: absolute;
+      right: 15px;
+      bottom: 77px;
+      width: 132px;
+      height: 68px;
+      transform: rotate(-17deg);
+      opacity: 0.92;
+    }
+
+    .sakura-branch::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 34px;
+      height: 2px;
+      background: rgba(92, 70, 56, 0.28);
+      border-radius: 999px;
+    }
+
+    .sakura-branch span {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(200, 75, 49, 0.32);
+      transform: rotate(45deg);
+    }
+
+    .sakura-branch span:nth-child(1) { right: 18px; top: 18px; }
+    .sakura-branch span:nth-child(2) { right: 42px; top: 32px; width: 11px; height: 11px; }
+    .sakura-branch span:nth-child(3) { right: 72px; top: 22px; width: 10px; height: 10px; }
+    .sakura-branch span:nth-child(4) { right: 100px; top: 38px; width: 9px; height: 9px; }
+
+    .sun-circle {
+      position: absolute;
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.24), transparent 20%),
+        linear-gradient(145deg, #e36c50, var(--red));
+      box-shadow: 0 16px 36px rgba(200, 75, 49, 0.22);
+    }
+
+    .torii {
+      position: absolute;
+      top: 156px;
+      left: 50%;
+      width: 112px;
+      height: 96px;
+      transform: translateX(-50%);
+      color: #272727;
+    }
+
+    .torii .beam-main,
+    .torii .beam-top,
+    .torii .beam-mid,
+    .torii .pillar,
+    .torii .base {
+      position: absolute;
+      background: currentColor;
+      border-radius: 3px;
+    }
+
+    .torii .beam-top {
+      left: 4px;
+      right: 4px;
+      top: 8px;
+      height: 9px;
+      transform: rotate(2deg);
+    }
+
+    .torii .beam-main {
+      left: 0;
+      right: 0;
+      top: 21px;
+      height: 10px;
+    }
+
+    .torii .beam-mid {
+      left: 24px;
+      right: 24px;
+      top: 42px;
+      height: 8px;
+    }
+
+    .torii .pillar.left { left: 27px; }
+    .torii .pillar.right { right: 27px; }
+
+    .torii .pillar {
+      top: 30px;
+      width: 9px;
+      height: 66px;
+    }
+
+    .torii .base {
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+    }
+
+    .torii .base.left { left: 20px; }
+    .torii .base.right { right: 20px; }
+
+    .mist {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      width: 270px;
+      height: 78px;
+      transform: translateX(-50%);
+      opacity: 1;
+      overflow: hidden;
+      border-radius: 0 0 120px 120px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0) 0%, rgba(255, 253, 248, 0.88) 38%, rgba(247, 243, 234, 0.28) 100%),
+        radial-gradient(ellipse at 50% 78%, rgba(47, 72, 88, 0.09), transparent 68%);
+      filter: none;
+    }
+
+    .mist::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 11px;
+      height: 56px;
+      opacity: 0.9;
+      background:
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(47, 72, 88, 0.15) 58% 61%, transparent 62%) 0 0 / 54px 31px repeat-x,
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(200, 75, 49, 0.13) 58% 61%, transparent 62%) 27px 16px / 54px 31px repeat-x;
+    }
+
+    .mist::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(47, 72, 88, 0.26), transparent);
+    }
+
+    .brand {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #172434;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(42px, 11vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 10px auto 22px;
+      max-width: 245px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--red-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(200, 75, 49, 0.45);
+    }
+
+    .home-chips {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: -6px 0 22px;
+    }
+
+    .home-chips span {
+      padding: 7px 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #5f5a52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, var(--red), #dc4b36);
+      box-shadow: 0 12px 26px rgba(200, 75, 49, 0.24);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(200, 75, 49, 0.28);
+    }
+
+    .ghost-btn {
+      border: 1.5px solid var(--red);
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .ghost-btn:hover {
+      background: rgba(200, 75, 49, 0.07);
+    }
+
+    .home-footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #5f5a52;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 0.45em;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(234, 223, 210, 0.8);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #dc5642);
+      transition: width 0.25s ease;
+    }
+
+    .question-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.82)),
+        radial-gradient(circle at 100% 100%, rgba(200, 75, 49, 0.08), transparent 30%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px 28px;
+      min-height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -18px;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      border: 18px solid rgba(200, 75, 49, 0.08);
+    }
+
+    .question-card::after {
+      content: "";
+      position: absolute;
+      width: 46px;
+      height: 2px;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: var(--red);
+      border-radius: 999px;
+    }
+
+    .question {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 36, 23, 0.035);
+      transition: 0.16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(200, 75, 49, 0.55);
+      background: #fffafa;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .choice-letter {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f2ede6;
+      color: #5d5750;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected {
+      border-color: var(--red);
+      background: rgba(200, 75, 49, 0.055);
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #315a31;
+    }
+
+    .option.correct .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #8d342a;
+    }
+
+    .option.wrong .choice-letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .meta-right {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .level-label {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.055);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin-top: 18px;
+      min-height: 52px;
+      flex: 0 0 auto;
+    }
+
+    .feedback-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card::after,
+    .result-art::after,
+    .review-screen::after {
+      content: "✿ ✿ ✿";
+      position: absolute;
+      right: 22px;
+      bottom: 42px;
+      color: rgba(200, 75, 49, 0.34);
+      transform: rotate(-18deg);
+      font-size: 24px;
+      letter-spacing: 8px;
+      pointer-events: none;
+    }
+
+    .status-ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 47px;
+      margin-bottom: 28px;
+      border: 12px solid;
+    }
+
+    .status-ring.correct-state {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: rgba(111, 147, 111, 0.18);
+    }
+
+    .status-ring.wrong-state {
+      color: var(--wrong);
+      background: var(--wrong-soft);
+      border-color: rgba(199, 109, 94, 0.18);
+    }
+
+    .feedback-title {
+      margin: 0;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .feedback-title.correct-text {
+      color: var(--green);
+    }
+
+    .feedback-explanation {
+      margin: 14px 0 32px;
+      color: #453f38;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    .result-art {
+      position: relative;
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      margin: 10px 0 4px;
+    }
+
+    .fuji {
+      position: relative;
+      width: 230px;
+      height: 165px;
+    }
+
+    .fuji .sun-small {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 124px;
+      height: 124px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e36c50, var(--red));
+      opacity: 0.92;
+    }
+
+    .fuji .mountain {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      width: 172px;
+      height: 112px;
+      transform: translateX(-50%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      background: linear-gradient(145deg, #fcfcfb 0 24%, #57636b 25% 64%, #2f4858 100%);
+      box-shadow: 0 18px 26px rgba(47, 72, 88, 0.2);
+    }
+
+    .fuji .ground {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      height: 2px;
+      background: rgba(47, 72, 88, 0.2);
+    }
+
+    .result-heading {
+      text-align: center;
+      margin: 4px 0 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 22px;
+    }
+
+    .result-score {
+      text-align: center;
+      margin: 10px 0 6px;
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 58px;
+      line-height: 1;
+    }
+
+    .result-message {
+      text-align: center;
+      color: #443f38;
+      line-height: 1.6;
+      margin: 0 auto 22px;
+      max-width: 310px;
+    }
+
+    .stats-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 18px 0 18px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.82);
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 20px;
+      color: #253746;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 12px;
+      padding-bottom: 22px;
+    }
+
+    .review-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 6px 18px rgba(49, 36, 23, 0.04);
+    }
+
+    .review-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #2d3338;
+    }
+
+    .badge {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .badge.ok { background: var(--green); }
+    .badge.no { background: var(--wrong); }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: var(--green);
+    }
+
+    .legend span:nth-child(2)::before {
+      background: var(--wrong);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .phone-frame {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        padding: 24px 20px;
+      }
+
+      .brand h1 {
+        font-size: 48px;
+      }
+
+      .home-info-panel {
+        margin-bottom: 20px;
+      }
+
+      .question-card {
+        min-height: 220px;
+      }
+    }
+
+
+    /* Tambahan saja: animasi ✓ dan × disamakan seperti versi sebelumnya, tanpa mengubah desain utama */
+    .feedback-card.feedback-animate {
+      animation: cardSoftEnter 0.46s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .status-ring {
+      position: relative;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      overflow: visible;
+      transform-origin: center;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.72);
+      will-change: transform, opacity, box-shadow;
+    }
+
+    .status-ring .status-symbol {
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      text-align: center;
+      font-weight: 900;
+      transform-origin: center;
+    }
+
+    .status-ring .symbol-correct {
+      font-size: 40px;
+      transform: translateY(-1px);
+    }
+
+    .status-ring .symbol-wrong {
+      font-size: 43px;
+      transform: translateY(-4px);
+    }
+
+    .feedback-card.feedback-animate .status-ring {
+      animation: iconPop 0.58s cubic-bezier(.22, 1.35, .36, 1) 0.12s both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.correct-state {
+      animation-name: iconPop, correctPulse;
+      animation-duration: 0.58s, 0.82s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.wrong-state {
+      animation-name: iconPop, wrongShake;
+      animation-duration: 0.58s, 0.38s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-in-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title,
+    .feedback-card.feedback-animate .feedback-explanation,
+    .feedback-card.feedback-animate #nextBtn {
+      animation: fadeSlideUp 0.42s ease-out both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title { animation-delay: 0.20s; }
+    .feedback-card.feedback-animate .feedback-explanation { animation-delay: 0.30s; }
+    .feedback-card.feedback-animate #nextBtn { animation-delay: 0.40s; }
+
+    .option.correct {
+      animation: optionCorrect 0.45s ease-out both;
+    }
+
+    .option.wrong {
+      animation: optionWrong 0.38s ease-in-out both;
+    }
+
+    .badge.ok,
+    .badge.no {
+      line-height: 1;
+    }
+
+    .badge.no {
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    @keyframes cardSoftEnter {
+      0% { opacity: 0; transform: translateY(18px) scale(0.975); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes iconPop {
+      0% { opacity: 0; transform: scale(0.58) rotate(-8deg); }
+      68% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes correctPulse {
+      0% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 0 rgba(111,147,111,.24); }
+      100% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 20px rgba(111,147,111,0); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0) scale(1); }
+      22% { transform: translateX(-5px) scale(1.01); }
+      48% { transform: translateX(5px) scale(1.01); }
+      72% { transform: translateX(-3px) scale(1.005); }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes optionCorrect {
+      0% { transform: scale(1); }
+      52% { transform: scale(1.018); box-shadow: 0 10px 20px rgba(111,147,111,.14); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes optionWrong {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feedback-card.feedback-animate,
+      .feedback-card.feedback-animate .status-ring,
+      .feedback-card.feedback-animate .status-ring.correct-state,
+      .feedback-card.feedback-animate .status-ring.wrong-state,
+      .feedback-card.feedback-animate .feedback-title,
+      .feedback-card.feedback-animate .feedback-explanation,
+      .feedback-card.feedback-animate #nextBtn,
+      .option.correct,
+      .option.wrong {
+        animation: none !important;
+      }
+    }
+
+
+    /* Tambahan: kanji berada di bawah kalimat soal yomikata */
+    .question {
+      white-space: pre-line;
+    }
+
+
+    /* Tambahan saja: target kosakata di dalam 「 」 tampil di bawah pertanyaan */
+    .question {
+      white-space: pre-line;
+    }
+
+  </style>
+</head>
+
+<body>
+  <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
+    <section class="screen active" id="startScreen">
+      <div class="home-art" aria-hidden="true">
+        <div class="vertical-copy">クイズを楽しんで<br>知識を深めましょう。</div>
+        <div class="sun-circle"></div>
+        <div class="torii">
+          <span class="beam-top"></span>
+          <span class="beam-main"></span>
+          <span class="beam-mid"></span>
+          <span class="pillar left"></span>
+          <span class="pillar right"></span>
+          <span class="base left"></span>
+          <span class="base right"></span>
+        </div>
+        <div class="mist"></div>
+        <div class="sakura-branch"><span></span><span></span><span></span><span></span></div>
+      </div>
+
+      <div class="home-info-panel" aria-label="Informasi kuis">
+        <div class="home-info-item">
+          <span>N3</span>
+          <strong>Kosakata N3</strong>
+          <small>Level latihan</small>
+        </div>
+        <div class="home-info-item">
+          <span>語彙</span>
+          <strong>Kosakata</strong>
+          <small>Vocab N3</small>
+        </div>
+        <div class="home-info-item">
+          <span>文</span>
+          <strong>Konteks</strong>
+          <small>Contoh kalimat</small>
+        </div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-mark">Kuis Kosakata N3</div>
+        <h1>NihongoGO</h1>
+        <p>Latihan 100 soal Kosakata JLPT N3: memilih arti kata dan melengkapi kalimat sesuai konteks.</p>
+        <div class="home-chips">
+          <span>語彙 Kosakata</span>
+          <span>意味 Arti</span>
+          <span>文脈 Konteks</span>
+        </div>
+        <button class="primary-btn" type="button" onclick="startQuiz()">Mulai Kuis&nbsp; →</button>
+        <div class="home-footer">日本語を学ぼう</div>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="meta-row">
+        <span id="progressText">Soal 1 dari 100</span>
+        <div class="meta-right">
+          <span class="level-label">Kosakata N3</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 100</span>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="question-card">
+        <p class="question" id="questionText"></p>
+      </article>
+
+      <div class="options" id="optionsBox"></div>
+
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
+    </section>
+
+    <section class="screen" id="feedbackScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="status-ring" id="statusRing"><span class="status-symbol symbol-correct">✓</span></div>
+        <h2 class="feedback-title" id="feedbackTitle">Benar!</h2>
+        <p class="feedback-explanation" id="feedbackExplanation"></p>
+        <button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya&nbsp; →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="topbar">
+        <span></span>
+        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="result-art" aria-hidden="true">
+        <div class="fuji">
+          <div class="sun-small"></div>
+          <div class="mountain"></div>
+          <div class="ground"></div>
+        </div>
+      </div>
+
+      <h2 class="result-heading">Skor Kamu</h2>
+      <div class="result-score" id="finalScore">0 / 100</div>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="stats-card">
+        <div class="stat">
+          ✓ <strong id="correctCount">0</strong>
+          <span>Benar</span>
+        </div>
+        <div class="stat">
+          × <strong id="incorrectCount">0</strong>
+          <span>Salah</span>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="ghost-btn" type="button" onclick="showReview()">Lihat Jawaban</button>
+        <button class="primary-btn" type="button" onclick="restartQuiz()">Kembali ke Awal</button>
+      </div>
+    </section>
+
+    <section class="screen review-screen" id="reviewScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
+        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+      <div class="legend">
+        <span>Benar</span>
+        <span>Salah</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const quiz = [
+      {
+            "question": "意味はどれですか。\n「確認」",
+            "options": [
+                  "mengantar",
+                  "membatalkan",
+                  "memastikan / mengecek",
+                  "menjelaskan panjang"
+            ],
+            "answer": "memastikan / mengecek",
+            "explanation": "「確認」 berarti memastikan, mengecek, atau konfirmasi."
+      },
+      {
+            "question": "意味はどれですか。\n「準備」",
+            "options": [
+                  "persiapan",
+                  "pemerintah",
+                  "perubahan",
+                  "pengalaman"
+            ],
+            "answer": "persiapan",
+            "explanation": "「準備」 berarti persiapan sebelum melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「連絡」",
+            "options": [
+                  "memilih",
+                  "membandingkan",
+                  "menyimpan",
+                  "menghubungi / kontak"
+            ],
+            "answer": "menghubungi / kontak",
+            "explanation": "「連絡」 berarti kontak, kabar, atau menghubungi seseorang."
+      },
+      {
+            "question": "意味はどれですか。\n「予約」",
+            "options": [
+                  "tagihan",
+                  "reservasi / pemesanan",
+                  "diskon",
+                  "pertemuan"
+            ],
+            "answer": "reservasi / pemesanan",
+            "explanation": "「予約」 berarti reservasi atau pemesanan lebih dulu."
+      },
+      {
+            "question": "意味はどれですか。\n「変更」",
+            "options": [
+                  "kesempatan",
+                  "keputusan akhir",
+                  "kebiasaan",
+                  "perubahan"
+            ],
+            "answer": "perubahan",
+            "explanation": "「変更」 berarti perubahan rencana, jadwal, atau isi."
+      },
+      {
+            "question": "意味はどれですか。\n「決定」",
+            "options": [
+                  "pengurangan",
+                  "pembayaran",
+                  "keputusan / penetapan",
+                  "permintaan maaf"
+            ],
+            "answer": "keputusan / penetapan",
+            "explanation": "「決定」 berarti keputusan atau sesuatu yang sudah ditetapkan."
+      },
+      {
+            "question": "意味はどれですか。\n「原因」",
+            "options": [
+                  "tujuan",
+                  "hasil",
+                  "penyebab",
+                  "batas"
+            ],
+            "answer": "penyebab",
+            "explanation": "「原因」 berarti penyebab dari suatu kejadian."
+      },
+      {
+            "question": "意味はどれですか。\n「結果」",
+            "options": [
+                  "peraturan",
+                  "alasan",
+                  "alat",
+                  "hasil"
+            ],
+            "answer": "hasil",
+            "explanation": "「結果」 berarti hasil dari proses atau tindakan."
+      },
+      {
+            "question": "意味はどれですか。\n「目的」",
+            "options": [
+                  "biaya",
+                  "cara",
+                  "tempat",
+                  "tujuan"
+            ],
+            "answer": "tujuan",
+            "explanation": "「目的」 berarti tujuan melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「方法」",
+            "options": [
+                  "jadwal",
+                  "bahaya",
+                  "cara / metode",
+                  "alasan"
+            ],
+            "answer": "cara / metode",
+            "explanation": "「方法」 berarti cara atau metode."
+      },
+      {
+            "question": "意味はどれですか。\n「必要」",
+            "options": [
+                  "aneh",
+                  "sementara",
+                  "mudah",
+                  "perlu / kebutuhan"
+            ],
+            "answer": "perlu / kebutuhan",
+            "explanation": "「必要」 berarti perlu atau kebutuhan."
+      },
+      {
+            "question": "意味はどれですか。\n「重要」",
+            "options": [
+                  "penting",
+                  "jarang",
+                  "gelap",
+                  "gratis"
+            ],
+            "answer": "penting",
+            "explanation": "「重要」 berarti penting."
+      },
+      {
+            "question": "意味はどれですか。\n「普通」",
+            "options": [
+                  "khusus",
+                  "berbahaya",
+                  "biasa / umum",
+                  "terakhir"
+            ],
+            "answer": "biasa / umum",
+            "explanation": "「普通」 berarti biasa atau umum."
+      },
+      {
+            "question": "意味はどれですか。\n「特別」",
+            "options": [
+                  "khusus / istimewa",
+                  "murah",
+                  "sering",
+                  "biasa"
+            ],
+            "answer": "khusus / istimewa",
+            "explanation": "「特別」 berarti khusus atau istimewa."
+      },
+      {
+            "question": "意味はどれですか。\n「安全」",
+            "options": [
+                  "aman / keselamatan",
+                  "perhatian",
+                  "bahaya",
+                  "kecepatan"
+            ],
+            "answer": "aman / keselamatan",
+            "explanation": "「安全」 berarti aman atau keselamatan."
+      },
+      {
+            "question": "意味はどれですか。\n「危険」",
+            "options": [
+                  "mudah",
+                  "ramai",
+                  "aman",
+                  "bahaya"
+            ],
+            "answer": "bahaya",
+            "explanation": "「危険」 berarti bahaya."
+      },
+      {
+            "question": "意味はどれですか。\n「関係」",
+            "options": [
+                  "alamat",
+                  "aturan",
+                  "hubungan",
+                  "harga"
+            ],
+            "answer": "hubungan",
+            "explanation": "「関係」 berarti hubungan antara orang, hal, atau keadaan."
+      },
+      {
+            "question": "意味はどれですか。\n「経験」",
+            "options": [
+                  "penelitian",
+                  "kesalahan",
+                  "pengalaman",
+                  "kesehatan"
+            ],
+            "answer": "pengalaman",
+            "explanation": "「経験」 berarti pengalaman."
+      },
+      {
+            "question": "意味はどれですか。\n「努力」",
+            "options": [
+                  "kemampuan alami",
+                  "perjalanan",
+                  "usaha keras",
+                  "istirahat"
+            ],
+            "answer": "usaha keras",
+            "explanation": "「努力」 berarti usaha keras."
+      },
+      {
+            "question": "意味はどれですか。\n「成功」",
+            "options": [
+                  "keluhan",
+                  "penundaan",
+                  "kesuksesan / berhasil",
+                  "kegagalan"
+            ],
+            "answer": "kesuksesan / berhasil",
+            "explanation": "「成功」 berarti berhasil atau kesuksesan."
+      },
+      {
+            "question": "意味はどれですか。\n「失敗」",
+            "options": [
+                  "kesuksesan",
+                  "persetujuan",
+                  "kegagalan",
+                  "keamanan"
+            ],
+            "answer": "kegagalan",
+            "explanation": "「失敗」 berarti kegagalan atau gagal melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「影響」",
+            "options": [
+                  "biaya",
+                  "bayangan saja",
+                  "pengaruh",
+                  "perpindahan"
+            ],
+            "answer": "pengaruh",
+            "explanation": "「影響」 berarti pengaruh atau dampak."
+      },
+      {
+            "question": "意味はどれですか。\n「環境」",
+            "options": [
+                  "perasaan",
+                  "lingkungan",
+                  "alamat",
+                  "hasil"
+            ],
+            "answer": "lingkungan",
+            "explanation": "「環境」 berarti lingkungan atau kondisi sekitar."
+      },
+      {
+            "question": "意味はどれですか。\n「制度」",
+            "options": [
+                  "pakaian",
+                  "sistem / aturan",
+                  "kecepatan",
+                  "hadiah"
+            ],
+            "answer": "sistem / aturan",
+            "explanation": "「制度」 berarti sistem, aturan, atau lembaga."
+      },
+      {
+            "question": "意味はどれですか。\n「資料」",
+            "options": [
+                  "bahan / dokumen",
+                  "makanan",
+                  "tiket",
+                  "rumah sakit"
+            ],
+            "answer": "bahan / dokumen",
+            "explanation": "「資料」 berarti bahan, data, atau dokumen."
+      },
+      {
+            "question": "意味はどれですか。\n「料金」",
+            "options": [
+                  "hadiah",
+                  "biaya / tarif",
+                  "barang",
+                  "gaji"
+            ],
+            "answer": "biaya / tarif",
+            "explanation": "「料金」 berarti biaya atau tarif layanan."
+      },
+      {
+            "question": "意味はどれですか。\n「無料」",
+            "options": [
+                  "berbayar",
+                  "kosong",
+                  "mahal",
+                  "gratis"
+            ],
+            "answer": "gratis",
+            "explanation": "「無料」 berarti gratis, tidak perlu membayar."
+      },
+      {
+            "question": "意味はどれですか。\n「有料」",
+            "options": [
+                  "gratis",
+                  "bermanfaat",
+                  "berbayar",
+                  "terkenal"
+            ],
+            "answer": "berbayar",
+            "explanation": "「有料」 berarti berbayar."
+      },
+      {
+            "question": "意味はどれですか。\n「以内」",
+            "options": [
+                  "dalam batas tertentu",
+                  "lebih baik",
+                  "selain itu",
+                  "di luar negeri"
+            ],
+            "answer": "dalam batas tertentu",
+            "explanation": "「以内」 berarti dalam batas waktu, jumlah, atau jarak tertentu."
+      },
+      {
+            "question": "意味はどれですか。\n「以外」",
+            "options": [
+                  "selain",
+                  "di dalam",
+                  "minimal",
+                  "sesudah"
+            ],
+            "answer": "selain",
+            "explanation": "「以外」 berarti selain."
+      },
+      {
+            "question": "意味はどれですか。\n「以上」",
+            "options": [
+                  "lebih dari / setidaknya",
+                  "di tengah",
+                  "selain",
+                  "kurang dari"
+            ],
+            "answer": "lebih dari / setidaknya",
+            "explanation": "「以上」 berarti lebih dari, minimal, atau setidaknya."
+      },
+      {
+            "question": "意味はどれですか。\n「以下」",
+            "options": [
+                  "di bawah / hingga batas",
+                  "seketika",
+                  "selain",
+                  "dari sekarang"
+            ],
+            "answer": "di bawah / hingga batas",
+            "explanation": "「以下」 berarti di bawah atau sampai batas tertentu."
+      },
+      {
+            "question": "意味はどれですか。\n「途中」",
+            "options": [
+                  "paling akhir",
+                  "di tengah perjalanan/proses",
+                  "tujuan utama",
+                  "awal bulan"
+            ],
+            "answer": "di tengah perjalanan/proses",
+            "explanation": "「途中」 berarti di tengah perjalanan atau proses."
+      },
+      {
+            "question": "意味はどれですか。\n「最近」",
+            "options": [
+                  "tahun depan",
+                  "akhir-akhir ini",
+                  "selamanya",
+                  "dahulu kala"
+            ],
+            "answer": "akhir-akhir ini",
+            "explanation": "「最近」 berarti akhir-akhir ini."
+      },
+      {
+            "question": "意味はどれですか。\n「現在」",
+            "options": [
+                  "masa depan",
+                  "saat ini",
+                  "sebelumnya",
+                  "masa lalu"
+            ],
+            "answer": "saat ini",
+            "explanation": "「現在」 berarti saat ini atau sekarang."
+      },
+      {
+            "question": "意味はどれですか。\n「過去」",
+            "options": [
+                  "tujuan",
+                  "masa depan",
+                  "masa lalu",
+                  "biaya"
+            ],
+            "answer": "masa lalu",
+            "explanation": "「過去」 berarti masa lalu."
+      },
+      {
+            "question": "意味はどれですか。\n「未来」",
+            "options": [
+                  "masa depan",
+                  "alamat",
+                  "lingkungan",
+                  "masa lalu"
+            ],
+            "answer": "masa depan",
+            "explanation": "「未来」 berarti masa depan."
+      },
+      {
+            "question": "意味はどれですか。\n「周囲」",
+            "options": [
+                  "kesalahan",
+                  "sekitar / sekeliling",
+                  "keputusan",
+                  "pemesanan"
+            ],
+            "answer": "sekitar / sekeliling",
+            "explanation": "「周囲」 berarti sekitar atau sekeliling."
+      },
+      {
+            "question": "意味はどれですか。\n「近所」",
+            "options": [
+                  "ruang kelas",
+                  "lingkungan sekitar / tetangga",
+                  "pemerintah",
+                  "pencarian"
+            ],
+            "answer": "lingkungan sekitar / tetangga",
+            "explanation": "「近所」 berarti lingkungan sekitar atau tetangga."
+      },
+      {
+            "question": "意味はどれですか。\n「住所」",
+            "options": [
+                  "kartu pos",
+                  "kehadiran",
+                  "gedung",
+                  "alamat"
+            ],
+            "answer": "alamat",
+            "explanation": "「住所」 berarti alamat."
+      },
+      {
+            "question": "意味はどれですか。\n「出席」",
+            "options": [
+                  "masuk sekolah",
+                  "lulus",
+                  "absen",
+                  "hadir / kehadiran"
+            ],
+            "answer": "hadir / kehadiran",
+            "explanation": "「出席」 berarti hadir atau kehadiran."
+      },
+      {
+            "question": "意味はどれですか。\n「欠席」",
+            "options": [
+                  "mendaftar",
+                  "lulus",
+                  "absen / tidak hadir",
+                  "hadir"
+            ],
+            "answer": "absen / tidak hadir",
+            "explanation": "「欠席」 berarti absen atau tidak hadir."
+      },
+      {
+            "question": "意味はどれですか。\n「卒業」",
+            "options": [
+                  "lulus",
+                  "masuk sekolah",
+                  "belajar kelompok",
+                  "izin sakit"
+            ],
+            "answer": "lulus",
+            "explanation": "「卒業」 berarti lulus dari sekolah/universitas."
+      },
+      {
+            "question": "意味はどれですか。\n「入学」",
+            "options": [
+                  "mengulang",
+                  "masuk sekolah/universitas",
+                  "pindah rumah",
+                  "lulus"
+            ],
+            "answer": "masuk sekolah/universitas",
+            "explanation": "「入学」 berarti masuk sekolah atau universitas."
+      },
+      {
+            "question": "意味はどれですか。\n「就職」",
+            "options": [
+                  "liburan",
+                  "berhenti sekolah",
+                  "mendapat pekerjaan",
+                  "wawancara teman"
+            ],
+            "answer": "mendapat pekerjaan",
+            "explanation": "「就職」 berarti mendapatkan pekerjaan atau mulai bekerja."
+      },
+      {
+            "question": "意味はどれですか。\n「面接」",
+            "options": [
+                  "rapat umum",
+                  "ujian tulis",
+                  "upacara",
+                  "wawancara"
+            ],
+            "answer": "wawancara",
+            "explanation": "「面接」 berarti wawancara, terutama wawancara kerja/sekolah."
+      },
+      {
+            "question": "意味はどれですか。\n「給料」",
+            "options": [
+                  "bahan pelajaran",
+                  "diskon",
+                  "gaji",
+                  "biaya masuk"
+            ],
+            "answer": "gaji",
+            "explanation": "「給料」 berarti gaji."
+      },
+      {
+            "question": "意味はどれですか。\n「残業」",
+            "options": [
+                  "kerja paruh waktu",
+                  "lembur",
+                  "rapat pagi",
+                  "cuti"
+            ],
+            "answer": "lembur",
+            "explanation": "「残業」 berarti lembur."
+      },
+      {
+            "question": "意味はどれですか。\n「会議」",
+            "options": [
+                  "tiket",
+                  "alamat",
+                  "rapat",
+                  "janji dokter"
+            ],
+            "answer": "rapat",
+            "explanation": "「会議」 berarti rapat atau pertemuan resmi."
+      },
+      {
+            "question": "意味はどれですか。\n「報告」",
+            "options": [
+                  "memesan tiket",
+                  "menerima gaji",
+                  "laporan / melaporkan",
+                  "mengurangi biaya"
+            ],
+            "answer": "laporan / melaporkan",
+            "explanation": "「報告」 berarti laporan atau melaporkan."
+      },
+      {
+            "question": "文に合う言葉はどれですか。会議の時間をもう一度＿＿してください。",
+            "options": [
+                  "失敗",
+                  "運動",
+                  "卒業",
+                  "確認"
+            ],
+            "answer": "確認",
+            "explanation": "時間をもう一度チェックするので「確認」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。旅行の前にホテルを＿＿しておきます。",
+            "options": [
+                  "欠席",
+                  "増加",
+                  "予約",
+                  "報告"
+            ],
+            "answer": "予約",
+            "explanation": "ホテルを前もって取ることは「予約」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。予定が変わったので、集合時間を＿＿しました。",
+            "options": [
+                  "就職",
+                  "変更",
+                  "無料",
+                  "影響"
+            ],
+            "answer": "変更",
+            "explanation": "時間や予定を変える時は「変更」を使います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。この事故の＿＿を調べています。",
+            "options": [
+                  "制度",
+                  "目的",
+                  "料金",
+                  "原因"
+            ],
+            "answer": "原因",
+            "explanation": "事故が起きた理由を調べるので「原因」が正しいです。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。試験の＿＿は来週発表されます。",
+            "options": [
+                  "関係",
+                  "結果",
+                  "方法",
+                  "途中"
+            ],
+            "answer": "結果",
+            "explanation": "試験の点数や合否は「結果」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。日本語を勉強する＿＿は、仕事で使うためです。",
+            "options": [
+                  "周囲",
+                  "目的",
+                  "影響",
+                  "安全"
+            ],
+            "answer": "目的",
+            "explanation": "何のためにするかを表す言葉は「目的」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。この機械の使い方をもっと簡単な＿＿で教えてください。",
+            "options": [
+                  "料金",
+                  "未来",
+                  "過去",
+                  "方法"
+            ],
+            "answer": "方法",
+            "explanation": "使い方ややり方には「方法」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。パスポートは海外旅行に＿＿です。",
+            "options": [
+                  "有料",
+                  "必要",
+                  "普通",
+                  "最近"
+            ],
+            "answer": "必要",
+            "explanation": "海外旅行にはパスポートが必要なので「必要」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。これはとても＿＿な書類なので、なくさないでください。",
+            "options": [
+                  "現在",
+                  "危険",
+                  "重要",
+                  "無料"
+            ],
+            "answer": "重要",
+            "explanation": "大切な書類という意味で「重要」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。この道は夜になると暗くて＿＿です。",
+            "options": [
+                  "無料",
+                  "安全",
+                  "危険",
+                  "特別"
+            ],
+            "answer": "危険",
+            "explanation": "暗くて危ない道なので「危険」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。子どもが遊べる＿＿な場所を探しています。",
+            "options": [
+                  "過去",
+                  "有料",
+                  "途中",
+                  "安全"
+            ],
+            "answer": "安全",
+            "explanation": "子どもが安心して遊べる場所には「安全」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。彼とは仕事上の＿＿があります。",
+            "options": [
+                  "関係",
+                  "欠席",
+                  "面接",
+                  "料金"
+            ],
+            "answer": "関係",
+            "explanation": "人や物事のつながりは「関係」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。海外で働いた＿＿があります。",
+            "options": [
+                  "制度",
+                  "会議",
+                  "住所",
+                  "経験"
+            ],
+            "answer": "経験",
+            "explanation": "過去にしたことは「経験」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。毎日の＿＿があったから、試験に合格できました。",
+            "options": [
+                  "努力",
+                  "環境",
+                  "失敗",
+                  "途中"
+            ],
+            "answer": "努力",
+            "explanation": "頑張り続けることは「努力」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。何度も失敗しましたが、最後には＿＿しました。",
+            "options": [
+                  "成功",
+                  "確認",
+                  "欠席",
+                  "有料"
+            ],
+            "answer": "成功",
+            "explanation": "最後にうまくいったので「成功」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。寝不足は仕事に悪い＿＿を与えます。",
+            "options": [
+                  "影響",
+                  "料金",
+                  "住所",
+                  "近所"
+            ],
+            "answer": "影響",
+            "explanation": "悪い効果やダメージを与えるので「影響」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。自然を守るために、＿＿について考える必要があります。",
+            "options": [
+                  "過去",
+                  "会議",
+                  "環境",
+                  "給料"
+            ],
+            "answer": "環境",
+            "explanation": "自然や周りの状態については「環境」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。この国の教育＿＿は大きく変わりました。",
+            "options": [
+                  "制度",
+                  "途中",
+                  "面接",
+                  "資料"
+            ],
+            "answer": "制度",
+            "explanation": "教育の仕組みやルールは「制度」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。会議で使う＿＿をコピーしておいてください。",
+            "options": [
+                  "資料",
+                  "料金",
+                  "未来",
+                  "欠席"
+            ],
+            "answer": "資料",
+            "explanation": "会議で使う文書やデータは「資料」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。このレッスンは＿＿なので、お金はかかりません。",
+            "options": [
+                  "有料",
+                  "無料",
+                  "重要",
+                  "危険"
+            ],
+            "answer": "無料",
+            "explanation": "お金がかからない場合は「無料」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。このサービスは＿＿ですから、先に料金を払ってください。",
+            "options": [
+                  "無料",
+                  "普通",
+                  "安全",
+                  "有料"
+            ],
+            "answer": "有料",
+            "explanation": "料金が必要なサービスは「有料」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。レポートは500字＿＿で書いてください。",
+            "options": [
+                  "現在",
+                  "以内",
+                  "以外",
+                  "途中"
+            ],
+            "answer": "以内",
+            "explanation": "500字を超えない範囲なので「以内」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。学生＿＿はこの部屋に入れません。",
+            "options": [
+                  "以下",
+                  "以内",
+                  "以上",
+                  "以外"
+            ],
+            "answer": "以外",
+            "explanation": "学生ではない人を表すので「学生以外」が正しいです。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。18歳＿＿の人だけが申し込めます。",
+            "options": [
+                  "途中",
+                  "以上",
+                  "以外",
+                  "無料"
+            ],
+            "answer": "以上",
+            "explanation": "18歳より上、または18歳を含むので「以上」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。小学生＿＿の子どもは無料です。",
+            "options": [
+                  "以下",
+                  "以内",
+                  "以上",
+                  "以外"
+            ],
+            "answer": "以下",
+            "explanation": "小学生までを含む範囲なので「以下」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。学校へ行く＿＿で友だちに会いました。",
+            "options": [
+                  "途中",
+                  "影響",
+                  "目的",
+                  "未来"
+            ],
+            "answer": "途中",
+            "explanation": "移動している間なので「途中」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。＿＿、忙しくて本を読む時間がありません。",
+            "options": [
+                  "最近",
+                  "以上",
+                  "未来",
+                  "昔"
+            ],
+            "answer": "最近",
+            "explanation": "今に近い時期の話なので「最近」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。＿＿の生活は、スマートフォンなしでは考えにくいです。",
+            "options": [
+                  "過去",
+                  "現在",
+                  "昔",
+                  "途中"
+            ],
+            "answer": "現在",
+            "explanation": "今の生活を表すので「現在」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。＿＿のことを後悔しても、変えることはできません。",
+            "options": [
+                  "過去",
+                  "未来",
+                  "現在",
+                  "近所"
+            ],
+            "answer": "過去",
+            "explanation": "もう終わったことなので「過去」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。子どもたちの＿＿のために、今できることを考えましょう。",
+            "options": [
+                  "資料",
+                  "料金",
+                  "途中",
+                  "未来"
+            ],
+            "answer": "未来",
+            "explanation": "これから先のことなので「未来」が合います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。大きな音がしたので、＿＿の人が外に出てきました。",
+            "options": [
+                  "結果",
+                  "周囲",
+                  "目的",
+                  "料金"
+            ],
+            "answer": "周囲",
+            "explanation": "周りにいる人たちを表すので「周囲」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。＿＿に新しいスーパーができました。",
+            "options": [
+                  "以上",
+                  "面接",
+                  "過去",
+                  "近所"
+            ],
+            "answer": "近所",
+            "explanation": "家の近くの地域には「近所」を使います。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。申込書に名前と＿＿を書いてください。",
+            "options": [
+                  "給料",
+                  "住所",
+                  "会議",
+                  "卒業"
+            ],
+            "answer": "住所",
+            "explanation": "名前と一緒に書く住んでいる場所は「住所」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。熱があったので、授業を＿＿しました。",
+            "options": [
+                  "欠席",
+                  "出席",
+                  "入学",
+                  "卒業"
+            ],
+            "answer": "欠席",
+            "explanation": "授業に行かなかったので「欠席」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。明日の会議には必ず＿＿してください。",
+            "options": [
+                  "欠席",
+                  "就職",
+                  "出席",
+                  "卒業"
+            ],
+            "answer": "出席",
+            "explanation": "会議に参加している状態は「出席」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。大学を＿＿したら、会社で働くつもりです。",
+            "options": [
+                  "変更",
+                  "入学",
+                  "卒業",
+                  "予約"
+            ],
+            "answer": "卒業",
+            "explanation": "大学を終えて出ることは「卒業」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。春に大学へ＿＿しました。",
+            "options": [
+                  "卒業",
+                  "欠席",
+                  "入学",
+                  "確認"
+            ],
+            "answer": "入学",
+            "explanation": "学校や大学に入ることは「入学」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。来月、第一希望の会社の＿＿を受けます。",
+            "options": [
+                  "近所",
+                  "料金",
+                  "面接",
+                  "過去"
+            ],
+            "answer": "面接",
+            "explanation": "会社で直接質問を受ける試験は「面接」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。新しい会社に＿＿することが決まりました。",
+            "options": [
+                  "就職",
+                  "予約",
+                  "欠席",
+                  "確認"
+            ],
+            "answer": "就職",
+            "explanation": "会社で働くことが決まるので「就職」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。今月の＿＿は来週銀行に入ります。",
+            "options": [
+                  "資料",
+                  "結果",
+                  "会議",
+                  "給料"
+            ],
+            "answer": "給料",
+            "explanation": "働いた分のお金は「給料」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。仕事が終わらなかったので、今日は＿＿しました。",
+            "options": [
+                  "残業",
+                  "無料",
+                  "卒業",
+                  "入学"
+            ],
+            "answer": "残業",
+            "explanation": "決まった時間の後も働くことは「残業」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。午後3時からプロジェクトの＿＿があります。",
+            "options": [
+                  "会議",
+                  "未来",
+                  "欠席",
+                  "料金"
+            ],
+            "answer": "会議",
+            "explanation": "仕事などの話し合いは「会議」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。上司に仕事の進み具合を＿＿しました。",
+            "options": [
+                  "報告",
+                  "減少",
+                  "出席",
+                  "予約"
+            ],
+            "answer": "報告",
+            "explanation": "状況を伝えることは「報告」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。この問題について先生に＿＿しました。",
+            "options": [
+                  "料金",
+                  "確認",
+                  "周囲",
+                  "相談"
+            ],
+            "answer": "相談",
+            "explanation": "困ったことを話して助言をもらうので「相談」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。人口が毎年少しずつ＿＿しています。",
+            "options": [
+                  "予約",
+                  "増加",
+                  "無料",
+                  "欠席"
+            ],
+            "answer": "増加",
+            "explanation": "数が増えることは「増加」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。売り上げが先月より＿＿しました。",
+            "options": [
+                  "成功",
+                  "影響",
+                  "出席",
+                  "減少"
+            ],
+            "answer": "減少",
+            "explanation": "数や量が減ることは「減少」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。AとBを＿＿して、よいほうを選びます。",
+            "options": [
+                  "準備",
+                  "比較",
+                  "報告",
+                  "卒業"
+            ],
+            "answer": "比較",
+            "explanation": "二つ以上のものを比べることは「比較」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。駅までの＿＿を地図で調べました。",
+            "options": [
+                  "道順",
+                  "制度",
+                  "給料",
+                  "会議"
+            ],
+            "answer": "道順",
+            "explanation": "目的地までの行き方やルートは「道順」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。大事な書類なので、なくさないように＿＿してください。",
+            "options": [
+                  "就職",
+                  "注意",
+                  "過去",
+                  "無料"
+            ],
+            "answer": "注意",
+            "explanation": "気をつけることは「注意」です。"
+      },
+      {
+            "question": "文に合う言葉はどれですか。駅の前に自転車を＿＿しないでください。",
+            "options": [
+                  "相談",
+                  "成功",
+                  "駐車",
+                  "報告"
+            ],
+            "answer": "駐車",
+            "explanation": "乗り物を止めて置くことは「駐車」です。自転車にも使われます。"
+      }
+];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswers = [];
+
+    const screens = {
+      start: document.getElementById("startScreen"),
+      quiz: document.getElementById("quizScreen"),
+      feedback: document.getElementById("feedbackScreen"),
+      result: document.getElementById("resultScreen"),
+      review: document.getElementById("reviewScreen")
+    };
+
+    function setScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      renderQuestion();
+      setScreen("quiz");
+    }
+
+    function goHome() {
+      setScreen("start");
+    }
+
+    function renderQuestion() {
+      const q = quiz[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quiz.length) * 100;
+
+      document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
+      document.getElementById("progressFill").style.width = `${progressPercent}%`;
+      document.getElementById("questionText").textContent = q.question;
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      const optionsBox = document.getElementById("optionsBox");
+      optionsBox.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${option}</span>`;
+        button.onclick = () => checkAnswer(option, button);
+        optionsBox.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selected, button) {
+      const q = quiz[currentQuestion];
+      const isCorrect = selected === q.answer;
+
+      selectedAnswers[currentQuestion] = {
+        question: q.question,
+        selected,
+        answer: q.answer,
+        correct: isCorrect,
+        explanation: q.explanation
+      };
+
+      if (isCorrect) score++;
+
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+        const text = btn.innerText.slice(1).trim();
+        if (text === q.answer) btn.classList.add("correct");
+      });
+
+      button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      // Langsung pindah ke halaman penjelasan tanpa delay
+      renderFeedback(isCorrect, q.answer, q.explanation);
+      setScreen("feedback");
+    }
+
+    function renderFeedback(isCorrect, answer, explanation) {
+      const statusRing = document.getElementById("statusRing");
+      const title = document.getElementById("feedbackTitle");
+      const text = document.getElementById("feedbackExplanation");
+      const nextBtn = document.getElementById("nextBtn");
+
+      const feedbackCard = document.querySelector("#feedbackScreen .feedback-card");
+      const symbolClass = isCorrect ? "symbol-correct" : "symbol-wrong";
+
+      if (feedbackCard) {
+        feedbackCard.classList.remove("feedback-animate");
+        void feedbackCard.offsetWidth;
+        feedbackCard.classList.add("feedback-animate");
+      }
+
+      statusRing.innerHTML = `<span class="status-symbol ${symbolClass}">${isCorrect ? "✓" : "×"}</span>`;
+      statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
+      title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
+      title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
+      text.innerHTML = isCorrect
+        ? `Bagus!<br>${explanation}`
+        : `Jawaban yang benar adalah <strong>${answer}</strong>.<br>${explanation}`;
+      nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+    }
+
+    function showQuizAgain() {
+      setScreen("quiz");
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quiz.length) {
+        renderQuestion();
+        setScreen("quiz");
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const incorrect = quiz.length - score;
+      const percentage = (score / quiz.length) * 100;
+      let message;
+
+      if (percentage >= 85) {
+        message = "すごい！ Sangat baik. Kosakata JLPT N3 kamu sudah kuat.";
+      } else if (percentage >= 70) {
+        message = "いいですね！ Kamu sudah cukup paham. Latih lagi kosakata yang mirip arti dan penggunaannya.";
+      } else if (percentage >= 50) {
+        message = "もう少し！ Cukup. Perbanyak latihan arti kosakata dan penggunaan dalam kalimat N3.";
+      } else {
+        message = "頑張って！ Mulai ulang dari kosakata N4 lalu naik bertahap ke N3.";
+      }
+
+      document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("correctCount").textContent = score;
+      document.getElementById("incorrectCount").textContent = incorrect;
+      setScreen("result");
+    }
+
+    function showReview() {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      selectedAnswers.forEach((item, index) => {
+        const row = document.createElement("article");
+        row.className = "review-item";
+        row.innerHTML = `
+          <p><strong>${index + 1}.</strong> ${item.question}<br><small>Jawaban kamu: ${item.selected}</small></p>
+          <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
+        `;
+        reviewList.appendChild(row);
+      });
+
+      setScreen("review");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      setScreen("start");
+    }
+  </script>
+</body>
+</html>
