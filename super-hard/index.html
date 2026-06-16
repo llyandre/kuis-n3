@@ -712,19 +712,35 @@
       color: white;
     }
 
-    .score-pill {
-      margin-top: auto;
+    .meta-right {
       display: inline-flex;
-      align-self: center;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 15px;
+      width: fit-content;
+      padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(234, 223, 210, 0.9);
-      color: var(--muted);
-      font-size: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+      box-shadow: 0 8px 20px rgba(49, 36, 23, 0.045);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin: 18px 0 0;
+      flex: 0 0 auto;
     }
 
     .feedback-card {
@@ -1018,6 +1034,19 @@
         margin-bottom: 20px;
       }
 
+      .meta-row {
+        gap: 10px;
+      }
+
+      .meta-right {
+        gap: 7px;
+      }
+
+      .score-pill {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+
       .question-card {
         min-height: 220px;
       }
@@ -1085,7 +1114,10 @@
 
       <div class="meta-row">
         <span id="progressText">Soal 1 dari 100</span>
-        <span>Level Super</span>
+        <div class="meta-right">
+          <span>Level Super</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 100</span>
+        </div>
       </div>
       <div class="progress-track" aria-hidden="true">
         <div class="progress-fill" id="progressFill"></div>
@@ -1097,7 +1129,7 @@
 
       <div class="options" id="optionsBox"></div>
 
-      <div class="score-pill" id="scorePill">Skor sementara: 0 / 100</div>
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
     </section>
 
     <section class="screen" id="feedbackScreen">
@@ -2320,7 +2352,11 @@
       document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
       document.getElementById("progressFill").style.width = `${progressPercent}%`;
       document.getElementById("questionText").textContent = q.question;
-      document.getElementById("scorePill").textContent = `Skor sementara: ${score} / ${quiz.length}`;
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
 
       const optionsBox = document.getElementById("optionsBox");
       optionsBox.innerHTML = "";
@@ -2357,6 +2393,10 @@
       });
 
       button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
 
       window.setTimeout(() => {
         renderFeedback(isCorrect, q.answer, q.explanation);
