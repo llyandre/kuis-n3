@@ -713,18 +713,27 @@
     }
 
     .score-pill {
-      margin-top: auto;
+      margin: -6px 0 16px auto;
       display: inline-flex;
-      align-self: center;
+      align-self: flex-end;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 15px;
+      gap: 7px;
+      width: fit-content;
+      padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.78);
       border: 1px solid rgba(234, 223, 210, 0.9);
       color: var(--muted);
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(49, 36, 23, 0.045);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin: 18px 0 0;
+      flex: 0 0 auto;
     }
 
     .feedback-card {
@@ -1072,13 +1081,15 @@
         <div class="progress-fill" id="progressFill"></div>
       </div>
 
+      <div class="score-pill" id="scorePill">Skor sementara: 0 / 15</div>
+
       <article class="question-card">
         <p class="question" id="questionText"></p>
       </article>
 
       <div class="options" id="optionsBox"></div>
 
-      <div class="score-pill" id="scorePill">Skor sementara: 0 / 15</div>
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
     </section>
 
     <section class="screen" id="feedbackScreen">
@@ -1279,6 +1290,10 @@
       document.getElementById("questionText").textContent = q.question;
       document.getElementById("scorePill").textContent = `Skor sementara: ${score} / ${quiz.length}`;
 
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
       const optionsBox = document.getElementById("optionsBox");
       optionsBox.innerHTML = "";
 
@@ -1314,6 +1329,10 @@
       });
 
       button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
 
       window.setTimeout(() => {
         renderFeedback(isCorrect, q.answer, q.explanation);
