@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Dokkai JLPT N3</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 196, 211, 0.45) 0 8%, transparent 9%),
+        radial-gradient(circle at 88% 12%, rgba(255, 222, 230, 0.55) 0 9%, transparent 10%),
+        linear-gradient(135deg, #fff7f7, #f8f1e9);
+      color: #2b2b2b;
+    }
+
+    .sakura-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 22px,
+          rgba(180, 32, 42, 0.12) 23px,
+          rgba(180, 32, 42, 0.12) 24px
+        );
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(99, 38, 38, 0.18);
+      border: 2px solid #f1c7c7;
+    }
+
+    .header {
+      padding: 35px 25px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(152, 23, 35, 0.91), rgba(152, 23, 35, 0.91)),
+        repeating-radial-gradient(circle at center, transparent 0 13px, rgba(255,255,255,0.2) 14px 15px);
+      color: white;
+    }
+
+    .sun {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b91c1c;
+      font-size: 39px;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+      letter-spacing: 1px;
+    }
+
+    .jp-title {
+      font-size: 20px;
+      margin-top: 8px;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .quiz-area { padding: 28px; }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 13px;
+      background: #fff0f0;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .progress {
+      font-size: 15px;
+      color: #7f1d1d;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .passage-card {
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-left: 6px solid #b91c1c;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      line-height: 1.9;
+      white-space: pre-line;
+      font-size: 17px;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 1px solid #ead7d7;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin: 11px 0;
+      border: 2px solid #ead7d7;
+      border-radius: 14px;
+      background: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s;
+      line-height: 1.5;
+    }
+
+    .option:hover:not(:disabled) {
+      background: #fff1f2;
+      border-color: #fb7185;
+      transform: translateY(-1px);
+    }
+
+    .option:disabled {
+      cursor: not-allowed;
+      opacity: 0.92;
+    }
+
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #166534;
+    }
+
+    .wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b;
+    }
+
+    #feedback {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #fef2f2;
+      color: #7f1d1d;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 17px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    #nextBtn, #restartBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #b91c1c, #e11d48);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(185, 28, 28, 0.25);
+    }
+
+    #nextBtn:hover, #restartBtn:hover {
+      background: linear-gradient(135deg, #991b1b, #be123c);
+    }
+
+    .result-box {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .result-score {
+      font-size: 54px;
+      color: #b91c1c;
+      margin: 10px 0;
+    }
+
+    .review {
+      text-align: left;
+      margin-top: 25px;
+      background: #fffaf6;
+      border: 1px solid #f3d2c1;
+      border-radius: 16px;
+      padding: 15px;
+      line-height: 1.6;
+    }
+
+    .review h3 {
+      color: #7f1d1d;
+      margin-top: 0;
+    }
+
+    .review-item {
+      border-bottom: 1px solid #f3d2c1;
+      padding: 12px 0;
+    }
+
+    .review-item:last-child {
+      border-bottom: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 18px;
+      background: #fff7f7;
+      color: #7f1d1d;
+      font-size: 14px;
+      border-top: 1px solid #f3d2d2;
+    }
+
+    .decor {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      h1 { font-size: 24px; }
+      .quiz-area { padding: 20px; }
+      .passage-card { font-size: 15px; }
+      .question { font-size: 18px; }
+      .option { font-size: 15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sakura-bg"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="sun">読</div>
+      <h1>Kuis Dokkai JLPT N3</h1>
+      <div class="jp-title">読解練習</div>
+      <p class="subtitle">20 soal: bacaan pendek, sedang, panjang, dan informasi poster</p>
+      <div class="decor">🌸 📖 ⛩️</div>
+    </div>
+
+    <div class="quiz-area" id="quizBox">
+      <span class="tag" id="categoryTag">JLPT N3 Dokkai</span>
+      <p class="progress" id="progress"></p>
+
+      <div class="passage-card" id="passage"></div>
+
+      <div class="question-card">
+        <p class="question" id="question"></p>
+      </div>
+
+      <div id="options"></div>
+      <p id="feedback"></p>
+      <p id="score"></p>
+
+      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➜</button>
+    </div>
+
+    <div class="footer">
+      🌸 読解は「情報を探す力」と「筆者の意図を読む力」です 🌸
+    </div>
+  </div>
+
+  <script>
+    const originalQuiz = [
+      {
+            "category": "Bacaan Pendek",
+            "passage": "昨日、会社の帰りに新しいカフェに寄りました。店は小さかったですが、とても静かで、店員さんも親切でした。コーヒーは少し高かったですが、香りがよく、また行きたいと思いました。",
+            "question": "筆者はこのカフェについてどう思っていますか。",
+            "options": [
+                  "高すぎるので、もう行きたくない",
+                  "静かでよかったので、また行きたい",
+                  "店員が不親切だったので、残念だった",
+                  "大きい店なので、にぎやかだった"
+            ],
+            "answer": "静かでよかったので、また行きたい",
+            "explanation": "本文では、店は小さいが静かで、店員も親切、コーヒーも香りがよいと書かれている。最後に「また行きたい」とある。"
+      },
+      {
+            "category": "Bacaan Pendek",
+            "passage": "田中さんへ\n明日の会議ですが、部長の都合で開始時間が10時から11時に変わりました。場所は前と同じ3階の会議室です。資料は私が印刷しておきますので、田中さんはパソコンだけ持ってきてください。\n山本",
+            "question": "田中さんは明日、何を持って行けばいいですか。",
+            "options": [
+                  "資料だけ",
+                  "パソコンだけ",
+                  "資料とパソコン",
+                  "何も持って行かなくていい"
+            ],
+            "answer": "パソコンだけ",
+            "explanation": "山本さんが資料を印刷するので、田中さんは「パソコンだけ」持ってくるように書かれている。"
+      },
+      {
+            "category": "Bacaan Pendek",
+            "passage": "最近、私は電車の中で本を読むようにしています。以前はスマートフォンばかり見ていましたが、目が疲れるし、時間を無駄にしている気がしました。本を読むと、短い時間でも新しいことを知ることができます。",
+            "question": "筆者が電車で本を読むようになった理由は何ですか。",
+            "options": [
+                  "スマートフォンを見ると目が疲れ、時間が無駄だと感じたから",
+                  "電車の中でスマートフォンが使えなくなったから",
+                  "本を読まないと会社で注意されるから",
+                  "本の値段が安くなったから"
+            ],
+            "answer": "スマートフォンを見ると目が疲れ、時間が無駄だと感じたから",
+            "explanation": "本文に「スマートフォンばかり見ていましたが、目が疲れるし、時間を無駄にしている気がしました」とある。"
+      },
+      {
+            "category": "Bacaan Pendek",
+            "passage": "来週の土曜日、駅前公園でフリーマーケットが開かれます。雨の場合は、次の日の日曜日に延期されます。出店したい人は、今週の金曜日までに市役所へ申し込んでください。",
+            "question": "雨が降った場合、フリーマーケットはどうなりますか。",
+            "options": [
+                  "中止になる",
+                  "市役所で行われる",
+                  "日曜日に延期される",
+                  "金曜日に変更される"
+            ],
+            "answer": "日曜日に延期される",
+            "explanation": "本文に「雨の場合は、次の日の日曜日に延期されます」とある。"
+      },
+      {
+            "category": "Bacaan Pendek",
+            "passage": "私は料理が苦手でしたが、一人暮らしを始めてから少しずつ作るようになりました。最初は失敗ばかりでしたが、最近は簡単な料理なら作れるようになりました。外食より安いし、健康にもいいと思います。",
+            "question": "筆者について、本文の内容と合っているものはどれですか。",
+            "options": [
+                  "今でも料理を全く作らない",
+                  "一人暮らしを始めてから料理をするようになった",
+                  "外食のほうが健康にいいと思っている",
+                  "最初から料理が得意だった"
+            ],
+            "answer": "一人暮らしを始めてから料理をするようになった",
+            "explanation": "本文に「一人暮らしを始めてから少しずつ作るようになりました」とある。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "私は去年から、毎朝30分早く起きることにしました。はじめは眠くて大変でしたが、朝の時間に余裕ができると、一日を落ち着いて始められるようになりました。以前は朝ご飯を食べずに家を出ることも多かったのですが、今は簡単な朝食を作って食べています。\n\nもちろん、夜遅くまで起きていると、次の日はつらくなります。そのため、最近は寝る前にスマートフォンを見る時間を短くしています。",
+            "question": "筆者はなぜ毎朝30分早く起きるようにしましたか。",
+            "options": [
+                  "会社からそう言われたから",
+                  "朝の時間に余裕を持ちたかったから",
+                  "朝ご飯を食べたくなかったから",
+                  "夜遅くまで起きたかったから"
+            ],
+            "answer": "朝の時間に余裕を持ちたかったから",
+            "explanation": "本文では、早く起きることで朝の時間に余裕ができ、一日を落ち着いて始められると説明している。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "私は去年から、毎朝30分早く起きることにしました。はじめは眠くて大変でしたが、朝の時間に余裕ができると、一日を落ち着いて始められるようになりました。以前は朝ご飯を食べずに家を出ることも多かったのですが、今は簡単な朝食を作って食べています。\n\nもちろん、夜遅くまで起きていると、次の日はつらくなります。そのため、最近は寝る前にスマートフォンを見る時間を短くしています。",
+            "question": "筆者が最近していることはどれですか。",
+            "options": [
+                  "寝る前のスマートフォンの時間を短くしている",
+                  "毎朝会社で朝ご飯を食べている",
+                  "夜遅くまで勉強している",
+                  "朝は何も食べないようにしている"
+            ],
+            "answer": "寝る前のスマートフォンの時間を短くしている",
+            "explanation": "最後に「寝る前にスマートフォンを見る時間を短くしています」と書かれている。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "最近、町の図書館では利用者を増やすために、いろいろな工夫をしています。以前は本を借りる場所というイメージが強かったのですが、今は学生が勉強したり、親子で絵本を読んだりできるスペースもあります。また、月に一度、地域の人が自分の経験について話すイベントも開かれています。\n\n図書館の人は「本を読まない人にも、まずは来てもらいたい」と話しています。",
+            "question": "最近の図書館について、本文と合っているものはどれですか。",
+            "options": [
+                  "本を借りることしかできない",
+                  "学生が勉強できる場所もある",
+                  "イベントは毎日行われている",
+                  "子どもは利用できない"
+            ],
+            "answer": "学生が勉強できる場所もある",
+            "explanation": "本文に「学生が勉強したり、親子で絵本を読んだりできるスペースもあります」とある。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "最近、町の図書館では利用者を増やすために、いろいろな工夫をしています。以前は本を借りる場所というイメージが強かったのですが、今は学生が勉強したり、親子で絵本を読んだりできるスペースもあります。また、月に一度、地域の人が自分の経験について話すイベントも開かれています。\n\n図書館の人は「本を読まない人にも、まずは来てもらいたい」と話しています。",
+            "question": "図書館の人が一番伝えたいことは何ですか。",
+            "options": [
+                  "本を読まない人にも図書館に来てほしい",
+                  "図書館では静かにしなければならない",
+                  "本をたくさん買ってほしい",
+                  "イベントだけに参加してほしい"
+            ],
+            "answer": "本を読まない人にも図書館に来てほしい",
+            "explanation": "最後の発言「本を読まない人にも、まずは来てもらいたい」が中心的な意図である。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "山田さんは、通勤に自転車を使っています。電車より時間がかかる日もありますが、運動になるし、朝の気分転換にもなるからです。ただし、雨の日や風が強い日は無理をせず、電車で行くことにしています。\n\n自転車通勤を始めてから、山田さんは以前より体調がよくなったと感じています。交通費も少し節約できるので、しばらく続けるつもりです。",
+            "question": "山田さんが自転車で通勤する理由として正しいものはどれですか。",
+            "options": [
+                  "電車がいつも遅れるから",
+                  "運動と気分転換になるから",
+                  "会社から自転車で来るように言われたから",
+                  "電車が使えないから"
+            ],
+            "answer": "運動と気分転換になるから",
+            "explanation": "本文に「運動になるし、朝の気分転換にもなるから」とある。"
+      },
+      {
+            "category": "Bacaan Sedang",
+            "passage": "山田さんは、通勤に自転車を使っています。電車より時間がかかる日もありますが、運動になるし、朝の気分転換にもなるからです。ただし、雨の日や風が強い日は無理をせず、電車で行くことにしています。\n\n自転車通勤を始めてから、山田さんは以前より体調がよくなったと感じています。交通費も少し節約できるので、しばらく続けるつもりです。",
+            "question": "山田さんはどんな日に電車で通勤しますか。",
+            "options": [
+                  "晴れている日",
+                  "雨の日や風が強い日",
+                  "仕事が早く終わる日",
+                  "体調がよい日"
+            ],
+            "answer": "雨の日や風が強い日",
+            "explanation": "本文に「雨の日や風が強い日は無理をせず、電車で行く」とある。"
+      },
+      {
+            "category": "Bacaan Panjang",
+            "passage": "最近、若い人の間で「物を持ちすぎない生活」が注目されています。以前は、便利な物をたくさん持つことが豊かな生活だと考える人が多かったかもしれません。しかし、物が増えると、部屋が狭くなったり、必要な物が見つからなくなったりします。そのため、あまり使わない物を減らし、本当に必要な物だけを持とうとする人が増えています。\n\nもちろん、何でも捨てればいいというわけではありません。大切なのは、自分の生活に何が必要かを考えることです。例えば、読まなくなった本を売ったり、使っていない服を人にあげたりすることで、物を無駄にせずに減らすことができます。\n\n物を減らすと、掃除がしやすくなるだけでなく、気持ちもすっきりするという人もいます。必要な物がすぐ見つかるため、時間の節約にもなります。物を少なくする生活は、単に部屋をきれいにすることではなく、自分の時間や気持ちを大切にする方法の一つだと言えるでしょう。",
+            "question": "本文によると、物が増えるとどんな問題がありますか。",
+            "options": [
+                  "部屋が狭くなったり、必要な物が見つけにくくなったりする",
+                  "掃除が楽になり、時間が増える",
+                  "大切な物が自然に増える",
+                  "本や服を買えなくなる"
+            ],
+            "answer": "部屋が狭くなったり、必要な物が見つけにくくなったりする",
+            "explanation": "第1段落に、物が増えると部屋が狭くなったり、必要な物が見つからなくなったりするとある。"
+      },
+      {
+            "category": "Bacaan Panjang",
+            "passage": "最近、若い人の間で「物を持ちすぎない生活」が注目されています。以前は、便利な物をたくさん持つことが豊かな生活だと考える人が多かったかもしれません。しかし、物が増えると、部屋が狭くなったり、必要な物が見つからなくなったりします。そのため、あまり使わない物を減らし、本当に必要な物だけを持とうとする人が増えています。\n\nもちろん、何でも捨てればいいというわけではありません。大切なのは、自分の生活に何が必要かを考えることです。例えば、読まなくなった本を売ったり、使っていない服を人にあげたりすることで、物を無駄にせずに減らすことができます。\n\n物を減らすと、掃除がしやすくなるだけでなく、気持ちもすっきりするという人もいます。必要な物がすぐ見つかるため、時間の節約にもなります。物を少なくする生活は、単に部屋をきれいにすることではなく、自分の時間や気持ちを大切にする方法の一つだと言えるでしょう。",
+            "question": "筆者は、物を減らすときに何が大切だと言っていますか。",
+            "options": [
+                  "高い物から捨てること",
+                  "自分の生活に何が必要か考えること",
+                  "新しい物をたくさん買うこと",
+                  "全部の物をすぐ捨てること"
+            ],
+            "answer": "自分の生活に何が必要か考えること",
+            "explanation": "第2段落に「大切なのは、自分の生活に何が必要かを考えることです」と明確に書かれている。"
+      },
+      {
+            "category": "Bacaan Panjang",
+            "passage": "最近、若い人の間で「物を持ちすぎない生活」が注目されています。以前は、便利な物をたくさん持つことが豊かな生活だと考える人が多かったかもしれません。しかし、物が増えると、部屋が狭くなったり、必要な物が見つからなくなったりします。そのため、あまり使わない物を減らし、本当に必要な物だけを持とうとする人が増えています。\n\nもちろん、何でも捨てればいいというわけではありません。大切なのは、自分の生活に何が必要かを考えることです。例えば、読まなくなった本を売ったり、使っていない服を人にあげたりすることで、物を無駄にせずに減らすことができます。\n\n物を減らすと、掃除がしやすくなるだけでなく、気持ちもすっきりするという人もいます。必要な物がすぐ見つかるため、時間の節約にもなります。物を少なくする生活は、単に部屋をきれいにすることではなく、自分の時間や気持ちを大切にする方法の一つだと言えるでしょう。",
+            "question": "本文全体の内容に最も合っているものはどれですか。",
+            "options": [
+                  "物を少なくする生活は、自分の時間や気持ちを大切にする方法でもある",
+                  "便利な物はできるだけ多く買うべきだ",
+                  "物を減らすには、すべて捨てるしかない",
+                  "若い人は掃除が嫌いなので物を持たない"
+            ],
+            "answer": "物を少なくする生活は、自分の時間や気持ちを大切にする方法でもある",
+            "explanation": "最後の文に近い内容で、本文全体の主旨を最もよく表している。"
+      },
+      {
+            "category": "Bacaan Panjang",
+            "passage": "インターネットで買い物をする人が増えています。家にいながら商品を選べるし、店より安く買えることもあります。また、他の人のレビューを読んでから買うことができるので、便利だと感じる人も多いでしょう。\n\nしかし、インターネットの買い物には注意も必要です。写真ではよく見えた商品が、届いてみると思っていたものと違うことがあります。また、レビューがすべて正しいとは限りません。中には、商品をよく見せるために書かれたものもあるかもしれません。\n\nそのため、買う前には商品の説明をよく読み、返品できるかどうかも確認しておくことが大切です。安いからという理由だけで急いで買うと、後で困ることがあります。便利さを上手に使うためには、情報をよく確かめる習慣が必要です。",
+            "question": "インターネットで買い物をする利点として本文にあるものはどれですか。",
+            "options": [
+                  "家にいながら商品を選べる",
+                  "必ず店より品質がいい",
+                  "返品しなくてもよい",
+                  "レビューは全部正しい"
+            ],
+            "answer": "家にいながら商品を選べる",
+            "explanation": "第1段落に「家にいながら商品を選べる」と書かれている。"
+      },
+      {
+            "category": "Bacaan Panjang",
+            "passage": "インターネットで買い物をする人が増えています。家にいながら商品を選べるし、店より安く買えることもあります。また、他の人のレビューを読んでから買うことができるので、便利だと感じる人も多いでしょう。\n\nしかし、インターネットの買い物には注意も必要です。写真ではよく見えた商品が、届いてみると思っていたものと違うことがあります。また、レビューがすべて正しいとは限りません。中には、商品をよく見せるために書かれたものもあるかもしれません。\n\nそのため、買う前には商品の説明をよく読み、返品できるかどうかも確認しておくことが大切です。安いからという理由だけで急いで買うと、後で困ることがあります。便利さを上手に使うためには、情報をよく確かめる習慣が必要です。",
+            "question": "筆者が一番言いたいことは何ですか。",
+            "options": [
+                  "ネットの買い物は便利だが、情報をよく確かめることが大切だ",
+                  "ネットでは安い商品だけを買うべきだ",
+                  "レビューが多い商品は必ずよい商品だ",
+                  "ネットの買い物は危険なのでやめるべきだ"
+            ],
+            "answer": "ネットの買い物は便利だが、情報をよく確かめることが大切だ",
+            "explanation": "本文は便利さを認めたうえで、説明や返品条件を確認する必要があると述べている。最後の文が主旨である。"
+      },
+      {
+            "category": "情報検索・ポスター",
+            "passage": "【市民スポーツ教室】\n日時：7月14日（日）午前9時〜11時\n場所：中央体育館\n内容：初心者向けヨガ教室\n対象：中学生以上\n参加費：500円\n持ち物：タオル、飲み物、動きやすい服\n申し込み：7月10日（水）までに市役所スポーツ課へ電話\n※定員20名。定員になり次第、受付終了。",
+            "question": "この教室に参加したい人は、いつまでに申し込まなければなりませんか。",
+            "options": [
+                  "7月10日",
+                  "7月14日",
+                  "午前9時",
+                  "定員20名になった後"
+            ],
+            "answer": "7月10日",
+            "explanation": "ポスターに「申し込み：7月10日（水）まで」とある。"
+      },
+      {
+            "category": "情報検索・ポスター",
+            "passage": "【市民スポーツ教室】\n日時：7月14日（日）午前9時〜11時\n場所：中央体育館\n内容：初心者向けヨガ教室\n対象：中学生以上\n参加費：500円\n持ち物：タオル、飲み物、動きやすい服\n申し込み：7月10日（水）までに市役所スポーツ課へ電話\n※定員20名。定員になり次第、受付終了。",
+            "question": "この教室について正しいものはどれですか。",
+            "options": [
+                  "小学生なら誰でも参加できる",
+                  "参加費は無料である",
+                  "初心者向けのヨガ教室である",
+                  "申し込みは体育館で直接行う"
+            ],
+            "answer": "初心者向けのヨガ教室である",
+            "explanation": "内容に「初心者向けヨガ教室」とある。対象は中学生以上、参加費は500円、申し込みは電話。"
+      },
+      {
+            "category": "情報検索・ポスター",
+            "passage": "【図書館からのお知らせ】\n8月1日（木）〜8月7日（水）は、図書整理のため休館します。\n休館中、本の返却は入口横の返却ポストをご利用ください。\nただし、CD・DVD・大型絵本は壊れやすいため、返却ポストに入れないでください。開館後、カウンターへ返してください。\n8月8日（木）から通常どおり開館します。",
+            "question": "8月3日に本を返したい人はどうすればいいですか。",
+            "options": [
+                  "カウンターへ返す",
+                  "返却ポストに入れる",
+                  "8月1日に電話する",
+                  "返すことができない"
+            ],
+            "answer": "返却ポストに入れる",
+            "explanation": "休館中でも本は入口横の返却ポストで返却できる。CD・DVD・大型絵本は不可。"
+      },
+      {
+            "category": "情報検索・ポスター",
+            "passage": "【図書館からのお知らせ】\n8月1日（木）〜8月7日（水）は、図書整理のため休館します。\n休館中、本の返却は入口横の返却ポストをご利用ください。\nただし、CD・DVD・大型絵本は壊れやすいため、返却ポストに入れないでください。開館後、カウンターへ返してください。\n8月8日（木）から通常どおり開館します。",
+            "question": "CDを返したい人はどうしなければなりませんか。",
+            "options": [
+                  "休館中に返却ポストへ入れる",
+                  "開館後にカウンターへ返す",
+                  "8月7日に入口へ置く",
+                  "本と一緒にポストへ入れる"
+            ],
+            "answer": "開館後にカウンターへ返す",
+            "explanation": "CD・DVD・大型絵本は返却ポストに入れず、開館後にカウンターへ返すと書かれている。"
+      }
+];
+
+    let quiz = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let wrongAnswers = [];
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz() {
+      // Untuk dokkai, urutan soal tidak diacak supaya urutan bacaan tetap rapi.
+      quiz = originalQuiz.map(q => ({
+        ...q,
+        options: shuffleArray(q.options)
+      }));
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      wrongAnswers = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = quiz[currentQuestion];
+
+      document.getElementById("categoryTag").innerText = q.category;
+      document.getElementById("progress").innerHTML =
+        "Soal " + (currentQuestion + 1) + " dari " + quiz.length;
+
+      document.getElementById("passage").innerText = q.passage;
+      document.getElementById("question").innerText = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+
+      q.options.forEach(function(option, index) {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.innerText = String.fromCharCode(65 + index) + ". " + option;
+        btn.dataset.option = option;
+        btn.onclick = function() {
+          checkAnswer(btn, option);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, selected) {
+      if (answered) return;
+
+      answered = true;
+      const q = quiz[currentQuestion];
+      const allButtons = document.querySelectorAll(".option");
+
+      allButtons.forEach(function(btn) {
+        btn.disabled = true;
+        if (btn.dataset.option === q.answer) {
+          btn.classList.add("correct");
+        }
+      });
+
+      if (selected === q.answer) {
+        score++;
+        button.classList.add("correct");
+        document.getElementById("feedback").innerHTML =
+          "正解！ Benar!<br>" + q.explanation;
+      } else {
+        button.classList.add("wrong");
+        wrongAnswers.push({
+          category: q.category,
+          question: q.question,
+          selected: selected,
+          answer: q.answer,
+          explanation: q.explanation
+        });
+
+        document.getElementById("feedback").innerHTML =
+          "不正解。Salah. Jawaban yang benar adalah: <strong>" + q.answer + "</strong><br>" + q.explanation;
+      }
+
+      document.getElementById("score").innerHTML =
+        "Skor sementara: " + score + " / " + quiz.length;
+    }
+
+    function nextQuestion() {
+      if (!answered) {
+        alert("Pilih jawaban dulu sebelum lanjut.");
+        return;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quiz.length) {
+        showQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const percentage = (score / quiz.length) * 100;
+      let message = "";
+
+      if (percentage >= 90) {
+        message = "すごい！ Kemampuan dokkai N3 kamu sangat kuat.";
+      } else if (percentage >= 75) {
+        message = "いいですね！ Bagus. Kamu cukup kuat, tinggal melatih kecepatan membaca dan menangkap detail.";
+      } else if (percentage >= 60) {
+        message = "もう少し！ Cukup baik. Latih lagi cara mencari informasi kunci dan memahami maksud penulis.";
+      } else {
+        message = "頑張って！ Perlu latihan lagi membaca ide utama, detail, dan informasi poster.";
+      }
+
+      let reviewHtml = "";
+
+      if (wrongAnswers.length > 0) {
+        reviewHtml = `
+          <div class="review">
+            <h3>Review Jawaban Salah</h3>
+            ${wrongAnswers.map((item, index) => `
+              <div class="review-item">
+                <strong>${index + 1}. [${item.category}] ${item.question}</strong><br>
+                Jawaban kamu: ${item.selected}<br>
+                Jawaban benar: <strong>${item.answer}</strong><br>
+                ${item.explanation}
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else {
+        reviewHtml = `
+          <div class="review">
+            <h3>完璧！ Semua jawaban benar.</h3>
+            <p>Kamu berhasil menjawab semua soal dokkai tanpa kesalahan.</p>
+          </div>
+        `;
+      }
+
+      document.getElementById("quizBox").innerHTML = `
+        <div class="result-box">
+          <div class="decor">🌸 📖 ⛩️</div>
+          <h2>Hasil Akhir</h2>
+          <p>Skor kamu:</p>
+          <div class="result-score">${score} / ${quiz.length}</div>
+          <p>${message}</p>
+          <button id="restartBtn" onclick="location.reload()">Ulangi Kuis</button>
+          ${reviewHtml}
+        </div>
+      `;
+    }
+
+    startQuiz();
+  </script>
+</body>
+</html>
