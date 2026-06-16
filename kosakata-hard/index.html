@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NihongoGO - Kosakata JLPT N3 Hard</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f7f3ea;
+      --paper: #fffdf8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #7c7468;
+      --line: #eadfd2;
+      --red: #c84b31;
+      --red-dark: #a83a26;
+      --indigo: #2f4858;
+      --green: #6f936f;
+      --green-soft: #edf5ec;
+      --wrong: #c76d5e;
+      --wrong-soft: #fff0ed;
+      --shadow: 0 24px 70px rgba(49, 36, 23, 0.12);
+      --soft-shadow: 0 10px 28px rgba(49, 36, 23, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(200, 75, 49, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 72, 88, 0.09), transparent 22%),
+        linear-gradient(135deg, #fbf7ef 0%, var(--bg) 44%, #f1eadf 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(200, 75, 49, 0.12) 1.4px, transparent 1.6px),
+        radial-gradient(circle at 32px 32px, rgba(47, 72, 88, 0.07) 1px, transparent 1.3px);
+      background-size: 48px 48px;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: 760px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 210px;
+      opacity: 0.65;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(47, 72, 88, 0.08) 59% 62%, transparent 63%) 0 0 / 64px 38px repeat-x,
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(200, 75, 49, 0.08) 59% 62%, transparent 63%) 32px 22px / 64px 38px repeat-x;
+      z-index: -1;
+    }
+
+    .screen {
+      display: none;
+      min-height: 760px;
+      padding: 28px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      margin-bottom: 22px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--indigo);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(47, 72, 88, 0.07);
+    }
+
+    .screen-title {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: #182531;
+      text-align: center;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.08);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .logo-mark svg {
+      width: 27px;
+      height: 27px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-mark .enso-main {
+      fill: none;
+      stroke: #1f2933;
+      stroke-width: 7.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-mark .enso-soft {
+      fill: none;
+      stroke: rgba(31, 41, 51, 0.34);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .logo-mark .enso-red {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      opacity: 0.92;
+    }
+
+    .home-art {
+      position: relative;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 305px;
+      margin: 4px 0 4px;
+    }
+
+    .vertical-copy {
+      position: absolute;
+      left: 8px;
+      top: 22px;
+      writing-mode: vertical-rl;
+      color: rgba(168, 58, 38, 0.78);
+      font-family: "Noto Serif JP", serif;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .mini-card {
+      position: absolute;
+      right: 6px;
+      top: 42px;
+      width: 132px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 12px 28px rgba(49, 36, 23, 0.08);
+      backdrop-filter: blur(10px);
+      text-align: left;
+    }
+
+    .mini-card .seal {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fffdf8;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .home-info-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 255, 255, 0.72)),
+        radial-gradient(circle at 92% 20%, rgba(200, 75, 49, 0.08), transparent 34%);
+      box-shadow: 0 12px 30px rgba(49, 36, 23, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .home-info-item {
+      min-height: 86px;
+      padding: 10px 6px 9px;
+      border-radius: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(234, 223, 210, 0.72);
+    }
+
+    .home-info-item span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.11);
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .home-info-item strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .home-info-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .sakura-branch {
+      position: absolute;
+      right: 15px;
+      bottom: 77px;
+      width: 132px;
+      height: 68px;
+      transform: rotate(-17deg);
+      opacity: 0.92;
+    }
+
+    .sakura-branch::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 34px;
+      height: 2px;
+      background: rgba(92, 70, 56, 0.28);
+      border-radius: 999px;
+    }
+
+    .sakura-branch span {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(200, 75, 49, 0.32);
+      transform: rotate(45deg);
+    }
+
+    .sakura-branch span:nth-child(1) { right: 18px; top: 18px; }
+    .sakura-branch span:nth-child(2) { right: 42px; top: 32px; width: 11px; height: 11px; }
+    .sakura-branch span:nth-child(3) { right: 72px; top: 22px; width: 10px; height: 10px; }
+    .sakura-branch span:nth-child(4) { right: 100px; top: 38px; width: 9px; height: 9px; }
+
+    .sun-circle {
+      position: absolute;
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.24), transparent 20%),
+        linear-gradient(145deg, #e36c50, var(--red));
+      box-shadow: 0 16px 36px rgba(200, 75, 49, 0.22);
+    }
+
+    .torii {
+      position: absolute;
+      top: 156px;
+      left: 50%;
+      width: 112px;
+      height: 96px;
+      transform: translateX(-50%);
+      color: #272727;
+    }
+
+    .torii .beam-main,
+    .torii .beam-top,
+    .torii .beam-mid,
+    .torii .pillar,
+    .torii .base {
+      position: absolute;
+      background: currentColor;
+      border-radius: 3px;
+    }
+
+    .torii .beam-top {
+      left: 4px;
+      right: 4px;
+      top: 8px;
+      height: 9px;
+      transform: rotate(2deg);
+    }
+
+    .torii .beam-main {
+      left: 0;
+      right: 0;
+      top: 21px;
+      height: 10px;
+    }
+
+    .torii .beam-mid {
+      left: 24px;
+      right: 24px;
+      top: 42px;
+      height: 8px;
+    }
+
+    .torii .pillar.left { left: 27px; }
+    .torii .pillar.right { right: 27px; }
+
+    .torii .pillar {
+      top: 30px;
+      width: 9px;
+      height: 66px;
+    }
+
+    .torii .base {
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+    }
+
+    .torii .base.left { left: 20px; }
+    .torii .base.right { right: 20px; }
+
+    .mist {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      width: 270px;
+      height: 78px;
+      transform: translateX(-50%);
+      opacity: 1;
+      overflow: hidden;
+      border-radius: 0 0 120px 120px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0) 0%, rgba(255, 253, 248, 0.88) 38%, rgba(247, 243, 234, 0.28) 100%),
+        radial-gradient(ellipse at 50% 78%, rgba(47, 72, 88, 0.09), transparent 68%);
+      filter: none;
+    }
+
+    .mist::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 11px;
+      height: 56px;
+      opacity: 0.9;
+      background:
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(47, 72, 88, 0.15) 58% 61%, transparent 62%) 0 0 / 54px 31px repeat-x,
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(200, 75, 49, 0.13) 58% 61%, transparent 62%) 27px 16px / 54px 31px repeat-x;
+    }
+
+    .mist::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(47, 72, 88, 0.26), transparent);
+    }
+
+    .brand {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #172434;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(42px, 11vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 10px auto 22px;
+      max-width: 245px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--red-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(200, 75, 49, 0.45);
+    }
+
+    .home-chips {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: -6px 0 22px;
+    }
+
+    .home-chips span {
+      padding: 7px 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #5f5a52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, var(--red), #dc4b36);
+      box-shadow: 0 12px 26px rgba(200, 75, 49, 0.24);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(200, 75, 49, 0.28);
+    }
+
+    .ghost-btn {
+      border: 1.5px solid var(--red);
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .ghost-btn:hover {
+      background: rgba(200, 75, 49, 0.07);
+    }
+
+    .home-footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #5f5a52;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 0.45em;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(234, 223, 210, 0.8);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #dc5642);
+      transition: width 0.25s ease;
+    }
+
+    .question-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.82)),
+        radial-gradient(circle at 100% 100%, rgba(200, 75, 49, 0.08), transparent 30%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px 28px;
+      min-height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -18px;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      border: 18px solid rgba(200, 75, 49, 0.08);
+    }
+
+    .question-card::after {
+      content: "";
+      position: absolute;
+      width: 46px;
+      height: 2px;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: var(--red);
+      border-radius: 999px;
+    }
+
+    .question {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 36, 23, 0.035);
+      transition: 0.16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(200, 75, 49, 0.55);
+      background: #fffafa;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .choice-letter {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f2ede6;
+      color: #5d5750;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected {
+      border-color: var(--red);
+      background: rgba(200, 75, 49, 0.055);
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #315a31;
+    }
+
+    .option.correct .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #8d342a;
+    }
+
+    .option.wrong .choice-letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .meta-right {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .level-label {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.055);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin-top: 18px;
+      min-height: 52px;
+      flex: 0 0 auto;
+    }
+
+    .feedback-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card::after,
+    .result-art::after,
+    .review-screen::after {
+      content: "✿ ✿ ✿";
+      position: absolute;
+      right: 22px;
+      bottom: 42px;
+      color: rgba(200, 75, 49, 0.34);
+      transform: rotate(-18deg);
+      font-size: 24px;
+      letter-spacing: 8px;
+      pointer-events: none;
+    }
+
+    .status-ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 47px;
+      margin-bottom: 28px;
+      border: 12px solid;
+    }
+
+    .status-ring.correct-state {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: rgba(111, 147, 111, 0.18);
+    }
+
+    .status-ring.wrong-state {
+      color: var(--wrong);
+      background: var(--wrong-soft);
+      border-color: rgba(199, 109, 94, 0.18);
+    }
+
+    .feedback-title {
+      margin: 0;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .feedback-title.correct-text {
+      color: var(--green);
+    }
+
+    .feedback-explanation {
+      margin: 14px 0 32px;
+      color: #453f38;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    .result-art {
+      position: relative;
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      margin: 10px 0 4px;
+    }
+
+    .fuji {
+      position: relative;
+      width: 230px;
+      height: 165px;
+    }
+
+    .fuji .sun-small {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 124px;
+      height: 124px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e36c50, var(--red));
+      opacity: 0.92;
+    }
+
+    .fuji .mountain {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      width: 172px;
+      height: 112px;
+      transform: translateX(-50%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      background: linear-gradient(145deg, #fcfcfb 0 24%, #57636b 25% 64%, #2f4858 100%);
+      box-shadow: 0 18px 26px rgba(47, 72, 88, 0.2);
+    }
+
+    .fuji .ground {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      height: 2px;
+      background: rgba(47, 72, 88, 0.2);
+    }
+
+    .result-heading {
+      text-align: center;
+      margin: 4px 0 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 22px;
+    }
+
+    .result-score {
+      text-align: center;
+      margin: 10px 0 6px;
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 58px;
+      line-height: 1;
+    }
+
+    .result-message {
+      text-align: center;
+      color: #443f38;
+      line-height: 1.6;
+      margin: 0 auto 22px;
+      max-width: 310px;
+    }
+
+    .stats-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 18px 0 18px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.82);
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 20px;
+      color: #253746;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 12px;
+      padding-bottom: 22px;
+    }
+
+    .review-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 6px 18px rgba(49, 36, 23, 0.04);
+    }
+
+    .review-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #2d3338;
+    }
+
+    .badge {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .badge.ok { background: var(--green); }
+    .badge.no { background: var(--wrong); }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: var(--green);
+    }
+
+    .legend span:nth-child(2)::before {
+      background: var(--wrong);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .phone-frame {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        padding: 24px 20px;
+      }
+
+      .brand h1 {
+        font-size: 48px;
+      }
+
+      .home-info-panel {
+        margin-bottom: 20px;
+      }
+
+      .question-card {
+        min-height: 220px;
+      }
+    }
+
+
+    /* Tambahan saja: animasi ✓ dan × disamakan seperti versi sebelumnya, tanpa mengubah desain utama */
+    .feedback-card.feedback-animate {
+      animation: cardSoftEnter 0.46s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .status-ring {
+      position: relative;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      overflow: visible;
+      transform-origin: center;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.72);
+      will-change: transform, opacity, box-shadow;
+    }
+
+    .status-ring .status-symbol {
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      text-align: center;
+      font-weight: 900;
+      transform-origin: center;
+    }
+
+    .status-ring .symbol-correct {
+      font-size: 40px;
+      transform: translateY(-1px);
+    }
+
+    .status-ring .symbol-wrong {
+      font-size: 43px;
+      transform: translateY(-4px);
+    }
+
+    .feedback-card.feedback-animate .status-ring {
+      animation: iconPop 0.58s cubic-bezier(.22, 1.35, .36, 1) 0.12s both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.correct-state {
+      animation-name: iconPop, correctPulse;
+      animation-duration: 0.58s, 0.82s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.wrong-state {
+      animation-name: iconPop, wrongShake;
+      animation-duration: 0.58s, 0.38s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-in-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title,
+    .feedback-card.feedback-animate .feedback-explanation,
+    .feedback-card.feedback-animate #nextBtn {
+      animation: fadeSlideUp 0.42s ease-out both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title { animation-delay: 0.20s; }
+    .feedback-card.feedback-animate .feedback-explanation { animation-delay: 0.30s; }
+    .feedback-card.feedback-animate #nextBtn { animation-delay: 0.40s; }
+
+    .option.correct {
+      animation: optionCorrect 0.45s ease-out both;
+    }
+
+    .option.wrong {
+      animation: optionWrong 0.38s ease-in-out both;
+    }
+
+    .badge.ok,
+    .badge.no {
+      line-height: 1;
+    }
+
+    .badge.no {
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    @keyframes cardSoftEnter {
+      0% { opacity: 0; transform: translateY(18px) scale(0.975); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes iconPop {
+      0% { opacity: 0; transform: scale(0.58) rotate(-8deg); }
+      68% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes correctPulse {
+      0% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 0 rgba(111,147,111,.24); }
+      100% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 20px rgba(111,147,111,0); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0) scale(1); }
+      22% { transform: translateX(-5px) scale(1.01); }
+      48% { transform: translateX(5px) scale(1.01); }
+      72% { transform: translateX(-3px) scale(1.005); }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes optionCorrect {
+      0% { transform: scale(1); }
+      52% { transform: scale(1.018); box-shadow: 0 10px 20px rgba(111,147,111,.14); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes optionWrong {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feedback-card.feedback-animate,
+      .feedback-card.feedback-animate .status-ring,
+      .feedback-card.feedback-animate .status-ring.correct-state,
+      .feedback-card.feedback-animate .status-ring.wrong-state,
+      .feedback-card.feedback-animate .feedback-title,
+      .feedback-card.feedback-animate .feedback-explanation,
+      .feedback-card.feedback-animate #nextBtn,
+      .option.correct,
+      .option.wrong {
+        animation: none !important;
+      }
+    }
+
+
+    /* Tambahan: kanji berada di bawah kalimat soal yomikata */
+    .question {
+      white-space: pre-line;
+    }
+
+
+    /* Tambahan saja: target kosakata di dalam 「 」 tampil di bawah pertanyaan */
+    .question {
+      white-space: pre-line;
+    }
+
+  </style>
+</head>
+
+<body>
+  <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
+    <section class="screen active" id="startScreen">
+      <div class="home-art" aria-hidden="true">
+        <div class="vertical-copy">クイズを楽しんで<br>知識を深めましょう。</div>
+        <div class="sun-circle"></div>
+        <div class="torii">
+          <span class="beam-top"></span>
+          <span class="beam-main"></span>
+          <span class="beam-mid"></span>
+          <span class="pillar left"></span>
+          <span class="pillar right"></span>
+          <span class="base left"></span>
+          <span class="base right"></span>
+        </div>
+        <div class="mist"></div>
+        <div class="sakura-branch"><span></span><span></span><span></span><span></span></div>
+      </div>
+
+      <div class="home-info-panel" aria-label="Informasi kuis">
+        <div class="home-info-item">
+          <span>N3</span>
+          <strong>Kosakata N3</strong>
+          <small>Level hard</small>
+        </div>
+        <div class="home-info-item">
+          <span>語彙</span>
+          <strong>Kosakata</strong>
+          <small>Level Hard</small>
+        </div>
+        <div class="home-info-item">
+          <span>難</span>
+          <strong>Hard</strong>
+          <small>Pilihan mirip</small>
+        </div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-mark">Kosakata N3 Hard</div>
+        <h1>NihongoGO</h1>
+        <p>Latihan 100 soal kosakata JLPT N3 level hard dengan pilihan jawaban yang mirip dan menantang.</p>
+        <div class="home-chips">
+          <span>語彙 Kosakata</span>
+          <span>意味 Arti</span>
+          <span>Level Hard</span>
+        </div>
+        <button class="primary-btn" type="button" onclick="startQuiz()">Mulai Kuis&nbsp; →</button>
+        <div class="home-footer">日本語を学ぼう</div>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
+        <h2 class="screen-title">Kuis Kosakata</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="meta-row">
+        <span id="progressText">Soal 1 dari 100</span>
+        <div class="meta-right">
+          <span class="level-label">Kosakata N3 Hard</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 100</span>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="question-card">
+        <p class="question" id="questionText"></p>
+      </article>
+
+      <div class="options" id="optionsBox"></div>
+
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
+    </section>
+
+    <section class="screen" id="feedbackScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
+        <h2 class="screen-title">Kuis Kosakata</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="status-ring" id="statusRing"><span class="status-symbol symbol-correct">✓</span></div>
+        <h2 class="feedback-title" id="feedbackTitle">Benar!</h2>
+        <p class="feedback-explanation" id="feedbackExplanation"></p>
+        <button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya&nbsp; →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="topbar">
+        <span></span>
+        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="result-art" aria-hidden="true">
+        <div class="fuji">
+          <div class="sun-small"></div>
+          <div class="mountain"></div>
+          <div class="ground"></div>
+        </div>
+      </div>
+
+      <h2 class="result-heading">Skor Kamu</h2>
+      <div class="result-score" id="finalScore">0 / 100</div>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="stats-card">
+        <div class="stat">
+          ✓ <strong id="correctCount">0</strong>
+          <span>Benar</span>
+        </div>
+        <div class="stat">
+          × <strong id="incorrectCount">0</strong>
+          <span>Salah</span>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="ghost-btn" type="button" onclick="showReview()">Lihat Jawaban</button>
+        <button class="primary-btn" type="button" onclick="restartQuiz()">Kembali ke Awal</button>
+      </div>
+    </section>
+
+    <section class="screen review-screen" id="reviewScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
+        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+      <div class="legend">
+        <span>Benar</span>
+        <span>Salah</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const quiz = [
+      {
+            "question": "意味はどれですか。\n「態度」",
+            "options": [
+                  "sikap",
+                  "aturan resmi",
+                  "alat tulis",
+                  "tujuan akhir"
+            ],
+            "answer": "sikap",
+            "explanation": "「態度」 berarti sikap atau cara seseorang menunjukkan perasaan/pendapat."
+      },
+      {
+            "question": "意味はどれですか。\n「特徴」",
+            "options": [
+                  "ciri khas",
+                  "kesalahan kecil",
+                  "biaya tambahan",
+                  "hubungan keluarga"
+            ],
+            "answer": "ciri khas",
+            "explanation": "「特徴」 berarti ciri khas atau karakteristik."
+      },
+      {
+            "question": "意味はどれですか。\n「状態」",
+            "options": [
+                  "keadaan",
+                  "perintah",
+                  "kerugian",
+                  "jadwal"
+            ],
+            "answer": "keadaan",
+            "explanation": "「状態」 berarti keadaan atau kondisi."
+      },
+      {
+            "question": "意味はどれですか。\n「現象」",
+            "options": [
+                  "fenomena",
+                  "alat ukur",
+                  "kebiasaan makan",
+                  "pengiriman"
+            ],
+            "answer": "fenomena",
+            "explanation": "「現象」 berarti fenomena atau gejala yang terlihat."
+      },
+      {
+            "question": "意味はどれですか。\n「傾向」",
+            "options": [
+                  "kecenderungan",
+                  "penjelasan rinci",
+                  "tempat tinggal",
+                  "jumlah uang"
+            ],
+            "answer": "kecenderungan",
+            "explanation": "「傾向」 berarti kecenderungan atau tren."
+      },
+      {
+            "question": "意味はどれですか。\n「意識」",
+            "options": [
+                  "kesadaran",
+                  "kesempatan kerja",
+                  "perlengkapan",
+                  "permintaan maaf"
+            ],
+            "answer": "kesadaran",
+            "explanation": "「意識」 berarti kesadaran atau perhatian terhadap sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「意見」",
+            "options": [
+                  "pendapat",
+                  "pemeriksaan",
+                  "perubahan cuaca",
+                  "batas waktu"
+            ],
+            "answer": "pendapat",
+            "explanation": "「意見」 berarti pendapat."
+      },
+      {
+            "question": "意味はどれですか。\n「判断」",
+            "options": [
+                  "penilaian/keputusan",
+                  "rasa lapar",
+                  "pemandangan",
+                  "alat komunikasi"
+            ],
+            "answer": "penilaian/keputusan",
+            "explanation": "「判断」 berarti menilai lalu memutuskan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「主張」",
+            "options": [
+                  "pendapat/argumen yang ditegaskan",
+                  "biaya masuk",
+                  "jadwal kerja",
+                  "pengaruh cuaca"
+            ],
+            "answer": "pendapat/argumen yang ditegaskan",
+            "explanation": "「主張」 berarti klaim atau pendapat yang ditegaskan."
+      },
+      {
+            "question": "意味はどれですか。\n「価値」",
+            "options": [
+                  "nilai",
+                  "kecepatan",
+                  "liburan",
+                  "alamat"
+            ],
+            "answer": "nilai",
+            "explanation": "「価値」 berarti nilai atau worth."
+      },
+      {
+            "question": "意味はどれですか。\n「評価」",
+            "options": [
+                  "evaluasi/penilaian",
+                  "pemesanan tiket",
+                  "perjalanan bisnis",
+                  "suhu udara"
+            ],
+            "answer": "evaluasi/penilaian",
+            "explanation": "「評価」 berarti evaluasi atau penilaian terhadap sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「影響」",
+            "options": [
+                  "pengaruh",
+                  "pembayaran",
+                  "pemandangan",
+                  "perjalanan"
+            ],
+            "answer": "pengaruh",
+            "explanation": "「影響」 berarti pengaruh."
+      },
+      {
+            "question": "意味はどれですか。\n「刺激」",
+            "options": [
+                  "rangsangan/stimulus",
+                  "penurunan harga",
+                  "upacara kelulusan",
+                  "ruang tunggu"
+            ],
+            "answer": "rangsangan/stimulus",
+            "explanation": "「刺激」 berarti rangsangan atau stimulus."
+      },
+      {
+            "question": "意味はどれですか。\n「変化」",
+            "options": [
+                  "perubahan",
+                  "kesalahan cetak",
+                  "penginapan",
+                  "kebakaran"
+            ],
+            "answer": "perubahan",
+            "explanation": "「変化」 berarti perubahan."
+      },
+      {
+            "question": "意味はどれですか。\n「改善」",
+            "options": [
+                  "perbaikan",
+                  "kerusakan",
+                  "pembatalan",
+                  "penerimaan tamu"
+            ],
+            "answer": "perbaikan",
+            "explanation": "「改善」 berarti perbaikan ke arah lebih baik."
+      },
+      {
+            "question": "意味はどれですか。\n「解決」",
+            "options": [
+                  "penyelesaian masalah",
+                  "penyebab masalah",
+                  "perjalanan pulang",
+                  "jumlah peserta"
+            ],
+            "answer": "penyelesaian masalah",
+            "explanation": "「解決」 berarti menyelesaikan masalah."
+      },
+      {
+            "question": "意味はどれですか。\n「発展」",
+            "options": [
+                  "perkembangan",
+                  "pengurangan",
+                  "pertemuan rahasia",
+                  "pakaian formal"
+            ],
+            "answer": "perkembangan",
+            "explanation": "「発展」 berarti perkembangan atau kemajuan."
+      },
+      {
+            "question": "意味はどれですか。\n「成長」",
+            "options": [
+                  "pertumbuhan/perkembangan",
+                  "penurunan",
+                  "penggantian barang",
+                  "pemandu wisata"
+            ],
+            "answer": "pertumbuhan/perkembangan",
+            "explanation": "「成長」 berarti tumbuh atau berkembang."
+      },
+      {
+            "question": "意味はどれですか。\n「進歩」",
+            "options": [
+                  "kemajuan",
+                  "keraguan",
+                  "perintah",
+                  "tempat parkir"
+            ],
+            "answer": "kemajuan",
+            "explanation": "「進歩」 berarti kemajuan."
+      },
+      {
+            "question": "意味はどれですか。\n「進学」",
+            "options": [
+                  "melanjutkan sekolah",
+                  "mencari kerja",
+                  "pindah rumah",
+                  "berlibur"
+            ],
+            "answer": "melanjutkan sekolah",
+            "explanation": "「進学」 berarti melanjutkan pendidikan ke jenjang berikutnya."
+      },
+      {
+            "question": "意味はどれですか。\n「就職」",
+            "options": [
+                  "mendapat pekerjaan",
+                  "lulus sekolah",
+                  "berhenti sekolah",
+                  "mengikuti ujian"
+            ],
+            "answer": "mendapat pekerjaan",
+            "explanation": "「就職」 berarti mulai bekerja atau mendapatkan pekerjaan."
+      },
+      {
+            "question": "意味はどれですか。\n「採用」",
+            "options": [
+                  "perekrutan/penerimaan",
+                  "pengunduran diri",
+                  "kenaikan harga",
+                  "penundaan acara"
+            ],
+            "answer": "perekrutan/penerimaan",
+            "explanation": "「採用」 berarti perekrutan atau penerimaan seseorang/ide."
+      },
+      {
+            "question": "意味はどれですか。\n「面接」",
+            "options": [
+                  "wawancara",
+                  "rapat umum",
+                  "pengumuman nilai",
+                  "latihan fisik"
+            ],
+            "answer": "wawancara",
+            "explanation": "「面接」 berarti wawancara, terutama untuk kerja/sekolah."
+      },
+      {
+            "question": "意味はどれですか。\n「履歴書」",
+            "options": [
+                  "daftar riwayat hidup",
+                  "surat undangan",
+                  "bukti pembayaran",
+                  "jadwal pelajaran"
+            ],
+            "answer": "daftar riwayat hidup",
+            "explanation": "「履歴書」 berarti CV/resume."
+      },
+      {
+            "question": "意味はどれですか。\n「給料」",
+            "options": [
+                  "gaji",
+                  "biaya masuk",
+                  "uang kembalian",
+                  "hadiah"
+            ],
+            "answer": "gaji",
+            "explanation": "「給料」 berarti gaji."
+      },
+      {
+            "question": "意味はどれですか。\n「収入」",
+            "options": [
+                  "pendapatan",
+                  "pengeluaran",
+                  "tabungan",
+                  "pinjaman"
+            ],
+            "answer": "pendapatan",
+            "explanation": "「収入」 berarti pemasukan atau pendapatan."
+      },
+      {
+            "question": "意味はどれですか。\n「支出」",
+            "options": [
+                  "pengeluaran",
+                  "pendapatan",
+                  "keuntungan",
+                  "diskon"
+            ],
+            "answer": "pengeluaran",
+            "explanation": "「支出」 berarti uang yang dikeluarkan."
+      },
+      {
+            "question": "意味はどれですか。\n「節約」",
+            "options": [
+                  "penghematan",
+                  "pemborosan",
+                  "peminjaman",
+                  "pembayaran denda"
+            ],
+            "answer": "penghematan",
+            "explanation": "「節約」 berarti hemat/penghematan."
+      },
+      {
+            "question": "意味はどれですか。\n「消費」",
+            "options": [
+                  "konsumsi/penggunaan",
+                  "produksi",
+                  "penyimpanan",
+                  "pembatalan"
+            ],
+            "answer": "konsumsi/penggunaan",
+            "explanation": "「消費」 berarti konsumsi atau penggunaan barang/energi/uang."
+      },
+      {
+            "question": "意味はどれですか。\n「商品」",
+            "options": [
+                  "barang dagangan/produk",
+                  "ruang rapat",
+                  "biaya kuliah",
+                  "tujuan wisata"
+            ],
+            "answer": "barang dagangan/produk",
+            "explanation": "「商品」 berarti produk atau barang dagangan."
+      },
+      {
+            "question": "意味はどれですか。\n「品質」",
+            "options": [
+                  "kualitas",
+                  "jumlah",
+                  "harga tiket",
+                  "pengiriman"
+            ],
+            "answer": "kualitas",
+            "explanation": "「品質」 berarti kualitas barang/jasa."
+      },
+      {
+            "question": "意味はどれですか。\n「価格」",
+            "options": [
+                  "harga",
+                  "kualitas",
+                  "pendapat",
+                  "aturan"
+            ],
+            "answer": "harga",
+            "explanation": "「価格」 berarti harga."
+      },
+      {
+            "question": "意味はどれですか。\n「割引」",
+            "options": [
+                  "diskon",
+                  "pajak",
+                  "deposit",
+                  "biaya tambahan"
+            ],
+            "answer": "diskon",
+            "explanation": "「割引」 berarti potongan harga/diskon."
+      },
+      {
+            "question": "意味はどれですか。\n「返品」",
+            "options": [
+                  "pengembalian barang",
+                  "pemesanan ulang",
+                  "pengiriman cepat",
+                  "pembayaran tunai"
+            ],
+            "answer": "pengembalian barang",
+            "explanation": "「返品」 berarti mengembalikan barang yang dibeli."
+      },
+      {
+            "question": "意味はどれですか。\n「交換」",
+            "options": [
+                  "penukaran",
+                  "pembatalan",
+                  "peminjaman",
+                  "pengurangan"
+            ],
+            "answer": "penukaran",
+            "explanation": "「交換」 berarti menukar sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「請求」",
+            "options": [
+                  "tagihan/permintaan pembayaran",
+                  "diskon besar",
+                  "kartu anggota",
+                  "garansi"
+            ],
+            "answer": "tagihan/permintaan pembayaran",
+            "explanation": "「請求」 berarti tagihan atau tuntutan pembayaran/permintaan resmi."
+      },
+      {
+            "question": "意味はどれですか。\n「保証」",
+            "options": [
+                  "garansi/jaminan",
+                  "kerusakan",
+                  "kekurangan",
+                  "penjelasan"
+            ],
+            "answer": "garansi/jaminan",
+            "explanation": "「保証」 berarti jaminan atau garansi."
+      },
+      {
+            "question": "意味はどれですか。\n「契約」",
+            "options": [
+                  "kontrak/perjanjian",
+                  "percakapan ringan",
+                  "pelatihan singkat",
+                  "perjalanan jauh"
+            ],
+            "answer": "kontrak/perjanjian",
+            "explanation": "「契約」 berarti kontrak atau perjanjian resmi."
+      },
+      {
+            "question": "意味はどれですか。\n「条件」",
+            "options": [
+                  "syarat/kondisi",
+                  "hasil akhir",
+                  "alamat baru",
+                  "alat bantu"
+            ],
+            "answer": "syarat/kondisi",
+            "explanation": "「条件」 berarti syarat atau kondisi."
+      },
+      {
+            "question": "意味はどれですか。\n「制限」",
+            "options": [
+                  "pembatasan",
+                  "kebebasan penuh",
+                  "penawaran",
+                  "penemuan"
+            ],
+            "answer": "pembatasan",
+            "explanation": "「制限」 berarti pembatasan."
+      },
+      {
+            "question": "意味はどれですか。\n「禁止」",
+            "options": [
+                  "larangan",
+                  "izin",
+                  "saran",
+                  "pembukaan"
+            ],
+            "answer": "larangan",
+            "explanation": "「禁止」 berarti larangan."
+      },
+      {
+            "question": "意味はどれですか。\n「許可」",
+            "options": [
+                  "izin",
+                  "larangan",
+                  "hukuman",
+                  "kesalahan"
+            ],
+            "answer": "izin",
+            "explanation": "「許可」 berarti izin."
+      },
+      {
+            "question": "意味はどれですか。\n「責任」",
+            "options": [
+                  "tanggung jawab",
+                  "kesempatan",
+                  "keuntungan",
+                  "keterlambatan"
+            ],
+            "answer": "tanggung jawab",
+            "explanation": "「責任」 berarti tanggung jawab."
+      },
+      {
+            "question": "意味はどれですか。\n「義務」",
+            "options": [
+                  "kewajiban",
+                  "hak istimewa",
+                  "kebetulan",
+                  "rasa terima kasih"
+            ],
+            "answer": "kewajiban",
+            "explanation": "「義務」 berarti kewajiban."
+      },
+      {
+            "question": "意味はどれですか。\n「権利」",
+            "options": [
+                  "hak",
+                  "kewajiban",
+                  "aturan kelas",
+                  "biaya"
+            ],
+            "answer": "hak",
+            "explanation": "「権利」 berarti hak."
+      },
+      {
+            "question": "意味はどれですか。\n「法律」",
+            "options": [
+                  "hukum/undang-undang",
+                  "kebiasaan pribadi",
+                  "peralatan rumah",
+                  "hadiah"
+            ],
+            "answer": "hukum/undang-undang",
+            "explanation": "「法律」 berarti hukum atau undang-undang."
+      },
+      {
+            "question": "意味はどれですか。\n「違反」",
+            "options": [
+                  "pelanggaran",
+                  "persetujuan",
+                  "perbaikan",
+                  "perayaan"
+            ],
+            "answer": "pelanggaran",
+            "explanation": "「違反」 berarti pelanggaran aturan."
+      },
+      {
+            "question": "意味はどれですか。\n「犯罪」",
+            "options": [
+                  "kejahatan",
+                  "kesalahan kecil",
+                  "keberhasilan",
+                  "pengalaman"
+            ],
+            "answer": "kejahatan",
+            "explanation": "「犯罪」 berarti kejahatan."
+      },
+      {
+            "question": "意味はどれですか。\n「被害」",
+            "options": [
+                  "kerugian/korban dampak",
+                  "keuntungan",
+                  "bantuan",
+                  "pelatihan"
+            ],
+            "answer": "kerugian/korban dampak",
+            "explanation": "「被害」 berarti kerugian atau dampak buruk yang dialami korban."
+      },
+      {
+            "question": "意味はどれですか。\n「防止」",
+            "options": [
+                  "pencegahan",
+                  "pengumuman",
+                  "pemindahan",
+                  "pengiriman"
+            ],
+            "answer": "pencegahan",
+            "explanation": "「防止」 berarti pencegahan."
+      },
+      {
+            "question": "意味はどれですか。\n「避難」",
+            "options": [
+                  "evakuasi/mengungsi",
+                  "kunjungan wisata",
+                  "pemeriksaan nilai",
+                  "pembayaran"
+            ],
+            "answer": "evakuasi/mengungsi",
+            "explanation": "「避難」 berarti evakuasi atau mengungsi ke tempat aman."
+      },
+      {
+            "question": "意味はどれですか。\n「警告」",
+            "options": [
+                  "peringatan",
+                  "perayaan",
+                  "penghargaan",
+                  "penawaran"
+            ],
+            "answer": "peringatan",
+            "explanation": "「警告」 berarti peringatan."
+      },
+      {
+            "question": "意味はどれですか。\n「事故」",
+            "options": [
+                  "kecelakaan",
+                  "acara",
+                  "jadwal",
+                  "pendapat"
+            ],
+            "answer": "kecelakaan",
+            "explanation": "「事故」 berarti kecelakaan."
+      },
+      {
+            "question": "意味はどれですか。\n「災害」",
+            "options": [
+                  "bencana",
+                  "kegiatan",
+                  "diskusi",
+                  "pengiriman"
+            ],
+            "answer": "bencana",
+            "explanation": "「災害」 berarti bencana."
+      },
+      {
+            "question": "意味はどれですか。\n「地震」",
+            "options": [
+                  "gempa bumi",
+                  "banjir",
+                  "kebakaran",
+                  "badai"
+            ],
+            "answer": "gempa bumi",
+            "explanation": "「地震」 berarti gempa bumi."
+      },
+      {
+            "question": "意味はどれですか。\n「洪水」",
+            "options": [
+                  "banjir",
+                  "gempa bumi",
+                  "salju lebat",
+                  "kebakaran"
+            ],
+            "answer": "banjir",
+            "explanation": "「洪水」 berarti banjir."
+      },
+      {
+            "question": "意味はどれですか。\n「停電」",
+            "options": [
+                  "listrik padam",
+                  "kemacetan",
+                  "hujan deras",
+                  "keterlambatan"
+            ],
+            "answer": "listrik padam",
+            "explanation": "「停電」 berarti pemadaman listrik."
+      },
+      {
+            "question": "意味はどれですか。\n「渋滞」",
+            "options": [
+                  "kemacetan",
+                  "pemadaman",
+                  "penerbangan",
+                  "perbaikan"
+            ],
+            "answer": "kemacetan",
+            "explanation": "「渋滞」 berarti kemacetan lalu lintas."
+      },
+      {
+            "question": "意味はどれですか。\n「交通」",
+            "options": [
+                  "lalu lintas/transportasi",
+                  "hubungan keluarga",
+                  "pendidikan",
+                  "cuaca"
+            ],
+            "answer": "lalu lintas/transportasi",
+            "explanation": "「交通」 berarti lalu lintas atau transportasi."
+      },
+      {
+            "question": "意味はどれですか。\n「道路」",
+            "options": [
+                  "jalan raya",
+                  "gedung sekolah",
+                  "ruang kantor",
+                  "toko"
+            ],
+            "answer": "jalan raya",
+            "explanation": "「道路」 berarti jalan raya."
+      },
+      {
+            "question": "意味はどれですか。\n「信号」",
+            "options": [
+                  "lampu lalu lintas/sinyal",
+                  "surat pribadi",
+                  "jadwal kereta",
+                  "peta"
+            ],
+            "answer": "lampu lalu lintas/sinyal",
+            "explanation": "「信号」 berarti sinyal atau lampu lalu lintas."
+      },
+      {
+            "question": "意味はどれですか。\n「速度」",
+            "options": [
+                  "kecepatan",
+                  "kepadatan",
+                  "ketinggian",
+                  "kedalaman"
+            ],
+            "answer": "kecepatan",
+            "explanation": "「速度」 berarti kecepatan."
+      },
+      {
+            "question": "意味はどれですか。\n「距離」",
+            "options": [
+                  "jarak",
+                  "kecepatan",
+                  "arah",
+                  "berat"
+            ],
+            "answer": "jarak",
+            "explanation": "「距離」 berarti jarak."
+      },
+      {
+            "question": "意味はどれですか。\n「位置」",
+            "options": [
+                  "posisi/letak",
+                  "harga",
+                  "pendapatan",
+                  "pakaian"
+            ],
+            "answer": "posisi/letak",
+            "explanation": "「位置」 berarti posisi atau letak."
+      },
+      {
+            "question": "意味はどれですか。\n「方向」",
+            "options": [
+                  "arah",
+                  "kecepatan",
+                  "ukuran",
+                  "jumlah"
+            ],
+            "answer": "arah",
+            "explanation": "「方向」 berarti arah."
+      },
+      {
+            "question": "意味はどれですか。\n「周辺」",
+            "options": [
+                  "area sekitar",
+                  "pusat kota",
+                  "masa depan",
+                  "perasaan"
+            ],
+            "answer": "area sekitar",
+            "explanation": "「周辺」 berarti daerah/area sekitar."
+      },
+      {
+            "question": "意味はどれですか。\n「地域」",
+            "options": [
+                  "wilayah/daerah",
+                  "alat tulis",
+                  "nilai ujian",
+                  "toko kecil"
+            ],
+            "answer": "wilayah/daerah",
+            "explanation": "「地域」 berarti wilayah atau daerah."
+      },
+      {
+            "question": "意味はどれですか。\n「都市」",
+            "options": [
+                  "kota besar/perkotaan",
+                  "desa kecil",
+                  "bandara",
+                  "stasiun"
+            ],
+            "answer": "kota besar/perkotaan",
+            "explanation": "「都市」 berarti kota besar atau area perkotaan."
+      },
+      {
+            "question": "意味はどれですか。\n「郊外」",
+            "options": [
+                  "pinggiran kota",
+                  "pusat kota",
+                  "luar negeri",
+                  "tengah laut"
+            ],
+            "answer": "pinggiran kota",
+            "explanation": "「郊外」 berarti pinggiran kota."
+      },
+      {
+            "question": "意味はどれですか。\n「農業」",
+            "options": [
+                  "pertanian",
+                  "industri",
+                  "perdagangan",
+                  "pendidikan"
+            ],
+            "answer": "pertanian",
+            "explanation": "「農業」 berarti pertanian."
+      },
+      {
+            "question": "意味はどれですか。\n「産業」",
+            "options": [
+                  "industri",
+                  "pertanian saja",
+                  "pariwisata saja",
+                  "pendapatan pribadi"
+            ],
+            "answer": "industri",
+            "explanation": "「産業」 berarti industri atau sektor ekonomi."
+      },
+      {
+            "question": "意味はどれですか。\n「資源」",
+            "options": [
+                  "sumber daya",
+                  "bencana",
+                  "tagihan",
+                  "tujuan"
+            ],
+            "answer": "sumber daya",
+            "explanation": "「資源」 berarti sumber daya."
+      },
+      {
+            "question": "意味はどれですか。\n「資金」",
+            "options": [
+                  "dana/modal",
+                  "bahan bacaan",
+                  "alamat kantor",
+                  "hadiah"
+            ],
+            "answer": "dana/modal",
+            "explanation": "「資金」 berarti dana atau modal."
+      },
+      {
+            "question": "意味はどれですか。\n「利益」",
+            "options": [
+                  "keuntungan",
+                  "kerugian",
+                  "biaya tetap",
+                  "utang"
+            ],
+            "answer": "keuntungan",
+            "explanation": "「利益」 berarti keuntungan atau laba."
+      },
+      {
+            "question": "意味はどれですか。\n「損害」",
+            "options": [
+                  "kerugian/kerusakan",
+                  "keuntungan",
+                  "diskon",
+                  "tabungan"
+            ],
+            "answer": "kerugian/kerusakan",
+            "explanation": "「損害」 berarti kerugian atau kerusakan."
+      },
+      {
+            "question": "意味はどれですか。\n「不足」",
+            "options": [
+                  "kekurangan",
+                  "kelebihan",
+                  "kesamaan",
+                  "keuntungan"
+            ],
+            "answer": "kekurangan",
+            "explanation": "「不足」 berarti kekurangan atau tidak cukup."
+      },
+      {
+            "question": "意味はどれですか。\n「余裕」",
+            "options": [
+                  "kelonggaran/keleluasaan",
+                  "kekurangan",
+                  "kesibukan ekstrem",
+                  "larangan"
+            ],
+            "answer": "kelonggaran/keleluasaan",
+            "explanation": "「余裕」 berarti ada ruang/waktu/tenaga lebih atau kelonggaran."
+      },
+      {
+            "question": "意味はどれですか。\n「基準」",
+            "options": [
+                  "standar/kriteria",
+                  "kebiasaan pribadi",
+                  "alat ukur",
+                  "jadwal libur"
+            ],
+            "answer": "standar/kriteria",
+            "explanation": "「基準」 berarti standar atau kriteria."
+      },
+      {
+            "question": "意味はどれですか。\n「基本」",
+            "options": [
+                  "dasar",
+                  "tambahan",
+                  "kesimpulan",
+                  "perbandingan"
+            ],
+            "answer": "dasar",
+            "explanation": "「基本」 berarti dasar atau fundamental."
+      },
+      {
+            "question": "意味はどれですか。\n「応用」",
+            "options": [
+                  "penerapan/aplikasi",
+                  "hafalan dasar",
+                  "penolakan",
+                  "pembatalan"
+            ],
+            "answer": "penerapan/aplikasi",
+            "explanation": "「応用」 berarti penerapan ilmu dalam situasi nyata."
+      },
+      {
+            "question": "意味はどれですか。\n「知識」",
+            "options": [
+                  "pengetahuan",
+                  "perasaan",
+                  "pengalaman buruk",
+                  "kebutuhan"
+            ],
+            "answer": "pengetahuan",
+            "explanation": "「知識」 berarti pengetahuan."
+      },
+      {
+            "question": "意味はどれですか。\n「情報」",
+            "options": [
+                  "informasi",
+                  "perasaan",
+                  "biaya",
+                  "izin"
+            ],
+            "answer": "informasi",
+            "explanation": "「情報」 berarti informasi."
+      },
+      {
+            "question": "意味はどれですか。\n「報告」",
+            "options": [
+                  "laporan",
+                  "undangan",
+                  "perjanjian",
+                  "peringatan"
+            ],
+            "answer": "laporan",
+            "explanation": "「報告」 berarti laporan atau melaporkan."
+      },
+      {
+            "question": "意味はどれですか。\n「連絡先」",
+            "options": [
+                  "kontak/alamat yang bisa dihubungi",
+                  "tujuan perjalanan",
+                  "nomor kursi",
+                  "jadwal ujian"
+            ],
+            "answer": "kontak/alamat yang bisa dihubungi",
+            "explanation": "「連絡先」 berarti kontak yang bisa dihubungi."
+      },
+      {
+            "question": "意味はどれですか。\n「受付」",
+            "options": [
+                  "resepsionis/penerimaan",
+                  "ruang rapat",
+                  "loket pembayaran saja",
+                  "jadwal"
+            ],
+            "answer": "resepsionis/penerimaan",
+            "explanation": "「受付」 berarti tempat/orang penerima tamu atau pendaftaran."
+      },
+      {
+            "question": "意味はどれですか。\n「提出」",
+            "options": [
+                  "penyerahan dokumen/tugas",
+                  "pembatalan jadwal",
+                  "pemeriksaan kesehatan",
+                  "penggantian barang"
+            ],
+            "answer": "penyerahan dokumen/tugas",
+            "explanation": "「提出」 berarti menyerahkan dokumen/tugas."
+      },
+      {
+            "question": "意味はどれですか。\n「締切」",
+            "options": [
+                  "batas akhir/deadline",
+                  "awal acara",
+                  "hari libur",
+                  "jam istirahat"
+            ],
+            "answer": "batas akhir/deadline",
+            "explanation": "「締切」 berarti batas akhir atau deadline."
+      },
+      {
+            "question": "意味はどれですか。\n「期限」",
+            "options": [
+                  "batas waktu",
+                  "jumlah peserta",
+                  "tempat acara",
+                  "harga barang"
+            ],
+            "answer": "batas waktu",
+            "explanation": "「期限」 berarti batas waktu."
+      },
+      {
+            "question": "意味はどれですか。\n「延期」",
+            "options": [
+                  "penundaan",
+                  "percepatan",
+                  "pembatalan total",
+                  "pengulangan"
+            ],
+            "answer": "penundaan",
+            "explanation": "「延期」 berarti penundaan ke waktu lain."
+      },
+      {
+            "question": "意味はどれですか。\n「中止」",
+            "options": [
+                  "pembatalan/penghentian",
+                  "penundaan",
+                  "perpanjangan",
+                  "pembukaan"
+            ],
+            "answer": "pembatalan/penghentian",
+            "explanation": "「中止」 berarti menghentikan atau membatalkan acara/kegiatan."
+      },
+      {
+            "question": "意味はどれですか。\n「変更」",
+            "options": [
+                  "perubahan",
+                  "pembayaran",
+                  "pengiriman",
+                  "pengurangan"
+            ],
+            "answer": "perubahan",
+            "explanation": "「変更」 berarti perubahan."
+      },
+      {
+            "question": "意味はどれですか。\n「追加」",
+            "options": [
+                  "tambahan/menambahkan",
+                  "pengurangan",
+                  "pembatalan",
+                  "penggantian"
+            ],
+            "answer": "tambahan/menambahkan",
+            "explanation": "「追加」 berarti tambahan atau menambahkan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。\n「削除」",
+            "options": [
+                  "penghapusan",
+                  "penambahan",
+                  "pembaruan",
+                  "pengiriman"
+            ],
+            "answer": "penghapusan",
+            "explanation": "「削除」 berarti menghapus data/tulisan."
+      },
+      {
+            "question": "意味はどれですか。\n「保存」",
+            "options": [
+                  "penyimpanan",
+                  "penghapusan",
+                  "pengiriman",
+                  "penutupan"
+            ],
+            "answer": "penyimpanan",
+            "explanation": "「保存」 berarti menyimpan data/barang agar tetap ada."
+      },
+      {
+            "question": "意味はどれですか。\n「設定」",
+            "options": [
+                  "pengaturan/setting",
+                  "penjelasan",
+                  "pemeriksaan",
+                  "perjalanan"
+            ],
+            "answer": "pengaturan/setting",
+            "explanation": "「設定」 berarti pengaturan atau setting."
+      },
+      {
+            "question": "意味はどれですか。\n「操作」",
+            "options": [
+                  "pengoperasian",
+                  "pengamatan",
+                  "penjelasan arti",
+                  "perjalanan jauh"
+            ],
+            "answer": "pengoperasian",
+            "explanation": "「操作」 berarti mengoperasikan alat/sistem."
+      },
+      {
+            "question": "意味はどれですか。\n「機能」",
+            "options": [
+                  "fungsi/fitur",
+                  "bentuk luar",
+                  "biaya",
+                  "bahan"
+            ],
+            "answer": "fungsi/fitur",
+            "explanation": "「機能」 berarti fungsi atau fitur."
+      },
+      {
+            "question": "意味はどれですか。\n「故障」",
+            "options": [
+                  "kerusakan mesin/alat",
+                  "kecelakaan lalu lintas",
+                  "kesalahan ejaan",
+                  "pembatalan"
+            ],
+            "answer": "kerusakan mesin/alat",
+            "explanation": "「故障」 berarti rusak, terutama mesin/alat."
+      },
+      {
+            "question": "意味はどれですか。\n「修理」",
+            "options": [
+                  "perbaikan barang/mesin",
+                  "pengiriman barang",
+                  "pembelian barang",
+                  "pembatalan"
+            ],
+            "answer": "perbaikan barang/mesin",
+            "explanation": "「修理」 berarti memperbaiki barang atau mesin."
+      },
+      {
+            "question": "意味はどれですか。\n「回復」",
+            "options": [
+                  "pemulihan",
+                  "kerusakan",
+                  "kehilangan",
+                  "pembayaran"
+            ],
+            "answer": "pemulihan",
+            "explanation": "「回復」 berarti pulih atau kembali membaik."
+      }
+];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswers = [];
+
+    const screens = {
+      start: document.getElementById("startScreen"),
+      quiz: document.getElementById("quizScreen"),
+      feedback: document.getElementById("feedbackScreen"),
+      result: document.getElementById("resultScreen"),
+      review: document.getElementById("reviewScreen")
+    };
+
+    function setScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      renderQuestion();
+      setScreen("quiz");
+    }
+
+    function goHome() {
+      setScreen("start");
+    }
+
+    function renderQuestion() {
+      const q = quiz[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quiz.length) * 100;
+
+      document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
+      document.getElementById("progressFill").style.width = `${progressPercent}%`;
+      document.getElementById("questionText").textContent = q.question;
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      const optionsBox = document.getElementById("optionsBox");
+      optionsBox.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${option}</span>`;
+        button.onclick = () => checkAnswer(option, button);
+        optionsBox.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selected, button) {
+      const q = quiz[currentQuestion];
+      const isCorrect = selected === q.answer;
+
+      selectedAnswers[currentQuestion] = {
+        question: q.question,
+        selected,
+        answer: q.answer,
+        correct: isCorrect,
+        explanation: q.explanation
+      };
+
+      if (isCorrect) score++;
+
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+        const text = btn.innerText.slice(1).trim();
+        if (text === q.answer) btn.classList.add("correct");
+      });
+
+      button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      // Langsung pindah ke halaman penjelasan tanpa delay
+      renderFeedback(isCorrect, q.answer, q.explanation);
+      setScreen("feedback");
+    }
+
+    function renderFeedback(isCorrect, answer, explanation) {
+      const statusRing = document.getElementById("statusRing");
+      const title = document.getElementById("feedbackTitle");
+      const text = document.getElementById("feedbackExplanation");
+      const nextBtn = document.getElementById("nextBtn");
+
+      const feedbackCard = document.querySelector("#feedbackScreen .feedback-card");
+      const symbolClass = isCorrect ? "symbol-correct" : "symbol-wrong";
+
+      if (feedbackCard) {
+        feedbackCard.classList.remove("feedback-animate");
+        void feedbackCard.offsetWidth;
+        feedbackCard.classList.add("feedback-animate");
+      }
+
+      statusRing.innerHTML = `<span class="status-symbol ${symbolClass}">${isCorrect ? "✓" : "×"}</span>`;
+      statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
+      title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
+      title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
+      text.innerHTML = isCorrect
+        ? `Bagus!<br>${explanation}`
+        : `Jawaban yang benar adalah <strong>${answer}</strong>.<br>${explanation}`;
+      nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+    }
+
+    function showQuizAgain() {
+      setScreen("quiz");
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quiz.length) {
+        renderQuestion();
+        setScreen("quiz");
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const incorrect = quiz.length - score;
+      const percentage = (score / quiz.length) * 100;
+      let message;
+
+      if (percentage >= 85) {
+        message = "すごい！ Sangat baik. Kosakata JLPT N3 hard kamu sudah kuat.";
+      } else if (percentage >= 70) {
+        message = "いいですね！ Kamu sudah cukup paham. Latih lagi kosakata abstrak, administrasi, dan kata kerja formal.";
+      } else if (percentage >= 50) {
+        message = "もう少し！ Cukup. Perbanyak latihan kosakata N3 hard dan contoh kalimatnya.";
+      } else {
+        message = "頑張って！ Mulai ulang dari kosakata N4 lalu naik bertahap ke N3.";
+      }
+
+      document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("correctCount").textContent = score;
+      document.getElementById("incorrectCount").textContent = incorrect;
+      setScreen("result");
+    }
+
+    function showReview() {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      selectedAnswers.forEach((item, index) => {
+        const row = document.createElement("article");
+        row.className = "review-item";
+        row.innerHTML = `
+          <p><strong>${index + 1}.</strong> ${item.question}<br><small>Jawaban kamu: ${item.selected}</small></p>
+          <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
+        `;
+        reviewList.appendChild(row);
+      });
+
+      setScreen("review");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      setScreen("start");
+    }
+  </script>
+</body>
+</html>
