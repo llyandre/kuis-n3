@@ -3,294 +3,1168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Bahasa Jepang JLPT N3 Hard Level</title>
+  <title>NihongoGO - JLPT N3 Hard</title>
+
   <style>
-    * { box-sizing: border-box; }
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f7f3ea;
+      --paper: #fffdf8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #7c7468;
+      --line: #eadfd2;
+      --red: #c84b31;
+      --red-dark: #a83a26;
+      --indigo: #2f4858;
+      --green: #6f936f;
+      --green-soft: #edf5ec;
+      --wrong: #c76d5e;
+      --wrong-soft: #fff0ed;
+      --shadow: 0 24px 70px rgba(49, 36, 23, 0.12);
+      --soft-shadow: 0 10px 28px rgba(49, 36, 23, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      font-family: "Trebuchet MS", Arial, sans-serif;
       margin: 0;
-      padding: 20px;
       min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
       background:
-        radial-gradient(circle at 12% 18%, rgba(255, 196, 211, 0.45) 0 8%, transparent 9%),
-        radial-gradient(circle at 88% 12%, rgba(255, 222, 230, 0.55) 0 9%, transparent 10%),
-        linear-gradient(135deg, #fff7f7, #f8f1e9);
-      color: #2b2b2b;
-    }
-
-    .sakura-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.18;
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          transparent 0,
-          transparent 22px,
-          rgba(180, 32, 42, 0.12) 23px,
-          rgba(180, 32, 42, 0.12) 24px
-        );
-      z-index: 0;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      margin: 30px auto;
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 12px 35px rgba(99, 38, 38, 0.18);
-      border: 2px solid #f1c7c7;
-    }
-
-    .header {
-      padding: 35px 25px;
-      text-align: center;
-      background:
-        linear-gradient(rgba(152, 23, 35, 0.91), rgba(152, 23, 35, 0.91)),
-        repeating-radial-gradient(circle at center, transparent 0 13px, rgba(255,255,255,0.2) 14px 15px);
-      color: white;
-    }
-
-    .sun {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #fff;
-      margin: 0 auto 15px;
+        radial-gradient(circle at 15% 10%, rgba(200, 75, 49, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 72, 88, 0.09), transparent 22%),
+        linear-gradient(135deg, #fbf7ef 0%, var(--bg) 44%, #f1eadf 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #b91c1c;
-      font-size: 38px;
-      box-shadow: 0 0 0 8px rgba(255,255,255,0.18);
+      padding: 28px;
+      overflow-x: hidden;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 31px;
-      letter-spacing: 1px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(200, 75, 49, 0.12) 1.4px, transparent 1.6px),
+        radial-gradient(circle at 32px 32px, rgba(47, 72, 88, 0.07) 1px, transparent 1.3px);
+      background-size: 48px 48px;
     }
 
-    .jp-title {
+    .phone-frame {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: 760px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 210px;
+      opacity: 0.65;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(47, 72, 88, 0.08) 59% 62%, transparent 63%) 0 0 / 64px 38px repeat-x,
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(200, 75, 49, 0.08) 59% 62%, transparent 63%) 32px 22px / 64px 38px repeat-x;
+      z-index: -1;
+    }
+
+    .screen {
+      display: none;
+      min-height: 760px;
+      padding: 28px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      margin-bottom: 22px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--indigo);
       font-size: 20px;
-      margin-top: 8px;
-      letter-spacing: 3px;
-    }
-
-    .subtitle {
-      margin-top: 10px;
-      font-size: 15px;
-      opacity: 0.95;
-    }
-
-    .quiz-area { padding: 28px; }
-
-    .tag {
-      display: inline-block;
-      padding: 7px 13px;
-      background: #fff0f0;
-      color: #9f1239;
-      border: 1px solid #fecdd3;
-      border-radius: 999px;
-      font-weight: bold;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .progress {
-      font-size: 15px;
-      color: #7f1d1d;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    .question-card {
-      background: #fffaf6;
-      border: 1px solid #f3d2c1;
-      border-left: 6px solid #b91c1c;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-
-    .question {
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 1.7;
-      margin: 0;
-      white-space: pre-line;
-    }
-
-    .option {
-      display: block;
-      width: 100%;
-      padding: 14px 16px;
-      margin: 11px 0;
-      border: 2px solid #ead7d7;
-      border-radius: 14px;
-      background: #ffffff;
-      font-size: 17px;
       cursor: pointer;
-      text-align: left;
-      transition: 0.2s;
-      line-height: 1.5;
+      border-radius: 999px;
     }
 
-    .option:hover:not(:disabled) {
-      background: #fff1f2;
-      border-color: #fb7185;
-      transform: translateY(-1px);
+    .icon-btn:hover {
+      background: rgba(47, 72, 88, 0.07);
     }
 
-    .option:disabled {
-      cursor: not-allowed;
+    .screen-title {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: #182531;
+      text-align: center;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.08);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .logo-mark svg {
+      width: 27px;
+      height: 27px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-mark .enso-main {
+      fill: none;
+      stroke: #1f2933;
+      stroke-width: 7.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-mark .enso-soft {
+      fill: none;
+      stroke: rgba(31, 41, 51, 0.34);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .logo-mark .enso-red {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3.2;
+      stroke-linecap: round;
       opacity: 0.92;
     }
 
-    .correct {
-      background: #dcfce7 !important;
-      border-color: #22c55e !important;
-      color: #166534;
+    .home-art {
+      position: relative;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 305px;
+      margin: 4px 0 4px;
     }
 
-    .wrong {
-      background: #fee2e2 !important;
-      border-color: #ef4444 !important;
-      color: #991b1b;
+    .vertical-copy {
+      position: absolute;
+      left: 8px;
+      top: 22px;
+      writing-mode: vertical-rl;
+      color: rgba(168, 58, 38, 0.78);
+      font-family: "Noto Serif JP", serif;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      line-height: 1.75;
     }
 
-    #feedback {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 14px;
-      background: #fef2f2;
-      color: #7f1d1d;
-      font-size: 16px;
-      line-height: 1.6;
-      font-weight: bold;
-      min-height: 20px;
+    .mini-card {
+      position: absolute;
+      right: 6px;
+      top: 42px;
+      width: 132px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 12px 28px rgba(49, 36, 23, 0.08);
+      backdrop-filter: blur(10px);
+      text-align: left;
     }
 
-    #score {
-      margin-top: 15px;
-      font-size: 17px;
-      color: #444;
-      font-weight: bold;
+    .mini-card .seal {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fffdf8;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 15px;
+      font-weight: 900;
     }
 
-    #nextBtn, #restartBtn {
-      margin-top: 20px;
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #b91c1c, #e11d48);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(185, 28, 28, 0.25);
+    .mini-card strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.25;
     }
 
-    #nextBtn:hover, #restartBtn:hover {
-      background: linear-gradient(135deg, #991b1b, #be123c);
+    .mini-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
     }
 
-    .result-box {
+    .home-info-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 255, 255, 0.72)),
+        radial-gradient(circle at 92% 20%, rgba(200, 75, 49, 0.08), transparent 34%);
+      box-shadow: 0 12px 30px rgba(49, 36, 23, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .home-info-item {
+      min-height: 86px;
+      padding: 10px 6px 9px;
+      border-radius: 16px;
       text-align: center;
-      padding: 20px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(234, 223, 210, 0.72);
+    }
+
+    .home-info-item span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.11);
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .home-info-item strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .home-info-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .sakura-branch {
+      position: absolute;
+      right: 15px;
+      bottom: 77px;
+      width: 132px;
+      height: 68px;
+      transform: rotate(-17deg);
+      opacity: 0.92;
+    }
+
+    .sakura-branch::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 34px;
+      height: 2px;
+      background: rgba(92, 70, 56, 0.28);
+      border-radius: 999px;
+    }
+
+    .sakura-branch span {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(200, 75, 49, 0.32);
+      transform: rotate(45deg);
+    }
+
+    .sakura-branch span:nth-child(1) { right: 18px; top: 18px; }
+    .sakura-branch span:nth-child(2) { right: 42px; top: 32px; width: 11px; height: 11px; }
+    .sakura-branch span:nth-child(3) { right: 72px; top: 22px; width: 10px; height: 10px; }
+    .sakura-branch span:nth-child(4) { right: 100px; top: 38px; width: 9px; height: 9px; }
+
+    .sun-circle {
+      position: absolute;
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.24), transparent 20%),
+        linear-gradient(145deg, #e36c50, var(--red));
+      box-shadow: 0 16px 36px rgba(200, 75, 49, 0.22);
+    }
+
+    .torii {
+      position: absolute;
+      top: 156px;
+      left: 50%;
+      width: 112px;
+      height: 96px;
+      transform: translateX(-50%);
+      color: #272727;
+    }
+
+    .torii .beam-main,
+    .torii .beam-top,
+    .torii .beam-mid,
+    .torii .pillar,
+    .torii .base {
+      position: absolute;
+      background: currentColor;
+      border-radius: 3px;
+    }
+
+    .torii .beam-top {
+      left: 4px;
+      right: 4px;
+      top: 8px;
+      height: 9px;
+      transform: rotate(2deg);
+    }
+
+    .torii .beam-main {
+      left: 0;
+      right: 0;
+      top: 21px;
+      height: 10px;
+    }
+
+    .torii .beam-mid {
+      left: 24px;
+      right: 24px;
+      top: 42px;
+      height: 8px;
+    }
+
+    .torii .pillar.left { left: 27px; }
+    .torii .pillar.right { right: 27px; }
+
+    .torii .pillar {
+      top: 30px;
+      width: 9px;
+      height: 66px;
+    }
+
+    .torii .base {
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+    }
+
+    .torii .base.left { left: 20px; }
+    .torii .base.right { right: 20px; }
+
+    .mist {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      width: 270px;
+      height: 78px;
+      transform: translateX(-50%);
+      opacity: 1;
+      overflow: hidden;
+      border-radius: 0 0 120px 120px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0) 0%, rgba(255, 253, 248, 0.88) 38%, rgba(247, 243, 234, 0.28) 100%),
+        radial-gradient(ellipse at 50% 78%, rgba(47, 72, 88, 0.09), transparent 68%);
+      filter: none;
+    }
+
+    .mist::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 11px;
+      height: 56px;
+      opacity: 0.9;
+      background:
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(47, 72, 88, 0.15) 58% 61%, transparent 62%) 0 0 / 54px 31px repeat-x,
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(200, 75, 49, 0.13) 58% 61%, transparent 62%) 27px 16px / 54px 31px repeat-x;
+    }
+
+    .mist::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(47, 72, 88, 0.26), transparent);
+    }
+
+    .brand {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #172434;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(42px, 11vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 10px auto 22px;
+      max-width: 245px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--red-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(200, 75, 49, 0.45);
+    }
+
+    .home-chips {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: -6px 0 22px;
+    }
+
+    .home-chips span {
+      padding: 7px 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #5f5a52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, var(--red), #dc4b36);
+      box-shadow: 0 12px 26px rgba(200, 75, 49, 0.24);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(200, 75, 49, 0.28);
+    }
+
+    .ghost-btn {
+      border: 1.5px solid var(--red);
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .ghost-btn:hover {
+      background: rgba(200, 75, 49, 0.07);
+    }
+
+    .home-footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #5f5a52;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 0.45em;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(234, 223, 210, 0.8);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #dc5642);
+      transition: width 0.25s ease;
+    }
+
+    .question-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.82)),
+        radial-gradient(circle at 100% 100%, rgba(200, 75, 49, 0.08), transparent 30%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px 28px;
+      min-height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -18px;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      border: 18px solid rgba(200, 75, 49, 0.08);
+    }
+
+    .question-card::after {
+      content: "";
+      position: absolute;
+      width: 46px;
+      height: 2px;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: var(--red);
+      border-radius: 999px;
+    }
+
+    .question {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 36, 23, 0.035);
+      transition: 0.16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(200, 75, 49, 0.55);
+      background: #fffafa;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .choice-letter {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f2ede6;
+      color: #5d5750;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected {
+      border-color: var(--red);
+      background: rgba(200, 75, 49, 0.055);
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #315a31;
+    }
+
+    .option.correct .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #8d342a;
+    }
+
+    .option.wrong .choice-letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .score-pill {
+      margin-top: auto;
+      display: inline-flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .feedback-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card::after,
+    .result-art::after,
+    .review-screen::after {
+      content: "✿ ✿ ✿";
+      position: absolute;
+      right: 22px;
+      bottom: 42px;
+      color: rgba(200, 75, 49, 0.34);
+      transform: rotate(-18deg);
+      font-size: 24px;
+      letter-spacing: 8px;
+      pointer-events: none;
+    }
+
+    .status-ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 47px;
+      margin-bottom: 28px;
+      border: 12px solid;
+    }
+
+    .status-ring.correct-state {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: rgba(111, 147, 111, 0.18);
+    }
+
+    .status-ring.wrong-state {
+      color: var(--wrong);
+      background: var(--wrong-soft);
+      border-color: rgba(199, 109, 94, 0.18);
+    }
+
+    .feedback-title {
+      margin: 0;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .feedback-title.correct-text {
+      color: var(--green);
+    }
+
+    .feedback-explanation {
+      margin: 14px 0 32px;
+      color: #453f38;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    .result-art {
+      position: relative;
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      margin: 10px 0 4px;
+    }
+
+    .fuji {
+      position: relative;
+      width: 230px;
+      height: 165px;
+    }
+
+    .fuji .sun-small {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 124px;
+      height: 124px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e36c50, var(--red));
+      opacity: 0.92;
+    }
+
+    .fuji .mountain {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      width: 172px;
+      height: 112px;
+      transform: translateX(-50%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      background: linear-gradient(145deg, #fcfcfb 0 24%, #57636b 25% 64%, #2f4858 100%);
+      box-shadow: 0 18px 26px rgba(47, 72, 88, 0.2);
+    }
+
+    .fuji .ground {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      height: 2px;
+      background: rgba(47, 72, 88, 0.2);
+    }
+
+    .result-heading {
+      text-align: center;
+      margin: 4px 0 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 22px;
     }
 
     .result-score {
-      font-size: 54px;
-      color: #b91c1c;
-      margin: 10px 0;
+      text-align: center;
+      margin: 10px 0 6px;
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 58px;
+      line-height: 1;
     }
 
-    .review {
-      text-align: left;
-      margin-top: 25px;
-      background: #fffaf6;
-      border: 1px solid #f3d2c1;
-      border-radius: 16px;
-      padding: 15px;
+    .result-message {
+      text-align: center;
+      color: #443f38;
       line-height: 1.6;
+      margin: 0 auto 22px;
+      max-width: 310px;
     }
 
-    .review h3 {
-      color: #7f1d1d;
-      margin-top: 0;
+    .stats-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 18px 0 18px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.82);
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 20px;
+      color: #253746;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 12px;
+      padding-bottom: 22px;
     }
 
     .review-item {
-      border-bottom: 1px solid #f3d2c1;
-      padding: 12px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 6px 18px rgba(49, 36, 23, 0.04);
     }
 
-    .review-item:last-child {
-      border-bottom: none;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 18px;
-      background: #fff7f7;
-      color: #7f1d1d;
+    .review-item p {
+      margin: 0;
       font-size: 14px;
-      border-top: 1px solid #f3d2d2;
+      line-height: 1.45;
+      color: #2d3338;
     }
 
-    .decor {
-      font-size: 24px;
-      margin: 10px 0;
+    .badge {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
     }
 
-    @media (max-width: 600px) {
-      body { padding: 10px; }
-      h1 { font-size: 24px; }
-      .question { font-size: 19px; }
-      .quiz-area { padding: 20px; }
-      .option { font-size: 16px; }
+    .badge.ok { background: var(--green); }
+    .badge.no { background: var(--wrong); }
+
+
+
+    .review-detail {
+      flex: 1;
+    }
+
+    .review-detail small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .review-answer {
+      color: #253746 !important;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: var(--green);
+    }
+
+    .legend span:nth-child(2)::before {
+      background: var(--wrong);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .phone-frame {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        padding: 24px 20px;
+      }
+
+      .brand h1 {
+        font-size: 48px;
+      }
+
+      .home-info-panel {
+        margin-bottom: 20px;
+      }
+
+      .question-card {
+        min-height: 220px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="sakura-bg"></div>
-
-  <div class="container">
-    <div class="header">
-      <div class="sun">日</div>
-      <h1>Kuis Bahasa Jepang JLPT N3</h1>
-      <div class="jp-title">難しい日本語クイズ</div>
-      <p class="subtitle">50 soal sulit: grammar, kosakata, dan pemahaman kalimat</p>
-      <div class="decor">🌸 ⛩️ 🌸</div>
-    </div>
-
-    <div class="quiz-area" id="quizBox">
-      <span class="tag">JLPT N3 Hard Practice</span>
-      <p class="progress" id="progress"></p>
-
-      <div class="question-card">
-        <p class="question" id="question"></p>
+  <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
+    <section class="screen active" id="startScreen">
+      <div class="home-art" aria-hidden="true">
+        <div class="vertical-copy">クイズを楽しんで<br>知識を深めましょう。</div>
+        <div class="sun-circle"></div>
+        <div class="torii">
+          <span class="beam-top"></span>
+          <span class="beam-main"></span>
+          <span class="beam-mid"></span>
+          <span class="pillar left"></span>
+          <span class="pillar right"></span>
+          <span class="base left"></span>
+          <span class="base right"></span>
+        </div>
+        <div class="mist"></div>
+        <div class="sakura-branch"><span></span><span></span><span></span><span></span></div>
       </div>
 
-      <div id="options"></div>
-      <p id="feedback"></p>
-      <p id="score"></p>
+      <div class="home-info-panel" aria-label="Informasi kuis">
+        <div class="home-info-item">
+          <span>N3</span>
+          <strong>JLPT N3</strong>
+          <small>Level latihan</small>
+        </div>
+        <div class="home-info-item">
+          <span>50</span>
+          <strong>Soal Sulit</strong>
+          <small>Level sulit</small>
+        </div>
+        <div class="home-info-item">
+          <span>文法</span>
+          <strong>Tata Bahasa</strong>
+          <small>Pola N3</small>
+        </div>
+      </div>
 
-      <button id="nextBtn" onclick="nextQuestion()">Soal Berikutnya ➜</button>
-    </div>
+      <div class="brand">
+        <div class="brand-mark">JLPT N3 Hard</div>
+        <h1>NihongoGO</h1>
+        <p>Latihan 50 soal N3 sulit dengan pembahasan singkat dan mudah dipahami.</p>
+        <div class="home-chips">
+          <span>文法 Tata Bahasa</span>
+          <span>語彙 Kosakata</span>
+          <span>Level Sulit</span>
+        </div>
+        <button class="primary-btn" type="button" onclick="startQuiz()">Mulai Kuis&nbsp; →</button>
+        <div class="home-footer">日本語を学ぼう</div>
+      </div>
+    </section>
 
-    <div class="footer">
-      🌸 Ganbatte! 頑張ってください 🌸
-    </div>
-  </div>
+    <section class="screen" id="quizScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="meta-row">
+        <span id="progressText">Soal 1 dari 15</span>
+        <span>Level Sulit</span>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="question-card">
+        <p class="question" id="questionText"></p>
+      </article>
+
+      <div class="options" id="optionsBox"></div>
+
+      <div class="score-pill" id="scorePill">Skor sementara: 0 / 15</div>
+    </section>
+
+    <section class="screen" id="feedbackScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="status-ring" id="statusRing">✓</div>
+        <h2 class="feedback-title" id="feedbackTitle">Benar!</h2>
+        <p class="feedback-explanation" id="feedbackExplanation"></p>
+        <button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya&nbsp; →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="topbar">
+        <span></span>
+        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="result-art" aria-hidden="true">
+        <div class="fuji">
+          <div class="sun-small"></div>
+          <div class="mountain"></div>
+          <div class="ground"></div>
+        </div>
+      </div>
+
+      <h2 class="result-heading">Skor Kamu</h2>
+      <div class="result-score" id="finalScore">0 / 15</div>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="stats-card">
+        <div class="stat">
+          ✓ <strong id="correctCount">0</strong>
+          <span>Benar</span>
+        </div>
+        <div class="stat">
+          × <strong id="incorrectCount">0</strong>
+          <span>Salah</span>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="ghost-btn" type="button" onclick="showReview()">Lihat Jawaban</button>
+        <button class="primary-btn" type="button" onclick="restartQuiz()">Kembali ke Awal</button>
+      </div>
+    </section>
+
+    <section class="screen review-screen" id="reviewScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
+        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+      <div class="legend">
+        <span>Benar</span>
+        <span>Salah</span>
+      </div>
+    </section>
+  </main>
 
   <script>
     const originalQuiz = [
@@ -298,321 +1172,333 @@
         question: "彼は日本語が話せる＿＿、漢字が読めるわけではない。",
         options: ["からには", "といっても", "ほど", "ばかりに"],
         answer: "といっても",
-        explanation: "「AといってもB」 berarti walaupun dikatakan A, bukan berarti B sepenuhnya benar. Ia bisa bicara Jepang, tetapi belum tentu bisa membaca kanji."
+        explanation: "「といっても」 artinya meskipun begitu. Bisa bicara, belum tentu bisa baca kanji."
       },
       {
         question: "忙しい＿＿、健康のために運動する時間は作るべきだ。",
         options: ["からこそ", "とはいえ", "ばかりか", "たびに"],
         answer: "とはいえ",
-        explanation: "「とはいえ」 berarti meskipun begitu. Walaupun sibuk, tetap perlu membuat waktu untuk olahraga."
+        explanation: "「とはいえ」 artinya walaupun begitu. Sibuk, tetapi tetap perlu olahraga."
       },
       {
         question: "この問題は簡単そうに見えるが、考えれば考える＿＿難しくなる。",
         options: ["ほど", "だけ", "しか", "こそ"],
         answer: "ほど",
-        explanation: "Pola 「ば〜ほど」 berarti semakin..., semakin.... Semakin dipikirkan, semakin sulit."
+        explanation: "Pola 「ば〜ほど」 artinya semakin A, semakin B."
       },
       {
         question: "試験の前日になって、急に不安＿＿きた。",
         options: ["にして", "として", "がして", "をして"],
         answer: "がして",
-        explanation: "「不安がしてきた」 berarti mulai merasa cemas. Pola 「〜がする」 dipakai untuk rasa, bau, suara, atau perasaan."
+        explanation: "「不安がする」 artinya merasa cemas atau gelisah."
       },
       {
         question: "約束した以上、どんなに忙しくても行かない＿＿。",
         options: ["わけではない", "わけにはいかない", "ことはない", "ものではない"],
         answer: "わけにはいかない",
-        explanation: "「〜ないわけにはいかない」 berarti harus melakukan. Karena sudah berjanji, tidak bisa tidak pergi."
+        explanation: "「ないわけにはいかない」 artinya harus dilakukan."
       },
       {
         question: "彼女は泣き＿＿話していたので、内容がよく分からなかった。",
         options: ["ながら", "つつ", "かけて", "きって"],
         answer: "ながら",
-        explanation: "「泣きながら話す」 berarti berbicara sambil menangis. Dua kegiatan berlangsung bersamaan."
+        explanation: "「ながら」 artinya sambil melakukan dua hal bersamaan."
       },
       {
         question: "この本は難しい＿＿、説明が丁寧なので最後まで読める。",
         options: ["ものの", "ために", "ばかりで", "ように"],
         answer: "ものの",
-        explanation: "「ものの」 berarti walaupun. Walaupun bukunya sulit, penjelasannya rinci sehingga bisa dibaca sampai selesai."
+        explanation: "「ものの」 artinya walaupun. Kalimat setelahnya berlawanan."
       },
       {
         question: "彼は仕事が速い＿＿、ミスも少ない。",
         options: ["ばかりか", "だけに", "ほどに", "せいで"],
         answer: "ばかりか",
-        explanation: "「AばかりかBも」 berarti bukan hanya A, tetapi juga B. Ia bukan hanya cepat, tetapi juga sedikit kesalahan."
+        explanation: "「ばかりか」 artinya bukan hanya A, tetapi juga B."
       },
       {
         question: "部屋を出る＿＿、電気を消してください。",
         options: ["うちに", "際に", "ところに", "最中に"],
         answer: "際に",
-        explanation: "「〜際に」 berarti pada saat/ketika. Bentuk ini lebih formal daripada 「とき」."
+        explanation: "「際に」 artinya ketika atau saat. Bentuknya lebih formal."
       },
       {
         question: "彼の説明は分かりにくい。つまり、話が＿＿いないのだ。",
         options: ["まとまって", "集まって", "決まって", "比べて"],
         answer: "まとまって",
-        explanation: "「話がまとまっていない」 berarti pembicaraan tidak tersusun atau tidak terarah dengan baik."
+        explanation: "「まとまる」 artinya tersusun rapi. Di sini, pembicaraan tidak jelas arahnya."
       },
       {
         question: "日本に来て以来、毎朝ジョギングする＿＿している。",
         options: ["ことに", "ように", "ために", "ものに"],
         answer: "ように",
-        explanation: "「〜ようにしている」 berarti berusaha membiasakan diri melakukan sesuatu."
+        explanation: "「ようにしている」 artinya berusaha membiasakan diri."
       },
       {
         question: "この資料は会議で使う＿＿、今すぐ印刷しておいてください。",
         options: ["ことに", "ために", "ものの", "ばかりに"],
         answer: "ために",
-        explanation: "「〜ために」 menunjukkan tujuan. Dokumen dicetak untuk digunakan dalam rapat."
+        explanation: "「ために」 artinya untuk tujuan tertentu."
       },
       {
         question: "彼は注意された＿＿、同じミスを繰り返した。",
         options: ["にもかかわらず", "にしたがって", "につれて", "によって"],
         answer: "にもかかわらず",
-        explanation: "「にもかかわらず」 berarti meskipun. Meskipun sudah diperingatkan, ia mengulang kesalahan yang sama."
+        explanation: "「にもかかわらず」 artinya meskipun. Dipakai untuk pertentangan."
       },
       {
         question: "年を取る＿＿、健康の大切さが分かってきた。",
         options: ["に対して", "につれて", "に限って", "に関して"],
         answer: "につれて",
-        explanation: "「〜につれて」 berarti seiring dengan perubahan A, B juga berubah. Seiring bertambah usia, makin memahami pentingnya kesehatan."
+        explanation: "「につれて」 artinya seiring dengan perubahan sesuatu."
       },
       {
         question: "失敗したからといって、夢をあきらめる＿＿。",
         options: ["ことはない", "わけがない", "しかない", "に違いない"],
         answer: "ことはない",
-        explanation: "「〜ことはない」 berarti tidak perlu. Hanya karena gagal, tidak perlu menyerah."
+        explanation: "「ことはない」 artinya tidak perlu melakukan sesuatu."
       },
       {
         question: "この料理は辛い＿＿、一度食べると忘れられない味だ。",
         options: ["反面", "最中", "きり", "次第"],
         answer: "反面",
-        explanation: "「反面」 menunjukkan sisi lain yang berlawanan. Masakan ini pedas, tetapi rasanya sulit dilupakan."
+        explanation: "「反面」 artinya di sisi lain. Ada dua sisi yang berbeda."
       },
       {
         question: "会議が始まる＿＿、資料を確認しておきましょう。",
         options: ["までに", "まで", "ほど", "きり"],
         answer: "までに",
-        explanation: "「までに」 berarti batas waktu sebelum sesuatu terjadi. Harus mengecek dokumen sebelum rapat dimulai."
+        explanation: "「までに」 artinya paling lambat sebelum waktu tertentu."
       },
       {
         question: "彼は何度説明しても分からない＿＿をしている。",
         options: ["ふり", "つもり", "はず", "わけ"],
         answer: "ふり",
-        explanation: "「分からないふりをする」 berarti berpura-pura tidak mengerti."
+        explanation: "「ふりをする」 artinya berpura-pura."
       },
       {
         question: "この薬は人＿＿効果が違うことがあります。",
         options: ["によって", "に対して", "について", "に関して"],
         answer: "によって",
-        explanation: "「人によって」 berarti tergantung orangnya. Efek obat bisa berbeda pada tiap orang."
+        explanation: "「によって」 artinya tergantung pada orang atau keadaan."
       },
       {
         question: "彼は急いでいた＿＿、財布を家に忘れてしまった。",
         options: ["せいで", "おかげで", "わけで", "くせに"],
         answer: "せいで",
-        explanation: "「せいで」 menunjukkan sebab negatif. Karena terburu-buru, ia lupa membawa dompet."
+        explanation: "「せいで」 artinya karena, untuk akibat yang kurang baik."
       },
       {
         question: "この映画は子ども＿＿大人まで楽しめる。",
         options: ["から", "まで", "ほど", "しか"],
         answer: "から",
-        explanation: "Pola 「AからBまで」 berarti dari A sampai B. Dari anak-anak sampai orang dewasa bisa menikmati film ini."
+        explanation: "Pola 「AからBまで」 artinya dari A sampai B."
       },
       {
         question: "日本語を勉強する＿＿、文化も理解することが大切だ。",
         options: ["うえで", "うちに", "うえに", "うえは"],
         answer: "うえで",
-        explanation: "「〜うえで」 berarti dalam hal/untuk melakukan sesuatu. Dalam belajar bahasa Jepang, budaya juga penting."
+        explanation: "「うえで」 artinya dalam hal atau untuk melakukan sesuatu."
       },
       {
         question: "彼は寝坊した＿＿、朝ご飯も食べずに家を出た。",
         options: ["あげく", "結果", "せいか", "ところ"],
         answer: "あげく",
-        explanation: "「〜あげく」 menunjukkan hasil buruk setelah suatu proses atau keadaan. Karena bangun kesiangan, akhirnya keluar tanpa sarapan."
+        explanation: "「あげく」 artinya akhirnya, biasanya hasilnya kurang baik."
       },
       {
         question: "今さら後悔した＿＿、もう何も変わらない。",
         options: ["ところで", "ところが", "ところを", "ところに"],
         answer: "ところで",
-        explanation: "「〜たところで」 berarti meskipun melakukan sesuatu, hasilnya tetap tidak berubah. Menyesal sekarang pun tidak mengubah apa-apa."
+        explanation: "「たところで」 artinya meskipun dilakukan, hasilnya tetap sama."
       },
       {
         question: "この仕事は経験者＿＿、初心者には少し難しい。",
         options: ["向けで", "向きで", "らしく", "っぽく"],
         answer: "向けで",
-        explanation: "「〜向け」 berarti ditujukan untuk. Pekerjaan ini untuk orang berpengalaman, jadi sulit untuk pemula."
+        explanation: "「向け」 artinya ditujukan untuk orang tertentu."
       },
       {
         question: "この靴は長く歩くの＿＿、旅行にぴったりだ。",
         options: ["向きで", "向けで", "として", "に対して"],
         answer: "向きで",
-        explanation: "「〜向き」 berarti cocok untuk. Sepatu ini cocok untuk berjalan lama, jadi pas untuk perjalanan."
+        explanation: "「向き」 artinya cocok untuk sesuatu."
       },
       {
         question: "彼は日本に10年住んでいる＿＿、日本人の考え方をよく理解している。",
         options: ["だけあって", "だけでは", "だけにして", "だけのことはなく"],
         answer: "だけあって",
-        explanation: "「〜だけあって」 berarti pantas saja/karena memang. Karena sudah tinggal 10 tahun, wajar ia memahami cara berpikir orang Jepang."
+        explanation: "「だけあって」 artinya pantas saja, karena memang begitu."
       },
       {
         question: "この町は昔＿＿静かではなくなった。",
         options: ["ほど", "より", "さえ", "こそ"],
         answer: "ほど",
-        explanation: "「昔ほど〜ない」 berarti tidak se... dulu. Kota ini tidak setenang dulu."
+        explanation: "「昔ほど〜ない」 artinya tidak se... dulu."
       },
       {
         question: "そんな大事なことを忘れる＿＿ない。",
         options: ["わけが", "ことが", "ものが", "ところが"],
         answer: "わけが",
-        explanation: "「〜わけがない」 berarti tidak mungkin. Tidak mungkin melupakan hal sepenting itu."
+        explanation: "「わけがない」 artinya tidak mungkin."
       },
       {
         question: "彼の話を聞いて、もう一度挑戦してみる＿＿になった。",
         options: ["こと", "気", "つもり", "はず"],
         answer: "気",
-        explanation: "「〜気になる」 berarti menjadi ingin/terdorong untuk melakukan sesuatu. Setelah mendengar ceritanya, jadi ingin mencoba lagi."
+        explanation: "「気になる」 artinya menjadi ingin atau tertarik melakukan sesuatu."
       },
       {
         question: "この問題については、専門家＿＿意見が分かれている。",
         options: ["の間でも", "に向けても", "に比べても", "を通しても"],
         answer: "の間でも",
-        explanation: "「専門家の間でも」 berarti bahkan di antara para ahli. Pilihan ini paling alami untuk menyatakan perbedaan pendapat."
+        explanation: "「の間でも」 artinya bahkan di antara suatu kelompok."
       },
       {
         question: "彼は疲れている＿＿、最後まで笑顔で対応してくれた。",
         options: ["くせに", "にもかかわらず", "せいで", "おかげで"],
         answer: "にもかかわらず",
-        explanation: "「にもかかわらず」 berarti meskipun. Netral dan formal. 「くせに」 bernada menyalahkan, kurang cocok untuk kalimat positif."
+        explanation: "「にもかかわらず」 artinya meskipun. Lebih netral daripada 「くせに」."
       },
       {
         question: "説明書を読んだ＿＿、使い方がよく分からない。",
         options: ["ものの", "ものなら", "ものだから", "ものか"],
         answer: "ものの",
-        explanation: "「〜ものの」 berarti walaupun. Walaupun sudah membaca manual, tetap tidak mengerti cara pakainya."
+        explanation: "「ものの」 artinya walaupun, tetapi hasilnya berbeda dari harapan."
       },
       {
         question: "新しい生活に慣れる＿＿、時間がかかる。",
         options: ["には", "では", "とは", "へは"],
         answer: "には",
-        explanation: "「〜するには時間がかかる」 berarti untuk melakukan/menjadi sesuatu membutuhkan waktu."
+        explanation: "「するには」 artinya untuk melakukan sesuatu."
       },
       {
         question: "この店は安い＿＿、味も悪くない。",
         options: ["うえに", "うえで", "うちは", "うちに"],
         answer: "うえに",
-        explanation: "「〜うえに」 berarti selain itu/terlebih lagi. Tokonya murah, selain itu rasanya juga tidak buruk."
+        explanation: "「うえに」 artinya selain itu atau ditambah lagi."
       },
       {
         question: "彼は忙しいと言っている＿＿、毎日ゲームをしている。",
         options: ["わりに", "くせに", "だけに", "ことに"],
         answer: "わりに",
-        explanation: "「〜わりに」 berarti jika dibandingkan dengan dugaan dari kondisi A, hasilnya berbeda. Katanya sibuk, tetapi tetap bermain game."
+        explanation: "「わりに」 artinya tidak sesuai dengan dugaan."
       },
       {
         question: "あの人は学生＿＿、まるで先生のように説明が上手だ。",
         options: ["にしては", "としては", "に対して", "について"],
         answer: "にしては",
-        explanation: "「〜にしては」 berarti untuk ukuran/sebagai seorang.... Untuk ukuran pelajar, penjelasannya sangat bagus."
+        explanation: "「にしては」 artinya untuk ukuran seseorang atau sesuatu."
       },
       {
         question: "このレポートは、内容＿＿構成にも問題がある。",
         options: ["だけでなく", "だけなら", "だけしか", "だけほど"],
         answer: "だけでなく",
-        explanation: "「AだけでなくBも」 berarti bukan hanya A, tetapi juga B. Bukan hanya isi, struktur juga bermasalah."
+        explanation: "「だけでなく」 artinya bukan hanya A, tetapi juga B."
       },
       {
         question: "努力した＿＿、必ず成功するとは限らない。",
         options: ["からには", "からといって", "からこそ", "からして"],
         answer: "からといって",
-        explanation: "「〜からといって、必ず〜とは限らない」 berarti hanya karena A, belum tentu B pasti terjadi."
+        explanation: "「からといって」 artinya hanya karena A, belum tentu B."
       },
       {
         question: "日本語が上手になる＿＿、毎日少しずつでも使うことが大切だ。",
         options: ["には", "まで", "ほど", "ばかり"],
         answer: "には",
-        explanation: "「〜するには」 berarti untuk mencapai/ melakukan sesuatu. Untuk menjadi mahir, penting memakai bahasa Jepang tiap hari."
+        explanation: "「には」 di sini artinya untuk mencapai tujuan."
       },
       {
         question: "彼は怒っている＿＿、声の調子で分かった。",
         options: ["ことが", "ことを", "ものが", "ものを"],
         answer: "ことが",
-        explanation: "「〜ことが分かる」 berarti mengetahui bahwa.... Dari nada suaranya, diketahui bahwa ia sedang marah."
+        explanation: "「ことが分かる」 artinya mengetahui bahwa sesuatu terjadi."
       },
       {
         question: "試験が近づく＿＿、クラス全体が緊張してきた。",
         options: ["にしたがって", "に対して", "について", "に限って"],
         answer: "にしたがって",
-        explanation: "「〜にしたがって」 berarti seiring dengan. Semakin ujian mendekat, seluruh kelas semakin tegang."
+        explanation: "「にしたがって」 artinya semakin berubah, hal lain ikut berubah."
       },
       {
         question: "この道具は使い方＿＿は簡単だが、正確に使うのは難しい。",
         options: ["そのもの", "自体", "向け", "次第"],
         answer: "自体",
-        explanation: "「使い方自体は」 berarti cara pakainya sendiri. Cara pakainya sederhana, tetapi menggunakannya secara akurat sulit."
+        explanation: "「自体」 artinya hal itu sendiri."
       },
       {
         question: "友達に相談した＿＿、少し気持ちが楽になった。",
         options: ["おかげで", "せいで", "ためで", "わけで"],
         answer: "おかげで",
-        explanation: "「おかげで」 menunjukkan sebab positif. Berkat berkonsultasi dengan teman, perasaan menjadi lebih ringan."
+        explanation: "「おかげで」 artinya berkat sesuatu, hasilnya baik."
       },
       {
         question: "彼は何も言わずに帰ってしまった。＿＿、何か怒っていたのかもしれない。",
         options: ["つまり", "もしかすると", "たとえば", "ところで"],
         answer: "もしかすると",
-        explanation: "「もしかすると」 berarti mungkin saja/barangkali. Cocok untuk dugaan."
+        explanation: "「もしかすると」 artinya mungkin atau barangkali."
       },
       {
         question: "メールを送った＿＿、返事が来ない。",
         options: ["きり", "まま", "ところ", "ばかり"],
         answer: "きり",
-        explanation: "「〜たきり」 berarti setelah melakukan sesuatu, keadaan berikutnya tidak terjadi/terputus. Setelah mengirim email, balasan tidak datang."
+        explanation: "「たきり」 artinya setelah itu tidak ada kelanjutan."
       },
       {
         question: "窓を開けた＿＿寝てしまったので、朝とても寒かった。",
         options: ["まま", "きり", "ところ", "うち"],
         answer: "まま",
-        explanation: "「〜たまま」 berarti keadaan dibiarkan seperti itu. Tidur dalam keadaan jendela masih terbuka."
+        explanation: "「たまま」 artinya keadaan dibiarkan tetap begitu."
       },
       {
         question: "努力を続ける＿＿、結果は少しずつ変わってくるはずだ。",
         options: ["うちに", "ところに", "最中に", "一方で"],
         answer: "うちに",
-        explanation: "「〜するうちに」 berarti selama proses melakukan sesuatu, perlahan terjadi perubahan."
+        explanation: "「うちに」 artinya selama proses itu berlangsung."
       },
       {
         question: "彼は英語＿＿、フランス語も話せる。",
         options: ["ばかりか", "だけなら", "しか", "ほど"],
         answer: "ばかりか",
-        explanation: "「AばかりかBも」 berarti bukan hanya A, tetapi juga B. Ia bukan hanya bisa bahasa Inggris, tetapi juga bahasa Prancis."
+        explanation: "「ばかりか」 artinya bukan hanya A, tetapi juga B."
       },
       {
         question: "この会社では、年齢＿＿能力で評価される。",
         options: ["によらず", "によって", "にしたがって", "に比べて"],
         answer: "によらず",
-        explanation: "「〜によらず」 berarti tanpa bergantung pada. Dinilai berdasarkan kemampuan, bukan berdasarkan usia."
+        explanation: "「によらず」 artinya tidak bergantung pada sesuatu."
       },
       {
         question: "交通事故＿＿、電車が止まっている。",
         options: ["のため", "のおかげ", "のわけ", "のふり"],
         answer: "のため",
-        explanation: "「〜のため」 menunjukkan sebab/alasan. Karena kecelakaan lalu lintas, kereta berhenti."
+        explanation: "「のため」 artinya karena atau akibat dari sesuatu."
       },
       {
         question: "せっかく料理を作った＿＿、誰も食べてくれなかった。",
         options: ["のに", "ので", "なら", "ても"],
         answer: "のに",
-        explanation: "「せっかく〜のに」 menunjukkan rasa kecewa: padahal sudah repot membuat masakan, tetapi tidak ada yang makan."
+        explanation: "「せっかく〜のに」 dipakai saat kecewa karena usaha tidak dihargai."
       }
     ];
 
     let quiz = [];
     let currentQuestion = 0;
     let score = 0;
-    let answered = false;
-    let wrongAnswers = [];
+    let selectedAnswers = [];
+
+    const screens = {
+      start: document.getElementById("startScreen"),
+      quiz: document.getElementById("quizScreen"),
+      feedback: document.getElementById("feedbackScreen"),
+      result: document.getElementById("resultScreen"),
+      review: document.getElementById("reviewScreen")
+    };
+
+    function setScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
 
     function shuffleArray(array) {
       const arr = [...array];
@@ -630,143 +1516,146 @@
       }));
       currentQuestion = 0;
       score = 0;
-      answered = false;
-      wrongAnswers = [];
-      showQuestion();
+      selectedAnswers = [];
+      renderQuestion();
+      setScreen("quiz");
     }
 
-    function showQuestion() {
-      answered = false;
+    function goHome() {
+      setScreen("start");
+    }
+
+    function renderQuestion() {
       const q = quiz[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quiz.length) * 100;
 
-      document.getElementById("progress").innerHTML =
-        "Soal " + (currentQuestion + 1) + " dari " + quiz.length;
+      document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
+      document.getElementById("progressFill").style.width = `${progressPercent}%`;
+      document.getElementById("questionText").textContent = q.question;
+      document.getElementById("scorePill").textContent = `Skor sementara: ${score} / ${quiz.length}`;
 
-      document.getElementById("question").innerText = q.question;
+      const optionsBox = document.getElementById("optionsBox");
+      optionsBox.innerHTML = "";
 
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
-
-      document.getElementById("feedback").innerHTML = "";
-      document.getElementById("score").innerHTML =
-        "Skor sementara: " + score + " / " + quiz.length;
-
-      q.options.forEach(function(option, index) {
-        const btn = document.createElement("button");
-        btn.className = "option";
-        btn.innerText = String.fromCharCode(65 + index) + ". " + option;
-        btn.dataset.option = option;
-        btn.onclick = function() {
-          checkAnswer(btn, option);
-        };
-        optionsDiv.appendChild(btn);
+      q.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.dataset.option = option;
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${option}</span>`;
+        button.onclick = () => checkAnswer(option, button);
+        optionsBox.appendChild(button);
       });
     }
 
-    function checkAnswer(button, selected) {
-      if (answered) return;
-
-      answered = true;
+    function checkAnswer(selected, button) {
       const q = quiz[currentQuestion];
-      const allButtons = document.querySelectorAll(".option");
+      const isCorrect = selected === q.answer;
 
-      allButtons.forEach(function(btn) {
+      selectedAnswers[currentQuestion] = {
+        question: q.question,
+        selected,
+        answer: q.answer,
+        correct: isCorrect,
+        explanation: q.explanation
+      };
+
+      if (isCorrect) score++;
+
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach(btn => {
         btn.disabled = true;
-        if (btn.dataset.option === q.answer) {
-          btn.classList.add("correct");
-        }
+        if (btn.dataset.option === q.answer) btn.classList.add("correct");
       });
 
-      if (selected === q.answer) {
-        score++;
-        button.classList.add("correct");
-        document.getElementById("feedback").innerHTML =
-          "正解！ Benar!<br>" + q.explanation;
-      } else {
-        button.classList.add("wrong");
-        wrongAnswers.push({
-          question: q.question,
-          selected: selected,
-          answer: q.answer,
-          explanation: q.explanation
-        });
+      button.classList.add(isCorrect ? "correct" : "wrong");
 
-        document.getElementById("feedback").innerHTML =
-          "不正解。Salah. Jawaban yang benar adalah: <strong>" + q.answer + "</strong><br>" + q.explanation;
-      }
+      window.setTimeout(() => {
+        renderFeedback(isCorrect, q.answer, q.explanation);
+        setScreen("feedback");
+      }, 350);
+    }
 
-      document.getElementById("score").innerHTML =
-        "Skor sementara: " + score + " / " + quiz.length;
+    function renderFeedback(isCorrect, answer, explanation) {
+      const statusRing = document.getElementById("statusRing");
+      const title = document.getElementById("feedbackTitle");
+      const text = document.getElementById("feedbackExplanation");
+      const nextBtn = document.getElementById("nextBtn");
+
+      statusRing.textContent = isCorrect ? "✓" : "×";
+      statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
+      title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
+      title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
+      text.innerHTML = isCorrect
+        ? `Bagus!<br>${explanation}`
+        : `Jawaban yang benar adalah <strong>${answer}</strong>.<br>${explanation}`;
+      nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+    }
+
+    function showQuizAgain() {
+      setScreen("quiz");
     }
 
     function nextQuestion() {
-      if (!answered) {
-        alert("Pilih jawaban dulu sebelum lanjut.");
-        return;
-      }
-
       currentQuestion++;
-
       if (currentQuestion < quiz.length) {
-        showQuestion();
+        renderQuestion();
+        setScreen("quiz");
       } else {
         showResult();
       }
     }
 
     function showResult() {
+      const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
-      let message = "";
+      let message;
 
       if (percentage >= 90) {
-        message = "すごい！ Sangat kuat. Kamu siap menghadapi soal N3 yang menuntut logika grammar.";
+        message = "すごい！ Sangat kuat. Kamu siap menghadapi soal N3 yang menuntut logika tata bahasa.";
       } else if (percentage >= 75) {
-        message = "いいですね！ Bagus. Pemahamanmu kuat, tetapi masih perlu mengasah perbedaan pola yang mirip.";
+        message = "いいですね！ Bagus. Pemahamanmu kuat, tetapi masih perlu mengasah pola yang mirip.";
       } else if (percentage >= 60) {
-        message = "もう少し！ Cukup baik. Fokus ulang pada grammar N3 seperti ものの, にしたがって, だけあって, dan わけにはいかない.";
+        message = "もう少し！ Cukup baik. Fokus ulang pada pola N3 seperti ものの, にしたがって, dan わけにはいかない.";
       } else {
-        message = "頑張って！ Masih perlu penguatan dari N4 menuju N3, terutama pola kalimat dan kosakata konteks."
+        message = "頑張って！ Perkuat lagi materi N4 menuju N3 secara bertahap.";
       }
 
-      let reviewHtml = "";
-
-      if (wrongAnswers.length > 0) {
-        reviewHtml = `
-          <div class="review">
-            <h3>Review Jawaban Salah</h3>
-            ${wrongAnswers.map((item, index) => `
-              <div class="review-item">
-                <strong>${index + 1}. ${item.question}</strong><br>
-                Jawaban kamu: ${item.selected}<br>
-                Jawaban benar: <strong>${item.answer}</strong><br>
-                ${item.explanation}
-              </div>
-            `).join("")}
-          </div>
-        `;
-      } else {
-        reviewHtml = `
-          <div class="review">
-            <h3>完璧！ Semua jawaban benar.</h3>
-            <p>Kamu berhasil menjawab semua soal tanpa kesalahan.</p>
-          </div>
-        `;
-      }
-
-      document.getElementById("quizBox").innerHTML = `
-        <div class="result-box">
-          <div class="decor">🌸 ⛩️ 🌸</div>
-          <h2>Hasil Akhir</h2>
-          <p>Skor kamu:</p>
-          <div class="result-score">${score} / ${quiz.length}</div>
-          <p>${message}</p>
-          <button id="restartBtn" onclick="location.reload()">Ulangi Kuis</button>
-          ${reviewHtml}
-        </div>
-      `;
+      document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("correctCount").textContent = score;
+      document.getElementById("incorrectCount").textContent = incorrect;
+      setScreen("result");
     }
 
-    startQuiz();
+    function showReview() {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      selectedAnswers.forEach((item, index) => {
+        const row = document.createElement("article");
+        row.className = "review-item";
+        row.innerHTML = `
+          <div class="review-detail">
+            <p><strong>${index + 1}.</strong> ${item.question}</p>
+            <small>Jawaban kamu: ${item.selected}</small>
+            <small class="review-answer">Jawaban benar: ${item.answer}</small>
+            <small>Penjelasan: ${item.explanation}</small>
+          </div>
+          <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
+        `;
+        reviewList.appendChild(row);
+      });
+
+      setScreen("review");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      setScreen("start");
+    }
   </script>
 </body>
 </html>
