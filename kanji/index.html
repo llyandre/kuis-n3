@@ -1575,34 +1575,86 @@
       }
     }
 
-
+    /* Default: elemen non-teks tidak bisa diseleksi */
     * {
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Teks boleh diblok dan dicopy */
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    small,
+    strong,
+    em,
+    li,
+    label,
+    .question,
+    .feedback-title,
+    .feedback-explanation,
+    .result-heading,
+    .result-score,
+    .result-message,
+    .result-user,
+    .review-item,
+    .review-item p,
+    .review-item small,
+    .ranking-name,
+    .ranking-date,
+    .ranking-score,
+    .ranking-empty,
+    .brand,
+    .brand p,
+    .brand h1,
+    .screen-title,
+    .meta-row,
+    .score-pill {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Input tetap bisa diketik, select, copy, paste */
+    input,
+    textarea {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Gambar tidak bisa drag/select */
     img {
       -webkit-user-drag: none;
       user-select: none;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
+      pointer-events: auto;
     }
 
-    body {
+    /* Tombol dan elemen dekoratif tidak perlu bisa diseleksi */
+    button,
+    .logo-mark,
+    .home-art,
+    .result-art,
+    .status-ring,
+    .stat-icon,
+    .badge,
+    .progress-track,
+    .progress-fill,
+    .phone-frame::after {
       user-select: none;
       -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
     }
 
-    input,
-    textarea {
-      user-select: text;
-      -webkit-user-select: text;
-    }
-
-
-  </style>
+</style>
 </head>
 
 <body>
@@ -3266,20 +3318,67 @@ let message;
         confirmUsername();
       }
     });
+window.openUsernameModal = openUsernameModal;
+    window.closeUsernameModal = closeUsernameModal;
+    window.confirmUsername = confirmUsername;
+    window.startQuiz = startQuiz;
+    window.goHome = goHome;
+    window.showQuizAgain = showQuizAgain;
+    window.nextQuestion = nextQuestion;
+    window.showReview = showReview;
+    window.showResult = showResult;
+    window.restartQuiz = restartQuiz;
+    window.openRankingModal = openRankingModal;
+    window.closeRankingModal = closeRankingModal;
+    window.clearRanking = clearRanking;
 
 
-    // Proteksi ringan khusus gambar: tidak bisa drag dan tidak bisa klik kanan.
+    // Hanya izinkan klik kanan pada teks dan input
+    document.addEventListener("contextmenu", function(event) {
+      const allowedTextTags = [
+        "P", "H1", "H2", "H3", "H4", "H5", "H6",
+        "SPAN", "SMALL", "STRONG", "EM", "LI", "LABEL",
+        "INPUT", "TEXTAREA"
+      ];
+
+      const target = event.target;
+
+      const isAllowedText =
+        allowedTextTags.includes(target.tagName) ||
+        target.closest(".question") ||
+        target.closest(".feedback-title") ||
+        target.closest(".feedback-explanation") ||
+        target.closest(".result-heading") ||
+        target.closest(".result-score") ||
+        target.closest(".result-message") ||
+        target.closest(".result-user") ||
+        target.closest(".review-item") ||
+        target.closest(".ranking-item") ||
+        target.closest(".ranking-empty") ||
+        target.closest(".brand") ||
+        target.closest(".screen-title") ||
+        target.closest(".meta-row") ||
+        target.closest(".score-pill");
+
+      if (!isAllowedText) {
+        event.preventDefault();
+      }
+    });
+
+    // Cegah klik kanan dan drag khusus gambar
     document.querySelectorAll("img").forEach(function(img) {
       img.setAttribute("draggable", "false");
+
       img.addEventListener("dragstart", function(event) {
         event.preventDefault();
       });
+
       img.addEventListener("contextmenu", function(event) {
         event.preventDefault();
       });
     });
 
-    // Blok shortcut umum untuk inspect/view source
+    // Blok shortcut inspect/source, tapi tetap izinkan copy/paste teks
     document.addEventListener("keydown", function(event) {
       const key = event.key.toLowerCase();
 
@@ -3295,40 +3394,10 @@ let message;
         alert("Akses inspect element dinonaktifkan.");
         return false;
       }
+
+      // Jangan blok Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X agar teks/input tetap bisa dipakai
     });
 
-    // Proteksi tambahan: deteksi DevTools secara ringan
-    (function detectDevTools() {
-      let warningShown = false;
-
-      setInterval(function() {
-        const widthDiff = window.outerWidth - window.innerWidth;
-        const heightDiff = window.outerHeight - window.innerHeight;
-
-        if ((widthDiff > 160 || heightDiff > 160) && !warningShown) {
-          warningShown = true;
-          alert("Inspect element tidak diizinkan pada halaman ini.");
-        }
-
-        if (widthDiff <= 160 && heightDiff <= 160) {
-          warningShown = false;
-        }
-      }, 1000);
-    })();
-
-    window.openUsernameModal = openUsernameModal;
-    window.closeUsernameModal = closeUsernameModal;
-    window.confirmUsername = confirmUsername;
-    window.startQuiz = startQuiz;
-    window.goHome = goHome;
-    window.showQuizAgain = showQuizAgain;
-    window.nextQuestion = nextQuestion;
-    window.showReview = showReview;
-    window.showResult = showResult;
-    window.restartQuiz = restartQuiz;
-    window.openRankingModal = openRankingModal;
-    window.closeRankingModal = closeRankingModal;
-    window.clearRanking = clearRanking;
 
   </script>
 </body>
