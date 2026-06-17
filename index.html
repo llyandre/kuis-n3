@@ -1565,12 +1565,29 @@
     }
 
 
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     img {
       -webkit-user-drag: none;
       user-select: none;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
+    }
+
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    input,
+    textarea {
+      user-select: text;
+      -webkit-user-select: text;
     }
 
 
@@ -2216,17 +2233,56 @@ let message;
     });
 
 
+    // Nonaktifkan klik kanan
     document.addEventListener("contextmenu", function(event) {
-      if (event.target.tagName === "IMG") {
+      event.preventDefault();
+    });
+
+    // Nonaktifkan drag gambar
+    document.querySelectorAll("img").forEach(function(img) {
+      img.setAttribute("draggable", "false");
+      img.addEventListener("dragstart", function(event) {
         event.preventDefault();
+      });
+    });
+
+    // Blok shortcut umum untuk inspect/view source
+    document.addEventListener("keydown", function(event) {
+      const key = event.key.toLowerCase();
+
+      if (
+        event.key === "F12" ||
+        (event.ctrlKey && event.shiftKey && key === "i") ||
+        (event.ctrlKey && event.shiftKey && key === "j") ||
+        (event.ctrlKey && event.shiftKey && key === "c") ||
+        (event.ctrlKey && key === "u") ||
+        (event.ctrlKey && key === "s")
+      ) {
+        event.preventDefault();
+        alert("Akses inspect element dinonaktifkan.");
+        return false;
       }
     });
 
-    document.querySelectorAll("img").forEach(img => {
-      img.setAttribute("draggable", "false");
-      img.addEventListener("dragstart", event => event.preventDefault());
-      img.addEventListener("contextmenu", event => event.preventDefault());
-    });
+    // Proteksi tambahan: deteksi DevTools secara ringan
+    (function detectDevTools() {
+      let warningShown = false;
+
+      setInterval(function() {
+        const widthDiff = window.outerWidth - window.innerWidth;
+        const heightDiff = window.outerHeight - window.innerHeight;
+
+        if ((widthDiff > 160 || heightDiff > 160) && !warningShown) {
+          warningShown = true;
+          alert("Inspect element tidak diizinkan pada halaman ini.");
+        }
+
+        if (widthDiff <= 160 && heightDiff <= 160) {
+          warningShown = false;
+        }
+      }, 1000);
+    })();
+
     window.openUsernameModal = openUsernameModal;
     window.closeUsernameModal = closeUsernameModal;
     window.confirmUsername = confirmUsername;
