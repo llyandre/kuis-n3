@@ -1713,7 +1713,7 @@
     <div class="ranking-modal" id="rankingModal" aria-hidden="true">
       <div class="ranking-modal-card">
         <h2>Ranking Nilai</h2>
-        <p>Daftar nilai peserta dari skor tertinggi. Data tersimpan di browser/perangkat yang sama.</p>
+        <p>Data ranking tersimpan online dan dapat dilihat oleh peserta lain.</p>
 
         <div class="ranking-list" id="rankingList"></div>
 
@@ -1726,7 +1726,10 @@
 
   </main>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getDatabase, ref, push, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
     const quiz = [
       {
         question: "彼は忙しい＿＿、毎日日本語を勉強しています。",
@@ -1825,9 +1828,21 @@
     let selectedAnswers = [];
     let currentUsername = "";
     let resultSaved = false;
-    let rankingMemoryFallback = [];
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqa_CZrOpAXO0N5XEc_IBZcG8pgzQFfgg",
+      authDomain: "nihongogo-quiz-n3.firebaseapp.com",
+      databaseURL: "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com",
+      projectId: "nihongogo-quiz-n3",
+      storageBucket: "nihongogo-quiz-n3.firebasestorage.app",
+      messagingSenderId: "676404099639",
+      appId: "1:676404099639:web:f9e7e875d936b200ef1db2",
+      measurementId: "G-5TSBZE4BN2"
+    };
 
-    const RANKING_KEY = "nihongoGO_N3_ranking";
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const rankingRef = ref(db, "nihongoGO_N3_ranking");
+
 
     const screens = {
       start: document.getElementById("startScreen"),
@@ -1876,47 +1891,41 @@
       startQuiz();
     }
 
-    function getRankingData() {
-      try {
-        const saved = localStorage.getItem(RANKING_KEY);
-        if (!saved) return rankingMemoryFallback;
-
-        const parsed = JSON.parse(saved);
-        return Array.isArray(parsed) ? parsed : rankingMemoryFallback;
-      } catch (error) {
-        return rankingMemoryFallback;
-      }
-    }
-
-    function saveRankingData(data) {
-      rankingMemoryFallback = Array.isArray(data) ? data : [];
-
-      try {
-        localStorage.setItem(RANKING_KEY, JSON.stringify(rankingMemoryFallback));
-      } catch (error) {
-        // Jika localStorage tidak tersedia, data tetap tampil selama halaman belum ditutup.
-      }
-    }
-
-    function saveUserRanking() {
-      const ranking = getRankingData();
-
+    async function saveUserRanking() {
       const userResult = {
         name: currentUsername || "Tanpa Nama",
         score: score,
         total: quiz.length,
         percentage: Math.round((score / quiz.length) * 100),
-        date: new Date().toLocaleString("id-ID")
+        date: new Date().toLocaleString("id-ID"),
+        createdAt: Date.now()
       };
 
-      ranking.push(userResult);
+      const newResultRef = push(rankingRef);
+      await set(newResultRef, userResult);
+    }
+
+    async function getRankingData() {
+      const snapshot = await get(rankingRef);
+
+      if (!snapshot.exists()) {
+        return [];
+      }
+
+      const data = snapshot.val();
+
+      const ranking = Object.keys(data).map(key => ({
+        id: key,
+        ...data[key]
+      }));
 
       ranking.sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
-        return b.percentage - a.percentage;
+        if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+        return b.createdAt - a.createdAt;
       });
 
-      saveRankingData(ranking);
+      return ranking;
     }
 
     function escapeHTML(value) {
@@ -1932,7 +1941,7 @@
       const list = document.getElementById("rankingList");
       list.innerHTML = "";
 
-      if (!ranking.length) {
+      if (!ranking || !ranking.length) {
         list.innerHTML = `<div class="ranking-empty">Belum ada data ranking.</div>`;
         return;
       }
@@ -1943,8 +1952,8 @@
         row.innerHTML = `
           <div class="ranking-number">${index + 1}</div>
           <div>
-            <div class="ranking-name">${escapeHTML(item.name)}</div>
-            <span class="ranking-date">${escapeHTML(item.date)}</span>
+            <div class="ranking-name">${escapeHTML(item.name || "Tanpa Nama")}</div>
+            <span class="ranking-date">${escapeHTML(item.date || "-")}</span>
           </div>
           <div class="ranking-score">${item.score}/${item.total}</div>
         `;
@@ -1952,14 +1961,28 @@
       });
     }
 
-    function openRankingModal() {
+    async function openRankingModal() {
       const modal = document.getElementById("rankingModal");
-      const ranking = getRankingData();
-
-      renderRankingList(ranking);
+      const list = document.getElementById("rankingList");
 
       modal.classList.add("active");
       modal.setAttribute("aria-hidden", "false");
+
+      list.innerHTML = `<div class="ranking-empty">Memuat ranking...</div>`;
+
+      try {
+        const ranking = await getRankingData();
+        renderRankingList(ranking);
+      } catch (error) {
+        console.error("Firebase ranking error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Ranking gagal dimuat.<br>
+            Detail error: ${escapeHTML(error.message || error.code || "Tidak diketahui")}
+          </div>
+        `;
+      }
     }
 
     function closeRankingModal() {
@@ -1968,21 +1991,30 @@
       modal.setAttribute("aria-hidden", "true");
     }
 
-    function clearRanking() {
-      const confirmClear = confirm("Hapus semua data ranking?");
+    async function clearRanking() {
+      const confirmClear = confirm("Hapus semua data ranking online?");
       if (!confirmClear) return;
 
-      rankingMemoryFallback = [];
+      const list = document.getElementById("rankingList");
+      list.innerHTML = `<div class="ranking-empty">Menghapus ranking...</div>`;
 
       try {
-        localStorage.removeItem(RANKING_KEY);
+        await remove(rankingRef);
+        renderRankingList([]);
+        alert("Ranking berhasil dihapus.");
       } catch (error) {
-        // Jika localStorage tidak tersedia, ranking cadangan tetap dikosongkan.
+        console.error("Firebase delete ranking error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Gagal menghapus ranking.<br>
+            Detail error: ${escapeHTML(error.message || error.code || "Tidak diketahui")}
+          </div>
+        `;
+
+        alert("Gagal menghapus ranking. Periksa Rules Firebase.");
       }
-
-      renderRankingList([]);
     }
-
 
     function startQuiz() {
       currentQuestion = 0;
@@ -2097,11 +2129,13 @@
     function showResult() {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
-
       if (!resultSaved) {
-        saveUserRanking();
+        saveUserRanking().catch(error => {
+          console.error("Gagal menyimpan ranking:", error);
+        });
         resultSaved = true;
       }
+
 
       let message;
 
@@ -2154,6 +2188,20 @@
         confirmUsername();
       }
     });
+
+    window.openUsernameModal = openUsernameModal;
+    window.closeUsernameModal = closeUsernameModal;
+    window.confirmUsername = confirmUsername;
+    window.startQuiz = startQuiz;
+    window.goHome = goHome;
+    window.showQuizAgain = showQuizAgain;
+    window.nextQuestion = nextQuestion;
+    window.showReview = showReview;
+    window.showResult = showResult;
+    window.restartQuiz = restartQuiz;
+    window.openRankingModal = openRankingModal;
+    window.closeRankingModal = closeRankingModal;
+    window.clearRanking = clearRanking;
 
   </script>
 </body>
