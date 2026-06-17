@@ -1,0 +1,3544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NihongoGO - Bunpou JLPT N3 100 Soal</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f7f3ea;
+      --paper: #fffdf8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #7c7468;
+      --line: #eadfd2;
+      --red: #c84b31;
+      --red-dark: #a83a26;
+      --indigo: #2f4858;
+      --green: #6f936f;
+      --green-soft: #edf5ec;
+      --wrong: #c76d5e;
+      --wrong-soft: #fff0ed;
+      --shadow: 0 24px 70px rgba(49, 36, 23, 0.12);
+      --soft-shadow: 0 10px 28px rgba(49, 36, 23, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(200, 75, 49, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 72, 88, 0.09), transparent 22%),
+        linear-gradient(135deg, #fbf7ef 0%, var(--bg) 44%, #f1eadf 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(200, 75, 49, 0.12) 1.4px, transparent 1.6px),
+        radial-gradient(circle at 32px 32px, rgba(47, 72, 88, 0.07) 1px, transparent 1.3px);
+      background-size: 48px 48px;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: 760px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 210px;
+      opacity: 0.65;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(47, 72, 88, 0.08) 59% 62%, transparent 63%) 0 0 / 64px 38px repeat-x,
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(200, 75, 49, 0.08) 59% 62%, transparent 63%) 32px 22px / 64px 38px repeat-x;
+      z-index: -1;
+    }
+
+    .screen {
+      display: none;
+      min-height: 760px;
+      padding: 28px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      margin-bottom: 22px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--indigo);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(47, 72, 88, 0.07);
+    }
+
+    .screen-title {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: #182531;
+      text-align: center;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.08);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .logo-mark svg {
+      width: 27px;
+      height: 27px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-mark .enso-main {
+      fill: none;
+      stroke: #1f2933;
+      stroke-width: 7.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-mark .enso-soft {
+      fill: none;
+      stroke: rgba(31, 41, 51, 0.34);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .logo-mark .enso-red {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      opacity: 0.92;
+    }
+
+    .home-art {
+      position: relative;
+      flex: 0 0 auto;
+      width: calc(100% + 48px);
+      height: 430px;
+      min-height: 430px;
+      margin: 0 -24px 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .home-art-image {
+      width: 100%;
+      max-width: none;
+      height: 430px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .vertical-copy {
+      position: absolute;
+      left: 34px;
+      top: 42px;
+      z-index: 5;
+      writing-mode: vertical-rl;
+      color: rgba(168, 58, 38, 0.78);
+      font-family: "Noto Serif JP", serif;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      line-height: 1.75;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    #startScreen .sun-circle,
+    #startScreen .torii,
+    #startScreen .mist,
+    #startScreen .sakura-branch {
+      display: none !important;
+    }
+
+    .mini-card {
+      position: absolute;
+      right: 6px;
+      top: 42px;
+      width: 132px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 12px 28px rgba(49, 36, 23, 0.08);
+      backdrop-filter: blur(10px);
+      text-align: left;
+    }
+
+    .mini-card .seal {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fffdf8;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .home-info-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 255, 255, 0.72)),
+        radial-gradient(circle at 92% 20%, rgba(200, 75, 49, 0.08), transparent 34%);
+      box-shadow: 0 12px 30px rgba(49, 36, 23, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .home-info-item {
+      min-height: 86px;
+      padding: 10px 6px 9px;
+      border-radius: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(234, 223, 210, 0.72);
+    }
+
+    .home-info-item span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.11);
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .home-info-item strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .home-info-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .sakura-branch {
+      position: absolute;
+      right: 15px;
+      bottom: 77px;
+      width: 132px;
+      height: 68px;
+      transform: rotate(-17deg);
+      opacity: 0.92;
+    }
+
+    .sakura-branch::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 34px;
+      height: 2px;
+      background: rgba(92, 70, 56, 0.28);
+      border-radius: 999px;
+    }
+
+    .sakura-branch span {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(200, 75, 49, 0.32);
+      transform: rotate(45deg);
+    }
+
+    .sakura-branch span:nth-child(1) { right: 18px; top: 18px; }
+    .sakura-branch span:nth-child(2) { right: 42px; top: 32px; width: 11px; height: 11px; }
+    .sakura-branch span:nth-child(3) { right: 72px; top: 22px; width: 10px; height: 10px; }
+    .sakura-branch span:nth-child(4) { right: 100px; top: 38px; width: 9px; height: 9px; }
+
+    .sun-circle {
+      position: absolute;
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.24), transparent 20%),
+        linear-gradient(145deg, #e36c50, var(--red));
+      box-shadow: 0 16px 36px rgba(200, 75, 49, 0.22);
+    }
+
+    .torii {
+      position: absolute;
+      top: 156px;
+      left: 50%;
+      width: 112px;
+      height: 96px;
+      transform: translateX(-50%);
+      color: #272727;
+    }
+
+    .torii .beam-main,
+    .torii .beam-top,
+    .torii .beam-mid,
+    .torii .pillar,
+    .torii .base {
+      position: absolute;
+      background: currentColor;
+      border-radius: 3px;
+    }
+
+    .torii .beam-top {
+      left: 4px;
+      right: 4px;
+      top: 8px;
+      height: 9px;
+      transform: rotate(2deg);
+    }
+
+    .torii .beam-main {
+      left: 0;
+      right: 0;
+      top: 21px;
+      height: 10px;
+    }
+
+    .torii .beam-mid {
+      left: 24px;
+      right: 24px;
+      top: 42px;
+      height: 8px;
+    }
+
+    .torii .pillar.left { left: 27px; }
+    .torii .pillar.right { right: 27px; }
+
+    .torii .pillar {
+      top: 30px;
+      width: 9px;
+      height: 66px;
+    }
+
+    .torii .base {
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+    }
+
+    .torii .base.left { left: 20px; }
+    .torii .base.right { right: 20px; }
+
+    .mist {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      width: 270px;
+      height: 78px;
+      transform: translateX(-50%);
+      opacity: 1;
+      overflow: hidden;
+      border-radius: 0 0 120px 120px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0) 0%, rgba(255, 253, 248, 0.88) 38%, rgba(247, 243, 234, 0.28) 100%),
+        radial-gradient(ellipse at 50% 78%, rgba(47, 72, 88, 0.09), transparent 68%);
+      filter: none;
+    }
+
+    .mist::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 11px;
+      height: 56px;
+      opacity: 0.9;
+      background:
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(47, 72, 88, 0.15) 58% 61%, transparent 62%) 0 0 / 54px 31px repeat-x,
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(200, 75, 49, 0.13) 58% 61%, transparent 62%) 27px 16px / 54px 31px repeat-x;
+    }
+
+    .mist::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(47, 72, 88, 0.26), transparent);
+    }
+
+    .brand {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #172434;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(42px, 11vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 10px auto 22px;
+      max-width: 245px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--red-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(200, 75, 49, 0.45);
+    }
+
+    .home-chips {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: -6px 0 22px;
+    }
+
+    .home-chips span {
+      padding: 7px 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #5f5a52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, var(--red), #dc4b36);
+      box-shadow: 0 12px 26px rgba(200, 75, 49, 0.24);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(200, 75, 49, 0.28);
+    }
+
+    .ghost-btn {
+      border: 1.5px solid var(--red);
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .ghost-btn:hover {
+      background: rgba(200, 75, 49, 0.07);
+    }
+
+    .home-footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #5f5a52;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 0.45em;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(234, 223, 210, 0.8);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #dc5642);
+      transition: width 0.25s ease;
+    }
+
+    .passage-card {
+      margin: 0 0 16px;
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 255, 255, 0.84)),
+        radial-gradient(circle at 100% 0%, rgba(200, 75, 49, 0.06), transparent 32%);
+      color: #253746;
+      box-shadow: var(--soft-shadow);
+      font-family: "Noto Serif JP", "Plus Jakarta Sans", serif;
+      font-size: 14.5px;
+      line-height: 1.85;
+      white-space: pre-line;
+      max-height: 265px;
+      overflow: auto;
+    }
+
+    .passage-card[hidden] {
+      display: none !important;
+    }
+
+    .question-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.82)),
+        radial-gradient(circle at 100% 100%, rgba(200, 75, 49, 0.08), transparent 30%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px 28px;
+      min-height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -18px;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      border: 18px solid rgba(200, 75, 49, 0.08);
+    }
+
+    .question-card::after {
+      content: "";
+      position: absolute;
+      width: 46px;
+      height: 2px;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: var(--red);
+      border-radius: 999px;
+    }
+
+    .question {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 36, 23, 0.035);
+      transition: 0.16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(200, 75, 49, 0.55);
+      background: #fffafa;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .choice-letter {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f2ede6;
+      color: #5d5750;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected {
+      border-color: var(--red);
+      background: rgba(200, 75, 49, 0.055);
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #315a31;
+    }
+
+    .option.correct .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #8d342a;
+    }
+
+    .option.wrong .choice-letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .meta-right {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .level-label {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.055);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin-top: 18px;
+      min-height: 52px;
+      flex: 0 0 auto;
+    }
+
+    .feedback-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card::after {
+      content: "✿ ✿ ✿";
+      position: absolute;
+      right: 22px;
+      bottom: 42px;
+      color: rgba(200, 75, 49, 0.34);
+      transform: rotate(-18deg);
+      font-size: 24px;
+      letter-spacing: 8px;
+      pointer-events: none;
+    }
+
+    .status-ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 47px;
+      margin-bottom: 28px;
+      border: 12px solid;
+    }
+
+    .status-ring.correct-state {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: rgba(111, 147, 111, 0.18);
+    }
+
+    .status-ring.wrong-state {
+      color: var(--wrong);
+      background: var(--wrong-soft);
+      border-color: rgba(199, 109, 94, 0.18);
+    }
+
+    .feedback-title {
+      margin: 0;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .feedback-title.correct-text {
+      color: var(--green);
+    }
+
+    .feedback-explanation {
+      margin: 14px 0 32px;
+      color: #453f38;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    #resultScreen {
+      padding-top: 28px;
+      padding-bottom: 24px;
+    }
+
+    #resultScreen .topbar {
+      margin-bottom: 18px;
+    }
+
+    .result-art {
+      position: relative;
+      width: 100%;
+      height: 245px;
+      min-height: 245px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px 0 4px;
+      overflow: visible;
+    }
+
+    .result-art-image {
+      width: 100%;
+      max-width: 345px;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .result-heading {
+      text-align: center;
+      margin: 4px 0 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: #172434;
+    }
+
+    .result-score {
+      text-align: center;
+      margin: 10px 0 8px;
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 58px;
+      line-height: 0.95;
+      font-weight: 900;
+    }
+
+    .result-message {
+      text-align: center;
+      color: #443f38;
+      line-height: 1.55;
+      margin: 0 auto 28px;
+      max-width: 310px;
+      font-size: 15px;
+    }
+
+    .stats-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 0 2px 20px;
+      box-shadow: 0 12px 32px rgba(49, 36, 23, 0.08);
+    }
+
+    .stat {
+      background: transparent;
+      padding: 16px 12px 15px;
+      text-align: center;
+      color: #443f38;
+    }
+
+    .stat-icon {
+      width: 24px;
+      height: 24px;
+      margin: 0 auto 7px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    .stat-correct-icon {
+      background: #6f936f;
+    }
+
+    .stat-wrong-icon {
+      background: #c84b31;
+    }
+
+    .stat strong {
+      display: block;
+      margin: 0;
+      font-size: 20px;
+      color: #172434;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    #resultScreen .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    #resultScreen .ghost-btn,
+    #resultScreen .primary-btn {
+      min-height: 50px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    #resultScreen .fuji,
+    #resultScreen .sun-small,
+    #resultScreen .mountain,
+    #resultScreen .ground {
+      display: none !important;
+    }
+
+    #reviewScreen {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #reviewScreen::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -4px;
+      transform: translateX(-50%);
+      width: calc(100% + 64px);
+      height: 260px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.9;
+      background-image: url("https://i.postimg.cc/6qY3BQsC/REVIEW-PAGE-RESULT.png");
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: 100% auto;
+    }
+
+    #reviewScreen > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    #reviewScreen {
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    #reviewScreen .topbar {
+      margin-bottom: 22px;
+    }
+
+    #reviewScreen .screen-title {
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #172434;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+      padding-bottom: 18px;
+    }
+
+    .review-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 68px;
+      padding: 15px 16px;
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 8px 22px rgba(49, 36, 23, 0.075);
+      backdrop-filter: blur(8px);
+    }
+
+    .review-item p {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 800;
+      color: #172434;
+    }
+
+    .review-item small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: 0 6px 14px rgba(49, 36, 23, 0.12);
+    }
+
+    .badge.ok {
+      background: #6f936f;
+    }
+
+    .badge.no {
+      background: #c84b31;
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 38px;
+      margin-top: 14px;
+      color: #443f38;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .legend span::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      display: inline-block;
+      border-radius: 50%;
+      margin: 0;
+      background: rgba(111, 147, 111, 0.35);
+    }
+
+    .legend span:nth-child(2)::before {
+      width: 13px;
+      height: 13px;
+      border: 4px solid #c84b31;
+      background: transparent;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .phone-frame {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        padding: 24px 20px;
+      }
+
+      .brand h1 {
+        font-size: 48px;
+      }
+
+      .home-info-panel {
+        margin-bottom: 20px;
+      }
+
+      .question-card {
+        min-height: 220px;
+      }
+    }
+
+
+    /* Texture khusus halaman kuis: hanya muncul di bagian bawah #quizScreen */
+    #quizScreen {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #quizScreen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -18px;
+      transform: translateX(-50%);
+      width: calc(100% + 90px);
+      height: 255px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.78;
+      background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
+      background-repeat: repeat-x;
+      background-position: center bottom;
+      background-size: 560px auto;
+      mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.92) 42%,
+        rgba(0, 0, 0, 0.42) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.92) 42%,
+        rgba(0, 0, 0, 0.42) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
+    #quizScreen > * {
+      position: relative;
+      z-index: 2;
+    }
+
+
+
+    /* Tambahan saja: animasi ✓ dan × disamakan seperti versi sebelumnya, tanpa mengubah desain utama */
+    .feedback-card.feedback-animate {
+      animation: cardSoftEnter 0.46s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .status-ring {
+      position: relative;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      overflow: visible;
+      transform-origin: center;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.72);
+      will-change: transform, opacity, box-shadow;
+    }
+
+    .status-ring .status-symbol {
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      text-align: center;
+      font-weight: 900;
+      transform-origin: center;
+    }
+
+    .status-ring .symbol-correct {
+      font-size: 40px;
+      transform: translateY(-1px);
+    }
+
+    .status-ring .symbol-wrong {
+      font-size: 43px;
+      transform: translateY(-4px);
+    }
+
+    .feedback-card.feedback-animate .status-ring {
+      animation: iconPop 0.58s cubic-bezier(.22, 1.35, .36, 1) 0.12s both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.correct-state {
+      animation-name: iconPop, correctPulse;
+      animation-duration: 0.58s, 0.82s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.wrong-state {
+      animation-name: iconPop, wrongShake;
+      animation-duration: 0.58s, 0.38s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-in-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title,
+    .feedback-card.feedback-animate .feedback-explanation,
+    .feedback-card.feedback-animate #nextBtn {
+      animation: fadeSlideUp 0.42s ease-out both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title { animation-delay: 0.20s; }
+    .feedback-card.feedback-animate .feedback-explanation { animation-delay: 0.30s; }
+    .feedback-card.feedback-animate #nextBtn { animation-delay: 0.40s; }
+
+    .option.correct {
+      animation: optionCorrect 0.45s ease-out both;
+    }
+
+    .option.wrong {
+      animation: optionWrong 0.38s ease-in-out both;
+    }
+
+    .badge.ok,
+    .badge.no {
+      line-height: 1;
+    }
+
+    .badge.no {
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    @keyframes cardSoftEnter {
+      0% { opacity: 0; transform: translateY(18px) scale(0.975); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes iconPop {
+      0% { opacity: 0; transform: scale(0.58) rotate(-8deg); }
+      68% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes correctPulse {
+      0% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 0 rgba(111,147,111,.24); }
+      100% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 20px rgba(111,147,111,0); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0) scale(1); }
+      22% { transform: translateX(-5px) scale(1.01); }
+      48% { transform: translateX(5px) scale(1.01); }
+      72% { transform: translateX(-3px) scale(1.005); }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes optionCorrect {
+      0% { transform: scale(1); }
+      52% { transform: scale(1.018); box-shadow: 0 10px 20px rgba(111,147,111,.14); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes optionWrong {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feedback-card.feedback-animate,
+      .feedback-card.feedback-animate .status-ring,
+      .feedback-card.feedback-animate .status-ring.correct-state,
+      .feedback-card.feedback-animate .status-ring.wrong-state,
+      .feedback-card.feedback-animate .feedback-title,
+      .feedback-card.feedback-animate .feedback-explanation,
+      .feedback-card.feedback-animate #nextBtn,
+      .option.correct,
+      .option.wrong {
+        animation: none !important;
+      }
+    }
+
+
+    .username-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(31, 41, 51, 0.22);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+    }
+
+    .username-modal.active {
+      display: flex;
+    }
+
+    .username-modal-card {
+      width: min(360px, 100%);
+      padding: 28px 24px 24px;
+      border-radius: 24px;
+      background: rgba(255, 253, 248, 0.96);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.18);
+      text-align: center;
+      animation: modalPop 0.28s ease both;
+    }
+
+    .username-modal-card h2 {
+      margin: 0 0 8px;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 24px;
+      color: #172434;
+    }
+
+    .username-modal-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .username-input {
+      width: 100%;
+      min-height: 50px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      padding: 0 14px;
+      font-size: 15px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      outline: none;
+      text-align: center;
+    }
+
+    .username-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(200, 75, 49, 0.08);
+    }
+
+    .username-error {
+      display: block;
+      min-height: 18px;
+      margin-top: 8px;
+      color: var(--wrong);
+      font-size: 12px;
+    }
+
+    .username-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .username-actions .primary-btn,
+    .username-actions .ghost-btn {
+      min-height: 48px;
+      font-size: 14px;
+    }
+
+    .result-user {
+      text-align: center;
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-button-row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .result-button-row .primary-btn {
+      grid-column: 1 / -1;
+    }
+
+    .ranking-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(31, 41, 51, 0.22);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+    }
+
+    .ranking-modal.active {
+      display: flex;
+    }
+
+    .ranking-modal-card {
+      width: min(380px, 100%);
+      max-height: 82vh;
+      overflow: hidden;
+      padding: 28px 22px 22px;
+      border-radius: 24px;
+      background: rgba(255, 253, 248, 0.97);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.18);
+      text-align: center;
+      animation: modalPop 0.28s ease both;
+    }
+
+    .ranking-modal-card h2 {
+      margin: 0 0 8px;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 24px;
+      color: #172434;
+    }
+
+    .ranking-modal-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 10px;
+      max-height: 330px;
+      overflow-y: auto;
+      padding: 2px 2px 4px;
+    }
+
+    .ranking-item {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(234, 223, 210, 0.85);
+      background: rgba(255, 255, 255, 0.86);
+      text-align: left;
+    }
+
+    .ranking-number {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.12);
+      color: var(--red-dark);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .ranking-name {
+      font-weight: 800;
+      color: #172434;
+      font-size: 14px;
+    }
+
+    .ranking-date {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .ranking-score {
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .ranking-empty {
+      padding: 18px 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ranking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .ranking-actions .primary-btn,
+    .ranking-actions .ghost-btn {
+      min-height: 48px;
+      font-size: 13px;
+    }
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Default: elemen non-teks tidak bisa diseleksi */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Teks boleh diblok dan dicopy */
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    small,
+    strong,
+    em,
+    li,
+    label,
+    .question,
+    .passage-card,
+    .feedback-title,
+    .feedback-explanation,
+    .result-heading,
+    .result-score,
+    .result-message,
+    .result-user,
+    .review-item,
+    .review-item p,
+    .review-item small,
+    .ranking-name,
+    .ranking-date,
+    .ranking-score,
+    .ranking-empty,
+    .brand,
+    .brand p,
+    .brand h1,
+    .screen-title,
+    .meta-row,
+    .score-pill {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Input tetap bisa diketik, select, copy, paste */
+    input,
+    textarea {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Gambar tidak bisa drag/select */
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      pointer-events: auto;
+    }
+
+    /* Tombol dan elemen dekoratif tidak perlu bisa diseleksi */
+    button,
+    .logo-mark,
+    .home-art,
+    .result-art,
+    .status-ring,
+    .stat-icon,
+    .badge,
+    .progress-track,
+    .progress-fill,
+    .phone-frame::after {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+  </style>
+</head>
+
+<body>
+  <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
+    <section class="screen active" id="startScreen">
+      <div class="home-art" aria-hidden="true">
+        <div class="vertical-copy">クイズを楽しんで、<br>知識を深めましょう。</div>
+
+        <img 
+          class="home-art-image" 
+          src="https://i.postimg.cc/x8tC9drM/HOMEPAGE-QUIZ-N3.png" 
+          alt=""
+        />
+      </div>
+
+
+      <div class="brand">
+        <div class="brand-mark">Kuis Jepang</div>
+        <h1>NihongoGO</h1>
+        <p>Asah N3-mu dengan tenang.</p>
+        <button class="primary-btn" type="button" onclick="openUsernameModal()">Mulai Kuis&nbsp; →</button>
+        <div class="home-footer">日本語を学ぼう</div>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="meta-row">
+        <span id="progressText">Soal 1 dari 100</span>
+        <div class="meta-right">
+          <span class="level-label" id="categoryText">Tata Bahasa N3</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 100</span>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="passage-card" id="passageText" hidden></article>
+
+      <article class="question-card">
+        <p class="question" id="questionText"></p>
+      </article>
+
+      <div class="options" id="optionsBox"></div>
+
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
+    </section>
+
+    <section class="screen" id="feedbackScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="status-ring" id="statusRing"><span class="status-symbol symbol-correct">✓</span></div>
+        <h2 class="feedback-title" id="feedbackTitle">Benar!</h2>
+        <p class="feedback-explanation" id="feedbackExplanation"></p>
+        <button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya&nbsp; →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="topbar">
+        <span></span>
+        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="result-art" aria-hidden="true">
+        <img 
+          class="result-art-image" 
+          src="https://i.postimg.cc/1XJtyzxp/RESULT-PAGE-QUIZ-N3.png" 
+          alt=""
+        />
+      </div>
+
+      <h2 class="result-heading">Skor Kamu</h2>
+      <p class="result-user" id="resultUserName"></p>
+      <div class="result-score" id="finalScore">0 / 100</div>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="stats-card">
+        <div class="stat">
+          <div class="stat-icon stat-correct-icon">✓</div>
+          <strong id="correctCount">0</strong>
+          <span>Benar</span>
+        </div>
+        <div class="stat">
+          <div class="stat-icon stat-wrong-icon">×</div>
+          <strong id="incorrectCount">0</strong>
+          <span>Salah</span>
+        </div>
+      </div>
+
+      <div class="button-row result-button-row">
+        <button class="ghost-btn" type="button" onclick="showReview()">Lihat Jawaban</button>
+        <button class="ghost-btn" type="button" onclick="openRankingModal()">Ranking</button>
+        <button class="primary-btn" type="button" onclick="restartQuiz()">Kembali ke Awal</button>
+      </div>
+    </section>
+
+    <section class="screen review-screen" id="reviewScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
+        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+      <div class="legend">
+        <span>Benar</span>
+        <span>Salah</span>
+      </div>
+    </section>
+
+    <div class="username-modal" id="usernameModal" aria-hidden="true">
+      <div class="username-modal-card">
+        <h2>Masukkan Nama</h2>
+        <p>Tulis nama kamu sebelum memulai kuis.</p>
+
+        <input
+          type="text"
+          id="usernameInput"
+          class="username-input"
+          placeholder="Contoh: Hannah"
+          maxlength="24"
+          autocomplete="off"
+        />
+
+        <small class="username-error" id="usernameError"></small>
+
+        <div class="username-actions">
+          <button class="ghost-btn" type="button" onclick="closeUsernameModal()">Batal</button>
+          <button class="primary-btn" type="button" onclick="confirmUsername()">Mulai</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+      <div class="ranking-modal-card">
+        <h2>Ranking Nilai</h2>
+        <p>Data ranking tersimpan online dan dapat dilihat oleh peserta lain.</p>
+
+        <div class="ranking-list" id="rankingList"></div>
+
+        <div class="ranking-actions">
+          <button class="ghost-btn" type="button" onclick="clearRanking()">Hapus Ranking</button>
+          <button class="primary-btn" type="button" onclick="closeRankingModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+
+    const quiz = [
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この店は安い＿＿、料理の量も多いので、学生に人気がある。",
+            "options": [
+                  "うえに",
+                  "うえで",
+                  "うちに",
+                  "うちは"
+            ],
+            "answer": "うえに",
+            "explanation": "Jawaban yang benar adalah 『うえに』 karena artinya 'selain itu'. Kalimatnya menjelaskan dua hal baik: murah dan porsinya banyak."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本語を上手に話す＿＿、毎日少しでも声に出して練習することが大切だ。",
+            "options": [
+                  "ために",
+                  "せいで",
+                  "くせに",
+                  "わりに"
+            ],
+            "answer": "ために",
+            "explanation": "『ために』 dipakai untuk menyatakan tujuan. Tujuannya adalah bisa berbicara bahasa Jepang dengan baik, maka perlu latihan setiap hari."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は忙しい＿＿、友だちの相談にはいつも丁寧に答えてくれる。",
+            "options": [
+                  "にもかかわらず",
+                  "によって",
+                  "につれて",
+                  "に対して"
+            ],
+            "answer": "にもかかわらず",
+            "explanation": "『にもかかわらず』 artinya 'meskipun'. Dia sibuk, tetapi tetap menjawab konsultasi teman dengan baik."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この問題は考えれば考える＿＿、答えが分からなくなる。",
+            "options": [
+                  "ほど",
+                  "だけ",
+                  "しか",
+                  "こそ"
+            ],
+            "answer": "ほど",
+            "explanation": "Pola 『ば〜ほど』 berarti 'semakin..., semakin...'. Semakin dipikirkan, semakin tidak tahu jawabannya."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "明日の会議で使う資料を、今夜中に準備して＿＿ください。",
+            "options": [
+                  "おいて",
+                  "しまって",
+                  "あって",
+                  "みて"
+            ],
+            "answer": "おいて",
+            "explanation": "『ておく』 berarti melakukan sesuatu terlebih dahulu untuk persiapan. Materi rapat perlu disiapkan sebelum rapat besok."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "このドアには『使用中』と書いて＿＿ので、入らないでください。",
+            "options": [
+                  "あります",
+                  "います",
+                  "おきます",
+                  "しまいます"
+            ],
+            "answer": "あります",
+            "explanation": "『てある』 dipakai ketika hasil suatu tindakan masih terlihat. Tulisan sudah ditempel/ditulis, jadi dipakai 『書いてあります』."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "大事なメールを間違えて消して＿＿、本当に困った。",
+            "options": [
+                  "しまって",
+                  "おいて",
+                  "あって",
+                  "みせて"
+            ],
+            "answer": "しまって",
+            "explanation": "『てしまう』 menunjukkan sesuatu yang terlanjur terjadi dan membuat menyesal. Email penting terhapus, jadi penulis merasa kesulitan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "最近、朝早く起きられる＿＿なりました。",
+            "options": [
+                  "ように",
+                  "ために",
+                  "ことに",
+                  "ものに"
+            ],
+            "answer": "ように",
+            "explanation": "『ようになる』 berarti menjadi bisa atau mulai terbiasa melakukan sesuatu. Sekarang dia menjadi bisa bangun pagi."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "健康のために、できるだけ歩く＿＿しています。",
+            "options": [
+                  "ように",
+                  "ことに",
+                  "ために",
+                  "ものに"
+            ],
+            "answer": "ように",
+            "explanation": "『ようにしている』 berarti berusaha membiasakan diri. Dia berusaha berjalan kaki demi kesehatan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この会社では、会議の前に資料を読む＿＿なっています。",
+            "options": [
+                  "ことに",
+                  "ように",
+                  "ために",
+                  "ものに"
+            ],
+            "answer": "ことに",
+            "explanation": "『ことになっている』 berarti sudah menjadi aturan atau kebiasaan resmi. Di perusahaan itu, membaca materi sebelum rapat sudah menjadi aturan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "約束した＿＿、最後まで責任を持ってやるべきだ。",
+            "options": [
+                  "以上",
+                  "最中",
+                  "うち",
+                  "たび"
+            ],
+            "answer": "以上",
+            "explanation": "『以上』 berarti 'karena sudah... maka harus...'. Karena sudah berjanji, harus bertanggung jawab sampai akhir."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "学生＿＿、勉強だけでなく社会のことにも関心を持つべきだ。",
+            "options": [
+                  "として",
+                  "によって",
+                  "について",
+                  "に対して"
+            ],
+            "answer": "として",
+            "explanation": "『として』 berarti 'sebagai'. Sebagai pelajar, seseorang sebaiknya peduli bukan hanya pelajaran, tetapi juga masyarakat."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この問題＿＿、先生にもう一度説明してもらった。",
+            "options": [
+                  "について",
+                  "によって",
+                  "にとって",
+                  "に対して"
+            ],
+            "answer": "について",
+            "explanation": "『について』 berarti 'tentang'. Kalimat ini berarti meminta guru menjelaskan lagi tentang masalah ini."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "子ども＿＿、この本は少し難しすぎるかもしれない。",
+            "options": [
+                  "にとって",
+                  "について",
+                  "によって",
+                  "に対して"
+            ],
+            "answer": "にとって",
+            "explanation": "『にとって』 berarti 'bagi'. Bagi anak-anak, buku ini mungkin terlalu sulit."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この薬の効果は人＿＿違います。",
+            "options": [
+                  "によって",
+                  "について",
+                  "にとって",
+                  "に対して"
+            ],
+            "answer": "によって",
+            "explanation": "『によって』 berarti 'tergantung pada'. Efek obat berbeda tergantung orangnya."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "親は子ども＿＿厳しすぎてもよくない。",
+            "options": [
+                  "に対して",
+                  "について",
+                  "によって",
+                  "にとって"
+            ],
+            "answer": "に対して",
+            "explanation": "『に対して』 berarti 'terhadap'. Kalimat ini membahas sikap orang tua terhadap anak."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本に来て＿＿、私は毎日日本語で日記を書いている。",
+            "options": [
+                  "以来",
+                  "最中",
+                  "うちに",
+                  "たびに"
+            ],
+            "answer": "以来",
+            "explanation": "『以来』 berarti 'sejak'. Sejak datang ke Jepang, dia menulis diary bahasa Jepang setiap hari."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "旅行に行く＿＿、必ず写真をたくさん撮ります。",
+            "options": [
+                  "たびに",
+                  "うちに",
+                  "最中に",
+                  "以来"
+            ],
+            "answer": "たびに",
+            "explanation": "『たびに』 berarti 'setiap kali'. Setiap kali pergi jalan-jalan, dia selalu mengambil banyak foto."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "若い＿＿、いろいろな経験をしておいたほうがいい。",
+            "options": [
+                  "うちに",
+                  "最中に",
+                  "たびに",
+                  "ところに"
+            ],
+            "answer": "うちに",
+            "explanation": "『うちに』 berarti 'selagi masih...'. Selagi masih muda, sebaiknya mencari banyak pengalaman."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "電話している＿＿、友だちが部屋に入ってきた。",
+            "options": [
+                  "最中に",
+                  "うちに",
+                  "たびに",
+                  "以来"
+            ],
+            "answer": "最中に",
+            "explanation": "『最中に』 berarti 'sedang tepat di tengah aktivitas'. Saat sedang menelepon, teman masuk ke kamar."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "説明を聞いた＿＿、まだ使い方がよく分からない。",
+            "options": [
+                  "ものの",
+                  "ために",
+                  "おかげで",
+                  "せいで"
+            ],
+            "answer": "ものの",
+            "explanation": "『ものの』 berarti 'walaupun'. Walaupun sudah mendengar penjelasan, cara memakainya masih belum dipahami."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "雨が降っている＿＿、試合は予定通り行われます。",
+            "options": [
+                  "とはいえ",
+                  "によって",
+                  "につれて",
+                  "として"
+            ],
+            "answer": "とはいえ",
+            "explanation": "『とはいえ』 berarti 'walaupun begitu'. Meskipun hujan, pertandingan tetap dilakukan sesuai jadwal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は日本語が話せる＿＿、漢字が全部読めるわけではない。",
+            "options": [
+                  "といっても",
+                  "からこそ",
+                  "ばかりか",
+                  "にしては"
+            ],
+            "answer": "といっても",
+            "explanation": "『といっても』 berarti 'meskipun dikatakan begitu'. Dia bisa bicara Jepang, tetapi bukan berarti bisa membaca semua kanji."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この仕事は大変な＿＿、やりがいがある。",
+            "options": [
+                  "反面",
+                  "最中",
+                  "次第",
+                  "きり"
+            ],
+            "answer": "反面",
+            "explanation": "『反面』 berarti 'di sisi lain'. Pekerjaan ini berat, tetapi di sisi lain memberi rasa puas."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は優しい＿＿、少し頼りないところがある。",
+            "options": [
+                  "一方で",
+                  "ために",
+                  "せいで",
+                  "おかげで"
+            ],
+            "answer": "一方で",
+            "explanation": "『一方で』 berarti 'di sisi lain'. Dia baik, tetapi di sisi lain agak kurang bisa diandalkan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "このレストランは味がいい＿＿、値段も高くない。",
+            "options": [
+                  "ばかりか",
+                  "だけに",
+                  "くせに",
+                  "せいで"
+            ],
+            "answer": "ばかりか",
+            "explanation": "『ばかりか』 berarti 'bukan hanya..., tetapi juga...'. Restoran ini bukan hanya enak, harganya juga tidak mahal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "急に寒くなった＿＿、風邪をひいてしまった。",
+            "options": [
+                  "せいで",
+                  "おかげで",
+                  "かわりに",
+                  "わりに"
+            ],
+            "answer": "せいで",
+            "explanation": "『せいで』 dipakai untuk sebab yang hasilnya buruk. Karena mendadak dingin, dia masuk angin."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "先生が丁寧に教えてくれた＿＿、よく理解できた。",
+            "options": [
+                  "おかげで",
+                  "せいで",
+                  "くせに",
+                  "わりに"
+            ],
+            "answer": "おかげで",
+            "explanation": "『おかげで』 dipakai untuk sebab yang hasilnya baik. Berkat penjelasan guru yang jelas, dia bisa memahami."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本に長く住んでいる＿＿、彼は日本の習慣に詳しい。",
+            "options": [
+                  "だけあって",
+                  "だけでなく",
+                  "だけでは",
+                  "だけなら"
+            ],
+            "answer": "だけあって",
+            "explanation": "『だけあって』 berarti 'pantas saja karena memang...'. Karena sudah lama tinggal di Jepang, wajar kalau dia paham kebiasaan Jepang."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "駅から近い＿＿、このアパートは家賃が高い。",
+            "options": [
+                  "だけに",
+                  "せいで",
+                  "くせに",
+                  "わりに"
+            ],
+            "answer": "だけに",
+            "explanation": "『だけに』 berarti 'justru karena...'. Karena apartemen dekat stasiun, wajar jika sewanya mahal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "子どもの＿＿、この説明はとても分かりやすい。",
+            "options": [
+                  "わりに",
+                  "くせに",
+                  "せいで",
+                  "おかげで"
+            ],
+            "answer": "わりに",
+            "explanation": "『わりに』 berarti 'untuk ukuran... ternyata...'. Untuk ukuran anak-anak, penjelasannya sangat mudah dipahami."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "知っている＿＿、彼は何も教えてくれなかった。",
+            "options": [
+                  "くせに",
+                  "わりに",
+                  "おかげで",
+                  "かわりに"
+            ],
+            "answer": "くせに",
+            "explanation": "『くせに』 berarti 'padahal' dengan rasa menyalahkan. Padahal dia tahu, tetapi tidak memberi tahu apa pun."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "忙しいなら、私が＿＿手伝いましょうか。",
+            "options": [
+                  "かわりに",
+                  "せいで",
+                  "くせに",
+                  "わりに"
+            ],
+            "answer": "かわりに",
+            "explanation": "『かわりに』 berarti 'sebagai gantinya'. Jika kamu sibuk, saya bisa membantu sebagai gantinya."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この機械は説明書を読まない＿＿使えない。",
+            "options": [
+                  "と",
+                  "ても",
+                  "なら",
+                  "ばかり"
+            ],
+            "answer": "と",
+            "explanation": "『〜ないと』 berarti 'kalau tidak..., maka tidak bisa...'. Kalau tidak membaca buku petunjuk, mesin ini tidak bisa digunakan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "時間がない＿＿、タクシーで行ったほうがいいです。",
+            "options": [
+                  "なら",
+                  "のに",
+                  "ても",
+                  "ばかり"
+            ],
+            "answer": "なら",
+            "explanation": "『なら』 dipakai untuk memberi saran berdasarkan kondisi. Kalau memang tidak ada waktu, lebih baik naik taksi."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "いくら説明して＿＿、彼はなかなか分かってくれない。",
+            "options": [
+                  "も",
+                  "ば",
+                  "と",
+                  "なら"
+            ],
+            "answer": "も",
+            "explanation": "Pola 『いくら〜ても』 berarti 'seberapa pun... tetap...'. Seberapa pun dijelaskan, dia tetap sulit paham."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "早く出発すれば、会議に間に合う＿＿。",
+            "options": [
+                  "はずだ",
+                  "わけだ",
+                  "ことだ",
+                  "ものだ"
+            ],
+            "answer": "はずだ",
+            "explanation": "『はずだ』 berarti 'seharusnya/semestinya'. Kalau berangkat cepat, seharusnya bisa tepat waktu ke rapat."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼がそんなひどいことを言う＿＿。とても優しい人だから。",
+            "options": [
+                  "わけがない",
+                  "はずではない",
+                  "ことがない",
+                  "ものではない"
+            ],
+            "answer": "わけがない",
+            "explanation": "『わけがない』 berarti 'tidak mungkin'. Karena dia orang baik, tidak mungkin dia mengatakan hal seburuk itu."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "お酒を飲んだので、車を運転する＿＿。",
+            "options": [
+                  "わけにはいかない",
+                  "ことはない",
+                  "ものではない",
+                  "はずがない"
+            ],
+            "answer": "わけにはいかない",
+            "explanation": "『わけにはいかない』 berarti 'tidak boleh/tidak mungkin dilakukan karena alasan moral atau aturan'. Setelah minum alkohol, tidak boleh menyetir."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本語が少し話せるが、難しいニュースが全部分かる＿＿。",
+            "options": [
+                  "わけではない",
+                  "わけがない",
+                  "ことはない",
+                  "ものではない"
+            ],
+            "answer": "わけではない",
+            "explanation": "『わけではない』 berarti 'bukan berarti'. Bisa sedikit berbicara Jepang bukan berarti memahami semua berita sulit."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "疲れているなら、無理して来る＿＿。",
+            "options": [
+                  "ことはない",
+                  "わけがない",
+                  "しかない",
+                  "に違いない"
+            ],
+            "answer": "ことはない",
+            "explanation": "『ことはない』 berarti 'tidak perlu'. Kalau lelah, tidak perlu memaksakan diri untuk datang."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この仕事は一人では無理だから、みんなでやる＿＿。",
+            "options": [
+                  "しかない",
+                  "ことはない",
+                  "わけではない",
+                  "はずがない"
+            ],
+            "answer": "しかない",
+            "explanation": "『しかない』 berarti 'tidak ada pilihan selain...'. Karena tidak bisa dilakukan sendiri, tidak ada pilihan selain mengerjakannya bersama."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "空が暗い。もうすぐ雨が降る＿＿。",
+            "options": [
+                  "に違いない",
+                  "わけではない",
+                  "ことはない",
+                  "しかない"
+            ],
+            "answer": "に違いない",
+            "explanation": "『に違いない』 berarti 'pasti'. Melihat langit gelap, pembicara yakin sebentar lagi akan hujan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼女は泣きそうな顔をしている。何かあった＿＿。",
+            "options": [
+                  "ようだ",
+                  "ためだ",
+                  "ことだ",
+                  "ものだ"
+            ],
+            "answer": "ようだ",
+            "explanation": "『ようだ』 dipakai untuk dugaan berdasarkan keadaan yang terlihat. Dari wajahnya, sepertinya ada sesuatu yang terjadi."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "このケーキはチーズの味がする。チーズケーキ＿＿。",
+            "options": [
+                  "みたいだ",
+                  "ためだ",
+                  "ばかりだ",
+                  "ことだ"
+            ],
+            "answer": "みたいだ",
+            "explanation": "『みたいだ』 berarti 'seperti/sepertinya'. Karena rasanya seperti keju, kue ini sepertinya cheesecake."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼の話し方は子ども＿＿。",
+            "options": [
+                  "っぽい",
+                  "らしい",
+                  "ように",
+                  "ために"
+            ],
+            "answer": "っぽい",
+            "explanation": "『っぽい』 berarti 'terkesan seperti'. Cara bicaranya terkesan kekanak-kanakan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "今日は春＿＿暖かい天気ですね。",
+            "options": [
+                  "らしい",
+                  "っぽい",
+                  "みたいに",
+                  "ように"
+            ],
+            "answer": "らしい",
+            "explanation": "『名詞＋らしい』 berarti 'khas/seperti'. Cuaca hari ini hangat seperti musim semi."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は何も言わずに出て行った＿＿。",
+            "options": [
+                  "きり",
+                  "ばかり",
+                  "だらけ",
+                  "ほど"
+            ],
+            "answer": "きり",
+            "explanation": "『〜たきり』 berarti setelah melakukan sesuatu, keadaan itu terus berlanjut. Dia pergi tanpa berkata apa-apa dan tidak kembali/lanjut tidak ada kabar."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "部屋の中はごみ＿＿で、歩く場所もなかった。",
+            "options": [
+                  "だらけ",
+                  "ばかり",
+                  "きり",
+                  "ほど"
+            ],
+            "answer": "だらけ",
+            "explanation": "『だらけ』 berarti 'penuh dengan hal yang buruk/kotor'. Kamar penuh sampah sampai tidak ada tempat berjalan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本に来た＿＿なので、まだ生活に慣れていません。",
+            "options": [
+                  "ばかり",
+                  "だらけ",
+                  "きり",
+                  "ほど"
+            ],
+            "answer": "ばかり",
+            "explanation": "『たばかり』 berarti 'baru saja'. Karena baru saja datang ke Jepang, dia belum terbiasa dengan kehidupan di sana."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この映画は泣きたい＿＿感動的だった。",
+            "options": [
+                  "ほど",
+                  "ばかり",
+                  "きり",
+                  "だらけ"
+            ],
+            "answer": "ほど",
+            "explanation": "『ほど』 menunjukkan tingkat yang sangat tinggi. Film ini sangat mengharukan sampai terasa ingin menangis."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "試験が近づく＿＿、だんだん不安になってきた。",
+            "options": [
+                  "につれて",
+                  "に対して",
+                  "について",
+                  "にとって"
+            ],
+            "answer": "につれて",
+            "explanation": "『につれて』 berarti 'seiring dengan'. Seiring ujian mendekat, rasa cemas makin meningkat."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "説明を聞く＿＿、この仕事の難しさが分かってきた。",
+            "options": [
+                  "にしたがって",
+                  "に対して",
+                  "について",
+                  "にとって"
+            ],
+            "answer": "にしたがって",
+            "explanation": "『にしたがって』 berarti 'sejalan dengan'. Semakin mendengar penjelasan, semakin memahami sulitnya pekerjaan ini."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "インターネット＿＿、世界中のニュースをすぐに知ることができる。",
+            "options": [
+                  "を通して",
+                  "に対して",
+                  "について",
+                  "にとって"
+            ],
+            "answer": "を通して",
+            "explanation": "『を通して』 berarti 'melalui'. Melalui internet, kita bisa mengetahui berita dari seluruh dunia dengan cepat."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この計画は市民の意見＿＿決められた。",
+            "options": [
+                  "に基づいて",
+                  "に対して",
+                  "について",
+                  "にとって"
+            ],
+            "answer": "に基づいて",
+            "explanation": "『に基づいて』 berarti 'berdasarkan'. Rencana ini diputuskan berdasarkan pendapat warga."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この商品は若い女性＿＿作られたものです。",
+            "options": [
+                  "向けに",
+                  "向きに",
+                  "について",
+                  "にとって"
+            ],
+            "answer": "向けに",
+            "explanation": "『向け』 berarti 'ditujukan untuk'. Produk ini dibuat untuk wanita muda sebagai targetnya."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この靴は長く歩く旅行＿＿だ。",
+            "options": [
+                  "向き",
+                  "向け",
+                  "について",
+                  "に対して"
+            ],
+            "answer": "向き",
+            "explanation": "『向き』 berarti 'cocok untuk'. Sepatu ini cocok untuk perjalanan yang banyak berjalan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この店では、現金＿＿クレジットカードも使えます。",
+            "options": [
+                  "だけでなく",
+                  "だけに",
+                  "だけあって",
+                  "だけなら"
+            ],
+            "answer": "だけでなく",
+            "explanation": "『だけでなく』 berarti 'bukan hanya'. Di toko ini bukan hanya uang tunai, kartu kredit juga bisa dipakai."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は勉強ができる＿＿、スポーツも得意だ。",
+            "options": [
+                  "だけでなく",
+                  "だけに",
+                  "だけあって",
+                  "だけなら"
+            ],
+            "answer": "だけでなく",
+            "explanation": "『だけでなく』 berarti 'bukan hanya..., tetapi juga...'. Dia bukan hanya pintar belajar, tetapi juga pandai olahraga."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "風邪をひいたので、今日は家で休む＿＿しました。",
+            "options": [
+                  "ことに",
+                  "ように",
+                  "ために",
+                  "ものに"
+            ],
+            "answer": "ことに",
+            "explanation": "『ことにする』 berarti memutuskan sendiri. Karena masuk angin, dia memutuskan untuk beristirahat di rumah."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "来月から新しいルールが始まる＿＿なりました。",
+            "options": [
+                  "ことに",
+                  "ように",
+                  "ために",
+                  "ものに"
+            ],
+            "answer": "ことに",
+            "explanation": "『ことになる』 berarti sesuatu diputuskan oleh keadaan, aturan, atau pihak luar. Aturan baru akan mulai bulan depan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この漢字は何度書いても覚え＿＿。",
+            "options": [
+                  "られない",
+                  "させない",
+                  "ていない",
+                  "すぎない"
+            ],
+            "answer": "られない",
+            "explanation": "『覚えられない』 adalah bentuk potensial negatif: tidak bisa menghafal. Kalimatnya berarti sudah ditulis berkali-kali tetapi tetap tidak bisa hafal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "私は弟に部屋を掃除＿＿。",
+            "options": [
+                  "させた",
+                  "された",
+                  "られた",
+                  "できた"
+            ],
+            "answer": "させた",
+            "explanation": "『させる』 adalah bentuk menyuruh/membiarkan. Kalimat ini berarti saya menyuruh adik membersihkan kamar."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "電車で知らない人に足を＿＿。",
+            "options": [
+                  "踏まれた",
+                  "踏ませた",
+                  "踏んだ",
+                  "踏めた"
+            ],
+            "answer": "踏まれた",
+            "explanation": "『踏まれた』 adalah bentuk pasif: diinjak. Di kereta, kaki saya diinjak oleh orang yang tidak dikenal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "母に大切な手紙を読まれて＿＿。",
+            "options": [
+                  "しまった",
+                  "おいた",
+                  "あった",
+                  "みた"
+            ],
+            "answer": "しまった",
+            "explanation": "Bentuk 『読まれてしまった』 berarti surat penting saya terlanjur dibaca, dan pembicara merasa tidak senang/menyesal."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この料理は辛すぎて、全部食べ＿＿。",
+            "options": [
+                  "られなかった",
+                  "させなかった",
+                  "すぎなかった",
+                  "っぱなしだった"
+            ],
+            "answer": "られなかった",
+            "explanation": "『食べられなかった』 berarti tidak bisa makan. Karena terlalu pedas, dia tidak bisa menghabiskannya."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "窓を開け＿＿にして寝たので、朝とても寒かった。",
+            "options": [
+                  "っぱなし",
+                  "ばかり",
+                  "きり",
+                  "だらけ"
+            ],
+            "answer": "っぱなし",
+            "explanation": "『っぱなし』 berarti dibiarkan terus dalam keadaan tertentu. Jendela dibiarkan terbuka saat tidur, jadi pagi terasa dingin."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "宿題を＿＿まま学校へ行ってしまった。",
+            "options": [
+                  "忘れた",
+                  "忘れる",
+                  "忘れて",
+                  "忘れれば"
+            ],
+            "answer": "忘れた",
+            "explanation": "『Vたまま』 berarti tetap dalam keadaan setelah melakukan/terjadi sesuatu. Dia pergi ke sekolah dalam keadaan PR tertinggal/lupa."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "靴を＿＿まま部屋に入らないでください。",
+            "options": [
+                  "はいた",
+                  "はく",
+                  "はいて",
+                  "はけば"
+            ],
+            "answer": "はいた",
+            "explanation": "Pola yang benar adalah 『靴をはいたまま』, artinya masuk dalam keadaan masih memakai sepatu."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この書類は明日＿＿に出してください。",
+            "options": [
+                  "までに",
+                  "まで",
+                  "ほど",
+                  "だけ"
+            ],
+            "answer": "までに",
+            "explanation": "『までに』 berarti batas waktu 'paling lambat'. Dokumen harus dikumpulkan paling lambat besok."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "夜10時＿＿図書館で勉強していました。",
+            "options": [
+                  "まで",
+                  "までに",
+                  "ほど",
+                  "だけ"
+            ],
+            "answer": "まで",
+            "explanation": "『まで』 menunjukkan kegiatan berlangsung sampai waktu tertentu. Dia belajar di perpustakaan sampai jam 10 malam."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "駅に着いた＿＿、友だちから電話がかかってきた。",
+            "options": [
+                  "ところに",
+                  "うちに",
+                  "たびに",
+                  "最中に"
+            ],
+            "answer": "ところに",
+            "explanation": "『ところに』 berarti tepat saat suatu keadaan/kejadian terjadi. Tepat ketika sampai di stasiun, teman menelepon."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "今から急いだ＿＿、もう電車には間に合わない。",
+            "options": [
+                  "ところで",
+                  "ところに",
+                  "ところを",
+                  "ところが"
+            ],
+            "answer": "ところで",
+            "explanation": "『たところで』 berarti 'walaupun melakukan, hasilnya tetap tidak berubah'. Walaupun sekarang buru-buru, tetap tidak akan sempat naik kereta."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "忙しい＿＿、わざわざ来てくださってありがとうございます。",
+            "options": [
+                  "ところを",
+                  "ところで",
+                  "ところに",
+                  "ところが"
+            ],
+            "answer": "ところを",
+            "explanation": "『ところを』 dipakai untuk menghargai situasi orang lain. Artinya: terima kasih sudah datang padahal sedang sibuk."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この仕事は思った＿＿時間がかかった。",
+            "options": [
+                  "より",
+                  "ほど",
+                  "しか",
+                  "だけ"
+            ],
+            "answer": "より",
+            "explanation": "『より』 dipakai untuk perbandingan. Pekerjaan ini memakan waktu lebih lama daripada yang dipikirkan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "今年の夏は去年＿＿暑くない。",
+            "options": [
+                  "ほど",
+                  "より",
+                  "だけ",
+                  "しか"
+            ],
+            "answer": "ほど",
+            "explanation": "Pola 『Aほど〜ない』 berarti 'tidak se... A'. Musim panas tahun ini tidak sepanas tahun lalu."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この町は静か＿＿、住みやすい。",
+            "options": [
+                  "で",
+                  "に",
+                  "を",
+                  "と"
+            ],
+            "answer": "で",
+            "explanation": "Untuk menyambung kata sifat-na, gunakan 『で』. 『静かで住みやすい』 berarti tenang dan nyaman untuk ditinggali."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この本は難しく＿＿、最後まで読めなかった。",
+            "options": [
+                  "て",
+                  "で",
+                  "に",
+                  "と"
+            ],
+            "answer": "て",
+            "explanation": "Untuk menyambung kata sifat-i, akhiran 『い』 berubah menjadi 『くて』. 『難しくて』 berarti karena sulit."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "先生は学生にレポートを来週までに出す＿＿言った。",
+            "options": [
+                  "ように",
+                  "ために",
+                  "ことに",
+                  "ものに"
+            ],
+            "answer": "ように",
+            "explanation": "『ように言う』 berarti menyuruh/meminta agar seseorang melakukan sesuatu. Guru menyuruh siswa menyerahkan laporan sampai minggu depan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "忘れない＿＿、ノートに書いておきます。",
+            "options": [
+                  "ように",
+                  "ために",
+                  "ことに",
+                  "ものに"
+            ],
+            "answer": "ように",
+            "explanation": "『ように』 dipakai untuk mencegah hal yang tidak diinginkan. Supaya tidak lupa, dia menulisnya di buku catatan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "試験に合格する＿＿、毎日三時間勉強しています。",
+            "options": [
+                  "ために",
+                  "ように",
+                  "ことに",
+                  "ものに"
+            ],
+            "answer": "ために",
+            "explanation": "『ために』 dipakai untuk tujuan yang dilakukan dengan sengaja. Tujuannya lulus ujian, maka belajar tiga jam setiap hari."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本語が聞き取れる＿＿、ニュースを毎日聞いています。",
+            "options": [
+                  "ように",
+                  "ために",
+                  "ことに",
+                  "ものに"
+            ],
+            "answer": "ように",
+            "explanation": "『ように』 cocok untuk tujuan berupa kemampuan atau keadaan. Agar bisa menangkap bahasa Jepang, dia mendengarkan berita setiap hari."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼は何も知らない＿＿をしているが、本当は知っているはずだ。",
+            "options": [
+                  "ふり",
+                  "つもり",
+                  "はず",
+                  "わけ"
+            ],
+            "answer": "ふり",
+            "explanation": "『ふりをする』 berarti berpura-pura. Dia berpura-pura tidak tahu, padahal seharusnya tahu."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "来年、日本へ留学する＿＿です。",
+            "options": [
+                  "つもり",
+                  "ふり",
+                  "はず",
+                  "わけ"
+            ],
+            "answer": "つもり",
+            "explanation": "『つもり』 berarti niat/rencana pribadi. Kalimat ini berarti saya berencana belajar ke Jepang tahun depan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "会議は3時からの＿＿だから、もうすぐ始まる。",
+            "options": [
+                  "はず",
+                  "つもり",
+                  "ふり",
+                  "わけ"
+            ],
+            "answer": "はず",
+            "explanation": "『はず』 berarti sesuatu yang seharusnya terjadi berdasarkan informasi. Karena rapat dijadwalkan jam 3, seharusnya segera dimulai."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "彼が怒るのも無理はない。約束を三回も破られた＿＿だ。",
+            "options": [
+                  "わけ",
+                  "はず",
+                  "つもり",
+                  "ふり"
+            ],
+            "answer": "わけ",
+            "explanation": "『わけだ』 berarti 'pantas saja/itulah sebabnya'. Karena janjinya dilanggar tiga kali, wajar kalau dia marah."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この仕事は今日中に終わらせる＿＿。",
+            "options": [
+                  "べきだ",
+                  "らしい",
+                  "みたいだ",
+                  "っぽい"
+            ],
+            "answer": "べきだ",
+            "explanation": "『べきだ』 berarti 'sebaiknya/seharusnya'. Pekerjaan ini seharusnya diselesaikan hari ini."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "子どもにそんな言い方をする＿＿。",
+            "options": [
+                  "べきではない",
+                  "しかない",
+                  "に違いない",
+                  "わけではない"
+            ],
+            "answer": "べきではない",
+            "explanation": "『べきではない』 berarti 'sebaiknya tidak'. Kalimat ini menyatakan bahwa tidak seharusnya berbicara seperti itu kepada anak."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本語を学ぶ＿＿、文化を知ることも大切だ。",
+            "options": [
+                  "うえで",
+                  "うえに",
+                  "うちは",
+                  "うちに"
+            ],
+            "answer": "うえで",
+            "explanation": "『うえで』 berarti 'dalam hal/untuk melakukan sesuatu'. Dalam belajar bahasa Jepang, memahami budaya juga penting."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "このホテルは駅に近い＿＿、部屋も広い。",
+            "options": [
+                  "うえに",
+                  "うえで",
+                  "うちは",
+                  "うちに"
+            ],
+            "answer": "うえに",
+            "explanation": "『うえに』 berarti 'selain itu'. Hotel ini dekat stasiun, selain itu kamarnya juga luas."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "日本にいる＿＿、一度は京都へ行ってみたい。",
+            "options": [
+                  "うちに",
+                  "うえで",
+                  "うえに",
+                  "うちは"
+            ],
+            "answer": "うちに",
+            "explanation": "『うちに』 berarti 'selagi masih'. Selagi berada di Jepang, dia ingin mencoba pergi ke Kyoto sekali."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "海外で生活する＿＿、言葉だけでなく習慣も大切だ。",
+            "options": [
+                  "うえで",
+                  "うえに",
+                  "うちは",
+                  "うちに"
+            ],
+            "answer": "うえで",
+            "explanation": "『うえで』 berarti 'dalam hal'. Dalam hidup di luar negeri, bukan hanya bahasa, kebiasaan juga penting."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この店は安い＿＿、味はあまりよくない。",
+            "options": [
+                  "ものの",
+                  "おかげで",
+                  "せいで",
+                  "ために"
+            ],
+            "answer": "ものの",
+            "explanation": "『ものの』 berarti 'walaupun'. Walaupun toko ini murah, rasanya tidak begitu enak."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "雨が降った＿＿、イベントは中止にならなかった。",
+            "options": [
+                  "にもかかわらず",
+                  "によって",
+                  "につれて",
+                  "にしたがって"
+            ],
+            "answer": "にもかかわらず",
+            "explanation": "『にもかかわらず』 berarti 'meskipun'. Meskipun hujan, acara tidak dibatalkan."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "熱がある＿＿、会社に行った。",
+            "options": [
+                  "のに",
+                  "ので",
+                  "から",
+                  "ために"
+            ],
+            "answer": "のに",
+            "explanation": "『のに』 berarti 'padahal/meskipun' dan menunjukkan hasil yang berlawanan. Padahal demam, dia tetap pergi ke kantor."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "熱がある＿＿、今日は会社を休みます。",
+            "options": [
+                  "ので",
+                  "のに",
+                  "ても",
+                  "なら"
+            ],
+            "answer": "ので",
+            "explanation": "『ので』 berarti 'karena' dengan nuansa alasan yang alami/sopan. Karena demam, hari ini tidak masuk kerja."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "このボタンを押す＿＿、ドアが開きます。",
+            "options": [
+                  "と",
+                  "なら",
+                  "ても",
+                  "のに"
+            ],
+            "answer": "と",
+            "explanation": "『と』 dipakai untuk akibat yang terjadi secara otomatis/alami. Kalau tombol ini ditekan, pintu akan terbuka."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "明日晴れ＿＿、山へ行きましょう。",
+            "options": [
+                  "たら",
+                  "と",
+                  "ても",
+                  "のに"
+            ],
+            "answer": "たら",
+            "explanation": "『たら』 dipakai untuk syarat. Jika besok cerah, mari pergi ke gunung."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "この料理は冷めない＿＿、早く食べてください。",
+            "options": [
+                  "うちに",
+                  "最中に",
+                  "たびに",
+                  "以来"
+            ],
+            "answer": "うちに",
+            "explanation": "『ないうちに』 berarti 'sebelum menjadi...'. Makanlah sebelum makanan ini menjadi dingin."
+      },
+      {
+            "category": "Tata Bahasa N3",
+            "question": "先生が来る＿＿、教室をきれいにしておきましょう。",
+            "options": [
+                  "前に",
+                  "後で",
+                  "うちに",
+                  "最中に"
+            ],
+            "answer": "前に",
+            "explanation": "『前に』 berarti 'sebelum'. Sebelum guru datang, mari merapikan kelas."
+      }
+];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswers = [];
+    let currentUsername = "";
+    let resultSaved = false;
+    const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
+    const RANKING_PATH = "nihongoGO_N3_ranking";
+    const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+
+    function fetchWithTimeout(url, options = {}, timeout = 8000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
+
+      return fetch(url, {
+        ...options,
+        signal: controller.signal
+      }).finally(() => clearTimeout(timer));
+    }
+
+
+const screens = {
+      start: document.getElementById("startScreen"),
+      quiz: document.getElementById("quizScreen"),
+      feedback: document.getElementById("feedbackScreen"),
+      result: document.getElementById("resultScreen"),
+      review: document.getElementById("reviewScreen")
+    };
+
+    function setScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
+
+    function openUsernameModal() {
+      const modal = document.getElementById("usernameModal");
+      const input = document.getElementById("usernameInput");
+      const error = document.getElementById("usernameError");
+
+      error.textContent = "";
+      input.value = "";
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+
+      setTimeout(() => input.focus(), 80);
+    }
+
+    function closeUsernameModal() {
+      const modal = document.getElementById("usernameModal");
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function confirmUsername() {
+      const input = document.getElementById("usernameInput");
+      const error = document.getElementById("usernameError");
+      const name = input.value.trim();
+
+      if (!name) {
+        error.textContent = "Nama wajib diisi.";
+        return;
+      }
+
+      currentUsername = name;
+      closeUsernameModal();
+      startQuiz();
+    }
+    async function saveUserRanking() {
+      const userResult = {
+        name: currentUsername || "Tanpa Nama",
+        score: score,
+        total: quiz.length,
+        percentage: Math.round((score / quiz.length) * 100),
+        date: new Date().toLocaleString("id-ID"),
+        createdAt: Date.now()
+      };
+
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userResult)
+      }, 8000);
+
+      if (!response.ok) {
+        throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
+      }
+    }
+
+    async function getRankingData() {
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "GET"
+      }, 8000);
+
+      if (!response.ok) {
+        throw new Error(`Gagal memuat ranking. Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data) {
+        return [];
+      }
+
+      const ranking = Object.keys(data).map(key => ({
+        id: key,
+        ...data[key]
+      }));
+
+      ranking.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+      return ranking;
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderRankingList(ranking) {
+      const list = document.getElementById("rankingList");
+      list.innerHTML = "";
+
+      if (!ranking || !ranking.length) {
+        list.innerHTML = `<div class="ranking-empty">Belum ada data ranking.</div>`;
+        return;
+      }
+
+      ranking.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "ranking-item";
+        row.innerHTML = `
+          <div class="ranking-number">${index + 1}</div>
+          <div>
+            <div class="ranking-name">${escapeHTML(item.name || "Tanpa Nama")}</div>
+            <span class="ranking-date">${escapeHTML(item.date || "-")}</span>
+          </div>
+          <div class="ranking-score">${item.score}/${item.total}</div>
+        `;
+        list.appendChild(row);
+      });
+    }
+    async function openRankingModal() {
+      const modal = document.getElementById("rankingModal");
+      const list = document.getElementById("rankingList");
+
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+
+      list.innerHTML = `<div class="ranking-empty">Memuat ranking...</div>`;
+
+      try {
+        const ranking = await getRankingData();
+        renderRankingList(ranking);
+      } catch (error) {
+        console.error("Ranking REST API error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Ranking gagal dimuat.<br>
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
+            <br><br>
+            Pastikan Rules Firebase sudah di-Publish dan koneksi internet aktif.
+          </div>
+        `;
+      }
+    }
+
+    function closeRankingModal() {
+      const modal = document.getElementById("rankingModal");
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
+    async function clearRanking() {
+      const confirmClear = confirm("Hapus semua data ranking online?");
+      if (!confirmClear) return;
+
+      const list = document.getElementById("rankingList");
+      list.innerHTML = `<div class="ranking-empty">Menghapus ranking...</div>`;
+
+      try {
+        const response = await fetchWithTimeout(RANKING_API_URL, {
+          method: "DELETE"
+        }, 8000);
+
+        if (!response.ok) {
+          throw new Error(`Gagal menghapus ranking. Status: ${response.status}`);
+        }
+
+        renderRankingList([]);
+        alert("Ranking berhasil dihapus.");
+      } catch (error) {
+        console.error("Delete ranking REST API error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Gagal menghapus ranking.<br>
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
+          </div>
+        `;
+
+        alert("Gagal menghapus ranking. Periksa Rules Firebase.");
+      }
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      resultSaved = false;
+      renderQuestion();
+      setScreen("quiz");
+    }
+
+    function goHome() {
+      setScreen("start");
+    }
+
+    function renderQuestion() {
+      const q = quiz[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quiz.length) * 100;
+      const optionList = Array.isArray(q["options"]) ? q["options"] : [];
+
+      document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
+      document.getElementById("progressFill").style.width = `${progressPercent}%`;
+
+      const categoryText = document.getElementById("categoryText") || document.querySelector(".level-label");
+      if (categoryText) {
+        categoryText.textContent = q.category || "JLPT N3";
+      }
+
+      const passageText = document.getElementById("passageText");
+      if (passageText) {
+        if (q.passage) {
+          passageText.hidden = false;
+          passageText.textContent = q.passage;
+        } else {
+          passageText.hidden = true;
+          passageText.textContent = "";
+        }
+      }
+
+      const questionText = document.getElementById("questionText");
+      questionText.innerHTML = q.question || "";
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      const optionsBox = document.getElementById("optionsBox");
+      optionsBox.innerHTML = "";
+
+      optionList.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.dataset.option = option;
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${escapeHTML(option)}</span>`;
+        button.onclick = () => checkAnswer(option, button);
+        optionsBox.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selected, button) {
+      const q = quiz[currentQuestion];
+      const isCorrect = selected === q.answer;
+
+      selectedAnswers[currentQuestion] = {
+        category: q.category || "JLPT N3",
+        passage: q.passage || "",
+        question: q.question,
+        selected,
+        answer: q.answer,
+        correct: isCorrect,
+        explanation: q.explanation
+      };
+
+      if (isCorrect) score++;
+
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.dataset.option === q.answer) btn.classList.add("correct");
+      });
+
+      button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      renderFeedback(isCorrect, q.answer, q.explanation);
+      setScreen("feedback");
+    }
+
+    function renderFeedback(isCorrect, answer, explanation) {
+      const statusRing = document.getElementById("statusRing");
+      const title = document.getElementById("feedbackTitle");
+      const text = document.getElementById("feedbackExplanation");
+      const nextBtn = document.getElementById("nextBtn");
+
+      const feedbackCard = document.querySelector("#feedbackScreen .feedback-card");
+      const symbolClass = isCorrect ? "symbol-correct" : "symbol-wrong";
+
+      if (feedbackCard) {
+        feedbackCard.classList.remove("feedback-animate");
+        void feedbackCard.offsetWidth;
+        feedbackCard.classList.add("feedback-animate");
+      }
+
+      statusRing.innerHTML = `<span class="status-symbol ${symbolClass}">${isCorrect ? "✓" : "×"}</span>`;
+      statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
+      title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
+      title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
+      text.innerHTML = isCorrect
+        ? `<strong>Jawaban kamu benar.</strong><br>${escapeHTML(explanation || "")}`
+        : `Jawaban yang benar adalah <strong>${escapeHTML(answer || "")}</strong>.<br>${escapeHTML(explanation || "")}`;
+      nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+    }
+
+    function showQuizAgain() {
+      setScreen("quiz");
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quiz.length) {
+        renderQuestion();
+        setScreen("quiz");
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const incorrect = quiz.length - score;
+      const percentage = (score / quiz.length) * 100;
+      if (!resultSaved) {
+        saveUserRanking().catch(error => {
+          console.error("Gagal menyimpan ranking:", error);
+        });
+        resultSaved = true;
+      }
+
+let message;
+
+      if (percentage >= 85) {
+        message = "Hebat! Pemahaman N3 kamu sudah kuat.";
+      } else if (percentage >= 70) {
+        message = "Bagus! Terus latih tata bahasa dan kosakata.";
+      } else if (percentage >= 50) {
+        message = "Cukup baik. Ayo perkuat lagi materi N3.";
+      } else {
+        message = "Tetap semangat. Ulangi materi dasar secara bertahap.";
+      }
+
+      document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
+      document.getElementById("resultUserName").textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("correctCount").textContent = score;
+      document.getElementById("incorrectCount").textContent = incorrect;
+      setScreen("result");
+    }
+
+    function showReview() {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      selectedAnswers.forEach((item, index) => {
+        const row = document.createElement("article");
+        row.className = "review-item";
+        row.innerHTML = `
+          <p>
+            <strong>${index + 1}. ${escapeHTML(item.category || "JLPT N3")}</strong>
+            ${item.question || ""}<br>
+            <small>Jawaban kamu: ${escapeHTML(item.selected || "-")}</small><br>
+            <small>Jawaban benar: ${escapeHTML(item.answer || "-")}</small>
+          </p>
+          <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
+        `;
+        reviewList.appendChild(row);
+      });
+
+      setScreen("review");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      currentUsername = "";
+      resultSaved = false;
+      setScreen("start");
+    }
+
+    document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        confirmUsername();
+      }
+    });
+
+    // Hanya izinkan klik kanan pada teks dan input
+    document.addEventListener("contextmenu", function(event) {
+      const allowedTextTags = [
+        "P", "H1", "H2", "H3", "H4", "H5", "H6",
+        "SPAN", "SMALL", "STRONG", "EM", "LI", "LABEL",
+        "INPUT", "TEXTAREA"
+      ];
+
+      const target = event.target;
+
+      const isAllowedText =
+        allowedTextTags.includes(target.tagName) ||
+        target.closest(".question") ||
+        target.closest(".passage-card") ||
+        target.closest(".feedback-title") ||
+        target.closest(".feedback-explanation") ||
+        target.closest(".result-heading") ||
+        target.closest(".result-score") ||
+        target.closest(".result-message") ||
+        target.closest(".result-user") ||
+        target.closest(".review-item") ||
+        target.closest(".ranking-item") ||
+        target.closest(".ranking-empty") ||
+        target.closest(".brand") ||
+        target.closest(".screen-title") ||
+        target.closest(".meta-row") ||
+        target.closest(".score-pill");
+
+      if (!isAllowedText) {
+        event.preventDefault();
+      }
+    });
+
+    // Cegah klik kanan dan drag khusus gambar
+    document.querySelectorAll("img").forEach(function(img) {
+      img.setAttribute("draggable", "false");
+
+      img.addEventListener("dragstart", function(event) {
+        event.preventDefault();
+      });
+
+      img.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+      });
+    });
+
+    // Blok shortcut inspect/source, tapi tetap izinkan copy/paste teks
+    document.addEventListener("keydown", function(event) {
+      const key = event.key.toLowerCase();
+
+      if (
+        event.key === "F12" ||
+        (event.ctrlKey && event.shiftKey && key === "i") ||
+        (event.ctrlKey && event.shiftKey && key === "j") ||
+        (event.ctrlKey && event.shiftKey && key === "c") ||
+        (event.ctrlKey && key === "u") ||
+        (event.ctrlKey && key === "s")
+      ) {
+        event.preventDefault();
+        alert("Akses inspect element dinonaktifkan.");
+        return false;
+      }
+
+      // Jangan blok Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X agar teks/input tetap bisa dipakai
+    });
+
+    function initializeQuizMeta() {
+      document.getElementById("progressText").textContent = `Soal 1 dari ${quiz.length}`;
+      document.getElementById("scorePill").textContent = `Skor: 0 / ${quiz.length}`;
+      document.getElementById("finalScore").textContent = `0 / ${quiz.length}`;
+      const categoryText = document.getElementById("categoryText") || document.querySelector(".level-label");
+      if (categoryText) {
+        categoryText.textContent = quiz[0]?.category || "JLPT N3";
+      }
+    }
+
+    initializeQuizMeta();
+
+    window.openUsernameModal = openUsernameModal;
+    window.closeUsernameModal = closeUsernameModal;
+    window.confirmUsername = confirmUsername;
+    window.startQuiz = startQuiz;
+    window.goHome = goHome;
+    window.showQuizAgain = showQuizAgain;
+    window.nextQuestion = nextQuestion;
+    window.showReview = showReview;
+    window.showResult = showResult;
+    window.restartQuiz = restartQuiz;
+    window.openRankingModal = openRankingModal;
+    window.closeRankingModal = closeRankingModal;
+    window.clearRanking = clearRanking;
+    window.renderFeedback = renderFeedback;
+    window.checkAnswer = checkAnswer;
+    window.renderQuestion = renderQuestion;
+
+  </script>
+</body>
+</html>
