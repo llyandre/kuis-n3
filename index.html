@@ -187,23 +187,45 @@
     .home-art {
       position: relative;
       flex: 0 0 auto;
+      width: calc(100% + 48px);
+      height: 430px;
+      min-height: 430px;
+      margin: 0 -24px 10px;
+      overflow: hidden;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      min-height: 305px;
-      margin: 4px 0 4px;
+    }
+
+    .home-art-image {
+      width: 100%;
+      max-width: none;
+      height: 430px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     .vertical-copy {
       position: absolute;
-      left: 8px;
-      top: 22px;
+      left: 34px;
+      top: 42px;
+      z-index: 5;
       writing-mode: vertical-rl;
       color: rgba(168, 58, 38, 0.78);
       font-family: "Noto Serif JP", serif;
       letter-spacing: 0.18em;
       font-size: 13px;
       line-height: 1.75;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    #startScreen .sun-circle,
+    #startScreen .torii,
+    #startScreen .mist,
+    #startScreen .sakura-branch {
+      display: none !important;
     }
 
     .mini-card {
@@ -1176,48 +1198,20 @@
   <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
     <section class="screen active" id="startScreen">
       <div class="home-art" aria-hidden="true">
-        <div class="vertical-copy">クイズを楽しんで<br>知識を深めましょう。</div>
-        <div class="sun-circle"></div>
-        <div class="torii">
-          <span class="beam-top"></span>
-          <span class="beam-main"></span>
-          <span class="beam-mid"></span>
-          <span class="pillar left"></span>
-          <span class="pillar right"></span>
-          <span class="base left"></span>
-          <span class="base right"></span>
-        </div>
-        <div class="mist"></div>
-        <div class="sakura-branch"><span></span><span></span><span></span><span></span></div>
+        <div class="vertical-copy">クイズを楽しんで、<br>知識を深めましょう。</div>
+
+        <img 
+          class="home-art-image" 
+          src="https://i.postimg.cc/x8tC9drM/HOMEPAGE-QUIZ-N3.png" 
+          alt=""
+        />
       </div>
 
-      <div class="home-info-panel" aria-label="Informasi kuis">
-        <div class="home-info-item">
-          <span>N3</span>
-          <strong>JLPT N3</strong>
-          <small>Level latihan</small>
-        </div>
-        <div class="home-info-item">
-          <span>文法</span>
-          <strong>Tata Bahasa</strong>
-          <small>Pola kalimat</small>
-        </div>
-        <div class="home-info-item">
-          <span>語彙</span>
-          <strong>Kosakata</strong>
-          <small>Arti kata</small>
-        </div>
-      </div>
 
       <div class="brand">
         <div class="brand-mark">Kuis Jepang</div>
         <h1>NihongoGO</h1>
-        <p>Latihan N3 singkat dengan pembahasan yang mudah dipahami.</p>
-        <div class="home-chips">
-          <span>文法 Tata Bahasa</span>
-          <span>語彙 Kosakata</span>
-          <span>読解 Makna</span>
-        </div>
+        <p>Asah N3-mu dengan tenang.</p>
         <button class="primary-btn" type="button" onclick="startQuiz()">Mulai Kuis&nbsp; →</button>
         <div class="home-footer">日本語を学ぼう</div>
       </div>
