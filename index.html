@@ -1735,9 +1735,7 @@
 
   </main>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import { getDatabase, ref, push, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+  <script>
 
     const quiz = [
       {
@@ -1837,30 +1835,18 @@
     let selectedAnswers = [];
     let currentUsername = "";
     let resultSaved = false;
-    const firebaseConfig = {
-      apiKey: "AIzaSyBqa_CZrOpAXO0N5XEc_IBZcG8pgzQFfgg",
-      authDomain: "nihongogo-quiz-n3.firebaseapp.com",
-      databaseURL: "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com",
-      projectId: "nihongogo-quiz-n3",
-      storageBucket: "nihongogo-quiz-n3.firebasestorage.app",
-      messagingSenderId: "676404099639",
-      appId: "1:676404099639:web:f9e7e875d936b200ef1db2",
-      measurementId: "G-5TSBZE4BN2"
-    };
+    const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
+    const RANKING_PATH = "nihongoGO_N3_ranking";
+    const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const rankingRef = ref(db, "nihongoGO_N3_ranking");
+    function fetchWithTimeout(url, options = {}, timeout = 8000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
 
-    function withTimeout(promise, ms = 8000) {
-      return Promise.race([
-        promise,
-        new Promise((_, reject) => {
-          setTimeout(() => {
-            reject(new Error("Koneksi Firebase timeout. Coba buka file HTML langsung di browser, cek internet, atau cek Rules Firebase."));
-          }, ms);
-        })
-      ]);
+      return fetch(url, {
+        ...options,
+        signal: controller.signal
+      }).finally(() => clearTimeout(timer));
     }
 
 
@@ -1920,18 +1906,33 @@ const screens = {
         createdAt: Date.now()
       };
 
-      const newResultRef = push(rankingRef);
-      await withTimeout(set(newResultRef, userResult), 8000);
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userResult)
+      }, 8000);
+
+      if (!response.ok) {
+        throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
+      }
     }
 
     async function getRankingData() {
-      const snapshot = await withTimeout(get(rankingRef), 8000);
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "GET"
+      }, 8000);
 
-      if (!snapshot.exists()) {
-        return [];
+      if (!response.ok) {
+        throw new Error(`Gagal memuat ranking. Status: ${response.status}`);
       }
 
-      const data = snapshot.val();
+      const data = await response.json();
+
+      if (!data) {
+        return [];
+      }
 
       const ranking = Object.keys(data).map(key => ({
         id: key,
@@ -1979,7 +1980,6 @@ const screens = {
         list.appendChild(row);
       });
     }
-
     async function openRankingModal() {
       const modal = document.getElementById("rankingModal");
       const list = document.getElementById("rankingList");
@@ -1993,14 +1993,14 @@ const screens = {
         const ranking = await getRankingData();
         renderRankingList(ranking);
       } catch (error) {
-        console.error("Firebase ranking error:", error);
+        console.error("Ranking REST API error:", error);
 
         list.innerHTML = `
           <div class="ranking-empty">
             Ranking gagal dimuat.<br>
-            ${escapeHTML(error.message || error.code || "Error tidak diketahui.")}
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
             <br><br>
-            Pastikan Rules Firebase sudah di-Publish dan file HTML dibuka dari browser yang punya akses internet.
+            Pastikan Rules Firebase sudah di-Publish dan koneksi internet aktif.
           </div>
         `;
       }
@@ -2011,7 +2011,6 @@ const screens = {
       modal.classList.remove("active");
       modal.setAttribute("aria-hidden", "true");
     }
-
     async function clearRanking() {
       const confirmClear = confirm("Hapus semua data ranking online?");
       if (!confirmClear) return;
@@ -2020,16 +2019,23 @@ const screens = {
       list.innerHTML = `<div class="ranking-empty">Menghapus ranking...</div>`;
 
       try {
-        await withTimeout(remove(rankingRef), 8000);
+        const response = await fetchWithTimeout(RANKING_API_URL, {
+          method: "DELETE"
+        }, 8000);
+
+        if (!response.ok) {
+          throw new Error(`Gagal menghapus ranking. Status: ${response.status}`);
+        }
+
         renderRankingList([]);
         alert("Ranking berhasil dihapus.");
       } catch (error) {
-        console.error("Firebase delete ranking error:", error);
+        console.error("Delete ranking REST API error:", error);
 
         list.innerHTML = `
           <div class="ranking-empty">
             Gagal menghapus ranking.<br>
-            ${escapeHTML(error.message || error.code || "Error tidak diketahui.")}
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
           </div>
         `;
 
