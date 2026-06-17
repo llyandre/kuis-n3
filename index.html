@@ -1565,6 +1565,15 @@
     }
 
 
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+
   </style>
 </head>
 
@@ -1843,8 +1852,19 @@
     const db = getDatabase(app);
     const rankingRef = ref(db, "nihongoGO_N3_ranking");
 
+    function withTimeout(promise, ms = 8000) {
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error("Koneksi Firebase timeout. Coba buka file HTML langsung di browser, cek internet, atau cek Rules Firebase."));
+          }, ms);
+        })
+      ]);
+    }
 
-    const screens = {
+
+const screens = {
       start: document.getElementById("startScreen"),
       quiz: document.getElementById("quizScreen"),
       feedback: document.getElementById("feedbackScreen"),
@@ -1890,7 +1910,6 @@
       closeUsernameModal();
       startQuiz();
     }
-
     async function saveUserRanking() {
       const userResult = {
         name: currentUsername || "Tanpa Nama",
@@ -1902,11 +1921,11 @@
       };
 
       const newResultRef = push(rankingRef);
-      await set(newResultRef, userResult);
+      await withTimeout(set(newResultRef, userResult), 8000);
     }
 
     async function getRankingData() {
-      const snapshot = await get(rankingRef);
+      const snapshot = await withTimeout(get(rankingRef), 8000);
 
       if (!snapshot.exists()) {
         return [];
@@ -1922,7 +1941,7 @@
       ranking.sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
         if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-        return b.createdAt - a.createdAt;
+        return (b.createdAt || 0) - (a.createdAt || 0);
       });
 
       return ranking;
@@ -1979,7 +1998,9 @@
         list.innerHTML = `
           <div class="ranking-empty">
             Ranking gagal dimuat.<br>
-            Detail error: ${escapeHTML(error.message || error.code || "Tidak diketahui")}
+            ${escapeHTML(error.message || error.code || "Error tidak diketahui.")}
+            <br><br>
+            Pastikan Rules Firebase sudah di-Publish dan file HTML dibuka dari browser yang punya akses internet.
           </div>
         `;
       }
@@ -1999,7 +2020,7 @@
       list.innerHTML = `<div class="ranking-empty">Menghapus ranking...</div>`;
 
       try {
-        await remove(rankingRef);
+        await withTimeout(remove(rankingRef), 8000);
         renderRankingList([]);
         alert("Ranking berhasil dihapus.");
       } catch (error) {
@@ -2008,7 +2029,7 @@
         list.innerHTML = `
           <div class="ranking-empty">
             Gagal menghapus ranking.<br>
-            Detail error: ${escapeHTML(error.message || error.code || "Tidak diketahui")}
+            ${escapeHTML(error.message || error.code || "Error tidak diketahui.")}
           </div>
         `;
 
@@ -2136,8 +2157,7 @@
         resultSaved = true;
       }
 
-
-      let message;
+let message;
 
       if (percentage >= 85) {
         message = "Hebat! Pemahaman N3 kamu sudah kuat.";
@@ -2189,6 +2209,18 @@
       }
     });
 
+
+    document.addEventListener("contextmenu", function(event) {
+      if (event.target.tagName === "IMG") {
+        event.preventDefault();
+      }
+    });
+
+    document.querySelectorAll("img").forEach(img => {
+      img.setAttribute("draggable", "false");
+      img.addEventListener("dragstart", event => event.preventDefault());
+      img.addEventListener("contextmenu", event => event.preventDefault());
+    });
     window.openUsernameModal = openUsernameModal;
     window.closeUsernameModal = closeUsernameModal;
     window.confirmUsername = confirmUsername;
