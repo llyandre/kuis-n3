@@ -790,7 +790,6 @@
     }
 
     .feedback-card::after,
-    .result-art::after,
     .review-screen::after {
       content: "✿ ✿ ✿";
       position: absolute;
@@ -844,51 +843,34 @@
       line-height: 1.68;
     }
 
+    #resultScreen {
+      padding-top: 28px;
+      padding-bottom: 24px;
+    }
+
+    #resultScreen .topbar {
+      margin-bottom: 18px;
+    }
+
     .result-art {
       position: relative;
-      min-height: 220px;
-      display: grid;
-      place-items: center;
-      margin: 10px 0 4px;
+      width: 100%;
+      height: 245px;
+      min-height: 245px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px 0 4px;
+      overflow: visible;
     }
 
-    .fuji {
-      position: relative;
-      width: 230px;
-      height: 165px;
-    }
-
-    .fuji .sun-small {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 124px;
-      height: 124px;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: linear-gradient(145deg, #e36c50, var(--red));
-      opacity: 0.92;
-    }
-
-    .fuji .mountain {
-      position: absolute;
-      left: 50%;
-      bottom: 16px;
-      width: 172px;
-      height: 112px;
-      transform: translateX(-50%);
-      clip-path: polygon(50% 0, 100% 100%, 0 100%);
-      background: linear-gradient(145deg, #fcfcfb 0 24%, #57636b 25% 64%, #2f4858 100%);
-      box-shadow: 0 18px 26px rgba(47, 72, 88, 0.2);
-    }
-
-    .fuji .ground {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      height: 2px;
-      background: rgba(47, 72, 88, 0.2);
+    .result-art-image {
+      width: 100%;
+      max-width: 345px;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
     }
 
     .result-heading {
@@ -896,60 +878,107 @@
       margin: 4px 0 0;
       font-family: "Noto Serif JP", Georgia, serif;
       font-size: 22px;
+      font-weight: 900;
+      color: #172434;
     }
 
     .result-score {
       text-align: center;
-      margin: 10px 0 6px;
+      margin: 10px 0 8px;
       color: var(--red);
       font-family: "Noto Serif JP", Georgia, serif;
       font-size: 58px;
-      line-height: 1;
+      line-height: 0.95;
+      font-weight: 900;
     }
 
     .result-message {
       text-align: center;
       color: #443f38;
-      line-height: 1.6;
-      margin: 0 auto 22px;
+      line-height: 1.55;
+      margin: 0 auto 28px;
       max-width: 310px;
+      font-size: 15px;
     }
 
     .stats-card {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      border-radius: 20px;
+      gap: 0;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      border-radius: 16px;
       overflow: hidden;
-      margin: 18px 0 18px;
-      box-shadow: var(--soft-shadow);
+      margin: 0 2px 20px;
+      box-shadow: 0 12px 32px rgba(49, 36, 23, 0.08);
     }
 
     .stat {
-      background: rgba(255, 255, 255, 0.82);
-      padding: 16px 14px;
+      background: transparent;
+      padding: 16px 12px 15px;
       text-align: center;
+      color: #443f38;
+    }
+
+    .stat-icon {
+      width: 24px;
+      height: 24px;
+      margin: 0 auto 7px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    .stat-correct-icon {
+      background: #6f936f;
+    }
+
+    .stat-wrong-icon {
+      background: #c84b31;
     }
 
     .stat strong {
       display: block;
-      margin-top: 6px;
+      margin: 0;
       font-size: 20px;
-      color: #253746;
+      color: #172434;
+      line-height: 1.05;
+      font-weight: 900;
     }
 
     .stat span {
+      display: block;
+      margin-top: 5px;
       color: var(--muted);
       font-size: 12px;
+      line-height: 1;
     }
 
-    .button-row {
+    #resultScreen .button-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-top: auto;
+      margin-top: 0;
+    }
+
+    #resultScreen .ghost-btn,
+    #resultScreen .primary-btn {
+      min-height: 50px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    #resultScreen .fuji,
+    #resultScreen .sun-small,
+    #resultScreen .mountain,
+    #resultScreen .ground {
+      display: none !important;
     }
 
     .review-list {
@@ -1312,11 +1341,11 @@
       </div>
 
       <div class="result-art" aria-hidden="true">
-        <div class="fuji">
-          <div class="sun-small"></div>
-          <div class="mountain"></div>
-          <div class="ground"></div>
-        </div>
+        <img 
+          class="result-art-image" 
+          src="https://i.postimg.cc/1XJtyzxp/RESULT-PAGE-QUIZ-N3.png" 
+          alt=""
+        />
       </div>
 
       <h2 class="result-heading">Skor Kamu</h2>
@@ -1325,11 +1354,13 @@
 
       <div class="stats-card">
         <div class="stat">
-          ✓ <strong id="correctCount">0</strong>
+          <div class="stat-icon stat-correct-icon">✓</div>
+          <strong id="correctCount">0</strong>
           <span>Benar</span>
         </div>
         <div class="stat">
-          × <strong id="incorrectCount">0</strong>
+          <div class="stat-icon stat-wrong-icon">×</div>
+          <strong id="incorrectCount">0</strong>
           <span>Salah</span>
         </div>
       </div>
@@ -1581,13 +1612,13 @@
       let message;
 
       if (percentage >= 85) {
-        message = "すごい！ Sangat baik. Pemahaman JLPT N3 kamu sudah kuat.";
+        message = "Hebat! Pemahaman N3 kamu sudah kuat.";
       } else if (percentage >= 70) {
-        message = "いいですね！ Kamu sudah cukup paham, tetapi masih perlu latihan tata bahasa dan kosakata.";
+        message = "Bagus! Terus latih tata bahasa dan kosakata.";
       } else if (percentage >= 50) {
-        message = "もう少し！ Cukup. Perbanyak latihan bunpou, kosakata, dan membaca kalimat N3.";
+        message = "Cukup baik. Ayo perkuat lagi materi N3.";
       } else {
-        message = "頑張って！ Masih perlu belajar ulang materi N4 menuju N3 secara bertahap.";
+        message = "Tetap semangat. Ulangi materi dasar secara bertahap.";
       }
 
       document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
