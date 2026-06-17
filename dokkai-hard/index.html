@@ -1,0 +1,2604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NihongoGO - Dokkai JLPT N3 Hard 20 Soal</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f7f3ea;
+      --paper: #fffdf8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #7c7468;
+      --line: #eadfd2;
+      --red: #c84b31;
+      --red-dark: #a83a26;
+      --indigo: #2f4858;
+      --green: #6f936f;
+      --green-soft: #edf5ec;
+      --wrong: #c76d5e;
+      --wrong-soft: #fff0ed;
+      --shadow: 0 24px 70px rgba(49, 36, 23, 0.12);
+      --soft-shadow: 0 10px 28px rgba(49, 36, 23, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(200, 75, 49, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 72, 88, 0.09), transparent 22%),
+        linear-gradient(135deg, #fbf7ef 0%, var(--bg) 44%, #f1eadf 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(200, 75, 49, 0.12) 1.4px, transparent 1.6px),
+        radial-gradient(circle at 32px 32px, rgba(47, 72, 88, 0.07) 1px, transparent 1.3px);
+      background-size: 48px 48px;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: min(430px, 100%);
+      min-height: 760px;
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 210px;
+      opacity: 0.65;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(47, 72, 88, 0.08) 59% 62%, transparent 63%) 0 0 / 64px 38px repeat-x,
+        radial-gradient(50% 90% at 50% 100%, transparent 58%, rgba(200, 75, 49, 0.08) 59% 62%, transparent 63%) 32px 22px / 64px 38px repeat-x;
+      z-index: -1;
+    }
+
+    .screen {
+      display: none;
+      min-height: 760px;
+      padding: 28px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+      margin-bottom: 22px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: var(--indigo);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(47, 72, 88, 0.07);
+    }
+
+    .screen-title {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+      color: #182531;
+      text-align: center;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 253, 248, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.08);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .logo-mark svg {
+      width: 27px;
+      height: 27px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-mark .enso-main {
+      fill: none;
+      stroke: #1f2933;
+      stroke-width: 7.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-mark .enso-soft {
+      fill: none;
+      stroke: rgba(31, 41, 51, 0.34);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .logo-mark .enso-red {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      opacity: 0.92;
+    }
+
+    .home-art {
+      position: relative;
+      flex: 0 0 auto;
+      width: calc(100% + 48px);
+      height: 430px;
+      min-height: 430px;
+      margin: 0 -24px 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .home-art-image {
+      width: 100%;
+      max-width: none;
+      height: 430px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .vertical-copy {
+      position: absolute;
+      left: 34px;
+      top: 42px;
+      z-index: 5;
+      writing-mode: vertical-rl;
+      color: rgba(168, 58, 38, 0.78);
+      font-family: "Noto Serif JP", serif;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      line-height: 1.75;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    #startScreen .sun-circle,
+    #startScreen .torii,
+    #startScreen .mist,
+    #startScreen .sakura-branch {
+      display: none !important;
+    }
+
+    .mini-card {
+      position: absolute;
+      right: 6px;
+      top: 42px;
+      width: 132px;
+      padding: 12px 12px 11px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 12px 28px rgba(49, 36, 23, 0.08);
+      backdrop-filter: blur(10px);
+      text-align: left;
+    }
+
+    .mini-card .seal {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fffdf8;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .home-info-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 22px;
+      padding: 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 255, 255, 0.72)),
+        radial-gradient(circle at 92% 20%, rgba(200, 75, 49, 0.08), transparent 34%);
+      box-shadow: 0 12px 30px rgba(49, 36, 23, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .home-info-item {
+      min-height: 86px;
+      padding: 10px 6px 9px;
+      border-radius: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(234, 223, 210, 0.72);
+    }
+
+    .home-info-item span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 7px;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.11);
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .home-info-item strong {
+      display: block;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .home-info-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .sakura-branch {
+      position: absolute;
+      right: 15px;
+      bottom: 77px;
+      width: 132px;
+      height: 68px;
+      transform: rotate(-17deg);
+      opacity: 0.92;
+    }
+
+    .sakura-branch::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 34px;
+      height: 2px;
+      background: rgba(92, 70, 56, 0.28);
+      border-radius: 999px;
+    }
+
+    .sakura-branch span {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(200, 75, 49, 0.32);
+      transform: rotate(45deg);
+    }
+
+    .sakura-branch span:nth-child(1) { right: 18px; top: 18px; }
+    .sakura-branch span:nth-child(2) { right: 42px; top: 32px; width: 11px; height: 11px; }
+    .sakura-branch span:nth-child(3) { right: 72px; top: 22px; width: 10px; height: 10px; }
+    .sakura-branch span:nth-child(4) { right: 100px; top: 38px; width: 9px; height: 9px; }
+
+    .sun-circle {
+      position: absolute;
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      top: 86px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.24), transparent 20%),
+        linear-gradient(145deg, #e36c50, var(--red));
+      box-shadow: 0 16px 36px rgba(200, 75, 49, 0.22);
+    }
+
+    .torii {
+      position: absolute;
+      top: 156px;
+      left: 50%;
+      width: 112px;
+      height: 96px;
+      transform: translateX(-50%);
+      color: #272727;
+    }
+
+    .torii .beam-main,
+    .torii .beam-top,
+    .torii .beam-mid,
+    .torii .pillar,
+    .torii .base {
+      position: absolute;
+      background: currentColor;
+      border-radius: 3px;
+    }
+
+    .torii .beam-top {
+      left: 4px;
+      right: 4px;
+      top: 8px;
+      height: 9px;
+      transform: rotate(2deg);
+    }
+
+    .torii .beam-main {
+      left: 0;
+      right: 0;
+      top: 21px;
+      height: 10px;
+    }
+
+    .torii .beam-mid {
+      left: 24px;
+      right: 24px;
+      top: 42px;
+      height: 8px;
+    }
+
+    .torii .pillar.left { left: 27px; }
+    .torii .pillar.right { right: 27px; }
+
+    .torii .pillar {
+      top: 30px;
+      width: 9px;
+      height: 66px;
+    }
+
+    .torii .base {
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+    }
+
+    .torii .base.left { left: 20px; }
+    .torii .base.right { right: 20px; }
+
+    .mist {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      width: 270px;
+      height: 78px;
+      transform: translateX(-50%);
+      opacity: 1;
+      overflow: hidden;
+      border-radius: 0 0 120px 120px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0) 0%, rgba(255, 253, 248, 0.88) 38%, rgba(247, 243, 234, 0.28) 100%),
+        radial-gradient(ellipse at 50% 78%, rgba(47, 72, 88, 0.09), transparent 68%);
+      filter: none;
+    }
+
+    .mist::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 11px;
+      height: 56px;
+      opacity: 0.9;
+      background:
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(47, 72, 88, 0.15) 58% 61%, transparent 62%) 0 0 / 54px 31px repeat-x,
+        radial-gradient(50% 92% at 50% 100%, transparent 57%, rgba(200, 75, 49, 0.13) 58% 61%, transparent 62%) 27px 16px / 54px 31px repeat-x;
+    }
+
+    .mist::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(47, 72, 88, 0.26), transparent);
+    }
+
+    .brand {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #172434;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(42px, 11vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -0.8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 10px auto 22px;
+      max-width: 245px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--red-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(200, 75, 49, 0.45);
+    }
+
+    .home-chips {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: -6px 0 22px;
+    }
+
+    .home-chips span {
+      padding: 7px 10px;
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #5f5a52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      width: 100%;
+      min-height: 54px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, var(--red), #dc4b36);
+      box-shadow: 0 12px 26px rgba(200, 75, 49, 0.24);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(200, 75, 49, 0.28);
+    }
+
+    .ghost-btn {
+      border: 1.5px solid var(--red);
+      color: var(--red-dark);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .ghost-btn:hover {
+      background: rgba(200, 75, 49, 0.07);
+    }
+
+    .home-footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #5f5a52;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 0.45em;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+    }
+
+    .progress-track {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(234, 223, 210, 0.8);
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #dc5642);
+      transition: width 0.25s ease;
+    }
+
+    .passage-card {
+      margin: 0 0 16px;
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 255, 255, 0.84)),
+        radial-gradient(circle at 100% 0%, rgba(200, 75, 49, 0.06), transparent 32%);
+      color: #253746;
+      box-shadow: var(--soft-shadow);
+      font-family: "Noto Serif JP", "Plus Jakarta Sans", serif;
+      font-size: 14.5px;
+      line-height: 1.85;
+      white-space: pre-line;
+      max-height: 265px;
+      overflow: auto;
+    }
+
+    .passage-card[hidden] {
+      display: none !important;
+    }
+
+    .question-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.82)),
+        radial-gradient(circle at 100% 100%, rgba(200, 75, 49, 0.08), transparent 30%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px 28px;
+      min-height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -18px;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      border: 18px solid rgba(200, 75, 49, 0.08);
+    }
+
+    .question-card::after {
+      content: "";
+      position: absolute;
+      width: 46px;
+      height: 2px;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: var(--red);
+      border-radius: 999px;
+    }
+
+    .question {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      color: #1d2d3c;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.35;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 36, 23, 0.035);
+      transition: 0.16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(200, 75, 49, 0.55);
+      background: #fffafa;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .choice-letter {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f2ede6;
+      color: #5d5750;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .option.selected {
+      border-color: var(--red);
+      background: rgba(200, 75, 49, 0.055);
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #315a31;
+    }
+
+    .option.correct .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-soft);
+      color: #8d342a;
+    }
+
+    .option.wrong .choice-letter {
+      background: var(--wrong);
+      color: white;
+    }
+
+    .meta-right {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .level-label {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      color: var(--red-dark);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.055);
+    }
+
+    .quiz-next-btn {
+      display: none;
+      margin-top: 18px;
+      min-height: 52px;
+      flex: 0 0 auto;
+    }
+
+    .feedback-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 34px 24px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card::after {
+      content: "✿ ✿ ✿";
+      position: absolute;
+      right: 22px;
+      bottom: 42px;
+      color: rgba(200, 75, 49, 0.34);
+      transform: rotate(-18deg);
+      font-size: 24px;
+      letter-spacing: 8px;
+      pointer-events: none;
+    }
+
+    .status-ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 47px;
+      margin-bottom: 28px;
+      border: 12px solid;
+    }
+
+    .status-ring.correct-state {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: rgba(111, 147, 111, 0.18);
+    }
+
+    .status-ring.wrong-state {
+      color: var(--wrong);
+      background: var(--wrong-soft);
+      border-color: rgba(199, 109, 94, 0.18);
+    }
+
+    .feedback-title {
+      margin: 0;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 28px;
+    }
+
+    .feedback-title.correct-text {
+      color: var(--green);
+    }
+
+    .feedback-explanation {
+      margin: 14px 0 32px;
+      color: #453f38;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    #resultScreen {
+      padding-top: 28px;
+      padding-bottom: 24px;
+    }
+
+    #resultScreen .topbar {
+      margin-bottom: 18px;
+    }
+
+    .result-art {
+      position: relative;
+      width: 100%;
+      height: 245px;
+      min-height: 245px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px 0 4px;
+      overflow: visible;
+    }
+
+    .result-art-image {
+      width: 100%;
+      max-width: 345px;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .result-heading {
+      text-align: center;
+      margin: 4px 0 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: #172434;
+    }
+
+    .result-score {
+      text-align: center;
+      margin: 10px 0 8px;
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 58px;
+      line-height: 0.95;
+      font-weight: 900;
+    }
+
+    .result-message {
+      text-align: center;
+      color: #443f38;
+      line-height: 1.55;
+      margin: 0 auto 28px;
+      max-width: 310px;
+      font-size: 15px;
+    }
+
+    .stats-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 0 2px 20px;
+      box-shadow: 0 12px 32px rgba(49, 36, 23, 0.08);
+    }
+
+    .stat {
+      background: transparent;
+      padding: 16px 12px 15px;
+      text-align: center;
+      color: #443f38;
+    }
+
+    .stat-icon {
+      width: 24px;
+      height: 24px;
+      margin: 0 auto 7px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    .stat-correct-icon {
+      background: #6f936f;
+    }
+
+    .stat-wrong-icon {
+      background: #c84b31;
+    }
+
+    .stat strong {
+      display: block;
+      margin: 0;
+      font-size: 20px;
+      color: #172434;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    #resultScreen .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    #resultScreen .ghost-btn,
+    #resultScreen .primary-btn {
+      min-height: 50px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    #resultScreen .fuji,
+    #resultScreen .sun-small,
+    #resultScreen .mountain,
+    #resultScreen .ground {
+      display: none !important;
+    }
+
+    #reviewScreen {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #reviewScreen::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -4px;
+      transform: translateX(-50%);
+      width: calc(100% + 64px);
+      height: 260px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.9;
+      background-image: url("https://i.postimg.cc/6qY3BQsC/REVIEW-PAGE-RESULT.png");
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: 100% auto;
+    }
+
+    #reviewScreen > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    #reviewScreen {
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    #reviewScreen .topbar {
+      margin-bottom: 22px;
+    }
+
+    #reviewScreen .screen-title {
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #172434;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+      padding-bottom: 18px;
+    }
+
+    .review-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 68px;
+      padding: 15px 16px;
+      border: 1px solid rgba(234, 223, 210, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 8px 22px rgba(49, 36, 23, 0.075);
+      backdrop-filter: blur(8px);
+    }
+
+    .review-item p {
+      margin: 0;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 800;
+      color: #172434;
+    }
+
+    .review-item small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: 0 6px 14px rgba(49, 36, 23, 0.12);
+    }
+
+    .badge.ok {
+      background: #6f936f;
+    }
+
+    .badge.no {
+      background: #c84b31;
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 38px;
+      margin-top: 14px;
+      color: #443f38;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .legend span::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      display: inline-block;
+      border-radius: 50%;
+      margin: 0;
+      background: rgba(111, 147, 111, 0.35);
+    }
+
+    .legend span:nth-child(2)::before {
+      width: 13px;
+      height: 13px;
+      border: 4px solid #c84b31;
+      background: transparent;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .phone-frame {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        padding: 24px 20px;
+      }
+
+      .brand h1 {
+        font-size: 48px;
+      }
+
+      .home-info-panel {
+        margin-bottom: 20px;
+      }
+
+      .question-card {
+        min-height: 220px;
+      }
+    }
+
+
+    /* Texture khusus halaman kuis: hanya muncul di bagian bawah #quizScreen */
+    #quizScreen {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #quizScreen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -18px;
+      transform: translateX(-50%);
+      width: calc(100% + 90px);
+      height: 255px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.78;
+      background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
+      background-repeat: repeat-x;
+      background-position: center bottom;
+      background-size: 560px auto;
+      mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.92) 42%,
+        rgba(0, 0, 0, 0.42) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.92) 42%,
+        rgba(0, 0, 0, 0.42) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
+    #quizScreen > * {
+      position: relative;
+      z-index: 2;
+    }
+
+
+
+    /* Tambahan saja: animasi ✓ dan × disamakan seperti versi sebelumnya, tanpa mengubah desain utama */
+    .feedback-card.feedback-animate {
+      animation: cardSoftEnter 0.46s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .status-ring {
+      position: relative;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      overflow: visible;
+      transform-origin: center;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.72);
+      will-change: transform, opacity, box-shadow;
+    }
+
+    .status-ring .status-symbol {
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      text-align: center;
+      font-weight: 900;
+      transform-origin: center;
+    }
+
+    .status-ring .symbol-correct {
+      font-size: 40px;
+      transform: translateY(-1px);
+    }
+
+    .status-ring .symbol-wrong {
+      font-size: 43px;
+      transform: translateY(-4px);
+    }
+
+    .feedback-card.feedback-animate .status-ring {
+      animation: iconPop 0.58s cubic-bezier(.22, 1.35, .36, 1) 0.12s both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.correct-state {
+      animation-name: iconPop, correctPulse;
+      animation-duration: 0.58s, 0.82s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .status-ring.wrong-state {
+      animation-name: iconPop, wrongShake;
+      animation-duration: 0.58s, 0.38s;
+      animation-delay: 0.12s, 0.62s;
+      animation-timing-function: cubic-bezier(.22, 1.35, .36, 1), ease-in-out;
+      animation-fill-mode: both, both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title,
+    .feedback-card.feedback-animate .feedback-explanation,
+    .feedback-card.feedback-animate #nextBtn {
+      animation: fadeSlideUp 0.42s ease-out both;
+    }
+
+    .feedback-card.feedback-animate .feedback-title { animation-delay: 0.20s; }
+    .feedback-card.feedback-animate .feedback-explanation { animation-delay: 0.30s; }
+    .feedback-card.feedback-animate #nextBtn { animation-delay: 0.40s; }
+
+    .option.correct {
+      animation: optionCorrect 0.45s ease-out both;
+    }
+
+    .option.wrong {
+      animation: optionWrong 0.38s ease-in-out both;
+    }
+
+    .badge.ok,
+    .badge.no {
+      line-height: 1;
+    }
+
+    .badge.no {
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    @keyframes cardSoftEnter {
+      0% { opacity: 0; transform: translateY(18px) scale(0.975); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes iconPop {
+      0% { opacity: 0; transform: scale(0.58) rotate(-8deg); }
+      68% { opacity: 1; transform: scale(1.08) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes correctPulse {
+      0% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 0 rgba(111,147,111,.24); }
+      100% { box-shadow: inset 0 0 0 10px rgba(255,255,255,.72), 0 0 0 20px rgba(111,147,111,0); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0) scale(1); }
+      22% { transform: translateX(-5px) scale(1.01); }
+      48% { transform: translateX(5px) scale(1.01); }
+      72% { transform: translateX(-3px) scale(1.005); }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes optionCorrect {
+      0% { transform: scale(1); }
+      52% { transform: scale(1.018); box-shadow: 0 10px 20px rgba(111,147,111,.14); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes optionWrong {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feedback-card.feedback-animate,
+      .feedback-card.feedback-animate .status-ring,
+      .feedback-card.feedback-animate .status-ring.correct-state,
+      .feedback-card.feedback-animate .status-ring.wrong-state,
+      .feedback-card.feedback-animate .feedback-title,
+      .feedback-card.feedback-animate .feedback-explanation,
+      .feedback-card.feedback-animate #nextBtn,
+      .option.correct,
+      .option.wrong {
+        animation: none !important;
+      }
+    }
+
+
+    .username-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(31, 41, 51, 0.22);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+    }
+
+    .username-modal.active {
+      display: flex;
+    }
+
+    .username-modal-card {
+      width: min(360px, 100%);
+      padding: 28px 24px 24px;
+      border-radius: 24px;
+      background: rgba(255, 253, 248, 0.96);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.18);
+      text-align: center;
+      animation: modalPop 0.28s ease both;
+    }
+
+    .username-modal-card h2 {
+      margin: 0 0 8px;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 24px;
+      color: #172434;
+    }
+
+    .username-modal-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .username-input {
+      width: 100%;
+      min-height: 50px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      padding: 0 14px;
+      font-size: 15px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      outline: none;
+      text-align: center;
+    }
+
+    .username-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(200, 75, 49, 0.08);
+    }
+
+    .username-error {
+      display: block;
+      min-height: 18px;
+      margin-top: 8px;
+      color: var(--wrong);
+      font-size: 12px;
+    }
+
+    .username-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .username-actions .primary-btn,
+    .username-actions .ghost-btn {
+      min-height: 48px;
+      font-size: 14px;
+    }
+
+    .result-user {
+      text-align: center;
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-button-row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .result-button-row .primary-btn {
+      grid-column: 1 / -1;
+    }
+
+    .ranking-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(31, 41, 51, 0.22);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+    }
+
+    .ranking-modal.active {
+      display: flex;
+    }
+
+    .ranking-modal-card {
+      width: min(380px, 100%);
+      max-height: 82vh;
+      overflow: hidden;
+      padding: 28px 22px 22px;
+      border-radius: 24px;
+      background: rgba(255, 253, 248, 0.97);
+      border: 1px solid rgba(234, 223, 210, 0.95);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.18);
+      text-align: center;
+      animation: modalPop 0.28s ease both;
+    }
+
+    .ranking-modal-card h2 {
+      margin: 0 0 8px;
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 24px;
+      color: #172434;
+    }
+
+    .ranking-modal-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 10px;
+      max-height: 330px;
+      overflow-y: auto;
+      padding: 2px 2px 4px;
+    }
+
+    .ranking-item {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(234, 223, 210, 0.85);
+      background: rgba(255, 255, 255, 0.86);
+      text-align: left;
+    }
+
+    .ranking-number {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(200, 75, 49, 0.12);
+      color: var(--red-dark);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .ranking-name {
+      font-weight: 800;
+      color: #172434;
+      font-size: 14px;
+    }
+
+    .ranking-date {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .ranking-score {
+      color: var(--red);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .ranking-empty {
+      padding: 18px 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ranking-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .ranking-actions .primary-btn,
+    .ranking-actions .ghost-btn {
+      min-height: 48px;
+      font-size: 13px;
+    }
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Default: elemen non-teks tidak bisa diseleksi */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Teks boleh diblok dan dicopy */
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    small,
+    strong,
+    em,
+    li,
+    label,
+    .question,
+    .passage-card,
+    .feedback-title,
+    .feedback-explanation,
+    .result-heading,
+    .result-score,
+    .result-message,
+    .result-user,
+    .review-item,
+    .review-item p,
+    .review-item small,
+    .ranking-name,
+    .ranking-date,
+    .ranking-score,
+    .ranking-empty,
+    .brand,
+    .brand p,
+    .brand h1,
+    .screen-title,
+    .meta-row,
+    .score-pill {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Input tetap bisa diketik, select, copy, paste */
+    input,
+    textarea {
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+
+    /* Gambar tidak bisa drag/select */
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      pointer-events: auto;
+    }
+
+    /* Tombol dan elemen dekoratif tidak perlu bisa diseleksi */
+    button,
+    .logo-mark,
+    .home-art,
+    .result-art,
+    .status-ring,
+    .stat-icon,
+    .badge,
+    .progress-track,
+    .progress-fill,
+    .phone-frame::after {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+  </style>
+</head>
+
+<body>
+  <main class="phone-frame" aria-label="Aplikasi Kuis Bahasa Jepang">
+    <section class="screen active" id="startScreen">
+      <div class="home-art" aria-hidden="true">
+        <div class="vertical-copy">クイズを楽しんで、<br>知識を深めましょう。</div>
+
+        <img 
+          class="home-art-image" 
+          src="https://i.postimg.cc/x8tC9drM/HOMEPAGE-QUIZ-N3.png" 
+          alt=""
+        />
+      </div>
+
+
+      <div class="brand">
+        <div class="brand-mark">Kuis Jepang</div>
+        <h1>NihongoGO</h1>
+        <p>Asah N3-mu dengan tenang.</p>
+        <button class="primary-btn" type="button" onclick="openUsernameModal()">Mulai Kuis&nbsp; →</button>
+        <div class="home-footer">日本語を学ぼう</div>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="meta-row">
+        <span id="progressText">Soal 1 dari 20</span>
+        <div class="meta-right">
+          <span class="level-label" id="categoryText">JLPT N3</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 20</span>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <article class="passage-card" id="passageText" hidden></article>
+
+      <article class="question-card">
+        <p class="question" id="questionText"></p>
+      </article>
+
+      <div class="options" id="optionsBox"></div>
+
+      <button class="primary-btn quiz-next-btn" type="button" onclick="nextQuestion()" id="quizNextBtn">Soal Berikutnya&nbsp; →</button>
+    </section>
+
+    <section class="screen" id="feedbackScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
+        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="status-ring" id="statusRing"><span class="status-symbol symbol-correct">✓</span></div>
+        <h2 class="feedback-title" id="feedbackTitle">Benar!</h2>
+        <p class="feedback-explanation" id="feedbackExplanation"></p>
+        <button class="primary-btn" type="button" onclick="nextQuestion()" id="nextBtn">Soal Berikutnya&nbsp; →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="topbar">
+        <span></span>
+        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="result-art" aria-hidden="true">
+        <img 
+          class="result-art-image" 
+          src="https://i.postimg.cc/1XJtyzxp/RESULT-PAGE-QUIZ-N3.png" 
+          alt=""
+        />
+      </div>
+
+      <h2 class="result-heading">Skor Kamu</h2>
+      <p class="result-user" id="resultUserName"></p>
+      <div class="result-score" id="finalScore">0 / 20</div>
+      <p class="result-message" id="resultMessage"></p>
+
+      <div class="stats-card">
+        <div class="stat">
+          <div class="stat-icon stat-correct-icon">✓</div>
+          <strong id="correctCount">0</strong>
+          <span>Benar</span>
+        </div>
+        <div class="stat">
+          <div class="stat-icon stat-wrong-icon">×</div>
+          <strong id="incorrectCount">0</strong>
+          <span>Salah</span>
+        </div>
+      </div>
+
+      <div class="button-row result-button-row">
+        <button class="ghost-btn" type="button" onclick="showReview()">Lihat Jawaban</button>
+        <button class="ghost-btn" type="button" onclick="openRankingModal()">Ranking</button>
+        <button class="primary-btn" type="button" onclick="restartQuiz()">Kembali ke Awal</button>
+      </div>
+    </section>
+
+    <section class="screen review-screen" id="reviewScreen">
+      <div class="topbar">
+        <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
+        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+      <div class="legend">
+        <span>Benar</span>
+        <span>Salah</span>
+      </div>
+    </section>
+
+    <div class="username-modal" id="usernameModal" aria-hidden="true">
+      <div class="username-modal-card">
+        <h2>Masukkan Nama</h2>
+        <p>Tulis nama kamu sebelum memulai kuis.</p>
+
+        <input
+          type="text"
+          id="usernameInput"
+          class="username-input"
+          placeholder="Contoh: Hannah"
+          maxlength="24"
+          autocomplete="off"
+        />
+
+        <small class="username-error" id="usernameError"></small>
+
+        <div class="username-actions">
+          <button class="ghost-btn" type="button" onclick="closeUsernameModal()">Batal</button>
+          <button class="primary-btn" type="button" onclick="confirmUsername()">Mulai</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-modal" id="rankingModal" aria-hidden="true">
+      <div class="ranking-modal-card">
+        <h2>Ranking Nilai</h2>
+        <p>Data ranking tersimpan online dan dapat dilihat oleh peserta lain.</p>
+
+        <div class="ranking-list" id="rankingList"></div>
+
+        <div class="ranking-actions">
+          <button class="ghost-btn" type="button" onclick="clearRanking()">Hapus Ranking</button>
+          <button class="primary-btn" type="button" onclick="closeRankingModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+
+    const quiz = [
+      {
+            "category": "Bacaan Pendek - Inferensi",
+            "passage": "最近、駅前に新しいスーパーができた。家から少し遠いが、夜遅くまで開いているので、仕事の帰りに寄れるのが便利だ。ただ、野菜は近所の店のほうが新鮮なので、私は買う物によって店を使い分けている。",
+            "question": "筆者は新しいスーパーをどのように利用していますか。",
+            "options": [
+                  "毎日すべての買い物をそこでしている",
+                  "仕事帰りに便利な物を買う時に利用している",
+                  "野菜だけを買うために利用している",
+                  "近所の店が閉まったので仕方なく利用している"
+            ],
+            "answer": "仕事帰りに便利な物を買う時に利用している",
+            "explanation": "筆者は夜遅くまで開いていて仕事帰りに寄れる点を便利だと言っています。ただし野菜は近所の店で買うため、目的によって使い分けています。"
+      },
+      {
+            "category": "Bacaan Pendek - Alasan",
+            "passage": "私はスマートフォンの予定表を使っているが、大事な予定だけは紙の手帳にも書くようにしている。スマートフォンは便利だが、電池がなくなったり、通知を見逃したりすることがあるからだ。二つ使うのは少し面倒だが、失敗を減らせる。",
+            "question": "筆者が紙の手帳にも予定を書く理由は何ですか。",
+            "options": [
+                  "スマートフォンを使うのが嫌いだから",
+                  "手帳のほうが予定をたくさん書けるから",
+                  "大事な予定を忘れる危険を減らしたいから",
+                  "会社で紙の手帳を使うように言われたから"
+            ],
+            "answer": "大事な予定を忘れる危険を減らしたいから",
+            "explanation": "スマートフォンは便利でも電池切れや通知の見逃しがあるため、紙の手帳も使って失敗を減らそうとしています。"
+      },
+      {
+            "category": "Bacaan Pendek - Maksud Penulis",
+            "passage": "外国語を勉強していると、間違えるのが怖くて話せなくなることがある。しかし、間違えない人だけが上手になるわけではない。むしろ、間違いに気づき、直していく人のほうが少しずつ力をつけていく。",
+            "question": "筆者が一番言いたいことは何ですか。",
+            "options": [
+                  "外国語は間違えないように黙って勉強すべきだ",
+                  "間違いを恐れず、直しながら学ぶことが大切だ",
+                  "話す練習より文法の勉強だけをするべきだ",
+                  "上手な人は最初から間違えることがない"
+            ],
+            "answer": "間違いを恐れず、直しながら学ぶことが大切だ",
+            "explanation": "筆者は、間違いに気づいて直す人が力をつけると言っています。つまり、失敗を恐れず改善する姿勢が大切です。"
+      },
+      {
+            "category": "Bacaan Pendek - Sikap Penulis",
+            "passage": "この町では、古い建物を壊して新しいマンションを建てる計画が進んでいる。住む人が増えるのはよいことだと思う一方で、町らしい景色が少しずつ消えていくのは残念だ。便利さだけを考えるのではなく、昔からあるものも大切にしてほしい。",
+            "question": "筆者はこの計画についてどう考えていますか。",
+            "options": [
+                  "新しいマンションには全く反対している",
+                  "便利になるなら古い建物は全部なくてよい",
+                  "人が増える利点はあるが、古い景色も守ってほしい",
+                  "古い建物より新しい建物のほうが町らしいと思っている"
+            ],
+            "answer": "人が増える利点はあるが、古い景色も守ってほしい",
+            "explanation": "筆者は住む人が増える点は認めていますが、古い景色が消えることを残念に思い、昔からあるものも大切にしてほしいと述べています。"
+      },
+      {
+            "category": "Bacaan Pendek - Kata Rujukan",
+            "passage": "朝の電車はいつも混んでいる。私はそれが嫌で、三十分早く家を出るようになった。すると、座れる日も増え、会社に着いてからコーヒーを飲む余裕もできた。早起きは大変だが、その分、一日の始まりが落ち着く。",
+            "question": "本文の「それ」は何を指していますか。",
+            "options": [
+                  "朝の電車が混んでいること",
+                  "会社でコーヒーを飲むこと",
+                  "三十分早く家を出ること",
+                  "早起きを続けること"
+            ],
+            "answer": "朝の電車が混んでいること",
+            "explanation": "直前に『朝の電車はいつも混んでいる』とあり、その状態が嫌なので早く家を出るようになった、と続いています。"
+      },
+      {
+            "category": "Bacaan Sedang - Opini",
+            "passage": "最近、社員食堂で昼食を取る人が減っている。理由の一つは、外の店のほうがメニューが多いからだ。しかし、社員食堂には会社の近くで安く食べられるという良さがある。そこで、会社は来月から週に二回、社員が希望したメニューを出すことにした。まずは三か月試して、利用者が増えるかどうかを見る予定だ。",
+            "question": "会社はなぜ新しい取り組みを始めるのですか。",
+            "options": [
+                  "社員食堂を完全になくすため",
+                  "外の店より値段を高くするため",
+                  "社員食堂の利用者を増やすため",
+                  "社員に昼食を無料で配るため"
+            ],
+            "answer": "社員食堂の利用者を増やすため",
+            "explanation": "本文では利用者が減っているため、希望メニューを出して三か月試し、利用者が増えるか見るとあります。目的は利用者を増やすことです。"
+      },
+      {
+            "category": "Bacaan Sedang - Detail",
+            "passage": "最近、社員食堂で昼食を取る人が減っている。理由の一つは、外の店のほうがメニューが多いからだ。しかし、社員食堂には会社の近くで安く食べられるという良さがある。そこで、会社は来月から週に二回、社員が希望したメニューを出すことにした。まずは三か月試して、利用者が増えるかどうかを見る予定だ。",
+            "question": "新しい取り組みについて、本文と合っているものはどれですか。",
+            "options": [
+                  "毎日、社員が希望したメニューを出す",
+                  "来月から週に二回、希望メニューを出す",
+                  "三か月後に社員食堂を閉める",
+                  "外の店と同じ値段にする"
+            ],
+            "answer": "来月から週に二回、希望メニューを出す",
+            "explanation": "本文に『来月から週に二回、社員が希望したメニューを出す』と明確に書かれています。"
+      },
+      {
+            "category": "Bacaan Sedang - Inti Bacaan",
+            "passage": "ある大学では、授業の資料をすべてインターネットで配るようにした。紙を減らせるうえ、学生は授業前にスマートフォンで確認できる。しかし、資料を印刷して書き込みたい学生も少なくない。そのため大学は、必要な学生だけが図書館で安く印刷できる仕組みを作った。便利さと学びやすさの両方を考えた結果である。",
+            "question": "この大学の方針として最も合っているものはどれですか。",
+            "options": [
+                  "紙の資料を完全に禁止する",
+                  "学生にスマートフォンを買わせる",
+                  "資料はネット配布を基本にし、必要なら印刷もできるようにする",
+                  "図書館では資料を見られないようにする"
+            ],
+            "answer": "資料はネット配布を基本にし、必要なら印刷もできるようにする",
+            "explanation": "大学はネット配布にしながら、印刷したい学生のために図書館で安く印刷できる仕組みを作っています。"
+      },
+      {
+            "category": "Bacaan Sedang - Nuansa",
+            "passage": "ある大学では、授業の資料をすべてインターネットで配るようにした。紙を減らせるうえ、学生は授業前にスマートフォンで確認できる。しかし、資料を印刷して書き込みたい学生も少なくない。そのため大学は、必要な学生だけが図書館で安く印刷できる仕組みを作った。便利さと学びやすさの両方を考えた結果である。",
+            "question": "本文の『便利さと学びやすさの両方』とは何を指しますか。",
+            "options": [
+                  "ネットで見られる便利さと、紙に書き込める学びやすさ",
+                  "授業に出なくてもよい便利さと、試験が簡単になること",
+                  "図書館が広くなることと、学生が増えること",
+                  "スマートフォンを使わない便利さと、資料を配らないこと"
+            ],
+            "answer": "ネットで見られる便利さと、紙に書き込める学びやすさ",
+            "explanation": "ネット配布で確認しやすい便利さと、必要な学生が印刷して書き込める学びやすさの両立を意味します。"
+      },
+      {
+            "category": "Bacaan Sedang - Alasan",
+            "passage": "山口さんは、会社の近くに引っ越すか迷っている。今の家は家賃が安く、駅前に店も多い。しかし、通勤に一時間半かかるため、帰宅すると何もする気になれない。会社の近くは家賃が高いが、自由に使える時間は増える。山口さんは、何を優先するか決められずにいる。",
+            "question": "山口さんが迷っている一番の理由は何ですか。",
+            "options": [
+                  "今の家の近くに店が全くないから",
+                  "会社の近くには住む場所がないから",
+                  "家賃の安さと時間の余裕のどちらを大切にするか決められないから",
+                  "今の家から会社まで歩いて行けるから"
+            ],
+            "answer": "家賃の安さと時間の余裕のどちらを大切にするか決められないから",
+            "explanation": "今の家は安いが通勤が長く、会社近くは高いが時間が増えるため、優先順位で迷っています。"
+      },
+      {
+            "category": "Bacaan Sedang - Kesimpulan",
+            "passage": "山口さんは、会社の近くに引っ越すか迷っている。今の家は家賃が安く、駅前に店も多い。しかし、通勤に一時間半かかるため、帰宅すると何もする気になれない。会社の近くは家賃が高いが、自由に使える時間は増える。山口さんは、何を優先するか決められずにいる。",
+            "question": "本文から分かることはどれですか。",
+            "options": [
+                  "山口さんはもう会社の近くに引っ越した",
+                  "山口さんは今の家に満足していて問題がない",
+                  "山口さんは通勤時間の長さに負担を感じている",
+                  "山口さんは家賃が高くても全く気にしない"
+            ],
+            "answer": "山口さんは通勤時間の長さに負担を感じている",
+            "explanation": "通勤に一時間半かかり、帰宅後に何もする気になれないとあるので、通勤時間を負担に感じています。"
+      },
+      {
+            "category": "お知らせ - Informasi Penting",
+            "passage": "【市民プールのお知らせ】\n来週月曜日から金曜日まで、設備点検のため市民プールは利用できません。ただし、受付窓口は通常通り開いており、来月分の教室の申し込みはできます。土曜日から通常営業に戻る予定です。",
+            "question": "このお知らせの内容と合っているものはどれですか。",
+            "options": [
+                  "来週は受付窓口もすべて閉まる",
+                  "設備点検中でもプールで泳ぐことができる",
+                  "来週月曜から金曜は泳げないが、申し込みはできる",
+                  "土曜日も設備点検のため利用できない"
+            ],
+            "answer": "来週月曜から金曜は泳げないが、申し込みはできる",
+            "explanation": "設備点検でプールは利用できませんが、受付窓口は通常通り開いており、教室の申し込みはできます。"
+      },
+      {
+            "category": "メール - 依頼内容",
+            "passage": "佐藤さん\n明日の発表資料を確認しました。内容は分かりやすいですが、最後のページに次の予定を書き加えたほうがよいと思います。また、グラフの数字が少し古いので、今日中に新しいデータに直してもらえますか。\n中村",
+            "question": "中村さんは佐藤さんに何を頼んでいますか。",
+            "options": [
+                  "発表を中止すること",
+                  "最後のページを消すこと",
+                  "予定を加え、グラフの数字を新しいものに直すこと",
+                  "資料を全部作り直すこと"
+            ],
+            "answer": "予定を加え、グラフの数字を新しいものに直すこと",
+            "explanation": "中村さんは最後のページに次の予定を加えることと、古いグラフの数字を新しいデータに直すことを頼んでいます。"
+      },
+      {
+            "category": "広告 - 条件理解",
+            "passage": "【日本語会話サロン】\n毎週水曜日 18:30〜20:00\n対象：日本語を勉強中の方\n参加費：無料\n予約：不要\n※初めて参加する方は、開始10分前までに受付で名前を書いてください。教科書は使いません。話したいテーマがあれば、自由に持ってきてください。",
+            "question": "初めて参加する人は何をしなければなりませんか。",
+            "options": [
+                  "前日までに予約する",
+                  "教科書を必ず持って行く",
+                  "開始10分前までに受付で名前を書く",
+                  "参加費を受付で払う"
+            ],
+            "answer": "開始10分前までに受付で名前を書く",
+            "explanation": "予約は不要ですが、初めての人は開始10分前までに受付で名前を書く必要があります。"
+      },
+      {
+            "category": "メモ - 条件判断",
+            "passage": "山田さんへ\n今日の会議室Aは15時まで使われています。15時半からなら予約できますが、プロジェクターは修理中です。発表練習をするなら、会議室Bのほうがいいかもしれません。Bは14時から17時まで空いていて、プロジェクターも使えます。\n受付より",
+            "question": "発表練習をする場合、会議室Bがよい理由は何ですか。",
+            "options": [
+                  "会議室Bは一日中空いているから",
+                  "会議室Bではプロジェクターが使えるから",
+                  "会議室Aより広いと書いてあるから",
+                  "会議室Bは予約しなくてもよいから"
+            ],
+            "answer": "会議室Bではプロジェクターが使えるから",
+            "explanation": "会議室Aのプロジェクターは修理中ですが、Bは空いていてプロジェクターも使えるため、発表練習に向いています。"
+      },
+      {
+            "category": "Bacaan Panjang - Pokok Pikiran",
+            "passage": "最近、若い人の間で『物を多く持たない生活』が注目されている。理由は人によって違う。部屋を広く使いたい人もいれば、買い物に使うお金を減らしたい人もいる。また、物を選ぶ時間を減らし、本当に必要なことに時間を使いたいという人もいる。\n\nしかし、物を少なくすること自体が目的になってしまうと、生活が不便になる場合もある。大切なのは、数を減らすことではなく、自分に必要な物を考えて選ぶことだ。",
+            "question": "筆者が一番言いたいことは何ですか。",
+            "options": [
+                  "物はできるだけ全部捨てるべきだ",
+                  "物を多く持つ人は時間を大切にしていない",
+                  "必要な物を考えて選ぶことが大切だ",
+                  "若い人は買い物をしないほうがよい"
+            ],
+            "answer": "必要な物を考えて選ぶことが大切だ",
+            "explanation": "最後に『大切なのは、数を減らすことではなく、自分に必要な物を考えて選ぶこと』とあります。これが筆者の主張です。"
+      },
+      {
+            "category": "Bacaan Panjang - Detail",
+            "passage": "最近、若い人の間で『物を多く持たない生活』が注目されている。理由は人によって違う。部屋を広く使いたい人もいれば、買い物に使うお金を減らしたい人もいる。また、物を選ぶ時間を減らし、本当に必要なことに時間を使いたいという人もいる。\n\nしかし、物を少なくすること自体が目的になってしまうと、生活が不便になる場合もある。大切なのは、数を減らすことではなく、自分に必要な物を考えて選ぶことだ。",
+            "question": "本文によると、物を多く持たない生活を選ぶ理由として書かれていないものはどれですか。",
+            "options": [
+                  "部屋を広く使いたい",
+                  "買い物に使うお金を減らしたい",
+                  "物を選ぶ時間を減らしたい",
+                  "家族に言われたから仕方なく始めた"
+            ],
+            "answer": "家族に言われたから仕方なく始めた",
+            "explanation": "部屋を広く使う、お金を減らす、選ぶ時間を減らすことは本文にありますが、家族に言われたとは書かれていません。"
+      },
+      {
+            "category": "Bacaan Panjang - Perbandingan",
+            "passage": "オンライン授業には、通学時間がいらない、録画を見直せるなどの良さがある。一方で、画面を長時間見続けると疲れやすく、先生や友達にすぐ質問しにくいという声もある。対面授業は移動に時間がかかるが、その場で話し合ったり、表情を見ながら理解を確認したりしやすい。\n\nどちらか一方だけが良いのではなく、授業の目的によって使い分けることが大切だ。知識を確認する授業はオンラインでもよいが、意見交換が中心の授業は対面のほうが向いている場合がある。",
+            "question": "本文の内容と合っているものはどれですか。",
+            "options": [
+                  "オンライン授業はすべての授業に最も向いている",
+                  "対面授業では質問や話し合いがしやすい",
+                  "録画を見直せるのは対面授業の良さである",
+                  "意見交換の授業も必ずオンラインで行うべきだ"
+            ],
+            "answer": "対面授業では質問や話し合いがしやすい",
+            "explanation": "本文では、対面授業はその場で話し合ったり、表情を見ながら確認したりしやすいと述べています。"
+      },
+      {
+            "category": "Bacaan Panjang - Kesimpulan",
+            "passage": "オンライン授業には、通学時間がいらない、録画を見直せるなどの良さがある。一方で、画面を長時間見続けると疲れやすく、先生や友達にすぐ質問しにくいという声もある。対面授業は移動に時間がかかるが、その場で話し合ったり、表情を見ながら理解を確認したりしやすい。\n\nどちらか一方だけが良いのではなく、授業の目的によって使い分けることが大切だ。知識を確認する授業はオンラインでもよいが、意見交換が中心の授業は対面のほうが向いている場合がある。",
+            "question": "筆者の考えに最も近いものはどれですか。",
+            "options": [
+                  "オンライン授業は便利なので対面授業は必要ない",
+                  "対面授業は古い方法なので減らすべきだ",
+                  "授業の目的に合わせてオンラインと対面を使い分けるべきだ",
+                  "学生が疲れるのでオンライン授業はやめるべきだ"
+            ],
+            "answer": "授業の目的に合わせてオンラインと対面を使い分けるべきだ",
+            "explanation": "筆者は『どちらか一方だけが良いのではなく、授業の目的によって使い分けることが大切』と述べています。"
+      },
+      {
+            "category": "Bacaan Panjang - Tujuan",
+            "passage": "地域の商店街では、毎月第一日曜日に『朝市』を始めた。野菜やパンを売るだけでなく、近所の店の人と住民が話す場を作ることも目的だ。最初は客が少なかったが、子ども向けの小さな体験コーナーを作ってから、家族で来る人が増えた。店の人たちは、売り上げだけでなく、地域のつながりが強くなることにも期待している。",
+            "question": "商店街が朝市を始めた目的として、本文と合っているものはどれですか。",
+            "options": [
+                  "近所の店を全部閉めるため",
+                  "住民と店の人が交流できる場を作るため",
+                  "子どもだけが買い物できる場所を作るため",
+                  "毎日野菜を安く売るため"
+            ],
+            "answer": "住民と店の人が交流できる場を作るため",
+            "explanation": "朝市は物を売るだけでなく、近所の店の人と住民が話す場を作ることも目的だと書かれています。"
+      }
+];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswers = [];
+    let currentUsername = "";
+    let resultSaved = false;
+    const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
+    const RANKING_PATH = "nihongoGO_N3_ranking";
+    const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+
+    function fetchWithTimeout(url, options = {}, timeout = 8000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
+
+      return fetch(url, {
+        ...options,
+        signal: controller.signal
+      }).finally(() => clearTimeout(timer));
+    }
+
+
+const screens = {
+      start: document.getElementById("startScreen"),
+      quiz: document.getElementById("quizScreen"),
+      feedback: document.getElementById("feedbackScreen"),
+      result: document.getElementById("resultScreen"),
+      review: document.getElementById("reviewScreen")
+    };
+
+    function setScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
+
+    function openUsernameModal() {
+      const modal = document.getElementById("usernameModal");
+      const input = document.getElementById("usernameInput");
+      const error = document.getElementById("usernameError");
+
+      error.textContent = "";
+      input.value = "";
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+
+      setTimeout(() => input.focus(), 80);
+    }
+
+    function closeUsernameModal() {
+      const modal = document.getElementById("usernameModal");
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function confirmUsername() {
+      const input = document.getElementById("usernameInput");
+      const error = document.getElementById("usernameError");
+      const name = input.value.trim();
+
+      if (!name) {
+        error.textContent = "Nama wajib diisi.";
+        return;
+      }
+
+      currentUsername = name;
+      closeUsernameModal();
+      startQuiz();
+    }
+    async function saveUserRanking() {
+      const userResult = {
+        name: currentUsername || "Tanpa Nama",
+        score: score,
+        total: quiz.length,
+        percentage: Math.round((score / quiz.length) * 100),
+        date: new Date().toLocaleString("id-ID"),
+        createdAt: Date.now()
+      };
+
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userResult)
+      }, 8000);
+
+      if (!response.ok) {
+        throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
+      }
+    }
+
+    async function getRankingData() {
+      const response = await fetchWithTimeout(RANKING_API_URL, {
+        method: "GET"
+      }, 8000);
+
+      if (!response.ok) {
+        throw new Error(`Gagal memuat ranking. Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data) {
+        return [];
+      }
+
+      const ranking = Object.keys(data).map(key => ({
+        id: key,
+        ...data[key]
+      }));
+
+      ranking.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (b.percentage !== a.percentage) return b.percentage - a.percentage;
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+      return ranking;
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderRankingList(ranking) {
+      const list = document.getElementById("rankingList");
+      list.innerHTML = "";
+
+      if (!ranking || !ranking.length) {
+        list.innerHTML = `<div class="ranking-empty">Belum ada data ranking.</div>`;
+        return;
+      }
+
+      ranking.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "ranking-item";
+        row.innerHTML = `
+          <div class="ranking-number">${index + 1}</div>
+          <div>
+            <div class="ranking-name">${escapeHTML(item.name || "Tanpa Nama")}</div>
+            <span class="ranking-date">${escapeHTML(item.date || "-")}</span>
+          </div>
+          <div class="ranking-score">${item.score}/${item.total}</div>
+        `;
+        list.appendChild(row);
+      });
+    }
+    async function openRankingModal() {
+      const modal = document.getElementById("rankingModal");
+      const list = document.getElementById("rankingList");
+
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+
+      list.innerHTML = `<div class="ranking-empty">Memuat ranking...</div>`;
+
+      try {
+        const ranking = await getRankingData();
+        renderRankingList(ranking);
+      } catch (error) {
+        console.error("Ranking REST API error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Ranking gagal dimuat.<br>
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
+            <br><br>
+            Pastikan Rules Firebase sudah di-Publish dan koneksi internet aktif.
+          </div>
+        `;
+      }
+    }
+
+    function closeRankingModal() {
+      const modal = document.getElementById("rankingModal");
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+    }
+    async function clearRanking() {
+      const confirmClear = confirm("Hapus semua data ranking online?");
+      if (!confirmClear) return;
+
+      const list = document.getElementById("rankingList");
+      list.innerHTML = `<div class="ranking-empty">Menghapus ranking...</div>`;
+
+      try {
+        const response = await fetchWithTimeout(RANKING_API_URL, {
+          method: "DELETE"
+        }, 8000);
+
+        if (!response.ok) {
+          throw new Error(`Gagal menghapus ranking. Status: ${response.status}`);
+        }
+
+        renderRankingList([]);
+        alert("Ranking berhasil dihapus.");
+      } catch (error) {
+        console.error("Delete ranking REST API error:", error);
+
+        list.innerHTML = `
+          <div class="ranking-empty">
+            Gagal menghapus ranking.<br>
+            ${escapeHTML(error.message || "Error tidak diketahui.")}
+          </div>
+        `;
+
+        alert("Gagal menghapus ranking. Periksa Rules Firebase.");
+      }
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      resultSaved = false;
+      renderQuestion();
+      setScreen("quiz");
+    }
+
+    function goHome() {
+      setScreen("start");
+    }
+
+    function renderQuestion() {
+      const q = quiz[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quiz.length) * 100;
+      const optionList = Array.isArray(q["options"]) ? q["options"] : [];
+
+      document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
+      document.getElementById("progressFill").style.width = `${progressPercent}%`;
+
+      const categoryText = document.getElementById("categoryText") || document.querySelector(".level-label");
+      if (categoryText) {
+        categoryText.textContent = q.category || "JLPT N3";
+      }
+
+      const passageText = document.getElementById("passageText");
+      if (passageText) {
+        if (q.passage) {
+          passageText.hidden = false;
+          passageText.textContent = q.passage;
+        } else {
+          passageText.hidden = true;
+          passageText.textContent = "";
+        }
+      }
+
+      const questionText = document.getElementById("questionText");
+      questionText.innerHTML = q.question || "";
+      document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "none";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      const optionsBox = document.getElementById("optionsBox");
+      optionsBox.innerHTML = "";
+
+      optionList.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.dataset.option = option;
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${escapeHTML(option)}</span>`;
+        button.onclick = () => checkAnswer(option, button);
+        optionsBox.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selected, button) {
+      const q = quiz[currentQuestion];
+      const isCorrect = selected === q.answer;
+
+      selectedAnswers[currentQuestion] = {
+        category: q.category || "JLPT N3",
+        passage: q.passage || "",
+        question: q.question,
+        selected,
+        answer: q.answer,
+        correct: isCorrect,
+        explanation: q.explanation
+      };
+
+      if (isCorrect) score++;
+
+      const optionButtons = document.querySelectorAll(".option");
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.dataset.option === q.answer) btn.classList.add("correct");
+      });
+
+      button.classList.add(isCorrect ? "correct" : "wrong");
+
+      const quizNextBtn = document.getElementById("quizNextBtn");
+      quizNextBtn.style.display = "block";
+      quizNextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+
+      renderFeedback(isCorrect, q.answer, q.explanation);
+      setScreen("feedback");
+    }
+
+    function renderFeedback(isCorrect, answer, explanation) {
+      const statusRing = document.getElementById("statusRing");
+      const title = document.getElementById("feedbackTitle");
+      const text = document.getElementById("feedbackExplanation");
+      const nextBtn = document.getElementById("nextBtn");
+
+      const feedbackCard = document.querySelector("#feedbackScreen .feedback-card");
+      const symbolClass = isCorrect ? "symbol-correct" : "symbol-wrong";
+
+      if (feedbackCard) {
+        feedbackCard.classList.remove("feedback-animate");
+        void feedbackCard.offsetWidth;
+        feedbackCard.classList.add("feedback-animate");
+      }
+
+      statusRing.innerHTML = `<span class="status-symbol ${symbolClass}">${isCorrect ? "✓" : "×"}</span>`;
+      statusRing.className = `status-ring ${isCorrect ? "correct-state" : "wrong-state"}`;
+      title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
+      title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
+      text.innerHTML = isCorrect
+        ? `<strong>Jawaban kamu benar.</strong><br>${escapeHTML(explanation || "")}`
+        : `Jawaban yang benar adalah <strong>${escapeHTML(answer || "")}</strong>.<br>${escapeHTML(explanation || "")}`;
+      nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
+    }
+
+    function showQuizAgain() {
+      setScreen("quiz");
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quiz.length) {
+        renderQuestion();
+        setScreen("quiz");
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const incorrect = quiz.length - score;
+      const percentage = (score / quiz.length) * 100;
+      if (!resultSaved) {
+        saveUserRanking().catch(error => {
+          console.error("Gagal menyimpan ranking:", error);
+        });
+        resultSaved = true;
+      }
+
+let message;
+
+      if (percentage >= 85) {
+        message = "Hebat! Pemahaman N3 kamu sudah kuat.";
+      } else if (percentage >= 70) {
+        message = "Bagus! Terus latih tata bahasa dan kosakata.";
+      } else if (percentage >= 50) {
+        message = "Cukup baik. Ayo perkuat lagi materi N3.";
+      } else {
+        message = "Tetap semangat. Ulangi materi dasar secara bertahap.";
+      }
+
+      document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
+      document.getElementById("resultUserName").textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("correctCount").textContent = score;
+      document.getElementById("incorrectCount").textContent = incorrect;
+      setScreen("result");
+    }
+
+    function showReview() {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      selectedAnswers.forEach((item, index) => {
+        const row = document.createElement("article");
+        row.className = "review-item";
+        row.innerHTML = `
+          <p>
+            <strong>${index + 1}. ${escapeHTML(item.category || "JLPT N3")}</strong>
+            ${item.question || ""}<br>
+            <small>Jawaban kamu: ${escapeHTML(item.selected || "-")}</small><br>
+            <small>Jawaban benar: ${escapeHTML(item.answer || "-")}</small>
+          </p>
+          <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
+        `;
+        reviewList.appendChild(row);
+      });
+
+      setScreen("review");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = [];
+      currentUsername = "";
+      resultSaved = false;
+      setScreen("start");
+    }
+
+    document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        confirmUsername();
+      }
+    });
+
+    // Hanya izinkan klik kanan pada teks dan input
+    document.addEventListener("contextmenu", function(event) {
+      const allowedTextTags = [
+        "P", "H1", "H2", "H3", "H4", "H5", "H6",
+        "SPAN", "SMALL", "STRONG", "EM", "LI", "LABEL",
+        "INPUT", "TEXTAREA"
+      ];
+
+      const target = event.target;
+
+      const isAllowedText =
+        allowedTextTags.includes(target.tagName) ||
+        target.closest(".question") ||
+        target.closest(".passage-card") ||
+        target.closest(".feedback-title") ||
+        target.closest(".feedback-explanation") ||
+        target.closest(".result-heading") ||
+        target.closest(".result-score") ||
+        target.closest(".result-message") ||
+        target.closest(".result-user") ||
+        target.closest(".review-item") ||
+        target.closest(".ranking-item") ||
+        target.closest(".ranking-empty") ||
+        target.closest(".brand") ||
+        target.closest(".screen-title") ||
+        target.closest(".meta-row") ||
+        target.closest(".score-pill");
+
+      if (!isAllowedText) {
+        event.preventDefault();
+      }
+    });
+
+    // Cegah klik kanan dan drag khusus gambar
+    document.querySelectorAll("img").forEach(function(img) {
+      img.setAttribute("draggable", "false");
+
+      img.addEventListener("dragstart", function(event) {
+        event.preventDefault();
+      });
+
+      img.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+      });
+    });
+
+    // Blok shortcut inspect/source, tapi tetap izinkan copy/paste teks
+    document.addEventListener("keydown", function(event) {
+      const key = event.key.toLowerCase();
+
+      if (
+        event.key === "F12" ||
+        (event.ctrlKey && event.shiftKey && key === "i") ||
+        (event.ctrlKey && event.shiftKey && key === "j") ||
+        (event.ctrlKey && event.shiftKey && key === "c") ||
+        (event.ctrlKey && key === "u") ||
+        (event.ctrlKey && key === "s")
+      ) {
+        event.preventDefault();
+        alert("Akses inspect element dinonaktifkan.");
+        return false;
+      }
+
+      // Jangan blok Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X agar teks/input tetap bisa dipakai
+    });
+
+    function initializeQuizMeta() {
+      document.getElementById("progressText").textContent = `Soal 1 dari ${quiz.length}`;
+      document.getElementById("scorePill").textContent = `Skor: 0 / ${quiz.length}`;
+      document.getElementById("finalScore").textContent = `0 / ${quiz.length}`;
+      const categoryText = document.getElementById("categoryText") || document.querySelector(".level-label");
+      if (categoryText) {
+        categoryText.textContent = quiz[0]?.category || "JLPT N3";
+      }
+    }
+
+    initializeQuizMeta();
+
+    window.openUsernameModal = openUsernameModal;
+    window.closeUsernameModal = closeUsernameModal;
+    window.confirmUsername = confirmUsername;
+    window.startQuiz = startQuiz;
+    window.goHome = goHome;
+    window.showQuizAgain = showQuizAgain;
+    window.nextQuestion = nextQuestion;
+    window.showReview = showReview;
+    window.showResult = showResult;
+    window.restartQuiz = restartQuiz;
+    window.openRankingModal = openRankingModal;
+    window.closeRankingModal = closeRankingModal;
+    window.clearRanking = clearRanking;
+    window.renderFeedback = renderFeedback;
+    window.checkAnswer = checkAnswer;
+    window.renderQuestion = renderQuestion;
+
+  </script>
+</body>
+</html>
