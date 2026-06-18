@@ -6,7 +6,7 @@
   <title>Nihongo Quiz - JLPT N3</title>
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&display=swap');
 
     :root {
       --navy: #10213b;
@@ -31,7 +31,7 @@
       margin: 0;
       min-height: 100vh;
       color: var(--navy);
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-family: "Merriweather", Georgia, serif;
       background:
         radial-gradient(circle at 12% 12%, rgba(214, 40, 40, 0.055), transparent 24%),
         radial-gradient(circle at 88% 15%, rgba(249, 115, 22, 0.065), transparent 28%),
@@ -1811,7 +1811,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--navy);
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: "Merriweather", Georgia, serif;
   background:
     radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.045), transparent 24%),
     radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.055), transparent 28%),
@@ -2758,6 +2758,176 @@ body {
   }
 }
 
+
+/* =========================
+   FONT OVERRIDE - MERRIWEATHER + NOTO SERIF JP
+   Hanya mengganti font, tanpa mengubah layout/spacing.
+========================= */
+
+body {
+  font-family: "Merriweather", Georgia, serif;
+}
+
+.logo-title,
+.logo-text strong,
+h1,
+h2,
+h3,
+.hero-title,
+.section-title,
+.quiz-title,
+.card-title {
+  font-family: "Merriweather", Georgia, serif;
+  font-weight: 900;
+}
+
+.japanese-text,
+.logo-text span {
+  font-family: "Noto Serif JP", serif;
+  font-weight: 400;
+}
+
+.nav a,
+.hero-badge,
+.level-chip,
+.quiz-desc,
+.quiz-btn,
+.tips-card p {
+  font-family: "Merriweather", Georgia, serif;
+}
+
+
+
+/* =========================
+   SAFE MOBILE HERO FIX
+   Desktop tetap sama, mobile lebih rapi
+========================= */
+
+@media (max-width: 640px) {
+  .hero {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+    padding: 22px 16px 14px !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 70% 45%, rgba(255, 199, 118, 0.10), transparent 38%),
+      linear-gradient(180deg, #fff8ec 0%, #fff6e8 58%, #fff8ec 100%) !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    z-index: 5 !important;
+  }
+
+  .hero-title-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .hero-target {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 24px !important;
+  }
+
+  .hero-title {
+    font-size: 32px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.035em !important;
+  }
+
+  .hero-desc {
+    max-width: 100% !important;
+    margin: 0 0 10px !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .hero-badge {
+    width: fit-content !important;
+    max-width: 100% !important;
+    gap: 7px !important;
+    padding: 7px 10px !important;
+    font-size: 10.8px !important;
+    white-space: normal !important;
+    flex-wrap: wrap !important;
+  }
+
+  .hero-badge strong {
+    padding: 6px 10px !important;
+  }
+
+  .hero-visual {
+    width: 100% !important;
+    height: 145px !important;
+    margin: 4px 0 -6px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    pointer-events: none !important;
+  }
+
+  .hero-visual::after {
+    display: none !important;
+  }
+
+  .hero-visual::before {
+    left: -20px !important;
+    right: -20px !important;
+    bottom: -6px !important;
+    height: 55px !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 248, 236, 0),
+      rgba(255, 248, 236, 0.92)
+    ) !important;
+  }
+
+  .hero-mountain {
+    width: min(335px, 100%) !important;
+    max-width: none !important;
+    height: 145px !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
+    transform: translateX(0) translateY(3px) !important;
+    animation: none !important;
+  }
+
+  .quiz-list {
+    margin-top: -4px !important;
+  }
+}
+
+/* HP sangat kecil */
+@media (max-width: 420px) {
+  .hero {
+    padding: 20px 14px 12px !important;
+  }
+
+  .hero-title {
+    font-size: 30px !important;
+  }
+
+  .hero-desc {
+    font-size: 13.5px !important;
+  }
+
+  .hero-visual {
+    height: 135px !important;
+    margin-top: 2px !important;
+  }
+
+  .hero-mountain {
+    width: min(310px, 100%) !important;
+    height: 135px !important;
+  }
+}
 
   </style>
 </head>
