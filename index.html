@@ -157,19 +157,30 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      gap: 20px;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       gap: 18px;
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 0;
       overflow-x: auto;
       scrollbar-width: none;
       padding: 6px 0;
     }
 
-    .nav::-webkit-scrollbar {
+    .nav-menu::-webkit-scrollbar {
       display: none;
     }
 
-    .nav a {
+    .nav-menu a {
       position: relative;
       color: var(--navy);
       font-weight: 800;
@@ -179,21 +190,22 @@
       gap: 7px;
       white-space: nowrap;
       transition: transform 0.2s ease, color 0.2s ease;
+      flex: 0 0 auto;
     }
 
-    .nav a svg {
+    .nav-menu a svg {
       width: 17px;
       height: 17px;
       fill: currentColor;
       flex: 0 0 auto;
     }
 
-    .nav a:hover {
+    .nav-menu a:hover {
       color: var(--red);
       transform: translateY(-2px);
     }
 
-    .nav a.active::after {
+    .nav-menu a.active::after {
       content: "";
       position: absolute;
       left: 0;
@@ -204,7 +216,27 @@
       background: var(--red);
     }
 
-    .nav a.user-icon,
+    .user-area {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 9px;
+      flex: 0 0 auto;
+      min-width: 0;
+      max-width: 190px;
+    }
+
+    .user-greeting {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--navy);
+      white-space: nowrap;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
     .user-icon {
       width: 40px;
       height: 40px;
@@ -221,6 +253,13 @@
       line-height: 1;
       overflow: hidden;
       flex: 0 0 auto;
+      transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .user-icon:hover {
+      color: var(--red);
+      border-color: rgba(214, 40, 40, 0.36);
+      transform: translateY(-2px);
     }
 
     .user-icon svg {
@@ -705,11 +744,23 @@
       }
 
       .nav {
+        gap: 16px;
+      }
+
+      .nav-menu {
         gap: 15px;
       }
 
-      .nav a {
+      .nav-menu a {
         font-size: 12px;
+      }
+
+      .user-greeting {
+        max-width: 112px;
+      }
+
+      .user-area {
+        max-width: 170px;
       }
 
       .hero {
@@ -760,6 +811,62 @@
 
       .quiz-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+
+    @media (max-width: 760px) {
+      .header {
+        padding: 10px 14px;
+        gap: 12px;
+      }
+
+      .site-logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .logo-text strong {
+        font-size: 22px;
+      }
+
+      .logo-text span {
+        font-size: 9px;
+      }
+
+      .nav {
+        gap: 12px;
+      }
+
+      .nav-menu {
+        gap: 12px;
+      }
+
+      .nav-menu a {
+        font-size: 11.5px;
+        gap: 6px;
+      }
+
+      .nav-menu a svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .user-area {
+        gap: 8px;
+        max-width: 138px;
+      }
+
+      .user-greeting {
+        max-width: 90px;
+        font-size: 11.5px;
+      }
+
+      .user-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
       }
     }
 
@@ -1176,9 +1283,108 @@
       }
     }
 
+    /* =========================
+       USERNAME MODAL
+    ========================= */
+
+    .username-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(255, 248, 236, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .username-modal.hidden {
+      display: none;
+    }
+
+    .username-box {
+      width: min(340px, 100%);
+      padding: 24px;
+      border-radius: 20px;
+      background: #fffdf8;
+      border: 1.5px solid rgba(222, 196, 158, 0.9);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.14);
+      text-align: center;
+    }
+
+    .username-box h2 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 24px;
+    }
+
+    .username-box p {
+      margin: 0 0 16px;
+      color: rgba(16, 33, 59, 0.72);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    #usernameInput {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(222, 196, 158, 0.95);
+      background: #fff8ec;
+      color: var(--navy);
+      font-family: inherit;
+      font-weight: 800;
+      text-align: center;
+      outline: none;
+    }
+
+    #usernameInput:focus {
+      border-color: var(--red);
+    }
+
+    #usernameError {
+      min-height: 18px;
+      display: block;
+      margin-top: 8px;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    #saveUsernameBtn {
+      margin-top: 8px;
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 10px;
+      background: var(--red);
+      color: #fff;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    #saveUsernameBtn:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.96);
+    }
+
+
   </style></head>
 <body>
-<div class="page-wrap">
+<div class="username-modal" id="usernameModal">
+<div class="username-box">
+<h2>Masukkan username kamu</h2>
+<p>Username maksimal 8 karakter.</p>
+<input autocomplete="off" id="usernameInput" maxlength="8" placeholder="Username" type="text"/>
+<small id="usernameError"></small>
+<button id="saveUsernameBtn" type="button">Mulai</button>
+</div>
+</div>
+<div class="page-wrap" id="pageWrap" style="display:none;">
 <header class="header">
 <a aria-label="Nihongo Quiz Beranda" class="site-brand" href="#">
 <img alt="Logo Nihongo Quiz" class="site-logo" src="https://i.postimg.cc/SNnYZ9YY/LOGO-NIHONGOGO.png"/>
@@ -1188,6 +1394,7 @@
 </span>
 </a>
 <nav aria-label="Menu utama" class="nav">
+<div class="nav-menu">
 <a class="active" href="#">
 <svg aria-hidden="true" viewbox="0 0 24 24">
 <path d="M3 10.6 12 3l9 7.6v9.9a.9.9 0 0 1-.9.9h-5.2v-6.4H9.1v6.4H3.9a.9.9 0 0 1-.9-.9v-9.9Z"></path>
@@ -1206,11 +1413,15 @@
 </svg>
           Peringkat
         </a>
+</div>
+<div class="user-area">
+<span class="user-greeting" id="userGreeting">Hai, Pengguna</span>
 <a aria-label="Profil pengguna" class="user-icon" href="#">
 <svg aria-hidden="true" viewbox="0 0 24 24">
 <path d="M12 12.2a4.4 4.4 0 1 0 0-8.8 4.4 4.4 0 0 0 0 8.8Zm0 2c-4.2 0-7.6 2.3-7.6 5.1v1.3h15.2v-1.3c0-2.8-3.4-5.1-7.6-5.1Z"></path>
 </svg>
 </a>
+</div>
 </nav>
 </header>
 <main>
@@ -1408,10 +1619,95 @@
 </div>
 
 <script>
-    document.querySelectorAll("img").forEach(function(img) {
-      img.setAttribute("draggable", "false");
-      img.addEventListener("dragstart", function(event) {
-        event.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+      const storageKey = "nihongoUsername";
+      const maxLength = 8;
+
+      const pageWrap = document.getElementById("pageWrap");
+      const usernameModal = document.getElementById("usernameModal");
+      const usernameInput = document.getElementById("usernameInput");
+      const usernameError = document.getElementById("usernameError");
+      const saveUsernameBtn = document.getElementById("saveUsernameBtn");
+      const userGreeting = document.getElementById("userGreeting");
+
+      function cleanUsername(value) {
+        return String(value || "").trim().slice(0, maxLength);
+      }
+
+      function showPage(username) {
+        if (userGreeting) {
+          userGreeting.textContent = "Hai, " + username;
+          userGreeting.setAttribute("title", "Hai, " + username);
+        }
+
+        if (usernameModal) {
+          usernameModal.classList.add("hidden");
+        }
+
+        if (pageWrap) {
+          pageWrap.style.display = "";
+        }
+      }
+
+      let savedUsername = cleanUsername(localStorage.getItem(storageKey));
+
+      if (savedUsername && savedUsername.toLowerCase() !== "pengguna") {
+        showPage(savedUsername);
+      } else {
+        localStorage.removeItem(storageKey);
+
+        if (pageWrap) {
+          pageWrap.style.display = "none";
+        }
+
+        if (usernameModal) {
+          usernameModal.classList.remove("hidden");
+        }
+
+        if (usernameInput) {
+          usernameInput.focus();
+
+          usernameInput.addEventListener("input", function () {
+            usernameInput.value = usernameInput.value.slice(0, maxLength);
+            if (usernameError) usernameError.textContent = "";
+          });
+        }
+      }
+
+      function saveUsername() {
+        const username = cleanUsername(usernameInput ? usernameInput.value : "");
+
+        if (!username) {
+          if (usernameError) {
+            usernameError.textContent = "Username wajib diisi.";
+          }
+          if (usernameInput) {
+            usernameInput.focus();
+          }
+          return;
+        }
+
+        localStorage.setItem(storageKey, username);
+        showPage(username);
+      }
+
+      if (saveUsernameBtn) {
+        saveUsernameBtn.addEventListener("click", saveUsername);
+      }
+
+      if (usernameInput) {
+        usernameInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            saveUsername();
+          }
+        });
+      }
+
+      document.querySelectorAll("img").forEach(function (img) {
+        img.setAttribute("draggable", "false");
+        img.addEventListener("dragstart", function (event) {
+          event.preventDefault();
+        });
       });
     });
   </script></body>
