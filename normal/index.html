@@ -1430,6 +1430,29 @@
       font-weight: 700;
     }
 
+    .topbar-title-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      line-height: 1.1;
+    }
+
+    .quiz-user-greeting {
+      display: block;
+      max-width: 140px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
     .result-button-row {
       grid-template-columns: 1fr 1fr;
     }
@@ -1673,7 +1696,10 @@
     <section class="screen" id="quizScreen">
       <div class="topbar">
         <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
-        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="topbar-title-wrap">
+          <h2 class="screen-title">Kuis Jepang</h2>
+          <small class="quiz-user-greeting">Hai, Pengguna</small>
+        </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
 
@@ -1700,7 +1726,10 @@
     <section class="screen" id="feedbackScreen">
       <div class="topbar">
         <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
-        <h2 class="screen-title">Kuis Jepang</h2>
+        <div class="topbar-title-wrap">
+          <h2 class="screen-title">Kuis Jepang</h2>
+          <small class="quiz-user-greeting">Hai, Pengguna</small>
+        </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
 
@@ -1715,7 +1744,10 @@
     <section class="screen" id="resultScreen">
       <div class="topbar">
         <span></span>
-        <h2 class="screen-title">Hasil Kuis</h2>
+        <div class="topbar-title-wrap">
+          <h2 class="screen-title">Hasil Kuis</h2>
+          <small class="quiz-user-greeting">Hai, Pengguna</small>
+        </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
 
@@ -1755,7 +1787,10 @@
     <section class="screen review-screen" id="reviewScreen">
       <div class="topbar">
         <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
-        <h2 class="screen-title">Pembahasan Jawaban</h2>
+        <div class="topbar-title-wrap">
+          <h2 class="screen-title">Pembahasan Jawaban</h2>
+          <small class="quiz-user-greeting">Hai, Pengguna</small>
+        </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
 
@@ -1769,14 +1804,14 @@
     <div class="username-modal" id="usernameModal" aria-hidden="true">
       <div class="username-modal-card">
         <h2>Masukkan Nama</h2>
-        <p>Tulis nama kamu sebelum memulai kuis.</p>
+        <p>Username maksimal 8 karakter.</p>
 
         <input
           type="text"
           id="usernameInput"
           class="username-input"
-          placeholder="Contoh: Hannah"
-          maxlength="24"
+          placeholder="Username"
+          maxlength="8"
           autocomplete="off"
         />
 
@@ -1905,9 +1940,46 @@
     let selectedAnswers = [];
     let currentUsername = "";
     let resultSaved = false;
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
+    const USERNAME_MAX_LENGTH = 8;
+
+    function cleanUsername(value) {
+      return String(value || "").trim().slice(0, USERNAME_MAX_LENGTH);
+    }
+
+    function isValidUsername(value) {
+      const username = cleanUsername(value);
+      return Boolean(username) && username.toLowerCase() !== "pengguna";
+    }
+
+    function getSavedUsername() {
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
+      if (!isValidUsername(username)) {
+        localStorage.removeItem(USERNAME_STORAGE_KEY);
+        return "";
+      }
+      return username;
+    }
+
+    function updateUsernameDisplay(username) {
+      const displayName = isValidUsername(username) ? cleanUsername(username) : "Pengguna";
+      document.querySelectorAll(".quiz-user-greeting").forEach(item => {
+        item.textContent = `Hai, ${displayName}`;
+        item.setAttribute("title", `Hai, ${displayName}`);
+      });
+    }
+
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+
+    function logoutUsername() {
+      localStorage.removeItem(USERNAME_STORAGE_KEY);
+      currentUsername = "";
+      updateUsernameDisplay("Pengguna");
+      setScreen("start");
+      openUsernameModal(true);
+    }
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
@@ -1933,13 +2005,23 @@ const screens = {
       screens[name].classList.add("active");
     }
 
-    function openUsernameModal() {
+    function openUsernameModal(forceInput = false) {
+      const savedUsername = getSavedUsername();
+
+      if (savedUsername && !forceInput) {
+        currentUsername = savedUsername;
+        updateUsernameDisplay(currentUsername);
+        startQuiz();
+        return;
+      }
+
       const modal = document.getElementById("usernameModal");
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
 
       error.textContent = "";
       input.value = "";
+      input.maxLength = USERNAME_MAX_LENGTH;
       modal.classList.add("active");
       modal.setAttribute("aria-hidden", "false");
 
@@ -1947,6 +2029,23 @@ const screens = {
     }
 
     function closeUsernameModal() {
+      const savedUsername = getSavedUsername();
+
+      if (!savedUsername) {
+        const input = document.getElementById("usernameInput");
+        const error = document.getElementById("usernameError");
+
+        if (error) {
+          error.textContent = "Username wajib diisi.";
+        }
+
+        if (input) {
+          input.focus();
+        }
+
+        return;
+      }
+
       const modal = document.getElementById("usernameModal");
       modal.classList.remove("active");
       modal.setAttribute("aria-hidden", "true");
@@ -1955,15 +2054,24 @@ const screens = {
     function confirmUsername() {
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
-      const name = input.value.trim();
+      const username = cleanUsername(input.value);
 
-      if (!name) {
-        error.textContent = "Nama wajib diisi.";
+      input.value = username;
+
+      if (!isValidUsername(username)) {
+        error.textContent = "Username wajib diisi dan tidak boleh memakai nama Pengguna.";
+        input.focus();
         return;
       }
 
-      currentUsername = name;
-      closeUsernameModal();
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
+      currentUsername = username;
+      updateUsernameDisplay(currentUsername);
+
+      const modal = document.getElementById("usernameModal");
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+
       startQuiz();
     }
     async function saveUserRanking() {
@@ -2114,6 +2222,18 @@ const screens = {
     }
 
     function startQuiz() {
+      const savedUsername = getSavedUsername();
+
+      if (!savedUsername) {
+        currentUsername = "";
+        updateUsernameDisplay("Pengguna");
+        setScreen("start");
+        openUsernameModal(true);
+        return;
+      }
+
+      currentUsername = savedUsername;
+      updateUsernameDisplay(currentUsername);
       currentQuestion = 0;
       score = 0;
       selectedAnswers = [];
@@ -2274,14 +2394,44 @@ let message;
       currentQuestion = 0;
       score = 0;
       selectedAnswers = [];
-      currentUsername = "";
+      currentUsername = getSavedUsername() || "";
       resultSaved = false;
+      updateUsernameDisplay(currentUsername || "Pengguna");
       setScreen("start");
+
+      if (!currentUsername) {
+        openUsernameModal(true);
+      }
     }
 
-    document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
+    const usernameInputElement = document.getElementById("usernameInput");
+
+    usernameInputElement?.addEventListener("input", function() {
+      this.value = this.value.slice(0, USERNAME_MAX_LENGTH);
+      const error = document.getElementById("usernameError");
+      if (error) {
+        error.textContent = "";
+      }
+    });
+
+    usernameInputElement?.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         confirmUsername();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const savedUsername = getSavedUsername();
+
+      if (savedUsername) {
+        currentUsername = savedUsername;
+        updateUsernameDisplay(currentUsername);
+        startQuiz();
+      } else {
+        currentUsername = "";
+        updateUsernameDisplay("Pengguna");
+        setScreen("start");
+        openUsernameModal(true);
       }
     });
 
@@ -2365,6 +2515,7 @@ let message;
     window.openRankingModal = openRankingModal;
     window.closeRankingModal = closeRankingModal;
     window.clearRanking = clearRanking;
+    window.logoutUsername = logoutUsername;
 
   </script>
 </body>
