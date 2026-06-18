@@ -1924,6 +1924,12 @@
     let selectedAnswers = [];
     let currentUsername = "";
     let resultSaved = false;
+
+    const QUIZ_ID = "kuis-umum-normal";
+    const QUIZ_TITLE = "Kuis Umum - Normal";
+    const QUIZ_CATEGORY = "Kuis Umum";
+    const QUIZ_LEVEL = "Normal";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
     const USERNAME_STORAGE_KEY = "nihongoUsername";
     const USERNAME_MAX_LENGTH = 8;
 
@@ -1937,7 +1943,7 @@
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
@@ -1975,7 +1981,7 @@
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
 
     function logoutUsername() {
-      localStorage.removeItem("nihongoUsername");
+      localStorage.removeItem(USERNAME_STORAGE_KEY);
       currentUsername = "";
       updateUsernameDisplay("Pengguna");
       updateResultUsername("");
@@ -2076,7 +2082,7 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
       updateUsernameDisplay(currentUsername);
       updateResultUsername(currentUsername);
@@ -2089,14 +2095,97 @@ const screens = {
 
       startQuiz();
     }
+
+    function getStoredQuizResults() {
+      try {
+        const data = JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function findCurrentUserRank(ranking, createdAtValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+
+      if (!username || !Array.isArray(ranking) || !ranking.length) {
+        return null;
+      }
+
+      let index = -1;
+
+      if (createdAtValue) {
+        index = ranking.findIndex(function (item) {
+          return String(item.name || "").trim().slice(0, 8) === username &&
+            Number(item.score) === Number(score) &&
+            Number(item.total) === Number(quiz.length) &&
+            Number(item.createdAt) === Number(createdAtValue);
+        });
+      }
+
+      if (index === -1) {
+        index = ranking.findIndex(function (item) {
+          return String(item.name || "").trim().slice(0, 8) === username &&
+            Number(item.score) === Number(score) &&
+            Number(item.total) === Number(quiz.length);
+        });
+      }
+
+      return index >= 0 ? index + 1 : null;
+    }
+
     async function saveUserRanking() {
+      const createdAt = Date.now();
       const userResult = {
         name: currentUsername || "Tanpa Nama",
         score: score,
         total: quiz.length,
         percentage: Math.round((score / quiz.length) * 100),
         date: new Date().toLocaleString("id-ID"),
-        createdAt: Date.now()
+        createdAt: createdAt
       };
 
       const response = await fetchWithTimeout(RANKING_API_URL, {
@@ -2109,6 +2198,14 @@ const screens = {
 
       if (!response.ok) {
         throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
+      }
+
+      try {
+        const ranking = await getRankingData();
+        return findCurrentUserRank(ranking, createdAt);
+      } catch (error) {
+        console.error("Gagal memperbarui rank localStorage:", error);
+        return null;
       }
     }
 
@@ -2184,6 +2281,10 @@ const screens = {
 
       try {
         const ranking = await getRankingData();
+        const latestRank = findCurrentUserRank(ranking);
+        if (latestRank) {
+          updateLatestQuizRank(latestRank);
+        }
         renderRankingList(ranking);
       } catch (error) {
         console.error("Ranking REST API error:", error);
@@ -2364,13 +2465,21 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
         resultSaved = true;
+
+        saveUserRanking()
+          .then(function (rankValue) {
+            if (rankValue) {
+              updateLatestQuizRank(rankValue);
+            }
+          })
+          .catch(function (error) {
+            console.error("Gagal menyimpan ranking:", error);
+          });
       }
 
-let message;
+      let message;
 
       if (percentage >= 85) {
         message = "Hebat! Pemahaman N3 kamu sudah kuat.";
