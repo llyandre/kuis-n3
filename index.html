@@ -1373,6 +1373,126 @@
     }
 
 
+    /* =========================
+       HISTORY MODAL
+    ========================= */
+
+    .history-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(16, 33, 59, 0.24);
+      backdrop-filter: blur(8px);
+    }
+
+    .history-modal.hidden {
+      display: none;
+    }
+
+    .history-box {
+      width: min(420px, 100%);
+      max-height: 78vh;
+      padding: 18px;
+      border-radius: 20px;
+      background: #fffdf8;
+      border: 1.5px solid rgba(222, 196, 158, 0.9);
+      box-shadow: 0 24px 70px rgba(49, 36, 23, 0.18);
+      overflow: hidden;
+    }
+
+    .history-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .history-head h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    #closeHistoryBtn {
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .history-content {
+      max-height: 48vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      padding: 12px;
+      margin-bottom: 9px;
+      border-radius: 12px;
+      background: #fff8ec;
+      border: 1.2px solid rgba(222, 196, 158, 0.78);
+    }
+
+    .history-item strong {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .history-item span,
+    .history-item small {
+      display: block;
+      color: rgba(16, 33, 59, 0.72);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .history-empty {
+      margin: 0;
+      padding: 16px;
+      border-radius: 12px;
+      background: #fff8ec;
+      color: rgba(16, 33, 59, 0.72);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .clear-history-btn {
+      width: 100%;
+      height: 38px;
+      margin-top: 12px;
+      border: 1.5px solid var(--red);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--red);
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .clear-history-btn:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+
   </style></head>
 <body>
 <div class="username-modal" id="usernameModal">
@@ -1382,6 +1502,19 @@
 <input autocomplete="off" id="usernameInput" maxlength="8" placeholder="Username" type="text"/>
 <small id="usernameError"></small>
 <button id="saveUsernameBtn" type="button">Mulai</button>
+</div>
+</div>
+
+<div class="history-modal hidden" id="historyModal">
+<div class="history-box">
+<div class="history-head">
+<h2>Riwayat Kuis</h2>
+<button id="closeHistoryBtn" type="button">×</button>
+</div>
+<div class="history-content" id="historyContent">
+<p class="history-empty">Belum ada kuis yang dijalankan.</p>
+</div>
+<button class="clear-history-btn" id="clearHistoryBtn" type="button">Hapus Riwayat</button>
 </div>
 </div>
 <div class="page-wrap" id="pageWrap" style="display:none;">
@@ -1401,7 +1534,7 @@
 </svg>
           Beranda
         </a>
-<a href="#">
+<a href="#" id="historyBtn">
 <svg aria-hidden="true" viewbox="0 0 24 24">
 <path d="M12 2.4a9.6 9.6 0 1 0 0 19.2 9.6 9.6 0 0 0 0-19.2Zm0 2a7.6 7.6 0 1 1 0 15.2 7.6 7.6 0 0 1 0-15.2Zm1 3.1h-2v5.6l4.7 2.8 1-1.7-3.7-2.2V7.5Z"></path>
 </svg>
@@ -1630,8 +1763,60 @@
       const saveUsernameBtn = document.getElementById("saveUsernameBtn");
       const userGreeting = document.getElementById("userGreeting");
 
+      const historyKey = "nihongoQuizHistory";
+      const historyBtn = document.getElementById("historyBtn");
+      const historyModal = document.getElementById("historyModal");
+      const closeHistoryBtn = document.getElementById("closeHistoryBtn");
+      const historyContent = document.getElementById("historyContent");
+      const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+
       function cleanUsername(value) {
         return String(value || "").trim().slice(0, maxLength);
+      }
+
+
+      function escapeHTML(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function getQuizHistory() {
+        try {
+          return JSON.parse(localStorage.getItem(historyKey)) || [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveQuizHistory(item) {
+        const history = getQuizHistory();
+        history.unshift(item);
+        localStorage.setItem(historyKey, JSON.stringify(history.slice(0, 20)));
+      }
+
+      function renderHistory() {
+        const history = getQuizHistory();
+
+        if (!historyContent) return;
+
+        if (!history.length) {
+          historyContent.innerHTML = '<p class="history-empty">Belum ada kuis yang dijalankan.</p>';
+          return;
+        }
+
+        historyContent.innerHTML = history.map(function (item) {
+          return `
+            <div class="history-item">
+              <strong>${escapeHTML(item.title)}</strong>
+              <span>Kategori: ${escapeHTML(item.category)}</span>
+              <small>Waktu: ${escapeHTML(item.time)}</small>
+            </div>
+          `;
+        }).join("");
       }
 
       function showPage(username) {
@@ -1700,6 +1885,67 @@
           if (event.key === "Enter") {
             saveUsername();
           }
+        });
+      }
+
+
+      document.querySelectorAll(".quiz-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const card = btn.closest(".quiz-card");
+          const section = btn.closest(".quiz-section");
+          const titleElement = card ? card.querySelector(".quiz-title") : null;
+          const categoryElement = section ? section.querySelector(".section-title") : null;
+
+          const title = titleElement ? titleElement.textContent.trim() : "Kuis";
+          const category = categoryElement ? categoryElement.textContent.trim() : "Kategori";
+          const link = btn.getAttribute("href") || "#";
+          const time = new Date().toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          });
+
+          saveQuizHistory({
+            title: title,
+            category: category,
+            link: link,
+            time: time
+          });
+        });
+      });
+
+      if (historyBtn) {
+        historyBtn.addEventListener("click", function (event) {
+          event.preventDefault();
+          renderHistory();
+          if (historyModal) {
+            historyModal.classList.remove("hidden");
+          }
+        });
+      }
+
+      if (closeHistoryBtn) {
+        closeHistoryBtn.addEventListener("click", function () {
+          if (historyModal) {
+            historyModal.classList.add("hidden");
+          }
+        });
+      }
+
+      if (historyModal) {
+        historyModal.addEventListener("click", function (event) {
+          if (event.target === historyModal) {
+            historyModal.classList.add("hidden");
+          }
+        });
+      }
+
+      if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener("click", function () {
+          localStorage.removeItem(historyKey);
+          renderHistory();
         });
       }
 
