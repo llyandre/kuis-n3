@@ -220,10 +220,10 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 9px;
+      gap: 7px;
       flex: 0 0 auto;
       min-width: 0;
-      max-width: 190px;
+      max-width: 250px;
     }
 
     .user-greeting {
@@ -231,10 +231,32 @@
       font-weight: 900;
       color: var(--navy);
       white-space: nowrap;
-      max-width: 120px;
+      max-width: 90px;
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.2;
+    }
+
+    .logout-username-btn {
+      height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      border: 1.4px solid rgba(214, 40, 40, 0.55);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--red);
+      font-family: inherit;
+      font-size: 10.5px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+      flex: 0 0 auto;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .logout-username-btn:hover {
+      background: var(--red);
+      color: #fff;
+      transform: translateY(-1px);
     }
 
     .user-icon {
@@ -755,12 +777,19 @@
         font-size: 12px;
       }
 
-      .user-greeting {
-        max-width: 112px;
+      .user-area {
+        max-width: 220px;
+        gap: 6px;
       }
 
-      .user-area {
-        max-width: 170px;
+      .user-greeting {
+        max-width: 82px;
+      }
+
+      .logout-username-btn {
+        height: 26px;
+        padding: 0 8px;
+        font-size: 10px;
       }
 
       .hero {
@@ -853,13 +882,19 @@
       }
 
       .user-area {
-        gap: 8px;
-        max-width: 138px;
+        max-width: 190px;
+        gap: 5px;
       }
 
       .user-greeting {
-        max-width: 90px;
-        font-size: 11.5px;
+        max-width: 70px;
+        font-size: 11px;
+      }
+
+      .logout-username-btn {
+        height: 24px;
+        padding: 0 7px;
+        font-size: 9.5px;
       }
 
       .user-icon {
@@ -1549,6 +1584,7 @@
 </div>
 <div class="user-area">
 <span class="user-greeting" id="userGreeting">Hai, Pengguna</span>
+<button class="logout-username-btn" id="logoutUsernameBtn" type="button">Keluar</button>
 <a aria-label="Profil pengguna" class="user-icon" href="#">
 <svg aria-hidden="true" viewbox="0 0 24 24">
 <path d="M12 12.2a4.4 4.4 0 1 0 0-8.8 4.4 4.4 0 0 0 0 8.8Zm0 2c-4.2 0-7.6 2.3-7.6 5.1v1.3h15.2v-1.3c0-2.8-3.4-5.1-7.6-5.1Z"></path>
@@ -1762,6 +1798,7 @@
       const usernameError = document.getElementById("usernameError");
       const saveUsernameBtn = document.getElementById("saveUsernameBtn");
       const userGreeting = document.getElementById("userGreeting");
+      const logoutUsernameBtn = document.getElementById("logoutUsernameBtn");
 
       const historyKey = "nihongoQuizHistory";
       const historyBtn = document.getElementById("historyBtn");
@@ -1876,6 +1913,41 @@
         showPage(username);
       }
 
+      function logoutUsername() {
+        localStorage.removeItem(storageKey);
+
+        if (userGreeting) {
+          userGreeting.textContent = "Hai, Pengguna";
+          userGreeting.setAttribute("title", "Hai, Pengguna");
+        }
+
+        if (pageWrap) {
+          pageWrap.style.display = "none";
+        }
+
+        if (usernameInput) {
+          usernameInput.value = "";
+        }
+
+        if (usernameError) {
+          usernameError.textContent = "";
+        }
+
+        if (historyModal) {
+          historyModal.classList.add("hidden");
+        }
+
+        if (usernameModal) {
+          usernameModal.classList.remove("hidden");
+        }
+
+        setTimeout(function () {
+          if (usernameInput) {
+            usernameInput.focus();
+          }
+        }, 100);
+      }
+
       if (saveUsernameBtn) {
         saveUsernameBtn.addEventListener("click", saveUsername);
       }
@@ -1886,6 +1958,10 @@
             saveUsername();
           }
         });
+      }
+
+      if (logoutUsernameBtn) {
+        logoutUsernameBtn.addEventListener("click", logoutUsername);
       }
 
 
