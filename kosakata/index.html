@@ -1664,7 +1664,7 @@
         <div class="brand-mark">Kuis Jepang</div>
         <h1>NihongoGO</h1>
         <p>Asah N3-mu dengan tenang.</p>
-        <button class="primary-btn" type="button" onclick="openUsernameModal()">Mulai Kuis&nbsp; →</button>
+        <button class="primary-btn" type="button" onclick="handleStartQuiz()">Mulai Kuis&nbsp; →</button>
         <div class="home-footer">日本語を学ぼう</div>
       </div>
     </section>
@@ -1775,7 +1775,7 @@
           id="usernameInput"
           class="username-input"
           placeholder="Contoh: Hannah"
-          maxlength="24"
+          maxlength="8"
           autocomplete="off"
         />
 
@@ -2942,17 +2942,61 @@ const screens = {
       screens[name].classList.add("active");
     }
 
+    function cleanUsername(value) {
+      return String(value || "").trim().slice(0, 8);
+    }
+
+    function getSavedUsername() {
+      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+
+      if (username && username.toLowerCase() !== "pengguna") {
+        return username;
+      }
+
+      return "";
+    }
+
+    function updateResultUserName() {
+      const resultUserName = document.getElementById("resultUserName");
+
+      if (resultUserName) {
+        resultUserName.textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
+      }
+    }
+
+    function handleStartQuiz() {
+      const savedUsername = getSavedUsername();
+
+      if (savedUsername) {
+        currentUsername = savedUsername;
+        updateResultUserName();
+        startQuiz();
+        return;
+      }
+
+      openUsernameModal();
+    }
+
     function openUsernameModal() {
       const modal = document.getElementById("usernameModal");
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
 
-      error.textContent = "";
-      input.value = "";
+      if (error) {
+        error.textContent = "";
+      }
+
+      if (input) {
+        input.value = "";
+        input.setAttribute("maxlength", "8");
+      }
+
       modal.classList.add("active");
       modal.setAttribute("aria-hidden", "false");
 
-      setTimeout(() => input.focus(), 80);
+      if (input) {
+        setTimeout(() => input.focus(), 80);
+      }
     }
 
     function closeUsernameModal() {
@@ -2964,14 +3008,23 @@ const screens = {
     function confirmUsername() {
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
-      const name = input.value.trim();
+      const username = cleanUsername(input ? input.value : "");
 
-      if (!name) {
-        error.textContent = "Nama wajib diisi.";
+      if (!username) {
+        if (error) {
+          error.textContent = "Username wajib diisi.";
+        }
+
+        if (input) {
+          input.focus();
+        }
+
         return;
       }
 
-      currentUsername = name;
+      localStorage.setItem("nihongoUsername", username);
+      currentUsername = username;
+      updateResultUserName();
       closeUsernameModal();
       startQuiz();
     }
@@ -3255,7 +3308,7 @@ let message;
       }
 
       document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
-      document.getElementById("resultUserName").textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
+      updateResultUserName();
       document.getElementById("resultMessage").textContent = message;
       document.getElementById("correctCount").textContent = score;
       document.getElementById("incorrectCount").textContent = incorrect;
@@ -3287,6 +3340,10 @@ let message;
       resultSaved = false;
       setScreen("start");
     }
+
+    document.getElementById("usernameInput")?.addEventListener("input", function() {
+      this.value = cleanUsername(this.value);
+    });
 
     document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
@@ -3364,6 +3421,7 @@ let message;
     window.openUsernameModal = openUsernameModal;
     window.closeUsernameModal = closeUsernameModal;
     window.confirmUsername = confirmUsername;
+    window.handleStartQuiz = handleStartQuiz;
     window.startQuiz = startQuiz;
     window.goHome = goHome;
     window.showQuizAgain = showQuizAgain;
