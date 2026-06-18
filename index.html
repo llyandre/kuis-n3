@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nihongo Quiz - JLPT N3</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nihongo Quiz - JLPT N3</title>
 
-  <style>
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&display=swap');
 
     :root {
@@ -21,10 +21,13 @@
 
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      background: #fff8ec;
     }
 
     body {
@@ -33,9 +36,9 @@
       color: var(--navy);
       font-family: "Merriweather", Georgia, serif;
       background:
-        radial-gradient(circle at 12% 12%, rgba(214, 40, 40, 0.055), transparent 24%),
-        radial-gradient(circle at 88% 15%, rgba(249, 115, 22, 0.065), transparent 28%),
-        linear-gradient(135deg, #fffaf1 0%, #fff3df 48%, #fff8ec 100%);
+        radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.035), transparent 24%),
+        radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.045), transparent 28%),
+        linear-gradient(180deg, #fff8ec 0%, #fff8ec 100%);
       overflow-x: hidden;
     }
 
@@ -45,50 +48,65 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      opacity: 0.2;
+      opacity: 0.12;
       background-image:
         linear-gradient(rgba(16, 33, 59, 0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(16, 33, 59, 0.028) 1px, transparent 1px);
       background-size: 34px 34px;
     }
 
-    img {
+    img,
+    svg {
+      display: block;
       -webkit-user-drag: none;
       user-select: none;
     }
 
     a {
       color: inherit;
+      text-decoration: none;
     }
 
     h1,
     h2,
     h3,
-    .logo-text,
+    .logo-text strong,
     .hero-title,
     .section-title,
     .quiz-title {
+      font-family: "Merriweather", Georgia, serif;
+      font-weight: 900;
+    }
+
+    .logo-text span,
+    .category-icon {
       font-family: "Noto Serif JP", Georgia, serif;
     }
 
     .page-wrap {
-      width: min(1280px, 100%);
+      width: min(940px, 100%);
       margin: 0 auto;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    main {
+      background: #fff8ec;
     }
 
     /* =========================
-       FINAL CLEAN HEADER
+       HEADER
     ========================= */
 
     .header {
-      min-height: 108px;
-      padding: 16px 42px;
-      background: rgba(255, 248, 236, 0.96);
-      border-bottom: 1px solid rgba(222, 196, 158, 0.65);
+      min-height: 66px;
+      padding: 9px 28px;
+      background: rgba(255, 248, 236, 0.98);
+      border-bottom: 1px solid rgba(222, 196, 158, 0.58);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 28px;
+      gap: 18px;
       position: sticky;
       top: 0;
       z-index: 50;
@@ -98,18 +116,16 @@
     .site-brand {
       display: flex;
       align-items: center;
-      gap: 18px;
-      text-decoration: none;
-      flex: 0 0 auto;
+      gap: 10px;
       min-width: 0;
+      flex: 0 0 auto;
     }
 
     .site-logo {
-      width: 76px;
-      height: 76px;
+      width: 46px;
+      height: 46px;
       object-fit: contain;
       object-position: center;
-      display: block;
       flex: 0 0 auto;
     }
 
@@ -122,21 +138,16 @@
     }
 
     .logo-text strong {
-      display: block;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 38px;
+      font-size: 26px;
       line-height: 0.95;
-      font-weight: 900;
       color: var(--navy);
       letter-spacing: -0.035em;
       white-space: nowrap;
     }
 
     .logo-text span {
-      display: block;
-      margin-top: 7px;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 13px;
+      margin-top: 4px;
+      font-size: 10px;
       color: var(--navy);
       letter-spacing: 0.15em;
       white-space: nowrap;
@@ -146,7 +157,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 30px;
+      gap: 18px;
       flex: 1;
       min-width: 0;
       overflow-x: auto;
@@ -162,18 +173,17 @@
       position: relative;
       color: var(--navy);
       font-weight: 800;
-      font-size: 15px;
-      text-decoration: none;
+      font-size: 12.5px;
       display: inline-flex;
       align-items: center;
-      gap: 9px;
+      gap: 7px;
       white-space: nowrap;
       transition: transform 0.2s ease, color 0.2s ease;
     }
 
     .nav a svg {
-      width: 22px;
-      height: 22px;
+      width: 17px;
+      height: 17px;
       fill: currentColor;
       flex: 0 0 auto;
     }
@@ -188,82 +198,91 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: -18px;
-      height: 3px;
+      bottom: -12px;
+      height: 2.5px;
       border-radius: 999px;
       background: var(--red);
     }
 
-    .nav a.user-icon {
-      width: 58px;
-      height: 58px;
-      padding: 0;
-      gap: 0;
-    }
-
+    .nav a.user-icon,
     .user-icon {
-      width: 58px;
-      height: 58px;
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
       border-radius: 50%;
-      border: 1.4px solid rgba(16, 33, 59, 0.25);
-      display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.5);
+      border: 1.4px solid rgba(16, 33, 59, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.55);
       color: var(--navy);
-      text-decoration: none;
+      padding: 0;
+      line-height: 1;
+      overflow: hidden;
       flex: 0 0 auto;
-      transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
-    }
-
-    .user-icon:hover {
-      color: var(--red);
-      background: rgba(255, 255, 255, 0.86);
-      transform: translateY(-2px);
     }
 
     .user-icon svg {
-      width: 32px;
-      height: 32px;
+      width: 19px;
+      height: 19px;
       fill: currentColor;
+      transform: translateY(-1px);
     }
 
     /* =========================
-       FINAL CLEAN HERO
+       HERO
     ========================= */
 
     .hero {
       position: relative;
-      min-height: 360px;
-      display: grid;
-      grid-template-columns: minmax(360px, 0.46fr) minmax(520px, 0.54fr);
+      min-height: 260px;
+      display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 34px 42px 24px;
+      justify-content: center;
+      padding: 42px 28px 34px;
       overflow: hidden;
+      text-align: center;
       background:
-        radial-gradient(circle at 80% 42%, rgba(255, 199, 118, 0.18), transparent 36%),
-        linear-gradient(90deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 248, 236, 0.92) 48%, rgba(255, 239, 211, 0.82) 100%);
+        radial-gradient(circle at 50% 22%, rgba(214, 40, 40, 0.045), transparent 28%),
+        radial-gradient(circle at 50% 82%, rgba(249, 115, 22, 0.045), transparent 32%),
+        linear-gradient(180deg, #fff8ec 0%, #fff8ec 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(214, 40, 40, 0.035), transparent 22%),
+        radial-gradient(circle at 82% 28%, rgba(16, 33, 59, 0.025), transparent 24%);
+      pointer-events: none;
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
       z-index: 5;
-      max-width: 460px;
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
     }
 
     .hero-title-row {
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 12px;
+      gap: 14px;
+      margin: 0 0 12px;
     }
 
     .hero-target {
-      width: 54px;
-      height: 54px;
+      width: 46px;
+      height: 46px;
       display: grid;
       place-items: center;
-      font-size: 40px;
+      font-size: 34px;
       line-height: 1;
       flex: 0 0 auto;
       filter: drop-shadow(0 8px 12px rgba(214, 40, 40, 0.12));
@@ -271,39 +290,42 @@
 
     .hero-title {
       margin: 0;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: clamp(42px, 4.1vw, 56px);
+      font-size: clamp(48px, 5vw, 68px);
       line-height: 1;
-      font-weight: 900;
       color: var(--navy);
       letter-spacing: -0.045em;
+      text-align: center;
     }
 
     .hero-desc {
-      margin: 0 0 22px;
-      max-width: 410px;
+      max-width: 580px;
+      margin: 0 auto 22px;
       color: var(--navy);
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: clamp(20px, 1.8vw, 25px);
-      line-height: 1.35;
+      font-size: clamp(18px, 2vw, 25px);
+      line-height: 1.4;
       font-weight: 700;
+      text-align: center;
     }
 
     .hero-badge {
       width: fit-content;
       max-width: 100%;
+      margin: 0 auto;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
       padding: 10px 16px;
       border: 1.4px solid rgba(222, 196, 158, 0.95);
-      border-radius: 12px;
+      border-radius: 13px;
       background: rgba(255, 253, 248, 0.88);
       box-shadow: 0 10px 24px rgba(49, 36, 23, 0.055);
       color: var(--navy);
       font-size: 15px;
       font-weight: 700;
-      white-space: nowrap;
+      white-space: normal;
+      flex-wrap: wrap;
+      text-align: center;
     }
 
     .hero-badge span:first-child {
@@ -312,7 +334,7 @@
     }
 
     .hero-badge strong {
-      padding: 10px 15px;
+      padding: 9px 14px;
       border-radius: 8px;
       background: var(--red);
       color: #fff;
@@ -320,86 +342,49 @@
       letter-spacing: 0.04em;
     }
 
-    /* Hero visual dibuat seperti bagian dari background, bukan tempelan */
-    .hero-visual {
-      position: relative;
-      z-index: 2;
-      height: 310px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      overflow: visible;
-      pointer-events: none;
-    }
-
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      left: -120px;
-      right: -40px;
-      bottom: -6px;
-      height: 130px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 248, 236, 0),
-        rgba(255, 248, 236, 0.78) 58%,
-        rgba(255, 248, 236, 1)
-      );
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      left: -150px;
-      top: 0;
-      bottom: 0;
-      width: 230px;
-      background: linear-gradient(
-        90deg,
-        rgba(255, 248, 236, 0.98),
-        rgba(255, 248, 236, 0.45),
-        rgba(255, 248, 236, 0)
-      );
-      z-index: 3;
-      pointer-events: none;
-    }
-
+    .hero-visual,
     .hero-mountain {
-      position: relative;
-      z-index: 1;
-      width: 620px;
-      max-width: 100%;
-      height: 310px;
-      object-fit: contain;
-      object-position: center bottom;
-      display: block;
-      opacity: 0.96;
-      transform: translateX(-6px) translateY(8px);
-      filter: drop-shadow(0 16px 30px rgba(47, 72, 88, 0.08));
-    }
-
-    /* Section kuis sedikit naik agar hero dan card terasa menyatu */
-    .quiz-list {
-      position: relative;
-      z-index: 6;
-      margin-top: -18px;
+      display: none;
     }
 
     /* =========================
-       QUIZ CARD AREA
+       QUIZ AREA
     ========================= */
+
+    .quiz-list {
+      position: relative;
+      z-index: 6;
+      margin-top: -10px;
+      padding-bottom: 0;
+      background: #fff8ec;
+    }
 
     .quiz-section {
       position: relative;
-      margin: 0 32px 16px;
-      padding: 24px 24px 22px;
+      margin: 0 18px 10px;
+      padding: 14px 14px 13px;
       border: 1.5px solid var(--border-soft);
-      border-radius: 26px;
-      background: rgba(255, 253, 248, 0.76);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(255, 248, 236, 0.94));
       box-shadow: var(--shadow-soft);
       overflow: hidden;
+      animation: fadeUpClean 0.45s ease both;
+    }
+
+    .quiz-section::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -7px;
+      height: 78px;
+      background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
+      background-repeat: repeat-x;
+      background-size: 220px auto;
+      background-position: bottom center;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .quiz-section::after {
@@ -409,31 +394,33 @@
       top: 48px;
       width: 130px;
       height: 48px;
-      opacity: 0.32;
+      opacity: 0.04;
       background:
         radial-gradient(50% 100% at 50% 100%, transparent 57%, rgba(222, 196, 158, 0.75) 58% 62%, transparent 63%) 0 0 / 38px 28px repeat-x;
       pointer-events: none;
     }
 
+    .quiz-section > * {
+      position: relative;
+      z-index: 2;
+    }
+
     .section-head {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
-      position: relative;
-      z-index: 2;
+      gap: 10px;
+      margin-bottom: 12px;
       flex-wrap: wrap;
     }
 
     .category-icon {
-      width: 54px;
-      height: 54px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      color: white;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 24px;
+      color: #fff;
+      font-size: 15px;
       font-weight: 900;
       flex: 0 0 auto;
       box-shadow: inset 0 -7px 12px rgba(0, 0, 0, 0.13);
@@ -456,28 +443,26 @@
     }
 
     .category-icon.small-text {
-      font-size: 14px;
+      font-size: 9px;
       letter-spacing: -0.04em;
     }
 
     .section-title {
       margin: 0;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 32px;
-      line-height: 1;
       color: var(--navy);
-      font-weight: 900;
+      font-size: 20px;
+      line-height: 1;
       letter-spacing: -0.035em;
     }
 
     .level-chip {
-      margin-left: 8px;
-      padding: 7px 14px;
+      margin-left: 0;
+      padding: 4px 9px;
       border: 1.5px solid var(--red);
-      border-radius: 9px;
+      border-radius: 7px;
       color: var(--red);
       background: #fff;
-      font-size: 15px;
+      font-size: 10.5px;
       font-weight: 900;
       line-height: 1;
       letter-spacing: 0.04em;
@@ -486,9 +471,7 @@
     .quiz-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      position: relative;
-      z-index: 2;
+      gap: 9px;
     }
 
     .quiz-card {
@@ -496,94 +479,118 @@
       --icon-bg: rgba(239, 246, 255, 0.9);
       position: relative;
       display: grid;
-      grid-template-columns: 96px 1fr;
+      grid-template-columns: 52px 1fr;
       align-items: center;
-      gap: 12px;
-      min-height: 148px;
-      padding: 18px 20px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.68);
+      gap: 10px;
+      min-height: 92px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 248, 236, 0.78);
       border: 1.5px solid rgba(222, 196, 158, 0.78);
+      text-align: left;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     .quiz-card.normal {
       --accent: #0f4ba8;
       --icon-bg: rgba(239, 246, 255, 0.92);
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(239,246,255,0.78));
+      background: linear-gradient(135deg, rgba(255,248,236,0.88), rgba(239,246,255,0.58));
     }
 
     .quiz-card.hard {
       --accent: #ea580c;
       --icon-bg: rgba(255, 237, 213, 0.92);
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,247,237,0.82));
+      background: linear-gradient(135deg, rgba(255,248,236,0.90), rgba(255,237,213,0.58));
     }
 
     .quiz-card.super {
       --accent: #dc2626;
       --icon-bg: rgba(254, 226, 226, 0.92);
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(254,242,242,0.84));
+      background: linear-gradient(135deg, rgba(255,248,236,0.90), rgba(254,226,226,0.56));
     }
 
     .quiz-card.purple-card {
       --accent: #5b21b6;
       --icon-bg: rgba(245, 243, 255, 0.94);
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(245,243,255,0.82));
+      background: linear-gradient(135deg, rgba(255,248,236,0.90), rgba(245,243,255,0.58));
     }
 
     .quiz-card.green-card {
       --accent: #047857;
       --icon-bg: rgba(236, 253, 245, 0.94);
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(240,253,244,0.82));
+      background: linear-gradient(135deg, rgba(255,248,236,0.90), rgba(236,253,245,0.58));
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
     }
 
     .quiz-level-icon {
-      width: 82px;
-      height: 82px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 40px;
+      align-self: center;
+      justify-self: center;
+      font-size: 21px;
       background: var(--icon-bg);
       color: var(--accent);
-      transition: transform 0.25s ease;
       box-shadow: inset 0 -12px 22px rgba(16, 33, 59, 0.055);
+      transition: transform 0.25s ease;
     }
 
     .quiz-card:hover .quiz-level-icon {
       transform: rotate(-4deg);
     }
 
+    .quiz-card > div:last-child {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: left;
+    }
+
     .quiz-title {
-      margin: 0 0 8px;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 23px;
-      line-height: 1.1;
+      width: 100%;
+      margin: 0 0 4px;
       color: var(--accent);
-      font-weight: 900;
+      font-size: 15px;
+      line-height: 1.15;
       letter-spacing: -0.035em;
+      text-align: left;
     }
 
     .quiz-desc {
-      margin: 0 0 16px;
+      width: 100%;
+      margin: 0 0 8px;
       color: var(--navy);
-      font-size: 15px;
-      line-height: 1.42;
+      font-size: 10.5px;
+      line-height: 1.38;
       font-weight: 500;
+      text-align: left;
     }
 
     .quiz-btn {
-      width: 154px;
-      min-height: 38px;
+      width: auto;
+      min-width: 96px;
+      min-height: 26px;
+      padding: 0 10px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      align-self: flex-start;
       border: 1.8px solid var(--accent);
-      border-radius: 8px;
+      border-radius: 7px;
       background: rgba(255,255,255,0.42);
       color: var(--accent);
-      text-decoration: none;
-      font-size: 14px;
+      font-size: 10.5px;
       font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
       transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
     }
 
@@ -592,84 +599,6 @@
       color: #fff;
       transform: translateX(3px);
     }
-
-    /* =========================
-       FINAL CLEAN TIPS
-    ========================= */
-
-    .tips-card {
-      position: relative;
-      min-height: 118px;
-      margin: 0 32px 34px;
-      padding: 22px 205px 22px 28px;
-      border: 1.5px solid rgba(167, 205, 249, 0.72);
-      border-radius: 23px;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.94), rgba(247,251,255,0.8)),
-        radial-gradient(circle at 91% 50%, rgba(214, 40, 40, 0.05), transparent 34%);
-      box-shadow: 0 10px 26px rgba(49, 36, 23, 0.035);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-
-    .tips-left {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .tips-icon {
-      width: 62px;
-      height: 62px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: #0f58c8;
-      color: #fff;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 34px;
-      font-weight: 900;
-      box-shadow: inset 0 -7px 12px rgba(0, 0, 0, 0.13);
-    }
-
-    .tips-card h3 {
-      margin: 0 0 7px;
-      font-family: "Noto Serif JP", Georgia, serif;
-      font-size: 26px;
-      line-height: 1;
-      color: var(--navy);
-      font-weight: 900;
-    }
-
-    .tips-card p {
-      margin: 0;
-      color: var(--navy);
-      font-size: 15.5px;
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .tips-cat {
-      position: absolute;
-      right: 28px;
-      top: 50%;
-      width: 155px;
-      max-width: 155px;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
-      display: block;
-      transform: translateY(-50%);
-      filter: drop-shadow(0 10px 18px rgba(49, 36, 23, 0.08));
-    }
-
-    /* =========================
-       FINAL SOFT ANIMATION
-    ========================= */
 
     @keyframes fadeUpClean {
       from {
@@ -682,57 +611,6 @@
       }
     }
 
-    @keyframes mountainCleanIn {
-      from {
-        opacity: 0;
-        transform: translateX(28px) translateY(12px);
-      }
-      to {
-        opacity: 0.96;
-        transform: translateX(-6px) translateY(8px);
-      }
-    }
-
-    @keyframes catSoftFloat {
-      0%, 100% {
-        transform: translateY(-50%);
-      }
-      50% {
-        transform: translateY(calc(-50% - 4px));
-      }
-    }
-
-    .hero-content {
-      animation: fadeUpClean 0.55s ease both;
-    }
-
-    .hero-mountain {
-      animation: mountainCleanIn 0.7s ease both;
-    }
-
-    .quiz-section {
-      animation: fadeUpClean 0.45s ease both;
-    }
-
-    .quiz-section:nth-of-type(1) { animation-delay: 0.03s; }
-    .quiz-section:nth-of-type(2) { animation-delay: 0.08s; }
-    .quiz-section:nth-of-type(3) { animation-delay: 0.13s; }
-    .quiz-section:nth-of-type(4) { animation-delay: 0.18s; }
-    .quiz-section:nth-of-type(5) { animation-delay: 0.23s; }
-
-    .tips-cat {
-      animation: catSoftFloat 3.2s ease-in-out infinite;
-    }
-
-    .quiz-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .quiz-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -743,157 +621,46 @@
     }
 
     /* =========================
-       FINAL RESPONSIVE
+       RESPONSIVE TABLET
     ========================= */
 
-    @media (max-width: 1100px) {
-      .header {
-        gap: 22px;
-        padding: 14px 30px;
-      }
-
-      .nav {
-        gap: 22px;
-      }
-
-      .logo-text strong {
-        font-size: 32px;
-      }
-
-      .quiz-card {
-        grid-template-columns: 82px 1fr;
-        padding: 17px;
-      }
-
-      .quiz-level-icon {
-        width: 72px;
-        height: 72px;
-        font-size: 34px;
-      }
-
-      .quiz-title {
-        font-size: 21px;
-      }
-
-      .quiz-desc {
-        font-size: 14px;
-      }
-
-      .quiz-btn {
-        width: 145px;
-      }
-    }
-
     @media (max-width: 980px) {
+      .page-wrap {
+        width: 100%;
+      }
+
       .header {
-        padding: 14px 24px;
-        gap: 18px;
+        padding: 10px 18px;
       }
 
       .site-logo {
-        width: 64px;
-        height: 64px;
+        width: 44px;
+        height: 44px;
       }
 
       .logo-text strong {
-        font-size: 31px;
+        font-size: 25px;
       }
 
       .logo-text span {
-        font-size: 12px;
+        font-size: 10px;
       }
 
       .nav {
-        gap: 20px;
+        gap: 15px;
       }
 
       .nav a {
-        font-size: 14px;
-      }
-
-      .nav a.user-icon {
-        width: 52px;
-        height: 52px;
-      }
-
-      .user-icon svg {
-        width: 29px;
-        height: 29px;
-      }
-
-      .nav a.active::after {
-        bottom: -14px;
+        font-size: 12px;
       }
 
       .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        padding: 34px 28px 26px;
+        min-height: 240px;
+        padding: 38px 24px 30px;
       }
 
       .hero-content {
-        max-width: 100%;
-      }
-
-      .hero-visual {
-        height: 230px;
-        justify-content: center;
-        margin-top: 10px;
-      }
-
-      .hero-visual::after {
-        width: 180px;
-        left: -80px;
-      }
-
-      .hero-mountain {
-        width: min(520px, 100%);
-        height: 230px;
-        transform: translateX(0) translateY(6px);
-        animation: none;
-      }
-
-      .quiz-list {
-        margin-top: -10px;
-      }
-
-      .quiz-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .quiz-card {
-        grid-template-columns: 92px 1fr;
-      }
-
-      .quiz-level-icon {
-        width: 78px;
-        height: 78px;
-        font-size: 38px;
-      }
-
-      .tips-card {
-        margin: 0 22px 28px;
-        padding-right: 170px;
-      }
-
-      .tips-cat {
-        width: 132px;
-        max-width: 132px;
-        right: 22px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-      }
-
-      .nav {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 8px;
+        max-width: 520px;
       }
 
       .hero-title {
@@ -901,2944 +668,554 @@
       }
 
       .hero-desc {
-        font-size: 20px;
+        font-size: 18px;
+      }
+
+      .quiz-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* =========================
+       RESPONSIVE MOBILE 640PX
+       Card dibuat compact, rata kiri, ikon kiri + teks kanan.
+    ========================= */
+
+    @media (max-width: 640px) {
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 18px 12px;
+        background:
+          radial-gradient(circle at 20% 10%, rgba(214, 40, 40, 0.035), transparent 24%),
+          radial-gradient(circle at 85% 12%, rgba(16, 33, 59, 0.035), transparent 28%),
+          linear-gradient(180deg, #fff8ec 0%, #fff8ec 100%);
+      }
+
+      .page-wrap {
+        width: min(390px, 100%);
+        max-width: 390px;
+        margin: 0 auto;
+        border-radius: 30px;
+        overflow: hidden;
+        background: #fff8ec;
+        box-shadow: 0 24px 70px rgba(49, 36, 23, 0.14);
+        border: 1px solid rgba(222, 196, 158, 0.65);
+      }
+
+      .header {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 34px 18px 28px;
+        background: linear-gradient(180deg, #fff8ec, #fff8ec);
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-title-row {
+        justify-content: center;
+        gap: 0;
+        margin: 0 0 8px;
+      }
+
+      .hero-target {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 48px;
+        line-height: 0.95;
+        letter-spacing: -0.05em;
+      }
+
+      .hero-title::before {
+        content: "— KUIS JEPANG —";
+        display: block;
+        margin-bottom: 12px;
+        color: #b33a2c;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+      }
+
+      .hero-desc {
+        max-width: 300px;
+        margin: 0 auto;
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(16, 33, 59, 0.68);
       }
 
       .hero-badge {
-        white-space: normal;
-        flex-wrap: wrap;
+        display: none;
       }
 
-      .hero-visual {
-        height: 190px;
-      }
-
-      .hero-mountain {
-        width: min(420px, 100%);
-        height: 190px;
+      .quiz-list {
+        margin-top: 0;
+        padding: 0 14px 18px;
       }
 
       .quiz-section {
-        margin: 0 16px 16px;
-        padding: 22px 18px;
+        margin: 0 0 12px;
+        padding: 14px;
+        border-radius: 20px;
       }
 
       .section-head {
-        gap: 12px;
+        gap: 9px;
+        margin-bottom: 12px;
       }
 
       .category-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 21px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
       }
 
       .category-icon.small-text {
-        font-size: 13px;
+        font-size: 8.5px;
       }
 
       .section-title {
-        font-size: 28px;
+        font-size: 19px;
+        line-height: 1.12;
       }
 
       .level-chip {
-        margin-left: 0;
-        padding: 7px 12px;
-        font-size: 14px;
+        padding: 4px 8px;
+        font-size: 10px;
       }
 
       .quiz-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
 
       .quiz-card {
-        grid-template-columns: 1fr;
-        text-align: center;
-        justify-items: center;
-        padding: 22px 18px;
+        grid-template-columns: 54px 1fr;
+        align-items: center;
+        gap: 12px;
+        min-height: 96px;
+        padding: 12px;
+        border-radius: 12px;
+        text-align: left;
       }
 
-      .quiz-title {
+      .quiz-level-icon {
+        width: 46px;
+        height: 46px;
         font-size: 22px;
       }
 
+      .quiz-card > div:last-child {
+        min-height: 70px;
+        justify-content: center;
+      }
+
+      .quiz-title {
+        margin-bottom: 4px;
+        font-size: 16px;
+        line-height: 1.15;
+      }
+
+      .quiz-desc {
+        margin-bottom: 8px;
+        font-size: 11px;
+        line-height: 1.42;
+      }
+
       .quiz-btn {
-        width: 100%;
-      }
-
-      .tips-card {
-        min-height: 170px;
-        padding: 20px 18px 110px;
-        margin: 0 16px 26px;
-        align-items: flex-start;
-      }
-
-      .tips-left {
-        align-items: flex-start;
-      }
-
-      .tips-icon {
-        width: 54px;
-        height: 54px;
-        font-size: 30px;
-      }
-
-      .tips-card h3 {
-        font-size: 24px;
-      }
-
-      .tips-card p {
-        font-size: 15px;
-      }
-
-      .tips-cat {
-        width: 126px;
-        max-width: 126px;
-        right: 18px;
-        top: auto;
-        bottom: 10px;
-        transform: none;
-        animation: none;
+        min-width: 112px;
+        min-height: 30px;
+        padding: 0 12px;
+        font-size: 11px;
       }
     }
 
+    /* =========================
+       RESPONSIVE MOBILE 430PX
+    ========================= */
+
     @media (max-width: 430px) {
-      .site-logo {
-        width: 58px;
-        height: 58px;
+      body {
+        padding: 14px 10px;
       }
 
-      .logo-text strong {
-        font-size: 27px;
+      .page-wrap {
+        width: min(390px, 100%);
+        border-radius: 28px;
       }
 
-      .nav a.user-icon {
-        width: 48px;
-        height: 48px;
+      .hero {
+        padding: 30px 16px 24px;
       }
 
-      .user-icon svg {
-        width: 27px;
-        height: 27px;
+      .hero-title {
+        font-size: 44px;
+      }
+
+      .hero-title::before {
+        margin-bottom: 10px;
+        font-size: 11px;
+      }
+
+      .hero-desc {
+        font-size: 13.5px;
+      }
+
+      .quiz-list {
+        padding: 0 12px 16px;
+      }
+
+      .quiz-section {
+        padding: 13px;
+        border-radius: 18px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .quiz-card {
+        grid-template-columns: 52px 1fr;
+        gap: 11px;
+        min-height: 94px;
+        padding: 11px;
+      }
+
+      .quiz-level-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 21px;
+      }
+
+      .quiz-title {
+        font-size: 15.5px;
+      }
+
+      .quiz-desc {
+        font-size: 10.8px;
+      }
+
+      .quiz-btn {
+        min-width: 108px;
+        min-height: 29px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      body {
+        padding: 12px 8px;
+      }
+
+      .page-wrap {
+        border-radius: 24px;
+      }
+
+      .hero {
+        padding: 28px 14px 22px;
       }
 
       .hero-title {
         font-size: 40px;
       }
 
-      .hero-desc {
-        font-size: 18px;
-      }
-
-      .hero-target {
-        width: 48px;
-        height: 48px;
-        font-size: 36px;
-      }
-    }
-
-
-    /* =========================
-       HERO IMAGE + QUIZ SECTION TEXTURE PATCH
-    ========================= */
-
-    .quiz-section {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quiz-section::before {
-      content: "";
-      position: absolute;
-      right: -18px;
-      bottom: -22px;
-      width: 220px;
-      height: 130px;
-      background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: right bottom;
-      opacity: 0.18;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .quiz-section > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    .quiz-section::after {
-      opacity: 0.12 !important;
-    }
-
-    .hero-mountain {
-      width: min(620px, 100%);
-      height: 310px;
-      object-fit: contain;
-      object-position: center bottom;
-      display: block;
-      opacity: 0.96;
-      transform: translateX(-6px) translateY(8px);
-    }
-
-    @media (max-width: 980px) {
-      .hero-mountain {
-        width: min(520px, 100%);
-        height: 230px;
-        transform: translateX(0) translateY(6px);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .quiz-section::before {
-        width: 170px;
-        height: 100px;
-        right: -26px;
-        bottom: -20px;
-        opacity: 0.14;
-      }
-
-      .hero-mountain {
-        width: min(420px, 100%);
-        height: 190px;
-      }
-    }
-
-
-    /* =========================
-       PROFILE ICON POSITION FIX
-    ========================= */
-
-    .nav a.user-icon,
-    .user-icon {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      min-height: 56px;
-      border-radius: 50%;
-      border: 1.4px solid rgba(16, 33, 59, 0.28);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--navy);
-      text-decoration: none;
-      flex: 0 0 auto;
-      padding: 0;
-      margin: 0;
-      line-height: 1;
-      overflow: hidden;
-      box-sizing: border-box;
-    }
-
-    .user-icon svg {
-      width: 25px;
-      height: 25px;
-      display: block;
-      fill: currentColor;
-      transform: translateY(-1px);
-      transform-origin: center;
-    }
-
-    .user-icon:hover {
-      color: var(--red);
-      background: rgba(255, 255, 255, 0.86);
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 640px) {
-      .nav a.user-icon,
-      .user-icon {
-        width: 46px;
-        height: 46px;
-        min-width: 46px;
-        min-height: 46px;
-      }
-
-      .user-icon svg {
-        width: 22px;
-        height: 22px;
-        transform: translateY(-1px);
-      }
-    }
-
-
-    /* =========================
-       FINAL HERO FUJI OVERRIDE - SIZE + BLEND
-       Letakkan paling bawah agar tidak ditimpa CSS lama.
-    ========================= */
-
-    .hero {
-      position: relative;
-      min-height: 380px;
-      display: grid;
-      grid-template-columns: minmax(360px, 0.42fr) minmax(620px, 0.58fr);
-      align-items: center;
-      gap: 0;
-      padding: 32px 42px 12px;
-      overflow: visible;
-      background:
-        radial-gradient(circle at 78% 42%, rgba(255, 199, 118, 0.20), transparent 36%),
-        linear-gradient(90deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 248, 236, 0.90) 46%, rgba(255, 239, 211, 0.82) 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 5;
-    }
-
-    .hero-visual {
-      position: relative;
-      z-index: 2;
-      height: 380px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      overflow: visible;
-      pointer-events: none;
-      margin-bottom: -44px;
-    }
-
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      left: -160px;
-      right: -80px;
-      bottom: -10px;
-      height: 170px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 248, 236, 0),
-        rgba(255, 248, 236, 0.54) 38%,
-        rgba(255, 248, 236, 0.92) 74%,
-        rgba(255, 248, 236, 1)
-      );
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      left: -190px;
-      top: 0;
-      bottom: 0;
-      width: 290px;
-      background: linear-gradient(
-        90deg,
-        rgba(255, 248, 236, 0.98),
-        rgba(255, 248, 236, 0.42),
-        rgba(255, 248, 236, 0)
-      );
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .hero-mountain {
-      position: relative;
-      z-index: 1;
-      width: 860px !important;
-      max-width: none !important;
-      height: 395px !important;
-      object-fit: contain;
-      object-position: center bottom;
-      display: block;
-      opacity: 0.98;
-      transform: translateX(34px) translateY(28px);
-      transform-origin: right bottom;
-      filter: drop-shadow(0 18px 32px rgba(47, 72, 88, 0.08));
-      animation: none !important;
-    }
-
-    .quiz-list {
-      position: relative;
-      z-index: 6;
-      margin-top: -42px;
-    }
-
-    @media (max-width: 980px) {
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        padding: 30px 24px 20px;
-        overflow: hidden;
-      }
-
-      .hero-visual {
-        height: 250px;
-        justify-content: center;
-        margin-top: 8px;
-        margin-bottom: -18px;
-        overflow: visible;
-      }
-
-      .hero-visual::after {
-        display: none;
-      }
-
-      .hero-mountain {
-        width: min(580px, 112%) !important;
-        max-width: none !important;
-        height: 250px !important;
-        transform: translateX(0) translateY(10px);
-      }
-
       .quiz-list {
-        margin-top: -18px;
+        padding: 0 10px 14px;
+      }
+
+      .quiz-section {
+        padding: 12px;
+      }
+
+      .section-head {
+        gap: 8px;
+      }
+
+      .category-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .section-title {
+        font-size: 17px;
+      }
+
+      .level-chip {
+        font-size: 9.5px;
+      }
+
+      .quiz-card {
+        grid-template-columns: 50px 1fr;
+        gap: 10px;
+        min-height: 92px;
+        padding: 10px;
+      }
+
+      .quiz-level-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+      }
+
+      .quiz-title {
+        font-size: 15px;
+      }
+
+      .quiz-desc {
+        font-size: 10.5px;
+      }
+
+      .quiz-btn {
+        min-width: 104px;
+        min-height: 28px;
+        font-size: 10.5px;
       }
     }
 
-    @media (max-width: 640px) {
-      .hero-visual {
-        height: 205px;
-        margin-bottom: -10px;
-      }
-
-      .hero-mountain {
-        width: min(460px, 116%) !important;
-        height: 205px !important;
-        transform: translateX(0) translateY(6px);
-      }
-
-      .quiz-list {
-        margin-top: -8px;
-      }
-    }
-
-  
-
-/* =====================================================
-   COMPACT BALANCE FINAL OVERRIDES
-   Fokus: layout lebih kecil, compact, dan balance
-===================================================== */
-
-.page-wrap {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-}
-
-.header {
-  min-height: 86px;
-  padding: 12px 40px;
-  background: rgba(255, 248, 236, 0.96);
-  border-bottom: 1px solid rgba(222, 196, 158, 0.65);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(14px);
-}
-
-.site-logo {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  display: block;
-}
-
-.logo-text strong {
-  font-size: 30px;
-  line-height: 0.95;
-}
-
-.logo-text span {
-  margin-top: 5px;
-  font-size: 11.5px;
-}
-
-.nav {
-  gap: 24px;
-}
-
-.nav a {
-  font-size: 14px;
-  gap: 8px;
-}
-
-.nav a svg {
-  width: 20px;
-  height: 20px;
-}
-
-.user-icon {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
-  min-height: 46px;
-}
-
-.user-icon svg {
-  width: 22px;
-  height: 22px;
-  transform: translateY(-1px);
-}
-
-.hero {
-  position: relative;
-  min-height: 330px;
-  display: grid;
-  grid-template-columns: minmax(330px, 0.42fr) minmax(560px, 0.58fr);
-  align-items: center;
-  gap: 0;
-  padding: 28px 38px 10px;
-  overflow: visible;
-  background:
-    radial-gradient(circle at 78% 42%, rgba(255, 199, 118, 0.18), transparent 36%),
-    linear-gradient(90deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 248, 236, 0.90) 46%, rgba(255, 239, 211, 0.82) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 5;
-  max-width: 420px;
-}
-
-.hero-title-row {
-  gap: 13px;
-  margin-bottom: 9px;
-}
-
-.hero-target {
-  width: 46px;
-  height: 46px;
-  font-size: 34px;
-}
-
-.hero-title {
-  font-size: clamp(38px, 3.6vw, 50px);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.hero-desc {
-  margin: 0 0 18px;
-  max-width: 390px;
-  font-size: clamp(18px, 1.55vw, 22px);
-  line-height: 1.35;
-}
-
-.hero-badge {
-  gap: 10px;
-  padding: 9px 14px;
-  border-radius: 11px;
-  font-size: 13.5px;
-}
-
-.hero-badge span:first-child {
-  font-size: 21px;
-}
-
-.hero-badge strong {
-  padding: 8px 13px;
-  border-radius: 8px;
-}
-
-.hero-visual {
-  position: relative;
-  z-index: 2;
-  height: 340px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  overflow: visible;
-  pointer-events: none;
-  margin-bottom: -38px;
-}
-
-.hero-mountain {
-  position: relative;
-  z-index: 1;
-  width: 820px !important;
-  max-width: none !important;
-  height: 370px !important;
-  object-fit: contain;
-  object-position: center bottom;
-  display: block;
-  opacity: 0.98;
-  transform: translateX(22px) translateY(22px);
-  transform-origin: right bottom;
-  filter: drop-shadow(0 16px 30px rgba(47, 72, 88, 0.08));
-}
-
-.quiz-list {
-  position: relative;
-  z-index: 6;
-  margin-top: -34px;
-}
-
-.quiz-section {
-  margin: 0 28px 14px;
-  padding: 20px 20px 18px;
-  border-radius: 24px;
-}
-
-.section-head {
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.category-icon {
-  width: 48px;
-  height: 48px;
-  font-size: 21px;
-}
-
-.category-icon.small-text {
-  font-size: 12px;
-}
-
-.section-title {
-  font-size: 28px;
-}
-
-.level-chip {
-  padding: 6px 12px;
-  font-size: 13.5px;
-  border-radius: 8px;
-}
-
-.quiz-grid {
-  gap: 14px;
-}
-
-.quiz-card {
-  grid-template-columns: 78px 1fr;
-  min-height: 128px;
-  padding: 16px;
-  border-radius: 13px;
-}
-
-.quiz-level-icon {
-  width: 66px;
-  height: 66px;
-  font-size: 31px;
-}
-
-.quiz-title {
-  font-size: 20px;
-  margin-bottom: 6px;
-}
-
-.quiz-desc {
-  font-size: 13.5px;
-  line-height: 1.42;
-  margin-bottom: 12px;
-}
-
-.quiz-btn {
-  width: 132px;
-  min-height: 34px;
-  font-size: 13px;
-}
-
-.tips-card {
-  min-height: 104px;
-  margin: 0 28px 30px;
-  padding: 18px 180px 18px 24px;
-  border-radius: 21px;
-}
-
-.tips-left {
-  gap: 16px;
-}
-
-.tips-icon {
-  width: 52px;
-  height: 52px;
-  font-size: 29px;
-}
-
-.tips-card h3 {
-  font-size: 22px;
-  margin-bottom: 5px;
-}
-
-.tips-card p {
-  font-size: 13.8px;
-  line-height: 1.45;
-}
-
-.tips-cat {
-  right: 22px;
-  width: 130px;
-  max-width: 130px;
-}
-
-@media (max-width: 980px) {
-  .header {
-    padding: 12px 22px;
-  }
-
-  .site-logo {
-    width: 46px;
-    height: 46px;
-  }
-
-  .logo-text strong {
-    font-size: 27px;
-  }
-
-  .logo-text span {
-    font-size: 11px;
-  }
-
-  .nav {
-    gap: 18px;
-  }
-
-  .nav a {
-    font-size: 13.5px;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 28px 22px 20px;
-    overflow: hidden;
-  }
-
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .hero-visual {
-    height: 230px;
-    justify-content: center;
-    margin-top: 6px;
-    margin-bottom: -14px;
-  }
-
-  .hero-mountain {
-    width: min(540px, 112%) !important;
-    max-width: none !important;
-    height: 230px !important;
-    transform: translateX(0) translateY(8px);
-  }
-
-  .quiz-list {
-    margin-top: -12px;
-  }
-
-  .quiz-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 18px;
-  }
-
-  .nav {
-    width: 100%;
-    overflow-x: auto;
-    gap: 16px;
-    padding-bottom: 8px;
-  }
-
-  .hero-title {
-    font-size: 38px;
-  }
-
-  .hero-desc {
-    font-size: 17px;
-  }
-
-  .hero-badge {
-    white-space: normal;
-    flex-wrap: wrap;
-  }
-
-  .hero-visual {
-    height: 190px;
-    margin-bottom: -8px;
-  }
-
-  .hero-mountain {
-    width: min(430px, 116%) !important;
-    height: 190px !important;
-    transform: translateX(0) translateY(6px);
-  }
-
-  .quiz-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .quiz-section {
-    margin: 0 14px 14px;
-    padding: 17px;
-  }
-
-  .quiz-card {
-    grid-template-columns: 68px 1fr;
-    min-height: 116px;
-    padding: 14px;
-    text-align: left;
-  }
-
-  .quiz-level-icon {
-    width: 58px;
-    height: 58px;
-    font-size: 27px;
-  }
-
-  .quiz-btn {
-    width: 125px;
-  }
-
-  .tips-card {
-    margin: 0 14px 24px;
-    padding: 18px;
-    display: grid;
-    gap: 12px;
-  }
-
-  .tips-cat {
-    position: static;
-    width: 112px;
-    max-width: 112px;
-    transform: none;
-    justify-self: end;
-  }
-}
-
-
-/* =========================
-   BOTTOM TEXTURE FOR QUIZ SECTIONS
-========================= */
-.quiz-section {
-  position: relative;
-  overflow: hidden;
-}
-
-.quiz-section::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -8px;
-  height: 135px;
-  background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
-  background-repeat: repeat-x;
-  background-size: 360px auto;
-  background-position: bottom center;
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.quiz-section > * {
-  position: relative;
-  z-index: 2;
-}
-
-.quiz-section::after {
-  opacity: 0.08 !important;
-}
-
-@media (max-width: 640px) {
-  .quiz-section::before {
-    height: 105px;
-    bottom: -6px;
-    background-size: 280px auto;
-    opacity: 0.14;
-  }
-}
-
-
-
-
-
-    /* =========================
-       LIGHT PROTECTION PATCH
-       Nonaktifkan select/copy/drag tanpa mengubah layout.
-    ========================= */
-
-    * {
-      -webkit-tap-highlight-color: transparent;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    html,
-    body {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    img,
-    svg,
-    button,
-    a,
-    div,
-    section,
-    article,
-    header,
-    main,
-    span,
-    p,
-    h1,
-    h2,
-    h3 {
-      -webkit-user-drag: none;
-      user-drag: none;
-      user-select: none;
-    }
-
-    img {
-      pointer-events: auto;
-      -webkit-user-drag: none;
-    }
-
-  
-
-/* =========================
-   FINAL COLOR + COMPACT PATCH
-   Background dibuat menyatu dan layout diperkecil ±25%
-========================= */
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--navy);
-  font-family: "Merriweather", Georgia, serif;
-  background:
-    radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.045), transparent 24%),
-    radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.055), transparent 28%),
-    linear-gradient(180deg, #fff8ec 0%, #fff6e8 42%, #fff8ec 100%);
-  overflow-x: hidden;
-}
-
-body::before {
-  opacity: 0.12;
-}
-
-.page-wrap {
-  width: min(960px, 100%);
-  margin: 0 auto;
-  background:
-    linear-gradient(180deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 246, 232, 0.98) 48%, rgba(255, 248, 236, 0.98) 100%);
-  box-shadow: 0 0 0 1px rgba(222, 196, 158, 0.18);
-}
-
-main {
-  background:
-    linear-gradient(180deg, rgba(255, 248, 236, 0.96) 0%, rgba(255, 246, 232, 0.96) 46%, rgba(255, 248, 236, 0.98) 100%);
-}
-
-.header {
-  min-height: 72px;
-  padding: 10px 32px;
-  background: rgba(255, 248, 236, 0.96);
-  border-bottom: 1px solid rgba(222, 196, 158, 0.55);
-  gap: 20px;
-}
-
-.site-brand {
-  gap: 12px;
-}
-
-.site-logo {
-  width: 56px;
-  height: 56px;
-}
-
-.logo-text strong {
-  font-size: 28px;
-  line-height: 0.95;
-}
-
-.logo-text span {
-  margin-top: 4px;
-  font-size: 10.5px;
-}
-
-.nav {
-  gap: 20px;
-}
-
-.nav a {
-  font-size: 13px;
-  gap: 7px;
-}
-
-.nav a svg {
-  width: 18px;
-  height: 18px;
-}
-
-.nav a.active::after {
-  bottom: -13px;
-  height: 2.5px;
-}
-
-.nav a.user-icon,
-.user-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  min-height: 42px;
-}
-
-.user-icon svg {
-  width: 20px;
-  height: 20px;
-  transform: translateY(-1px);
-}
-
-.hero {
-  position: relative;
-  min-height: 270px;
-  display: grid;
-  grid-template-columns: minmax(280px, 0.42fr) minmax(420px, 0.58fr);
-  align-items: center;
-  gap: 0;
-  padding: 22px 32px 8px;
-  overflow: visible;
-  background:
-    radial-gradient(circle at 78% 40%, rgba(255, 199, 118, 0.13), transparent 36%),
-    linear-gradient(90deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 247, 235, 0.96) 48%, rgba(255, 242, 221, 0.90) 100%);
-}
-
-.hero-content {
-  max-width: 340px;
-  position: relative;
-  z-index: 5;
-}
-
-.hero-title-row {
-  gap: 10px;
-  margin-bottom: 7px;
-}
-
-.hero-target {
-  width: 38px;
-  height: 38px;
-  font-size: 28px;
-}
-
-.hero-title {
-  font-size: clamp(32px, 3.1vw, 40px);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.hero-desc {
-  margin: 0 0 14px;
-  max-width: 320px;
-  font-size: clamp(15.5px, 1.35vw, 18px);
-  line-height: 1.35;
-}
-
-.hero-badge {
-  gap: 8px;
-  padding: 7px 11px;
-  border-radius: 10px;
-  font-size: 11.5px;
-}
-
-.hero-badge span:first-child {
-  font-size: 18px;
-}
-
-.hero-badge strong {
-  padding: 7px 11px;
-  border-radius: 7px;
-}
-
-.hero-visual {
-  position: relative;
-  z-index: 2;
-  height: 275px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  overflow: visible;
-  pointer-events: none;
-  margin-bottom: -30px;
-}
-
-.hero-visual::before {
-  content: "";
-  position: absolute;
-  left: -120px;
-  right: -60px;
-  bottom: -8px;
-  height: 120px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 248, 236, 0),
-    rgba(255, 248, 236, 0.62) 48%,
-    rgba(255, 248, 236, 1)
-  );
-  z-index: 3;
-  pointer-events: none;
-}
-
-.hero-visual::after {
-  content: "";
-  position: absolute;
-  left: -135px;
-  top: 0;
-  bottom: 0;
-  width: 210px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 248, 236, 0.98),
-    rgba(255, 248, 236, 0.38),
-    rgba(255, 248, 236, 0)
-  );
-  z-index: 3;
-  pointer-events: none;
-}
-
-.hero-mountain {
-  width: 660px !important;
-  max-width: none !important;
-  height: 300px !important;
-  object-fit: contain;
-  object-position: center bottom;
-  display: block;
-  opacity: 0.98;
-  transform: translateX(18px) translateY(18px);
-  transform-origin: right bottom;
-  animation: none !important;
-}
-
-.quiz-list {
-  position: relative;
-  z-index: 6;
-  margin-top: -26px;
-}
-
-.quiz-section {
-  margin: 0 22px 12px;
-  padding: 16px 16px 15px;
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 249, 238, 0.82));
-}
-
-.section-head {
-  gap: 11px;
-  margin-bottom: 14px;
-}
-
-.category-icon {
-  width: 38px;
-  height: 38px;
-  font-size: 17px;
-}
-
-.category-icon.small-text {
-  font-size: 10px;
-}
-
-.section-title {
-  font-size: 23px;
-}
-
-.level-chip {
-  padding: 5px 10px;
-  font-size: 11.5px;
-  border-radius: 7px;
-}
-
-.quiz-grid {
-  gap: 11px;
-}
-
-.quiz-card {
-  grid-template-columns: 60px 1fr;
-  min-height: 104px;
-  padding: 12px;
-  border-radius: 11px;
-}
-
-.quiz-level-icon {
-  width: 52px;
-  height: 52px;
-  font-size: 24px;
-}
-
-.quiz-title {
-  font-size: 16.5px;
-  margin-bottom: 4px;
-}
-
-.quiz-desc {
-  font-size: 11.5px;
-  line-height: 1.4;
-  margin-bottom: 9px;
-}
-
-.quiz-btn {
-  width: 106px;
-  min-height: 28px;
-  font-size: 11.5px;
-  border-radius: 7px;
-}
-
-.quiz-section::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -8px;
-  height: 92px;
-  background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
-  background-repeat: repeat-x;
-  background-size: 250px auto;
-  background-position: bottom center;
-  opacity: 0.13;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.quiz-section > * {
-  position: relative;
-  z-index: 2;
-}
-
-.quiz-section::after {
-  opacity: 0.05 !important;
-}
-
-.tips-card {
-  min-height: 82px;
-  margin: 0 22px 24px;
-  padding: 14px 135px 14px 18px;
-  border-radius: 18px;
-}
-
-.tips-left {
-  gap: 12px;
-}
-
-.tips-icon {
-  width: 40px;
-  height: 40px;
-  font-size: 23px;
-}
-
-.tips-card h3 {
-  font-size: 17px;
-  margin-bottom: 4px;
-}
-
-.tips-card p {
-  font-size: 11.5px;
-  line-height: 1.4;
-}
-
-.tips-cat {
-  right: 16px;
-  width: 96px;
-  max-width: 96px;
-}
-
-@media (max-width: 980px) {
-  .page-wrap {
-    width: 100%;
-  }
-
-  .header {
-    padding: 10px 18px;
-  }
-
-  .site-logo {
-    width: 44px;
-    height: 44px;
-  }
-
-  .logo-text strong {
-    font-size: 25px;
-  }
-
-  .logo-text span {
-    font-size: 10px;
-  }
-
-  .nav {
-    gap: 15px;
-  }
-
-  .nav a {
-    font-size: 12px;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 24px 18px 18px;
-    overflow: hidden;
-  }
-
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .hero-visual {
-    height: 200px;
-    justify-content: center;
-    margin-top: 6px;
-    margin-bottom: -12px;
-  }
-
-  .hero-visual::after {
-    display: none;
-  }
-
-  .hero-mountain {
-    width: min(460px, 112%) !important;
-    height: 200px !important;
-    transform: translateX(0) translateY(7px);
-  }
-
-  .quiz-list {
-    margin-top: -10px;
-  }
-
-  .quiz-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 15px;
-  }
-
-  .nav {
-    width: 100%;
-    overflow-x: auto;
-    gap: 14px;
-    padding-bottom: 8px;
-  }
-
-  .hero-title {
-    font-size: 34px;
-  }
-
-  .hero-desc {
-    font-size: 15.5px;
-  }
-
-  .hero-badge {
-    white-space: normal;
-    flex-wrap: wrap;
-  }
-
-  .hero-visual {
-    height: 170px;
-    margin-bottom: -8px;
-  }
-
-  .hero-mountain {
-    width: min(390px, 116%) !important;
-    height: 170px !important;
-    transform: translateX(0) translateY(5px);
-  }
-
-  .quiz-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .quiz-section {
-    margin: 0 12px 12px;
-    padding: 14px;
-  }
-
-  .quiz-card {
-    grid-template-columns: 52px 1fr;
-    min-height: 96px;
-    padding: 11px;
-    text-align: left;
-  }
-
-  .quiz-level-icon {
-    width: 46px;
-    height: 46px;
-    font-size: 22px;
-  }
-
-  .quiz-btn {
-    width: 110px;
-  }
-
-  .tips-card {
-    margin: 0 12px 20px;
-    padding: 14px;
-    display: grid;
-    gap: 10px;
-  }
-
-  .tips-cat {
-    position: static;
-    width: 90px;
-    max-width: 90px;
-    transform: none;
-    justify-self: end;
-  }
-}
-
-/* =========================
-   FINAL CLEAN BLEND + SMALLER LAYOUT
-   Memperbaiki warna kotak kanan dan mengecilkan layout
-========================= */
-
-html,
-body {
-  background: #fff8ec !important;
-  overflow-x: hidden;
-}
-
-body {
-  background:
-    radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.035), transparent 24%),
-    radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.045), transparent 28%),
-    linear-gradient(180deg, #fff8ec 0%, #fff6e8 45%, #fff8ec 100%) !important;
-}
-
-.page-wrap {
-  width: min(900px, 100%) !important;
-  margin: 0 auto !important;
-  background: transparent !important;
-  overflow: hidden;
-}
-
-/* Header sedikit lebih kecil */
-.header {
-  min-height: 66px !important;
-  padding: 9px 28px !important;
-  background: rgba(255, 248, 236, 0.98) !important;
-  border-bottom: 1px solid rgba(222, 196, 158, 0.58) !important;
-}
-
-.site-brand {
-  gap: 10px !important;
-}
-
-.site-logo {
-  width: 46px !important;
-  height: 46px !important;
-}
-
-.logo-text strong {
-  font-size: 26px !important;
-  line-height: 0.95 !important;
-}
-
-.logo-text span {
-  margin-top: 4px !important;
-  font-size: 10px !important;
-}
-
-.nav {
-  gap: 18px !important;
-}
-
-.nav a {
-  font-size: 12.5px !important;
-  gap: 7px !important;
-}
-
-.nav a svg {
-  width: 17px !important;
-  height: 17px !important;
-}
-
-.nav a.active::after {
-  bottom: -12px !important;
-  height: 2.5px !important;
-}
-
-.nav a.user-icon,
-.user-icon {
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
-}
-
-.user-icon svg {
-  width: 19px !important;
-  height: 19px !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Hero: warna dibuat menyatu, tidak ada kotak kanan */
-.hero {
-  position: relative !important;
-  min-height: 245px !important;
-  display: grid !important;
-  grid-template-columns: minmax(260px, 0.42fr) minmax(390px, 0.58fr) !important;
-  align-items: center !important;
-  gap: 0 !important;
-  padding: 20px 28px 6px !important;
-  overflow: hidden !important;
-  background:
-    radial-gradient(circle at 77% 42%, rgba(255, 199, 118, 0.11), transparent 38%),
-    linear-gradient(90deg, #fff8ec 0%, #fff8ec 46%, #fff5e7 100%) !important;
-}
-
-/* Tambahkan layer blend agar sisi kanan tidak terlihat kotak */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 248, 236, 1) 0%,
-      rgba(255, 248, 236, 0.92) 44%,
-      rgba(255, 248, 236, 0.78) 68%,
-      rgba(255, 248, 236, 0.96) 100%
-    );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative !important;
-  z-index: 5 !important;
-  max-width: 310px !important;
-}
-
-.hero-title-row {
-  gap: 9px !important;
-  margin-bottom: 6px !important;
-}
-
-.hero-target {
-  width: 34px !important;
-  height: 34px !important;
-  font-size: 25px !important;
-}
-
-.hero-title {
-  font-size: clamp(29px, 2.9vw, 36px) !important;
-  line-height: 1 !important;
-}
-
-.hero-desc {
-  margin: 0 0 12px !important;
-  max-width: 295px !important;
-  font-size: clamp(14px, 1.2vw, 16px) !important;
-  line-height: 1.35 !important;
-}
-
-.hero-badge {
-  gap: 7px !important;
-  padding: 6px 10px !important;
-  border-radius: 9px !important;
-  font-size: 10.8px !important;
-}
-
-.hero-badge span:first-child {
-  font-size: 16px !important;
-}
-
-.hero-badge strong {
-  padding: 6px 10px !important;
-  border-radius: 7px !important;
-}
-
-/* Gambar Fuji tetap besar, tapi tidak membuat kotak kanan */
-.hero-visual {
-  position: relative !important;
-  z-index: 2 !important;
-  height: 245px !important;
-  display: flex !important;
-  align-items: flex-end !important;
-  justify-content: flex-end !important;
-  overflow: visible !important;
-  pointer-events: none !important;
-  margin-bottom: -24px !important;
-}
-
-.hero-visual::before {
-  content: "";
-  position: absolute;
-  left: -105px;
-  right: -55px;
-  bottom: -8px;
-  height: 105px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 248, 236, 0),
-    rgba(255, 248, 236, 0.58) 48%,
-    rgba(255, 248, 236, 1)
-  );
-  z-index: 4;
-  pointer-events: none;
-}
-
-.hero-visual::after {
-  content: "";
-  position: absolute;
-  left: -120px;
-  top: 0;
-  bottom: 0;
-  width: 185px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 248, 236, 0.98),
-    rgba(255, 248, 236, 0.35),
-    rgba(255, 248, 236, 0)
-  );
-  z-index: 4;
-  pointer-events: none;
-}
-
-.hero-mountain {
-  width: 590px !important;
-  max-width: none !important;
-  height: 270px !important;
-  object-fit: contain !important;
-  object-position: center bottom !important;
-  opacity: 0.98 !important;
-  transform: translateX(10px) translateY(16px) scale(1.02) !important;
-  transform-origin: right bottom !important;
-  animation: none !important;
-}
-
-/* Card kuis lebih compact */
-.quiz-list {
-  position: relative !important;
-  z-index: 6 !important;
-  margin-top: -22px !important;
-}
-
-.quiz-section {
-  margin: 0 18px 10px !important;
-  padding: 14px 14px 13px !important;
-  border-radius: 18px !important;
-  background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.90), rgba(255, 248, 236, 0.86)) !important;
-}
-
-.section-head {
-  gap: 10px !important;
-  margin-bottom: 12px !important;
-}
-
-.category-icon {
-  width: 34px !important;
-  height: 34px !important;
-  font-size: 15px !important;
-}
-
-.category-icon.small-text {
-  font-size: 9px !important;
-}
-
-.section-title {
-  font-size: 20px !important;
-}
-
-.level-chip {
-  padding: 4px 9px !important;
-  font-size: 10.5px !important;
-  border-radius: 7px !important;
-}
-
-.quiz-grid {
-  gap: 9px !important;
-}
-
-.quiz-card {
-  grid-template-columns: 52px 1fr !important;
-  min-height: 92px !important;
-  padding: 10px !important;
-  border-radius: 10px !important;
-}
-
-.quiz-level-icon {
-  width: 44px !important;
-  height: 44px !important;
-  font-size: 21px !important;
-}
-
-.quiz-title {
-  font-size: 15px !important;
-  margin-bottom: 4px !important;
-}
-
-.quiz-desc {
-  font-size: 10.5px !important;
-  line-height: 1.38 !important;
-  margin-bottom: 8px !important;
-}
-
-.quiz-btn {
-  width: 96px !important;
-  min-height: 26px !important;
-  font-size: 10.5px !important;
-  border-radius: 7px !important;
-}
-
-/* Texture lebih lembut agar warna tidak terlihat pecah */
-.quiz-section::before {
-  height: 78px !important;
-  bottom: -7px !important;
-  background-size: 220px auto !important;
-  opacity: 0.10 !important;
-}
-
-.quiz-section::after {
-  opacity: 0.04 !important;
-}
-
-/* Tips ikut diperkecil */
-.tips-card {
-  min-height: 76px !important;
-  margin: 0 18px 20px !important;
-  padding: 12px 118px 12px 15px !important;
-  border-radius: 16px !important;
-}
-
-.tips-left {
-  gap: 10px !important;
-}
-
-.tips-icon {
-  width: 36px !important;
-  height: 36px !important;
-  font-size: 20px !important;
-}
-
-.tips-card h3 {
-  font-size: 15px !important;
-  margin-bottom: 3px !important;
-}
-
-.tips-card p {
-  font-size: 10.5px !important;
-  line-height: 1.38 !important;
-}
-
-.tips-cat {
-  right: 13px !important;
-  width: 82px !important;
-  max-width: 82px !important;
-}
-
-/* Responsive mobile */
-@media (max-width: 980px) {
-  .page-wrap {
-    width: 100% !important;
-  }
-
-  .hero {
-    grid-template-columns: 1fr !important;
-    padding: 22px 16px 16px !important;
-    overflow: hidden !important;
-  }
-
-  .hero::before {
-    background: linear-gradient(180deg, rgba(255,248,236,0.96), rgba(255,248,236,0.86)) !important;
-  }
-
-  .hero-content {
-    max-width: 100% !important;
-  }
-
-  .hero-visual {
-    height: 180px !important;
-    justify-content: center !important;
-    margin-top: 5px !important;
-    margin-bottom: -10px !important;
-  }
-
-  .hero-visual::after {
-    display: none !important;
-  }
-
-  .hero-mountain {
-    width: min(420px, 112%) !important;
-    height: 180px !important;
-    transform: translateX(0) translateY(6px) scale(1.02) !important;
-  }
-
-  .quiz-list {
-    margin-top: -8px !important;
-  }
-
-  .quiz-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 9px !important;
-    padding: 11px 14px !important;
-  }
-
-  .nav {
-    width: 100% !important;
-    overflow-x: auto !important;
-    gap: 12px !important;
-    padding-bottom: 7px !important;
-  }
-
-  .hero-title {
-    font-size: 31px !important;
-  }
-
-  .hero-desc {
-    font-size: 14px !important;
-  }
-
-  .hero-badge {
-    white-space: normal !important;
-    flex-wrap: wrap !important;
-  }
-
-  .hero-visual {
-    height: 150px !important;
-  }
-
-  .hero-mountain {
-    width: min(350px, 116%) !important;
-    height: 150px !important;
-    transform: translateX(0) translateY(5px) scale(1) !important;
-  }
-
-  .quiz-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .quiz-section {
-    margin: 0 10px 10px !important;
-    padding: 12px !important;
-  }
-
-  .quiz-card {
-    grid-template-columns: 48px 1fr !important;
-    min-height: 88px !important;
-    text-align: left !important;
-  }
-
-  .quiz-level-icon {
-    width: 42px !important;
-    height: 42px !important;
-    font-size: 20px !important;
-  }
-
-  .tips-card {
-    margin: 0 10px 18px !important;
-    padding: 12px !important;
-    display: grid !important;
-    gap: 9px !important;
-  }
-
-  .tips-cat {
-    position: static !important;
-    width: 78px !important;
-    max-width: 78px !important;
-    transform: none !important;
-    justify-self: end !important;
-  }
-}
-
-
-/* =========================
-   FONT OVERRIDE - MERRIWEATHER + NOTO SERIF JP
-   Hanya mengganti font, tanpa mengubah layout/spacing.
-========================= */
-
-body {
-  font-family: "Merriweather", Georgia, serif;
-}
-
-.logo-title,
-.logo-text strong,
-h1,
-h2,
-h3,
-.hero-title,
-.section-title,
-.quiz-title,
-.card-title {
-  font-family: "Merriweather", Georgia, serif;
-  font-weight: 900;
-}
-
-.japanese-text,
-.logo-text span {
-  font-family: "Noto Serif JP", serif;
-  font-weight: 400;
-}
-
-.nav a,
-.hero-badge,
-.level-chip,
-.quiz-desc,
-.quiz-btn,
-.tips-card p {
-  font-family: "Merriweather", Georgia, serif;
-}
-
-
-
-/* =========================
-   SAFE MOBILE HERO FIX
-   Desktop tetap sama, mobile lebih rapi
-========================= */
-
-@media (max-width: 640px) {
-  .hero {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    min-height: auto !important;
-    padding: 22px 16px 14px !important;
-    gap: 8px !important;
-    overflow: hidden !important;
-    background:
-      radial-gradient(circle at 70% 45%, rgba(255, 199, 118, 0.10), transparent 38%),
-      linear-gradient(180deg, #fff8ec 0%, #fff6e8 58%, #fff8ec 100%) !important;
-  }
-
-  .hero-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    z-index: 5 !important;
-  }
-
-  .hero-title-row {
-    display: flex !important;
-    align-items: center !important;
-    gap: 9px !important;
-    margin-bottom: 7px !important;
-  }
-
-  .hero-target {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 24px !important;
-  }
-
-  .hero-title {
-    font-size: 32px !important;
-    line-height: 1.05 !important;
-    letter-spacing: -0.035em !important;
-  }
-
-  .hero-desc {
-    max-width: 100% !important;
-    margin: 0 0 10px !important;
-    font-size: 14px !important;
-    line-height: 1.45 !important;
-  }
-
-  .hero-badge {
-    width: fit-content !important;
-    max-width: 100% !important;
-    gap: 7px !important;
-    padding: 7px 10px !important;
-    font-size: 10.8px !important;
-    white-space: normal !important;
-    flex-wrap: wrap !important;
-  }
-
-  .hero-badge strong {
-    padding: 6px 10px !important;
-  }
-
-  .hero-visual {
-    width: 100% !important;
-    height: 145px !important;
-    margin: 4px 0 -6px !important;
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
-    overflow: visible !important;
-    pointer-events: none !important;
-  }
-
-  .hero-visual::after {
-    display: none !important;
-  }
-
-  .hero-visual::before {
-    left: -20px !important;
-    right: -20px !important;
-    bottom: -6px !important;
-    height: 55px !important;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 248, 236, 0),
-      rgba(255, 248, 236, 0.92)
-    ) !important;
-  }
-
-  .hero-mountain {
-    width: min(335px, 100%) !important;
-    max-width: none !important;
-    height: 145px !important;
-    object-fit: contain !important;
-    object-position: center bottom !important;
-    transform: translateX(0) translateY(3px) !important;
-    animation: none !important;
-  }
-
-  .quiz-list {
-    margin-top: -4px !important;
-  }
-}
-
-/* HP sangat kecil */
-@media (max-width: 420px) {
-  .hero {
-    padding: 20px 14px 12px !important;
-  }
-
-  .hero-title {
-    font-size: 30px !important;
-  }
-
-  .hero-desc {
-    font-size: 13.5px !important;
-  }
-
-  .hero-visual {
-    height: 135px !important;
-    margin-top: 2px !important;
-  }
-
-  .hero-mountain {
-    width: min(310px, 100%) !important;
-    height: 135px !important;
-  }
-}
-
-  
-
-/* =========================
-   FINAL HERO GAP FIX
-   Rapatkan jarak teks dan gambar Fuji
-========================= */
-
-@media (min-width: 981px) {
-  .page-wrap {
-    width: min(940px, 100%) !important;
-    margin: 0 auto !important;
-  }
-
-  .hero {
-    min-height: 250px !important;
-    display: grid !important;
-    grid-template-columns: minmax(295px, 0.40fr) minmax(430px, 0.60fr) !important;
-    align-items: center !important;
-    column-gap: 0 !important;
-    padding: 22px 26px 8px !important;
-    overflow: hidden !important;
-    background:
-      radial-gradient(circle at 72% 42%, rgba(255, 199, 118, 0.12), transparent 38%),
-      linear-gradient(90deg, #fff8ec 0%, #fff8ec 43%, #fff5e7 100%) !important;
-  }
-
-  .hero-content {
-    max-width: 310px !important;
-    position: relative !important;
-    z-index: 5 !important;
-  }
-
-  .hero-title-row {
-    gap: 9px !important;
-    margin-bottom: 6px !important;
-  }
-
-  .hero-target {
-    width: 34px !important;
-    height: 34px !important;
-    font-size: 25px !important;
-  }
-
-  .hero-title {
-    font-size: clamp(30px, 3vw, 38px) !important;
-    line-height: 1.05 !important;
-  }
-
-  .hero-desc {
-    max-width: 300px !important;
-    margin: 0 0 12px !important;
-    font-size: clamp(14px, 1.25vw, 16px) !important;
-    line-height: 1.35 !important;
-  }
-
-  .hero-badge {
-    gap: 7px !important;
-    padding: 6px 10px !important;
-    border-radius: 9px !important;
-    font-size: 10.8px !important;
-  }
-
-  .hero-badge strong {
-    padding: 6px 10px !important;
-  }
-
-  .hero-visual {
-    height: 245px !important;
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: flex-start !important;
-    overflow: visible !important;
-    margin-left: -42px !important;
-    margin-bottom: -22px !important;
-    pointer-events: none !important;
-  }
-
-  .hero-visual::after {
-    content: "" !important;
-    position: absolute !important;
-    left: -70px !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    width: 130px !important;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 248, 236, 0.98),
-      rgba(255, 248, 236, 0.36),
-      rgba(255, 248, 236, 0)
-    ) !important;
-    z-index: 4 !important;
-    pointer-events: none !important;
-  }
-
-  .hero-visual::before {
-    content: "" !important;
-    position: absolute !important;
-    left: -80px !important;
-    right: -35px !important;
-    bottom: -8px !important;
-    height: 95px !important;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 248, 236, 0),
-      rgba(255, 248, 236, 0.72) 52%,
-      rgba(255, 248, 236, 1)
-    ) !important;
-    z-index: 4 !important;
-    pointer-events: none !important;
-  }
-
-  .hero-mountain {
-    width: 570px !important;
-    max-width: none !important;
-    height: 255px !important;
-    object-fit: contain !important;
-    object-position: center bottom !important;
-    opacity: 0.98 !important;
-    transform: translateX(-18px) translateY(13px) !important;
-    animation: none !important;
-  }
-
-  .quiz-list {
-    margin-top: -20px !important;
-  }
-}
-
-
-
-/* =========================
-   MOBILE ONLY PHONE-CARD LAYOUT
-   Desktop tidak berubah
-========================= */
-
-@media (max-width: 640px) {
-  html,
-  body {
-    min-height: 100vh !important;
-    overflow-x: hidden !important;
-    background:
-      radial-gradient(circle at 20% 10%, rgba(214, 40, 40, 0.04), transparent 24%),
-      radial-gradient(circle at 85% 12%, rgba(16, 33, 59, 0.04), transparent 28%),
-      linear-gradient(135deg, #fbf7ef 0%, #f7f1e7 50%, #f1eadf 100%) !important;
-  }
-
-  body {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    padding: 18px 12px !important;
-  }
-
-  .page-wrap,
-  .app,
-  .quiz-app,
-  .phone-frame,
-  .container {
-    width: min(390px, 100%) !important;
-    max-width: 390px !important;
-    min-height: auto !important;
-    margin: 0 auto !important;
-    border-radius: 30px !important;
-    overflow: hidden !important;
-    background: rgba(255, 253, 248, 0.94) !important;
-    box-shadow: 0 24px 70px rgba(49, 36, 23, 0.14) !important;
-    border: 1px solid rgba(222, 196, 158, 0.65) !important;
-  }
-
-  .header {
-    display: none !important;
-  }
-
-  .hero {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    min-height: auto !important;
-    padding: 28px 18px 22px !important;
-    gap: 0 !important;
-    text-align: center !important;
-    overflow: hidden !important;
-    background:
-      linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 248, 236, 0.94)) !important;
-  }
-
-  .hero-content {
-    order: 2 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    text-align: center !important;
-    z-index: 5 !important;
-  }
-
-  .hero-visual {
-    order: 1 !important;
-    width: 100% !important;
-    height: 250px !important;
-    margin: 0 auto 14px !important;
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
-    overflow: visible !important;
-    pointer-events: none !important;
-  }
-
-  .hero-visual::before {
-    content: "" !important;
-    position: absolute !important;
-    left: -18px !important;
-    right: -18px !important;
-    bottom: -8px !important;
-    height: 90px !important;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 253, 248, 0),
-      rgba(255, 253, 248, 0.96)
-    ) !important;
-    z-index: 3 !important;
-    pointer-events: none !important;
-  }
-
-  .hero-visual::after {
-    display: none !important;
-  }
-
-  .hero-mountain {
-    width: min(360px, 100%) !important;
-    max-width: 360px !important;
-    height: 250px !important;
-    object-fit: contain !important;
-    object-position: center bottom !important;
-    display: block !important;
-    transform: translateX(0) translateY(4px) !important;
-    opacity: 0.98 !important;
-    animation: none !important;
-  }
-
-  .hero-title-row {
-    justify-content: center !important;
-    gap: 0 !important;
-    margin: 0 0 8px !important;
-  }
-
-  .hero-target {
-    display: none !important;
-  }
-
-  .hero-title {
-    font-size: 48px !important;
-    line-height: 0.95 !important;
-    letter-spacing: -0.05em !important;
-    text-align: center !important;
-  }
-
-  .hero-title::before {
-    content: "— KUIS JEPANG —";
-    display: block;
-    margin-bottom: 12px;
-    color: #b33a2c;
-    font-family: "Merriweather", Georgia, serif;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.12em;
-  }
-
-  .hero-desc {
-    max-width: 300px !important;
-    margin: 0 auto 18px !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    color: rgba(16, 33, 59, 0.68) !important;
-    text-align: center !important;
-  }
-
-  .hero-badge {
-    display: none !important;
-  }
-
-  .hero .quiz-btn,
-  .start-btn,
-  .home-start-btn,
-  .hero-button,
-  .hero a[href] {
-    width: 100% !important;
-    max-width: 320px !important;
-    min-height: 54px !important;
-    margin: 0 auto !important;
-    border-radius: 12px !important;
-    background: #d94a36 !important;
-    color: #ffffff !important;
-    border: none !important;
-    box-shadow: 0 16px 36px rgba(217, 74, 54, 0.25) !important;
-    font-size: 15px !important;
-    font-weight: 900 !important;
-  }
-
-  .quiz-list {
-    margin-top: 0 !important;
-    padding: 0 14px 18px !important;
-  }
-
-  .quiz-section {
-    margin: 0 0 12px !important;
-    padding: 14px !important;
-    border-radius: 20px !important;
-  }
-
-  .quiz-grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-
-  .quiz-card {
-    grid-template-columns: 54px 1fr !important;
-    min-height: 92px !important;
-    padding: 12px !important;
-    text-align: left !important;
-  }
-
-  .quiz-level-icon {
-    width: 46px !important;
-    height: 46px !important;
-    font-size: 22px !important;
-  }
-
-  .quiz-title {
-    font-size: 16px !important;
-  }
-
-  .quiz-desc {
-    font-size: 11px !important;
-  }
-
-  .quiz-btn {
-    width: 112px !important;
-    min-height: 30px !important;
-    font-size: 11px !important;
-  }
-
-  .tips-card {
-    margin: 0 0 16px !important;
-    padding: 14px !important;
-    display: grid !important;
-    gap: 10px !important;
-  }
-
-  .tips-cat {
-    position: static !important;
-    width: 88px !important;
-    max-width: 88px !important;
-    transform: none !important;
-    justify-self: end !important;
-  }
-}
-
-@media (min-width: 641px) {
-  /* Desktop/laptop/PC jangan diubah */
-}
-
-/* =========================
-   REMOVE FUJI HERO IMAGE - ALL DEVICES
-========================= */
-
-.hero-visual,
-.hero-mountain {
-  display: none !important;
-}
-
-/* =========================
-   HERO TEXT ONLY - ALL DEVICES
-========================= */
-
-.hero {
-  position: relative !important;
-  min-height: 260px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 42px 28px 34px !important;
-  overflow: hidden !important;
-  text-align: center !important;
-  background:
-    radial-gradient(circle at 50% 22%, rgba(214, 40, 40, 0.045), transparent 28%),
-    radial-gradient(circle at 50% 82%, rgba(249, 115, 22, 0.045), transparent 32%),
-    linear-gradient(180deg, #fff8ec 0%, #fff6e8 55%, #fff8ec 100%) !important;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(214, 40, 40, 0.035), transparent 22%),
-    radial-gradient(circle at 82% 28%, rgba(16, 33, 59, 0.025), transparent 24%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative !important;
-  z-index: 5 !important;
-  width: 100% !important;
-  max-width: 560px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-}
-
-.hero-title-row {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 14px !important;
-  margin: 0 0 12px !important;
-}
-
-.hero-target {
-  width: 46px !important;
-  height: 46px !important;
-  font-size: 34px !important;
-  flex: 0 0 auto !important;
-}
-
-.hero-title {
-  margin: 0 !important;
-  font-size: clamp(42px, 5vw, 64px) !important;
-  line-height: 1 !important;
-  letter-spacing: -0.045em !important;
-  text-align: center !important;
-}
-
-.hero-desc {
-  max-width: 520px !important;
-  margin: 0 auto 22px !important;
-  font-size: clamp(18px, 2vw, 25px) !important;
-  line-height: 1.4 !important;
-  text-align: center !important;
-}
-
-.hero-badge {
-  width: fit-content !important;
-  max-width: 100% !important;
-  margin: 0 auto !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 12px !important;
-  padding: 10px 16px !important;
-  border-radius: 13px !important;
-  white-space: normal !important;
-  flex-wrap: wrap !important;
-  text-align: center !important;
-}
-
-.hero-badge strong {
-  padding: 9px 14px !important;
-  border-radius: 8px !important;
-}
-
-.quiz-list {
-  margin-top: -10px !important;
-}
-
-@media (min-width: 981px) {
-  .hero {
-    min-height: 270px !important;
-    padding: 48px 36px 40px !important;
-  }
-
-  .hero-content {
-    max-width: 620px !important;
-  }
-
-  .hero-title {
-    font-size: clamp(48px, 5vw, 68px) !important;
-  }
-
-  .hero-desc {
-    max-width: 580px !important;
-  }
-}
-
-@media (max-width: 980px) {
-  .hero {
-    min-height: 240px !important;
-    padding: 38px 24px 30px !important;
-  }
-
-  .hero-content {
-    max-width: 520px !important;
-  }
-
-  .hero-title {
-    font-size: 44px !important;
-  }
-
-  .hero-desc {
-    font-size: 18px !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero {
-    min-height: 230px !important;
-    padding: 34px 18px 28px !important;
-  }
-
-  .hero-title-row {
-    gap: 10px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .hero-target {
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 27px !important;
-  }
-
-  .hero-title {
-    font-size: 36px !important;
-  }
-
-  .hero-desc {
-    max-width: 100% !important;
-    font-size: 15px !important;
-    line-height: 1.45 !important;
-    margin-bottom: 16px !important;
-  }
-
-  .hero-badge {
-    padding: 8px 11px !important;
-    gap: 7px !important;
-    font-size: 11.5px !important;
-  }
-
-  .hero-badge strong {
-    padding: 7px 11px !important;
-  }
-
-  .quiz-list {
-    margin-top: -6px !important;
-  }
-}
-
-</style>
-</head>
-
+  </style></head>
 <body>
-  <div class="page-wrap">
-    <header class="header">
-      <a href="#" class="site-brand" aria-label="Nihongo Quiz Beranda">
-        <img
-          class="site-logo"
-          src="https://i.postimg.cc/SNnYZ9YY/LOGO-NIHONGOGO.png"
-          alt="Logo Nihongo Quiz"
-        />
-        <span class="logo-text">
-          <strong>Nihongo Quiz</strong>
-          <span>日本語クイズ</span>
-        </span>
-      </a>
-
-      <nav class="nav" aria-label="Menu utama">
-        <a href="#" class="active">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3 10.6 12 3l9 7.6v9.9a.9.9 0 0 1-.9.9h-5.2v-6.4H9.1v6.4H3.9a.9.9 0 0 1-.9-.9v-9.9Z"/>
-          </svg>
+<div class="page-wrap">
+<header class="header">
+<a aria-label="Nihongo Quiz Beranda" class="site-brand" href="#">
+<img alt="Logo Nihongo Quiz" class="site-logo" src="https://i.postimg.cc/SNnYZ9YY/LOGO-NIHONGOGO.png"/>
+<span class="logo-text">
+<strong>Nihongo Quiz</strong>
+<span>日本語クイズ</span>
+</span>
+</a>
+<nav aria-label="Menu utama" class="nav">
+<a class="active" href="#">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M3 10.6 12 3l9 7.6v9.9a.9.9 0 0 1-.9.9h-5.2v-6.4H9.1v6.4H3.9a.9.9 0 0 1-.9-.9v-9.9Z"></path>
+</svg>
           Beranda
         </a>
-
-        <a href="#">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.4a9.6 9.6 0 1 0 0 19.2 9.6 9.6 0 0 0 0-19.2Zm0 2a7.6 7.6 0 1 1 0 15.2 7.6 7.6 0 0 1 0-15.2Zm1 3.1h-2v5.6l4.7 2.8 1-1.7-3.7-2.2V7.5Z"/>
-          </svg>
+<a href="#">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M12 2.4a9.6 9.6 0 1 0 0 19.2 9.6 9.6 0 0 0 0-19.2Zm0 2a7.6 7.6 0 1 1 0 15.2 7.6 7.6 0 0 1 0-15.2Zm1 3.1h-2v5.6l4.7 2.8 1-1.7-3.7-2.2V7.5Z"></path>
+</svg>
           Riwayat
         </a>
-
-        <a href="#">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18.7 4H5.3v2H2.5v3.4c0 2.5 1.8 4.6 4.2 5.1A6.1 6.1 0 0 0 11 17.8V20H7.8v2h8.4v-2H13v-2.2a6.1 6.1 0 0 0 4.3-3.3c2.4-.5 4.2-2.6 4.2-5.1V6h-2.8V4ZM4.5 9.4V8h.8v3.9a3.2 3.2 0 0 1-.8-2.5Zm15 0c0 .9-.3 1.8-.8 2.5V8h.8v1.4Z"/>
-          </svg>
+<a href="#">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M18.7 4H5.3v2H2.5v3.4c0 2.5 1.8 4.6 4.2 5.1A6.1 6.1 0 0 0 11 17.8V20H7.8v2h8.4v-2H13v-2.2a6.1 6.1 0 0 0 4.3-3.3c2.4-.5 4.2-2.6 4.2-5.1V6h-2.8V4ZM4.5 9.4V8h.8v3.9a3.2 3.2 0 0 1-.8-2.5Zm15 0c0 .9-.3 1.8-.8 2.5V8h.8v1.4Z"></path>
+</svg>
           Peringkat
         </a>
-
-        <a href="#" class="user-icon" aria-label="Profil pengguna">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 12.2a4.4 4.4 0 1 0 0-8.8 4.4 4.4 0 0 0 0 8.8Zm0 2c-4.2 0-7.6 2.3-7.6 5.1v1.3h15.2v-1.3c0-2.8-3.4-5.1-7.6-5.1Z"/>
-          </svg>
-        </a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-title-row">
-            <div class="hero-target">🎯</div>
-            <h1 class="hero-title">Pilih Kuis</h1>
-          </div>
-
-          <p class="hero-desc">
-            Pilih kategori dan tingkat kesulitan<br>
+<a aria-label="Profil pengguna" class="user-icon" href="#">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M12 12.2a4.4 4.4 0 1 0 0-8.8 4.4 4.4 0 0 0 0 8.8Zm0 2c-4.2 0-7.6 2.3-7.6 5.1v1.3h15.2v-1.3c0-2.8-3.4-5.1-7.6-5.1Z"></path>
+</svg>
+</a>
+</nav>
+</header>
+<main>
+<section class="hero">
+<div class="hero-content">
+<div class="hero-title-row">
+<div class="hero-target">🎯</div>
+<h1 class="hero-title">Pilih Kuis</h1>
+</div>
+<p class="hero-desc">
+            Pilih kategori dan tingkat kesulitan<br/>
             yang ingin kamu tantang!
           </p>
+<div class="hero-badge">
+<span>🎓</span>
+<span>Kuis ini khusus untuk level</span>
+<strong>JLPT N3</strong>
+<span>saja.</span>
+</div>
+</div>
+<div aria-hidden="true" class="hero-visual">
+<img alt="" class="hero-mountain" src="https://i.postimg.cc/jdfyh11Q/JAPAN-INDEX.png"/>
+</div>
+</section>
+<section aria-label="Daftar kuis JLPT N3" class="quiz-list">
+<article class="quiz-section">
+<div class="section-head">
+<div class="category-icon red">漢</div>
+<h2 class="section-title">Kuis Umum</h2>
+<span class="level-chip">JLPT N3</span>
+</div>
+<div class="quiz-grid">
+<div class="quiz-card normal">
+<div aria-hidden="true" class="quiz-level-icon">★</div>
+<div>
+<h3 class="quiz-title">Normal</h3>
+<p class="quiz-desc">Tingkat kesulitan dasar untuk semua topik.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/normal/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card hard">
+<div aria-hidden="true" class="quiz-level-icon">🔥</div>
+<div>
+<h3 class="quiz-title">Hard</h3>
+<p class="quiz-desc">Tantangan lebih sulit untuk kemampuanmu.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/hard/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card super">
+<div aria-hidden="true" class="quiz-level-icon">♛</div>
+<div>
+<h3 class="quiz-title">Super Hard</h3>
+<p class="quiz-desc">Tingkat tersulit untuk ahli sejati!</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/super-hard/">Klik Saya →</a>
+</div>
+</div>
+</div>
+</article>
+<article class="quiz-section">
+<div class="section-head">
+<div class="category-icon purple">漢</div>
+<h2 class="section-title">Kanji</h2>
+<span class="level-chip">JLPT N3</span>
+</div>
+<div class="quiz-grid">
+<div class="quiz-card purple-card">
+<div aria-hidden="true" class="quiz-level-icon">📖</div>
+<div>
+<h3 class="quiz-title">Kanji Normal</h3>
+<p class="quiz-desc">Kanji dasar yang sering muncul.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card hard">
+<div aria-hidden="true" class="quiz-level-icon">📖</div>
+<div>
+<h3 class="quiz-title">Kanji Hard</h3>
+<p class="quiz-desc">Kanji tingkat menengah yang lebih kompleks.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji-hard/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card super">
+<div aria-hidden="true" class="quiz-level-icon">📖</div>
+<div>
+<h3 class="quiz-title">Kanji Super Hard</h3>
+<p class="quiz-desc">Kanji tingkat tinggi untuk tantangan maksimal.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji-superhard/">Klik Saya →</a>
+</div>
+</div>
+</div>
+</article>
+<article class="quiz-section">
+<div class="section-head">
+<div class="category-icon green">あ</div>
+<h2 class="section-title">Kosakata</h2>
+<span class="level-chip">JLPT N3</span>
+</div>
+<!-- TODO: Tambahkan link Kosakata Normal/Hard/Super Hard jika sudah tersedia -->
+<div class="quiz-grid">
+<div class="quiz-card green-card">
+<div aria-hidden="true" class="quiz-level-icon">💬</div>
+<div>
+<h3 class="quiz-title">Kosakata Normal</h3>
+<p class="quiz-desc">Kosakata sehari-hari dasar.</p>
+<a class="quiz-btn" href="#">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card hard">
+<div aria-hidden="true" class="quiz-level-icon">💬</div>
+<div>
+<h3 class="quiz-title">Kosakata Hard</h3>
+<p class="quiz-desc">Kosakata tingkat menengah.</p>
+<a class="quiz-btn" href="#">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card super">
+<div aria-hidden="true" class="quiz-level-icon">💬</div>
+<div>
+<h3 class="quiz-title">Kosakata Super Hard</h3>
+<p class="quiz-desc">Kosakata tingkat lanjutan yang menantang.</p>
+<a class="quiz-btn" href="#">Klik Saya →</a>
+</div>
+</div>
+</div>
+</article>
+<article class="quiz-section">
+<div class="section-head">
+<div class="category-icon blue small-text">文法</div>
+<h2 class="section-title">Bunpou (Tata Bahasa)</h2>
+<span class="level-chip">JLPT N3</span>
+</div>
+<div class="quiz-grid">
+<div class="quiz-card normal">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Bunpou Normal</h3>
+<p class="quiz-desc">Tata bahasa dasar yang sering digunakan.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card hard">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Bunpou Hard</h3>
+<p class="quiz-desc">Tata bahasa tingkat menengah yang lebih kompleks.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou-hard/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card super">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Bunpou Super Hard</h3>
+<p class="quiz-desc">Tata bahasa tingkat tinggi untuk tantangan maksimal.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou-superhard/">Klik Saya →</a>
+</div>
+</div>
+</div>
+</article>
+<article class="quiz-section">
+<div class="section-head">
+<div class="category-icon blue">読</div>
+<h2 class="section-title">Dokkai (Membaca)</h2>
+<span class="level-chip">JLPT N3</span>
+</div>
+<div class="quiz-grid">
+<div class="quiz-card normal">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Dokkai Normal</h3>
+<p class="quiz-desc">Teks pendek untuk latihan membaca.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card hard">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Dokkai Hard</h3>
+<p class="quiz-desc">Teks lebih panjang dan kompleks.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai-hard/">Klik Saya →</a>
+</div>
+</div>
+<div class="quiz-card super">
+<div aria-hidden="true" class="quiz-level-icon">📄</div>
+<div>
+<h3 class="quiz-title">Dokkai Super Hard</h3>
+<p class="quiz-desc">Teks panjang dan sulit untuk ahli.</p>
+<a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai-superhard/">Klik Saya →</a>
+</div>
+</div>
+</div>
+</article>
 
-          <div class="hero-badge">
-            <span>🎓</span>
-            <span>Kuis ini khusus untuk level</span>
-            <strong>JLPT N3</strong>
-            <span>saja.</span>
-          </div>
-        </div>
+</section>
+</main>
+</div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <img
-            class="hero-mountain"
-            src="https://i.postimg.cc/jdfyh11Q/JAPAN-INDEX.png"
-            alt=""
-          />
-        </div>
-      </section>
-
-      <section class="quiz-list" aria-label="Daftar kuis JLPT N3">
-        <article class="quiz-section">
-          <div class="section-head">
-            <div class="category-icon red">漢</div>
-            <h2 class="section-title">Kuis Umum</h2>
-            <span class="level-chip">JLPT N3</span>
-          </div>
-
-          <div class="quiz-grid">
-            <div class="quiz-card normal">
-              <div class="quiz-level-icon" aria-hidden="true">★</div>
-              <div>
-                <h3 class="quiz-title">Normal</h3>
-                <p class="quiz-desc">Tingkat kesulitan dasar untuk semua topik.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/normal/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card hard">
-              <div class="quiz-level-icon" aria-hidden="true">🔥</div>
-              <div>
-                <h3 class="quiz-title">Hard</h3>
-                <p class="quiz-desc">Tantangan lebih sulit untuk kemampuanmu.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/hard/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card super">
-              <div class="quiz-level-icon" aria-hidden="true">♛</div>
-              <div>
-                <h3 class="quiz-title">Super Hard</h3>
-                <p class="quiz-desc">Tingkat tersulit untuk ahli sejati!</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/super-hard/">Klik Saya →</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="quiz-section">
-          <div class="section-head">
-            <div class="category-icon purple">漢</div>
-            <h2 class="section-title">Kanji</h2>
-            <span class="level-chip">JLPT N3</span>
-          </div>
-
-          <div class="quiz-grid">
-            <div class="quiz-card purple-card">
-              <div class="quiz-level-icon" aria-hidden="true">📖</div>
-              <div>
-                <h3 class="quiz-title">Kanji Normal</h3>
-                <p class="quiz-desc">Kanji dasar yang sering muncul.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card hard">
-              <div class="quiz-level-icon" aria-hidden="true">📖</div>
-              <div>
-                <h3 class="quiz-title">Kanji Hard</h3>
-                <p class="quiz-desc">Kanji tingkat menengah yang lebih kompleks.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji-hard/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card super">
-              <div class="quiz-level-icon" aria-hidden="true">📖</div>
-              <div>
-                <h3 class="quiz-title">Kanji Super Hard</h3>
-                <p class="quiz-desc">Kanji tingkat tinggi untuk tantangan maksimal.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/kanji-superhard/">Klik Saya →</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="quiz-section">
-          <div class="section-head">
-            <div class="category-icon green">あ</div>
-            <h2 class="section-title">Kosakata</h2>
-            <span class="level-chip">JLPT N3</span>
-          </div>
-
-          <!-- TODO: Tambahkan link Kosakata Normal/Hard/Super Hard jika sudah tersedia -->
-          <div class="quiz-grid">
-            <div class="quiz-card green-card">
-              <div class="quiz-level-icon" aria-hidden="true">💬</div>
-              <div>
-                <h3 class="quiz-title">Kosakata Normal</h3>
-                <p class="quiz-desc">Kosakata sehari-hari dasar.</p>
-                <a class="quiz-btn" href="#">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card hard">
-              <div class="quiz-level-icon" aria-hidden="true">💬</div>
-              <div>
-                <h3 class="quiz-title">Kosakata Hard</h3>
-                <p class="quiz-desc">Kosakata tingkat menengah.</p>
-                <a class="quiz-btn" href="#">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card super">
-              <div class="quiz-level-icon" aria-hidden="true">💬</div>
-              <div>
-                <h3 class="quiz-title">Kosakata Super Hard</h3>
-                <p class="quiz-desc">Kosakata tingkat lanjutan yang menantang.</p>
-                <a class="quiz-btn" href="#">Klik Saya →</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="quiz-section">
-          <div class="section-head">
-            <div class="category-icon blue small-text">文法</div>
-            <h2 class="section-title">Bunpou (Tata Bahasa)</h2>
-            <span class="level-chip">JLPT N3</span>
-          </div>
-
-          <div class="quiz-grid">
-            <div class="quiz-card normal">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Bunpou Normal</h3>
-                <p class="quiz-desc">Tata bahasa dasar yang sering digunakan.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card hard">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Bunpou Hard</h3>
-                <p class="quiz-desc">Tata bahasa tingkat menengah yang lebih kompleks.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou-hard/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card super">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Bunpou Super Hard</h3>
-                <p class="quiz-desc">Tata bahasa tingkat tinggi untuk tantangan maksimal.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/bunpou-superhard/">Klik Saya →</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="quiz-section">
-          <div class="section-head">
-            <div class="category-icon blue">読</div>
-            <h2 class="section-title">Dokkai (Membaca)</h2>
-            <span class="level-chip">JLPT N3</span>
-          </div>
-
-          <div class="quiz-grid">
-            <div class="quiz-card normal">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Dokkai Normal</h3>
-                <p class="quiz-desc">Teks pendek untuk latihan membaca.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card hard">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Dokkai Hard</h3>
-                <p class="quiz-desc">Teks lebih panjang dan kompleks.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai-hard/">Klik Saya →</a>
-              </div>
-            </div>
-
-            <div class="quiz-card super">
-              <div class="quiz-level-icon" aria-hidden="true">📄</div>
-              <div>
-                <h3 class="quiz-title">Dokkai Super Hard</h3>
-                <p class="quiz-desc">Teks panjang dan sulit untuk ahli.</p>
-                <a class="quiz-btn" href="https://llyandre.github.io/kuis-n3/dokkai-superhard/">Klik Saya →</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <section class="tips-card">
-          <div class="tips-left">
-            <div class="tips-icon">i</div>
-            <div class="tips-text">
-              <h3>Tips</h3>
-              <p>Kerjakan kuis secara rutin untuk meningkatkan kemampuan bahasa Jepangmu!</p>
-            </div>
-          </div>
-
-          <img
-            class="tips-cat"
-            src="https://i.postimg.cc/nrKxTpfG/NEKO-SAKURA-INDEX.png"
-            alt=""
-          />
-        </section>
-      </section>
-    </main>
-  </div>
-
-  <script>
+<script>
     document.querySelectorAll("img").forEach(function(img) {
       img.setAttribute("draggable", "false");
-
       img.addEventListener("dragstart", function(event) {
         event.preventDefault();
       });
-
-      img.addEventListener("contextmenu", function(event) {
-        event.preventDefault();
-      });
     });
-
-
-    /* =========================
-       LIGHT PROTECTION SCRIPT
-       Anti klik kanan, drag, select/copy, shortcut inspect/view source.
-    ========================= */
-
-    document.addEventListener("contextmenu", function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    document.addEventListener("dragstart", function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    document.addEventListener("selectstart", function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    document.addEventListener("copy", function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    document.addEventListener("cut", function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    document.addEventListener("keydown", function(event) {
-      const key = event.key.toLowerCase();
-
-      if (
-        event.key === "F12" ||
-        (event.ctrlKey && event.shiftKey && key === "i") ||
-        (event.ctrlKey && event.shiftKey && key === "j") ||
-        (event.ctrlKey && event.shiftKey && key === "c") ||
-        (event.ctrlKey && key === "u") ||
-        (event.ctrlKey && key === "s") ||
-        (event.ctrlKey && key === "p") ||
-        (event.ctrlKey && key === "a") ||
-        (event.ctrlKey && key === "c")
-      ) {
-        event.preventDefault();
-        alert("Akses inspect element dinonaktifkan.");
-        return false;
-      }
-    });
-
-    (function detectDevTools() {
-      let warningShown = false;
-
-      setInterval(function() {
-        const widthDiff = window.outerWidth - window.innerWidth;
-        const heightDiff = window.outerHeight - window.innerHeight;
-
-        if ((widthDiff > 160 || heightDiff > 160) && !warningShown) {
-          warningShown = true;
-          alert("Inspect element tidak diizinkan pada halaman ini.");
-        }
-
-        if (widthDiff <= 160 && heightDiff <= 160) {
-          warningShown = false;
-        }
-      }, 1000);
-    })();
-
-  </script>
-</body>
+  </script></body>
 </html>
