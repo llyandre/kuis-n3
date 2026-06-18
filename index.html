@@ -550,7 +550,7 @@
     }
 
     .quiz-card:hover .quiz-level-icon {
-      transform: scale(1.06) rotate(-4deg);
+      transform: rotate(-4deg);
     }
 
     .quiz-title {
@@ -1245,7 +1245,7 @@
       object-position: center bottom;
       display: block;
       opacity: 0.98;
-      transform: translateX(34px) translateY(28px) scale(1.08);
+      transform: translateX(34px) translateY(28px);
       transform-origin: right bottom;
       filter: drop-shadow(0 18px 32px rgba(47, 72, 88, 0.08));
       animation: none !important;
@@ -1281,7 +1281,7 @@
         width: min(580px, 112%) !important;
         max-width: none !important;
         height: 250px !important;
-        transform: translateX(0) translateY(10px) scale(1.03);
+        transform: translateX(0) translateY(10px);
       }
 
       .quiz-list {
@@ -1298,7 +1298,7 @@
       .hero-mountain {
         width: min(460px, 116%) !important;
         height: 205px !important;
-        transform: translateX(0) translateY(6px) scale(1);
+        transform: translateX(0) translateY(6px);
       }
 
       .quiz-list {
@@ -1459,7 +1459,7 @@
   object-position: center bottom;
   display: block;
   opacity: 0.98;
-  transform: translateX(22px) translateY(22px) scale(1.04);
+  transform: translateX(22px) translateY(22px);
   transform-origin: right bottom;
   filter: drop-shadow(0 16px 30px rgba(47, 72, 88, 0.08));
 }
@@ -1616,7 +1616,7 @@
     width: min(540px, 112%) !important;
     max-width: none !important;
     height: 230px !important;
-    transform: translateX(0) translateY(8px) scale(1.02);
+    transform: translateX(0) translateY(8px);
   }
 
   .quiz-list {
@@ -1664,7 +1664,7 @@
   .hero-mountain {
     width: min(430px, 116%) !important;
     height: 190px !important;
-    transform: translateX(0) translateY(6px) scale(1);
+    transform: translateX(0) translateY(6px);
   }
 
   .quiz-grid {
@@ -1799,6 +1799,965 @@
       pointer-events: auto;
       -webkit-user-drag: none;
     }
+
+  
+
+/* =========================
+   FINAL COLOR + COMPACT PATCH
+   Background dibuat menyatu dan layout diperkecil ±25%
+========================= */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--navy);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.045), transparent 24%),
+    radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.055), transparent 28%),
+    linear-gradient(180deg, #fff8ec 0%, #fff6e8 42%, #fff8ec 100%);
+  overflow-x: hidden;
+}
+
+body::before {
+  opacity: 0.12;
+}
+
+.page-wrap {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 246, 232, 0.98) 48%, rgba(255, 248, 236, 0.98) 100%);
+  box-shadow: 0 0 0 1px rgba(222, 196, 158, 0.18);
+}
+
+main {
+  background:
+    linear-gradient(180deg, rgba(255, 248, 236, 0.96) 0%, rgba(255, 246, 232, 0.96) 46%, rgba(255, 248, 236, 0.98) 100%);
+}
+
+.header {
+  min-height: 72px;
+  padding: 10px 32px;
+  background: rgba(255, 248, 236, 0.96);
+  border-bottom: 1px solid rgba(222, 196, 158, 0.55);
+  gap: 20px;
+}
+
+.site-brand {
+  gap: 12px;
+}
+
+.site-logo {
+  width: 56px;
+  height: 56px;
+}
+
+.logo-text strong {
+  font-size: 28px;
+  line-height: 0.95;
+}
+
+.logo-text span {
+  margin-top: 4px;
+  font-size: 10.5px;
+}
+
+.nav {
+  gap: 20px;
+}
+
+.nav a {
+  font-size: 13px;
+  gap: 7px;
+}
+
+.nav a svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nav a.active::after {
+  bottom: -13px;
+  height: 2.5px;
+}
+
+.nav a.user-icon,
+.user-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+}
+
+.user-icon svg {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-1px);
+}
+
+.hero {
+  position: relative;
+  min-height: 270px;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(420px, 0.58fr);
+  align-items: center;
+  gap: 0;
+  padding: 22px 32px 8px;
+  overflow: visible;
+  background:
+    radial-gradient(circle at 78% 40%, rgba(255, 199, 118, 0.13), transparent 36%),
+    linear-gradient(90deg, rgba(255, 248, 236, 0.98) 0%, rgba(255, 247, 235, 0.96) 48%, rgba(255, 242, 221, 0.90) 100%);
+}
+
+.hero-content {
+  max-width: 340px;
+  position: relative;
+  z-index: 5;
+}
+
+.hero-title-row {
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.hero-target {
+  width: 38px;
+  height: 38px;
+  font-size: 28px;
+}
+
+.hero-title {
+  font-size: clamp(32px, 3.1vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hero-desc {
+  margin: 0 0 14px;
+  max-width: 320px;
+  font-size: clamp(15.5px, 1.35vw, 18px);
+  line-height: 1.35;
+}
+
+.hero-badge {
+  gap: 8px;
+  padding: 7px 11px;
+  border-radius: 10px;
+  font-size: 11.5px;
+}
+
+.hero-badge span:first-child {
+  font-size: 18px;
+}
+
+.hero-badge strong {
+  padding: 7px 11px;
+  border-radius: 7px;
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 2;
+  height: 275px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  overflow: visible;
+  pointer-events: none;
+  margin-bottom: -30px;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  left: -120px;
+  right: -60px;
+  bottom: -8px;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 236, 0),
+    rgba(255, 248, 236, 0.62) 48%,
+    rgba(255, 248, 236, 1)
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  left: -135px;
+  top: 0;
+  bottom: 0;
+  width: 210px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 248, 236, 0.98),
+    rgba(255, 248, 236, 0.38),
+    rgba(255, 248, 236, 0)
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-mountain {
+  width: 660px !important;
+  max-width: none !important;
+  height: 300px !important;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+  opacity: 0.98;
+  transform: translateX(18px) translateY(18px);
+  transform-origin: right bottom;
+  animation: none !important;
+}
+
+.quiz-list {
+  position: relative;
+  z-index: 6;
+  margin-top: -26px;
+}
+
+.quiz-section {
+  margin: 0 22px 12px;
+  padding: 16px 16px 15px;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(255, 249, 238, 0.82));
+}
+
+.section-head {
+  gap: 11px;
+  margin-bottom: 14px;
+}
+
+.category-icon {
+  width: 38px;
+  height: 38px;
+  font-size: 17px;
+}
+
+.category-icon.small-text {
+  font-size: 10px;
+}
+
+.section-title {
+  font-size: 23px;
+}
+
+.level-chip {
+  padding: 5px 10px;
+  font-size: 11.5px;
+  border-radius: 7px;
+}
+
+.quiz-grid {
+  gap: 11px;
+}
+
+.quiz-card {
+  grid-template-columns: 60px 1fr;
+  min-height: 104px;
+  padding: 12px;
+  border-radius: 11px;
+}
+
+.quiz-level-icon {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+
+.quiz-title {
+  font-size: 16.5px;
+  margin-bottom: 4px;
+}
+
+.quiz-desc {
+  font-size: 11.5px;
+  line-height: 1.4;
+  margin-bottom: 9px;
+}
+
+.quiz-btn {
+  width: 106px;
+  min-height: 28px;
+  font-size: 11.5px;
+  border-radius: 7px;
+}
+
+.quiz-section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 92px;
+  background-image: url("https://i.postimg.cc/br3JqvXb/QUESTION-PAGE-TEXTURE.png");
+  background-repeat: repeat-x;
+  background-size: 250px auto;
+  background-position: bottom center;
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.quiz-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.quiz-section::after {
+  opacity: 0.05 !important;
+}
+
+.tips-card {
+  min-height: 82px;
+  margin: 0 22px 24px;
+  padding: 14px 135px 14px 18px;
+  border-radius: 18px;
+}
+
+.tips-left {
+  gap: 12px;
+}
+
+.tips-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 23px;
+}
+
+.tips-card h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.tips-card p {
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.tips-cat {
+  right: 16px;
+  width: 96px;
+  max-width: 96px;
+}
+
+@media (max-width: 980px) {
+  .page-wrap {
+    width: 100%;
+  }
+
+  .header {
+    padding: 10px 18px;
+  }
+
+  .site-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo-text strong {
+    font-size: 25px;
+  }
+
+  .logo-text span {
+    font-size: 10px;
+  }
+
+  .nav {
+    gap: 15px;
+  }
+
+  .nav a {
+    font-size: 12px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 24px 18px 18px;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    height: 200px;
+    justify-content: center;
+    margin-top: 6px;
+    margin-bottom: -12px;
+  }
+
+  .hero-visual::after {
+    display: none;
+  }
+
+  .hero-mountain {
+    width: min(460px, 112%) !important;
+    height: 200px !important;
+    transform: translateX(0) translateY(7px);
+  }
+
+  .quiz-list {
+    margin-top: -10px;
+  }
+
+  .quiz-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav {
+    width: 100%;
+    overflow-x: auto;
+    gap: 14px;
+    padding-bottom: 8px;
+  }
+
+  .hero-title {
+    font-size: 34px;
+  }
+
+  .hero-desc {
+    font-size: 15.5px;
+  }
+
+  .hero-badge {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    height: 170px;
+    margin-bottom: -8px;
+  }
+
+  .hero-mountain {
+    width: min(390px, 116%) !important;
+    height: 170px !important;
+    transform: translateX(0) translateY(5px);
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-section {
+    margin: 0 12px 12px;
+    padding: 14px;
+  }
+
+  .quiz-card {
+    grid-template-columns: 52px 1fr;
+    min-height: 96px;
+    padding: 11px;
+    text-align: left;
+  }
+
+  .quiz-level-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+  }
+
+  .quiz-btn {
+    width: 110px;
+  }
+
+  .tips-card {
+    margin: 0 12px 20px;
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .tips-cat {
+    position: static;
+    width: 90px;
+    max-width: 90px;
+    transform: none;
+    justify-self: end;
+  }
+}
+
+/* =========================
+   FINAL CLEAN BLEND + SMALLER LAYOUT
+   Memperbaiki warna kotak kanan dan mengecilkan layout
+========================= */
+
+html,
+body {
+  background: #fff8ec !important;
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(214, 40, 40, 0.035), transparent 24%),
+    radial-gradient(circle at 84% 16%, rgba(249, 115, 22, 0.045), transparent 28%),
+    linear-gradient(180deg, #fff8ec 0%, #fff6e8 45%, #fff8ec 100%) !important;
+}
+
+.page-wrap {
+  width: min(900px, 100%) !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  overflow: hidden;
+}
+
+/* Header sedikit lebih kecil */
+.header {
+  min-height: 66px !important;
+  padding: 9px 28px !important;
+  background: rgba(255, 248, 236, 0.98) !important;
+  border-bottom: 1px solid rgba(222, 196, 158, 0.58) !important;
+}
+
+.site-brand {
+  gap: 10px !important;
+}
+
+.site-logo {
+  width: 46px !important;
+  height: 46px !important;
+}
+
+.logo-text strong {
+  font-size: 26px !important;
+  line-height: 0.95 !important;
+}
+
+.logo-text span {
+  margin-top: 4px !important;
+  font-size: 10px !important;
+}
+
+.nav {
+  gap: 18px !important;
+}
+
+.nav a {
+  font-size: 12.5px !important;
+  gap: 7px !important;
+}
+
+.nav a svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+.nav a.active::after {
+  bottom: -12px !important;
+  height: 2.5px !important;
+}
+
+.nav a.user-icon,
+.user-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+.user-icon svg {
+  width: 19px !important;
+  height: 19px !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Hero: warna dibuat menyatu, tidak ada kotak kanan */
+.hero {
+  position: relative !important;
+  min-height: 245px !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 0.42fr) minmax(390px, 0.58fr) !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 20px 28px 6px !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 77% 42%, rgba(255, 199, 118, 0.11), transparent 38%),
+    linear-gradient(90deg, #fff8ec 0%, #fff8ec 46%, #fff5e7 100%) !important;
+}
+
+/* Tambahkan layer blend agar sisi kanan tidak terlihat kotak */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 248, 236, 1) 0%,
+      rgba(255, 248, 236, 0.92) 44%,
+      rgba(255, 248, 236, 0.78) 68%,
+      rgba(255, 248, 236, 0.96) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative !important;
+  z-index: 5 !important;
+  max-width: 310px !important;
+}
+
+.hero-title-row {
+  gap: 9px !important;
+  margin-bottom: 6px !important;
+}
+
+.hero-target {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 25px !important;
+}
+
+.hero-title {
+  font-size: clamp(29px, 2.9vw, 36px) !important;
+  line-height: 1 !important;
+}
+
+.hero-desc {
+  margin: 0 0 12px !important;
+  max-width: 295px !important;
+  font-size: clamp(14px, 1.2vw, 16px) !important;
+  line-height: 1.35 !important;
+}
+
+.hero-badge {
+  gap: 7px !important;
+  padding: 6px 10px !important;
+  border-radius: 9px !important;
+  font-size: 10.8px !important;
+}
+
+.hero-badge span:first-child {
+  font-size: 16px !important;
+}
+
+.hero-badge strong {
+  padding: 6px 10px !important;
+  border-radius: 7px !important;
+}
+
+/* Gambar Fuji tetap besar, tapi tidak membuat kotak kanan */
+.hero-visual {
+  position: relative !important;
+  z-index: 2 !important;
+  height: 245px !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  margin-bottom: -24px !important;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  left: -105px;
+  right: -55px;
+  bottom: -8px;
+  height: 105px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 236, 0),
+    rgba(255, 248, 236, 0.58) 48%,
+    rgba(255, 248, 236, 1)
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  left: -120px;
+  top: 0;
+  bottom: 0;
+  width: 185px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 248, 236, 0.98),
+    rgba(255, 248, 236, 0.35),
+    rgba(255, 248, 236, 0)
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-mountain {
+  width: 590px !important;
+  max-width: none !important;
+  height: 270px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  opacity: 0.98 !important;
+  transform: translateX(10px) translateY(16px) scale(1.02) !important;
+  transform-origin: right bottom !important;
+  animation: none !important;
+}
+
+/* Card kuis lebih compact */
+.quiz-list {
+  position: relative !important;
+  z-index: 6 !important;
+  margin-top: -22px !important;
+}
+
+.quiz-section {
+  margin: 0 18px 10px !important;
+  padding: 14px 14px 13px !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.90), rgba(255, 248, 236, 0.86)) !important;
+}
+
+.section-head {
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.category-icon {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 15px !important;
+}
+
+.category-icon.small-text {
+  font-size: 9px !important;
+}
+
+.section-title {
+  font-size: 20px !important;
+}
+
+.level-chip {
+  padding: 4px 9px !important;
+  font-size: 10.5px !important;
+  border-radius: 7px !important;
+}
+
+.quiz-grid {
+  gap: 9px !important;
+}
+
+.quiz-card {
+  grid-template-columns: 52px 1fr !important;
+  min-height: 92px !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
+.quiz-level-icon {
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 21px !important;
+}
+
+.quiz-title {
+  font-size: 15px !important;
+  margin-bottom: 4px !important;
+}
+
+.quiz-desc {
+  font-size: 10.5px !important;
+  line-height: 1.38 !important;
+  margin-bottom: 8px !important;
+}
+
+.quiz-btn {
+  width: 96px !important;
+  min-height: 26px !important;
+  font-size: 10.5px !important;
+  border-radius: 7px !important;
+}
+
+/* Texture lebih lembut agar warna tidak terlihat pecah */
+.quiz-section::before {
+  height: 78px !important;
+  bottom: -7px !important;
+  background-size: 220px auto !important;
+  opacity: 0.10 !important;
+}
+
+.quiz-section::after {
+  opacity: 0.04 !important;
+}
+
+/* Tips ikut diperkecil */
+.tips-card {
+  min-height: 76px !important;
+  margin: 0 18px 20px !important;
+  padding: 12px 118px 12px 15px !important;
+  border-radius: 16px !important;
+}
+
+.tips-left {
+  gap: 10px !important;
+}
+
+.tips-icon {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 20px !important;
+}
+
+.tips-card h3 {
+  font-size: 15px !important;
+  margin-bottom: 3px !important;
+}
+
+.tips-card p {
+  font-size: 10.5px !important;
+  line-height: 1.38 !important;
+}
+
+.tips-cat {
+  right: 13px !important;
+  width: 82px !important;
+  max-width: 82px !important;
+}
+
+/* Responsive mobile */
+@media (max-width: 980px) {
+  .page-wrap {
+    width: 100% !important;
+  }
+
+  .hero {
+    grid-template-columns: 1fr !important;
+    padding: 22px 16px 16px !important;
+    overflow: hidden !important;
+  }
+
+  .hero::before {
+    background: linear-gradient(180deg, rgba(255,248,236,0.96), rgba(255,248,236,0.86)) !important;
+  }
+
+  .hero-content {
+    max-width: 100% !important;
+  }
+
+  .hero-visual {
+    height: 180px !important;
+    justify-content: center !important;
+    margin-top: 5px !important;
+    margin-bottom: -10px !important;
+  }
+
+  .hero-visual::after {
+    display: none !important;
+  }
+
+  .hero-mountain {
+    width: min(420px, 112%) !important;
+    height: 180px !important;
+    transform: translateX(0) translateY(6px) scale(1.02) !important;
+  }
+
+  .quiz-list {
+    margin-top: -8px !important;
+  }
+
+  .quiz-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 9px !important;
+    padding: 11px 14px !important;
+  }
+
+  .nav {
+    width: 100% !important;
+    overflow-x: auto !important;
+    gap: 12px !important;
+    padding-bottom: 7px !important;
+  }
+
+  .hero-title {
+    font-size: 31px !important;
+  }
+
+  .hero-desc {
+    font-size: 14px !important;
+  }
+
+  .hero-badge {
+    white-space: normal !important;
+    flex-wrap: wrap !important;
+  }
+
+  .hero-visual {
+    height: 150px !important;
+  }
+
+  .hero-mountain {
+    width: min(350px, 116%) !important;
+    height: 150px !important;
+    transform: translateX(0) translateY(5px) scale(1) !important;
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .quiz-section {
+    margin: 0 10px 10px !important;
+    padding: 12px !important;
+  }
+
+  .quiz-card {
+    grid-template-columns: 48px 1fr !important;
+    min-height: 88px !important;
+    text-align: left !important;
+  }
+
+  .quiz-level-icon {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 20px !important;
+  }
+
+  .tips-card {
+    margin: 0 10px 18px !important;
+    padding: 12px !important;
+    display: grid !important;
+    gap: 9px !important;
+  }
+
+  .tips-cat {
+    position: static !important;
+    width: 78px !important;
+    max-width: 78px !important;
+    transform: none !important;
+    justify-self: end !important;
+  }
+}
+
 
   </style>
 </head>
