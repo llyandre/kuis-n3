@@ -405,6 +405,62 @@
       letter-spacing: 0.04em;
     }
 
+    .hero-search {
+      width: min(330px, 100%);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border: 1.5px solid rgba(222, 196, 158, 0.95);
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.9);
+      box-shadow: 0 8px 18px rgba(49, 36, 23, 0.045);
+    }
+
+    .hero-search-icon {
+      font-size: 16px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    #quizSearchInput {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--navy);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 800;
+      min-width: 0;
+    }
+
+    #quizSearchInput::placeholder {
+      color: rgba(16, 33, 59, 0.48);
+    }
+
+    .hero-search:focus-within {
+      border-color: rgba(214, 40, 40, 0.72);
+      box-shadow: 0 10px 22px rgba(214, 40, 40, 0.08);
+    }
+
+    .search-empty {
+      margin: 0 18px 12px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.9);
+      border: 1.5px solid rgba(222, 196, 158, 0.82);
+      color: rgba(16, 33, 59, 0.72);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .search-empty.hidden {
+      display: none;
+    }
+
     .hero-visual {
       position: relative;
       z-index: 2;
@@ -1013,6 +1069,21 @@
         border-radius: 6px;
       }
 
+      .hero-search {
+        width: 100%;
+        min-height: 42px;
+        border-radius: 12px;
+      }
+
+      #quizSearchInput {
+        font-size: 12px;
+      }
+
+      .search-empty {
+        margin: 0 0 12px;
+        font-size: 12px;
+      }
+
       .hero-visual {
         height: 138px;
         justify-content: flex-end;
@@ -1604,11 +1675,9 @@
             Pilih kategori dan tingkat kesulitan<br/>
             yang ingin kamu tantang!
           </p>
-<div class="hero-badge">
-<span>🎓</span>
-<span>Kuis ini khusus untuk level</span>
-<strong>JLPT N3</strong>
-<span>saja.</span>
+<div class="hero-search">
+<span class="hero-search-icon">🔍</span>
+<input autocomplete="off" id="quizSearchInput" placeholder="Cari kategori kuis..." type="text"/>
 </div>
 </div>
 <div aria-hidden="true" class="hero-visual">
@@ -1616,6 +1685,7 @@
 </div>
 </section>
 <section aria-label="Daftar kuis JLPT N3" class="quiz-list">
+<p class="search-empty hidden" id="searchEmptyMessage">Kategori kuis tidak ditemukan.</p>
 <article class="quiz-section">
 <div class="section-head">
 <div class="category-icon red">漢</div>
@@ -1807,8 +1877,53 @@
       const historyContent = document.getElementById("historyContent");
       const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
+      const quizSearchInput = document.getElementById("quizSearchInput");
+      const quizSections = document.querySelectorAll(".quiz-section");
+      const searchEmptyMessage = document.getElementById("searchEmptyMessage");
+
       function cleanUsername(value) {
         return String(value || "").trim().slice(0, maxLength);
+      }
+
+      function normalizeText(value) {
+        return String(value || "")
+          .toLowerCase()
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function filterQuizSections() {
+        const keyword = normalizeText(quizSearchInput ? quizSearchInput.value : "");
+        let visibleCount = 0;
+
+        quizSections.forEach(function (section) {
+          const sectionTitle = section.querySelector(".section-title");
+          const quizTitles = section.querySelectorAll(".quiz-title");
+
+          let searchableText = sectionTitle ? sectionTitle.textContent : "";
+
+          quizTitles.forEach(function (title) {
+            searchableText += " " + title.textContent;
+          });
+
+          searchableText = normalizeText(searchableText);
+
+          const isMatch = !keyword || searchableText.indexOf(keyword) !== -1;
+
+          section.style.display = isMatch ? "" : "none";
+
+          if (isMatch) {
+            visibleCount++;
+          }
+        });
+
+        if (searchEmptyMessage) {
+          if (visibleCount === 0) {
+            searchEmptyMessage.classList.remove("hidden");
+          } else {
+            searchEmptyMessage.classList.add("hidden");
+          }
+        }
       }
 
 
@@ -1962,6 +2077,10 @@
 
       if (logoutUsernameBtn) {
         logoutUsernameBtn.addEventListener("click", logoutUsername);
+      }
+
+      if (quizSearchInput) {
+        quizSearchInput.addEventListener("input", filterQuizSections);
       }
 
 
