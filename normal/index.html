@@ -1688,7 +1688,7 @@
         <div class="brand-mark">Kuis Jepang</div>
         <h1>NihongoGO</h1>
         <p>Asah N3-mu dengan tenang.</p>
-        <button class="primary-btn" type="button" onclick="openUsernameModal()">Mulai Kuis&nbsp; →</button>
+        <button class="primary-btn" type="button" onclick="handleStartQuiz()">Mulai Kuis&nbsp; →</button>
         <div class="home-footer">日本語を学ぼう</div>
       </div>
     </section>
@@ -1944,7 +1944,7 @@
     const USERNAME_MAX_LENGTH = 8;
 
     function cleanUsername(value) {
-      return String(value || "").trim().slice(0, USERNAME_MAX_LENGTH);
+      return String(value || "").trim().slice(0, 8);
     }
 
     function isValidUsername(value) {
@@ -1953,12 +1953,11 @@
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
-      if (!isValidUsername(username)) {
-        localStorage.removeItem(USERNAME_STORAGE_KEY);
-        return "";
+      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      if (username && username.toLowerCase() !== "pengguna") {
+        return username;
       }
-      return username;
+      return "";
     }
 
     function updateUsernameDisplay(username) {
@@ -1969,16 +1968,37 @@
       });
     }
 
+    function updateResultUsername(username) {
+      const resultUserName = document.getElementById("resultUserName");
+      if (resultUserName) {
+        resultUserName.textContent = username ? "Peserta: " + username : "";
+      }
+    }
+
+    function handleStartQuiz() {
+      const savedUsername = getSavedUsername();
+
+      if (savedUsername) {
+        currentUsername = savedUsername;
+        updateUsernameDisplay(currentUsername);
+        updateResultUsername(currentUsername);
+        startQuiz();
+        return;
+      }
+
+      openUsernameModal();
+    }
+
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
 
     function logoutUsername() {
-      localStorage.removeItem(USERNAME_STORAGE_KEY);
+      localStorage.removeItem("nihongoUsername");
       currentUsername = "";
       updateUsernameDisplay("Pengguna");
+      updateResultUsername("");
       setScreen("start");
-      openUsernameModal(true);
     }
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
@@ -2005,27 +2025,30 @@ const screens = {
       screens[name].classList.add("active");
     }
 
-    function openUsernameModal(forceInput = false) {
-      const savedUsername = getSavedUsername();
-
-      if (savedUsername && !forceInput) {
-        currentUsername = savedUsername;
-        updateUsernameDisplay(currentUsername);
-        startQuiz();
-        return;
-      }
-
+    function openUsernameModal() {
       const modal = document.getElementById("usernameModal");
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
 
-      error.textContent = "";
-      input.value = "";
-      input.maxLength = USERNAME_MAX_LENGTH;
-      modal.classList.add("active");
-      modal.setAttribute("aria-hidden", "false");
+      if (error) {
+        error.textContent = "";
+      }
 
-      setTimeout(() => input.focus(), 80);
+      if (input) {
+        input.value = "";
+        input.maxLength = 8;
+      }
+
+      if (modal) {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+      }
+
+      setTimeout(() => {
+        if (input) {
+          input.focus();
+        }
+      }, 80);
     }
 
     function closeUsernameModal() {
@@ -2047,30 +2070,41 @@ const screens = {
       }
 
       const modal = document.getElementById("usernameModal");
-      modal.classList.remove("active");
-      modal.setAttribute("aria-hidden", "true");
+      if (modal) {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      }
     }
 
     function confirmUsername() {
       const input = document.getElementById("usernameInput");
       const error = document.getElementById("usernameError");
-      const username = cleanUsername(input.value);
+      const username = cleanUsername(input ? input.value : "");
 
-      input.value = username;
+      if (input) {
+        input.value = username;
+      }
 
-      if (!isValidUsername(username)) {
-        error.textContent = "Username wajib diisi dan tidak boleh memakai nama Pengguna.";
-        input.focus();
+      if (!username || username.toLowerCase() === "pengguna") {
+        if (error) {
+          error.textContent = "Username wajib diisi.";
+        }
+        if (input) {
+          input.focus();
+        }
         return;
       }
 
-      localStorage.setItem(USERNAME_STORAGE_KEY, username);
+      localStorage.setItem("nihongoUsername", username);
       currentUsername = username;
       updateUsernameDisplay(currentUsername);
+      updateResultUsername(currentUsername);
 
       const modal = document.getElementById("usernameModal");
-      modal.classList.remove("active");
-      modal.setAttribute("aria-hidden", "true");
+      if (modal) {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      }
 
       startQuiz();
     }
@@ -2227,13 +2261,15 @@ const screens = {
       if (!savedUsername) {
         currentUsername = "";
         updateUsernameDisplay("Pengguna");
+        updateResultUsername("");
         setScreen("start");
-        openUsernameModal(true);
+        openUsernameModal();
         return;
       }
 
       currentUsername = savedUsername;
       updateUsernameDisplay(currentUsername);
+      updateResultUsername(currentUsername);
       currentQuestion = 0;
       score = 0;
       selectedAnswers = [];
@@ -2397,11 +2433,8 @@ let message;
       currentUsername = getSavedUsername() || "";
       resultSaved = false;
       updateUsernameDisplay(currentUsername || "Pengguna");
+      updateResultUsername(currentUsername);
       setScreen("start");
-
-      if (!currentUsername) {
-        openUsernameModal(true);
-      }
     }
 
     const usernameInputElement = document.getElementById("usernameInput");
@@ -2423,15 +2456,15 @@ let message;
     document.addEventListener("DOMContentLoaded", function() {
       const savedUsername = getSavedUsername();
 
-      if (savedUsername) {
-        currentUsername = savedUsername;
-        updateUsernameDisplay(currentUsername);
-        startQuiz();
-      } else {
-        currentUsername = "";
-        updateUsernameDisplay("Pengguna");
-        setScreen("start");
-        openUsernameModal(true);
+      currentUsername = savedUsername || "";
+      updateUsernameDisplay(currentUsername || "Pengguna");
+      updateResultUsername(currentUsername);
+      setScreen("start");
+
+      const usernameModal = document.getElementById("usernameModal");
+      if (usernameModal) {
+        usernameModal.classList.remove("active");
+        usernameModal.setAttribute("aria-hidden", "true");
       }
     });
 
@@ -2502,6 +2535,7 @@ let message;
       // Jangan blok Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X agar teks/input tetap bisa dipakai
     });
 
+    window.handleStartQuiz = handleStartQuiz;
     window.openUsernameModal = openUsernameModal;
     window.closeUsernameModal = closeUsernameModal;
     window.confirmUsername = confirmUsername;
