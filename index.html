@@ -1578,17 +1578,33 @@
       line-height: 1;
     }
 
-    #closeHistoryBtn {
-      width: 34px;
-      height: 34px;
+    #closeHistoryBtn,
+    #closeRankingSummaryBtn {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
+      padding: 0;
       border: none;
       border-radius: 50%;
       background: var(--red);
       color: #fff;
-      font-size: 22px;
-      font-weight: 900;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-size: 28px;
+      font-weight: 900;
       line-height: 1;
+      text-align: center;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    #closeHistoryBtn:hover,
+    #closeRankingSummaryBtn:hover {
+      filter: brightness(0.95);
     }
 
     .history-content {
