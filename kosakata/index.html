@@ -658,6 +658,18 @@
       font-weight: 700;
     }
 
+
+    .question-target {
+      display: block;
+      margin-top: 12px;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(30px, 9vw, 42px);
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
     .options {
       display: grid;
       gap: 12px;
@@ -1564,7 +1576,6 @@
       }
     }
 
-
     /* Default: elemen non-teks tidak bisa diseleksi */
     * {
       -webkit-tap-highlight-color: transparent;
@@ -1643,6 +1654,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
+
   </style>
 </head>
 
@@ -1806,1106 +1818,1106 @@
 
   <script>
 
-        const quiz = [
+    const quiz = [
       {
-            "question": "意味はどれですか。\n「確認」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「確率」</span>",
             "options": [
-                  "mengantar",
-                  "membatalkan",
-                  "memastikan / mengecek",
-                  "menjelaskan panjang"
+                  "kemungkinan atau probabilitas",
+                  "kepastian mutlak",
+                  "perbandingan harga",
+                  "perubahan jadwal"
             ],
-            "answer": "memastikan / mengecek",
-            "explanation": "「確認」 berarti memastikan, mengecek, atau konfirmasi."
+            "answer": "kemungkinan atau probabilitas",
+            "explanation": "「確率」 berarti kemungkinan atau probabilitas terjadinya sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「準備」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「傾向」</span>",
             "options": [
-                  "persiapan",
-                  "pemerintah",
-                  "perubahan",
-                  "pengalaman"
+                  "keputusan resmi",
+                  "perbandingan angka",
+                  "pengaruh langsung",
+                  "kecenderungan"
             ],
-            "answer": "persiapan",
-            "explanation": "「準備」 berarti persiapan sebelum melakukan sesuatu."
+            "answer": "kecenderungan",
+            "explanation": "「傾向」 berarti kecenderungan atau arah umum suatu keadaan."
       },
       {
-            "question": "意味はどれですか。\n「連絡」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「方針」</span>",
             "options": [
-                  "memilih",
-                  "membandingkan",
-                  "menyimpan",
-                  "menghubungi / kontak"
+                  "perasaan pribadi",
+                  "biaya tambahan",
+                  "kebijakan atau arah tindakan",
+                  "hasil akhir"
             ],
-            "answer": "menghubungi / kontak",
-            "explanation": "「連絡」 berarti kontak, kabar, atau menghubungi seseorang."
+            "answer": "kebijakan atau arah tindakan",
+            "explanation": "「方針」 berarti kebijakan, prinsip, atau arah tindakan."
       },
       {
-            "question": "意味はどれですか。\n「予約」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「事情」</span>",
             "options": [
-                  "tagihan",
-                  "reservasi / pemesanan",
-                  "diskon",
-                  "pertemuan"
+                  "biaya perjalanan",
+                  "keadaan atau latar belakang situasi",
+                  "jadwal harian",
+                  "peraturan sekolah"
             ],
-            "answer": "reservasi / pemesanan",
-            "explanation": "「予約」 berarti reservasi atau pemesanan lebih dulu."
+            "answer": "keadaan atau latar belakang situasi",
+            "explanation": "「事情」 berarti keadaan, alasan, atau latar belakang suatu situasi."
       },
       {
-            "question": "意味はどれですか。\n「変更」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「状況」</span>",
             "options": [
-                  "kesempatan",
-                  "keputusan akhir",
-                  "kebiasaan",
-                  "perubahan"
+                  "situasi atau kondisi yang sedang terjadi",
+                  "tujuan pribadi",
+                  "metode pembayaran",
+                  "pengalaman masa lalu"
             ],
-            "answer": "perubahan",
-            "explanation": "「変更」 berarti perubahan rencana, jadwal, atau isi."
+            "answer": "situasi atau kondisi yang sedang terjadi",
+            "explanation": "「状況」 berarti situasi atau kondisi yang sedang berlangsung."
       },
       {
-            "question": "意味はどれですか。\n「決定」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「条件」</span>",
             "options": [
-                  "pengurangan",
-                  "pembayaran",
-                  "keputusan / penetapan",
-                  "permintaan maaf"
+                  "hasil penelitian",
+                  "pendapat umum",
+                  "biaya bulanan",
+                  "syarat atau kondisi"
             ],
-            "answer": "keputusan / penetapan",
-            "explanation": "「決定」 berarti keputusan atau sesuatu yang sudah ditetapkan."
+            "answer": "syarat atau kondisi",
+            "explanation": "「条件」 berarti syarat atau kondisi yang harus dipenuhi."
       },
       {
-            "question": "意味はどれですか。\n「原因」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「対象」</span>",
             "options": [
-                  "tujuan",
-                  "hasil",
-                  "penyebab",
-                  "batas"
+                  "hasil akhir",
+                  "aturan lama",
+                  "target atau objek yang dituju",
+                  "perasaan kecewa"
             ],
-            "answer": "penyebab",
-            "explanation": "「原因」 berarti penyebab dari suatu kejadian."
+            "answer": "target atau objek yang dituju",
+            "explanation": "「対象」 berarti sasaran, target, atau objek pembahasan."
       },
       {
-            "question": "意味はどれですか。\n「結果」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「価値」</span>",
             "options": [
-                  "peraturan",
-                  "alasan",
-                  "alat",
-                  "hasil"
+                  "batas waktu",
+                  "nilai atau harga penting sesuatu",
+                  "jumlah peserta",
+                  "cara pemakaian"
             ],
-            "answer": "hasil",
-            "explanation": "「結果」 berarti hasil dari proses atau tindakan."
+            "answer": "nilai atau harga penting sesuatu",
+            "explanation": "「価値」 berarti nilai, baik nilai benda maupun nilai pentingnya sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「目的」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「役割」</span>",
             "options": [
-                  "biaya",
-                  "cara",
-                  "tempat",
-                  "tujuan"
+                  "peran atau tugas dalam suatu posisi",
+                  "kesalahan kecil",
+                  "biaya tambahan",
+                  "ruang kosong"
             ],
-            "answer": "tujuan",
-            "explanation": "「目的」 berarti tujuan melakukan sesuatu."
+            "answer": "peran atau tugas dalam suatu posisi",
+            "explanation": "「役割」 berarti peran atau fungsi seseorang/sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「方法」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「責任」</span>",
             "options": [
-                  "jadwal",
-                  "bahaya",
-                  "cara / metode",
-                  "alasan"
+                  "hak pribadi",
+                  "kebiasaan kecil",
+                  "rencana liburan",
+                  "tanggung jawab"
             ],
-            "answer": "cara / metode",
-            "explanation": "「方法」 berarti cara atau metode."
+            "answer": "tanggung jawab",
+            "explanation": "「責任」 berarti tanggung jawab atas suatu tugas atau akibat."
       },
       {
-            "question": "意味はどれですか。\n「必要」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「権利」</span>",
             "options": [
-                  "aneh",
-                  "sementara",
-                  "mudah",
-                  "perlu / kebutuhan"
-            ],
-            "answer": "perlu / kebutuhan",
-            "explanation": "「必要」 berarti perlu atau kebutuhan."
-      },
-      {
-            "question": "意味はどれですか。\n「重要」",
-            "options": [
-                  "penting",
-                  "jarang",
-                  "gelap",
-                  "gratis"
-            ],
-            "answer": "penting",
-            "explanation": "「重要」 berarti penting."
-      },
-      {
-            "question": "意味はどれですか。\n「普通」",
-            "options": [
-                  "khusus",
-                  "berbahaya",
-                  "biasa / umum",
-                  "terakhir"
-            ],
-            "answer": "biasa / umum",
-            "explanation": "「普通」 berarti biasa atau umum."
-      },
-      {
-            "question": "意味はどれですか。\n「特別」",
-            "options": [
-                  "khusus / istimewa",
-                  "murah",
-                  "sering",
-                  "biasa"
-            ],
-            "answer": "khusus / istimewa",
-            "explanation": "「特別」 berarti khusus atau istimewa."
-      },
-      {
-            "question": "意味はどれですか。\n「安全」",
-            "options": [
-                  "aman / keselamatan",
-                  "perhatian",
-                  "bahaya",
-                  "kecepatan"
-            ],
-            "answer": "aman / keselamatan",
-            "explanation": "「安全」 berarti aman atau keselamatan."
-      },
-      {
-            "question": "意味はどれですか。\n「危険」",
-            "options": [
-                  "mudah",
-                  "ramai",
-                  "aman",
-                  "bahaya"
-            ],
-            "answer": "bahaya",
-            "explanation": "「危険」 berarti bahaya."
-      },
-      {
-            "question": "意味はどれですか。\n「関係」",
-            "options": [
-                  "alamat",
-                  "aturan",
-                  "hubungan",
-                  "harga"
-            ],
-            "answer": "hubungan",
-            "explanation": "「関係」 berarti hubungan antara orang, hal, atau keadaan."
-      },
-      {
-            "question": "意味はどれですか。\n「経験」",
-            "options": [
-                  "penelitian",
+                  "larangan",
                   "kesalahan",
-                  "pengalaman",
-                  "kesehatan"
+                  "hak",
+                  "kewajiban"
             ],
-            "answer": "pengalaman",
-            "explanation": "「経験」 berarti pengalaman."
+            "answer": "hak",
+            "explanation": "「権利」 berarti hak yang dimiliki seseorang."
       },
       {
-            "question": "意味はどれですか。\n「努力」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「義務」</span>",
             "options": [
-                  "kemampuan alami",
-                  "perjalanan",
-                  "usaha keras",
-                  "istirahat"
+                  "biaya ringan",
+                  "kewajiban",
+                  "hak khusus",
+                  "keinginan bebas"
             ],
-            "answer": "usaha keras",
-            "explanation": "「努力」 berarti usaha keras."
+            "answer": "kewajiban",
+            "explanation": "「義務」 berarti kewajiban yang harus dilakukan."
       },
       {
-            "question": "意味はどれですか。\n「成功」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「意識」</span>",
             "options": [
-                  "keluhan",
-                  "penundaan",
-                  "kesuksesan / berhasil",
-                  "kegagalan"
+                  "kesadaran atau perhatian",
+                  "hasil pembayaran",
+                  "jumlah barang",
+                  "surat izin"
             ],
-            "answer": "kesuksesan / berhasil",
-            "explanation": "「成功」 berarti berhasil atau kesuksesan."
+            "answer": "kesadaran atau perhatian",
+            "explanation": "「意識」 berarti kesadaran, perhatian, atau pikiran terhadap sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「失敗」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「判断」</span>",
             "options": [
-                  "kesuksesan",
-                  "persetujuan",
-                  "kegagalan",
-                  "keamanan"
+                  "pengiriman barang",
+                  "pemandangan alam",
+                  "perubahan cuaca",
+                  "penilaian atau keputusan setelah berpikir"
             ],
-            "answer": "kegagalan",
-            "explanation": "「失敗」 berarti kegagalan atau gagal melakukan sesuatu."
+            "answer": "penilaian atau keputusan setelah berpikir",
+            "explanation": "「判断」 berarti menilai atau memutuskan berdasarkan informasi."
       },
       {
-            "question": "意味はどれですか。\n「影響」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「評価」</span>",
             "options": [
+                  "pembatalan acara",
+                  "pengeluaran uang",
+                  "evaluasi atau penilaian",
+                  "permintaan bantuan"
+            ],
+            "answer": "evaluasi atau penilaian",
+            "explanation": "「評価」 berarti evaluasi atau penilaian terhadap sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「表情」</span>",
+            "options": [
+                  "jadwal kerja",
+                  "ekspresi wajah",
+                  "isi laporan",
+                  "hasil rapat"
+            ],
+            "answer": "ekspresi wajah",
+            "explanation": "「表情」 berarti ekspresi atau raut wajah."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「態度」</span>",
+            "options": [
+                  "sikap",
+                  "alat tulis",
+                  "biaya masuk",
+                  "perubahan warna"
+            ],
+            "answer": "sikap",
+            "explanation": "「態度」 berarti sikap atau cara seseorang bertindak."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「印象」</span>",
+            "options": [
+                  "persetujuan resmi",
+                  "pendapatan tetap",
+                  "cara memasak",
+                  "kesan"
+            ],
+            "answer": "kesan",
+            "explanation": "「印象」 berarti kesan yang muncul terhadap seseorang/sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「感情」</span>",
+            "options": [
+                  "biaya layanan",
+                  "dokumen resmi",
+                  "perasaan atau emosi",
+                  "batas waktu"
+            ],
+            "answer": "perasaan atau emosi",
+            "explanation": "「感情」 berarti perasaan atau emosi."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「関心」</span>",
+            "options": [
+                  "hasil ujian",
+                  "minat atau ketertarikan",
+                  "kerugian besar",
+                  "syarat masuk"
+            ],
+            "answer": "minat atau ketertarikan",
+            "explanation": "「関心」 berarti minat atau perhatian terhadap suatu hal."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「期待」</span>",
+            "options": [
+                  "harapan atau ekspektasi",
+                  "penolakan",
                   "biaya",
-                  "bayangan saja",
-                  "pengaruh",
-                  "perpindahan"
+                  "kebiasaan"
             ],
-            "answer": "pengaruh",
-            "explanation": "「影響」 berarti pengaruh atau dampak."
+            "answer": "harapan atau ekspektasi",
+            "explanation": "「期待」 berarti harapan atau ekspektasi terhadap sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「環境」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不満」</span>",
             "options": [
-                  "perasaan",
-                  "lingkungan",
-                  "alamat",
-                  "hasil"
+                  "rasa aman",
+                  "kesempatan kerja",
+                  "pembayaran selesai",
+                  "rasa tidak puas"
             ],
-            "answer": "lingkungan",
-            "explanation": "「環境」 berarti lingkungan atau kondisi sekitar."
+            "answer": "rasa tidak puas",
+            "explanation": "「不満」 berarti ketidakpuasan terhadap keadaan."
       },
       {
-            "question": "意味はどれですか。\n「制度」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不安」</span>",
             "options": [
-                  "pakaian",
-                  "sistem / aturan",
-                  "kecepatan",
-                  "hadiah"
+                  "aturan baru",
+                  "keuntungan besar",
+                  "rasa cemas atau khawatir",
+                  "rasa puas"
             ],
-            "answer": "sistem / aturan",
-            "explanation": "「制度」 berarti sistem, aturan, atau lembaga."
+            "answer": "rasa cemas atau khawatir",
+            "explanation": "「不安」 berarti rasa cemas, gelisah, atau khawatir."
       },
       {
-            "question": "意味はどれですか。\n「資料」",
-            "options": [
-                  "bahan / dokumen",
-                  "makanan",
-                  "tiket",
-                  "rumah sakit"
-            ],
-            "answer": "bahan / dokumen",
-            "explanation": "「資料」 berarti bahan, data, atau dokumen."
-      },
-      {
-            "question": "意味はどれですか。\n「料金」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「苦労」</span>",
             "options": [
                   "hadiah",
-                  "biaya / tarif",
-                  "barang",
-                  "gaji"
+                  "kesulitan atau perjuangan",
+                  "hiburan",
+                  "keuntungan"
             ],
-            "answer": "biaya / tarif",
-            "explanation": "「料金」 berarti biaya atau tarif layanan."
+            "answer": "kesulitan atau perjuangan",
+            "explanation": "「苦労」 berarti kesulitan, perjuangan, atau kerja keras yang berat."
       },
       {
-            "question": "意味はどれですか。\n「無料」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「我慢」</span>",
             "options": [
-                  "berbayar",
-                  "kosong",
-                  "mahal",
-                  "gratis"
+                  "menahan diri atau bersabar",
+                  "menyerah total",
+                  "meminta izin",
+                  "mengirim barang"
             ],
-            "answer": "gratis",
-            "explanation": "「無料」 berarti gratis, tidak perlu membayar."
+            "answer": "menahan diri atau bersabar",
+            "explanation": "「我慢」 berarti menahan diri, menahan rasa sakit, atau bersabar."
       },
       {
-            "question": "意味はどれですか。\n「有料」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「遠慮」</span>",
             "options": [
-                  "gratis",
-                  "bermanfaat",
-                  "berbayar",
-                  "terkenal"
+                  "kesombongan",
+                  "pengumuman",
+                  "kewajiban",
+                  "sungkan atau menahan diri karena sopan"
             ],
-            "answer": "berbayar",
-            "explanation": "「有料」 berarti berbayar."
+            "answer": "sungkan atau menahan diri karena sopan",
+            "explanation": "「遠慮」 berarti sungkan, segan, atau menahan diri demi sopan santun."
       },
       {
-            "question": "意味はどれですか。\n「以内」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「誤解」</span>",
             "options": [
-                  "dalam batas tertentu",
-                  "lebih baik",
-                  "selain itu",
-                  "di luar negeri"
+                  "kebiasaan",
+                  "keberhasilan",
+                  "salah paham",
+                  "kesepakatan"
             ],
-            "answer": "dalam batas tertentu",
-            "explanation": "「以内」 berarti dalam batas waktu, jumlah, atau jarak tertentu."
+            "answer": "salah paham",
+            "explanation": "「誤解」 berarti salah paham terhadap maksud atau keadaan."
       },
       {
-            "question": "意味はどれですか。\n「以外」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「理解」</span>",
             "options": [
-                  "selain",
-                  "di dalam",
-                  "minimal",
-                  "sesudah"
+                  "larangan",
+                  "pemahaman",
+                  "penolakan",
+                  "pembayaran"
             ],
-            "answer": "selain",
-            "explanation": "「以外」 berarti selain."
+            "answer": "pemahaman",
+            "explanation": "「理解」 berarti pemahaman terhadap isi atau maksud sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「以上」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「納得」</span>",
             "options": [
-                  "lebih dari / setidaknya",
-                  "di tengah",
-                  "selain",
-                  "kurang dari"
+                  "menerima karena paham atau merasa masuk akal",
+                  "menolak tanpa alasan",
+                  "membayar biaya",
+                  "membatalkan jadwal"
             ],
-            "answer": "lebih dari / setidaknya",
-            "explanation": "「以上」 berarti lebih dari, minimal, atau setidaknya."
+            "answer": "menerima karena paham atau merasa masuk akal",
+            "explanation": "「納得」 berarti memahami dan menerima sesuatu sebagai masuk akal."
       },
       {
-            "question": "意味はどれですか。\n「以下」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「反省」</span>",
             "options": [
-                  "di bawah / hingga batas",
-                  "seketika",
-                  "selain",
-                  "dari sekarang"
+                  "promosi barang",
+                  "perbaikan mesin",
+                  "pemesanan tiket",
+                  "introspeksi atau refleksi diri"
             ],
-            "answer": "di bawah / hingga batas",
-            "explanation": "「以下」 berarti di bawah atau sampai batas tertentu."
+            "answer": "introspeksi atau refleksi diri",
+            "explanation": "「反省」 berarti melihat kembali kesalahan diri untuk memperbaiki."
       },
       {
-            "question": "意味はどれですか。\n「途中」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「改善」</span>",
             "options": [
-                  "paling akhir",
-                  "di tengah perjalanan/proses",
-                  "tujuan utama",
-                  "awal bulan"
+                  "pengiriman",
+                  "penurunan harga",
+                  "perbaikan",
+                  "kerusakan"
             ],
-            "answer": "di tengah perjalanan/proses",
-            "explanation": "「途中」 berarti di tengah perjalanan atau proses."
+            "answer": "perbaikan",
+            "explanation": "「改善」 berarti memperbaiki keadaan agar menjadi lebih baik."
       },
       {
-            "question": "意味はどれですか。\n「最近」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「解決」</span>",
             "options": [
-                  "tahun depan",
-                  "akhir-akhir ini",
-                  "selamanya",
-                  "dahulu kala"
+                  "pembagian tugas",
+                  "penyelesaian masalah",
+                  "permulaan masalah",
+                  "penambahan biaya"
             ],
-            "answer": "akhir-akhir ini",
-            "explanation": "「最近」 berarti akhir-akhir ini."
+            "answer": "penyelesaian masalah",
+            "explanation": "「解決」 berarti menyelesaikan masalah."
       },
       {
-            "question": "意味はどれですか。\n「現在」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「対策」</span>",
             "options": [
-                  "masa depan",
-                  "saat ini",
-                  "sebelumnya",
-                  "masa lalu"
+                  "langkah penanggulangan",
+                  "tujuan umum",
+                  "jadwal tetap",
+                  "pendapat pribadi"
             ],
-            "answer": "saat ini",
-            "explanation": "「現在」 berarti saat ini atau sekarang."
+            "answer": "langkah penanggulangan",
+            "explanation": "「対策」 berarti cara atau langkah untuk menghadapi masalah."
       },
       {
-            "question": "意味はどれですか。\n「過去」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「影響」</span>",
             "options": [
+                  "pembayaran",
+                  "pemandangan",
+                  "pemesanan",
+                  "pengaruh"
+            ],
+            "answer": "pengaruh",
+            "explanation": "「影響」 berarti pengaruh yang diberikan kepada sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「効果」</span>",
+            "options": [
+                  "biaya masuk",
+                  "alamat rumah",
+                  "efek atau hasil manfaat",
+                  "penyebab awal"
+            ],
+            "answer": "efek atau hasil manfaat",
+            "explanation": "「効果」 berarti efek, hasil, atau manfaat dari suatu tindakan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「結果」</span>",
+            "options": [
+                  "alasan",
+                  "hasil",
                   "tujuan",
-                  "masa depan",
-                  "masa lalu",
+                  "cara"
+            ],
+            "answer": "hasil",
+            "explanation": "「結果」 berarti hasil dari suatu proses atau tindakan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「原因」</span>",
+            "options": [
+                  "penyebab",
+                  "hasil akhir",
+                  "batas waktu",
+                  "perasaan senang"
+            ],
+            "answer": "penyebab",
+            "explanation": "「原因」 berarti penyebab terjadinya sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「理由」</span>",
+            "options": [
+                  "kesimpulan",
+                  "barang bukti",
+                  "pengeluaran",
+                  "alasan"
+            ],
+            "answer": "alasan",
+            "explanation": "「理由」 berarti alasan mengapa sesuatu terjadi atau dilakukan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「目的」</span>",
+            "options": [
+                  "biaya",
+                  "aturan",
+                  "tujuan",
+                  "cara"
+            ],
+            "answer": "tujuan",
+            "explanation": "「目的」 berarti tujuan yang ingin dicapai."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「方法」</span>",
+            "options": [
+                  "kewajiban",
+                  "cara atau metode",
+                  "tujuan utama",
+                  "hasil akhir"
+            ],
+            "answer": "cara atau metode",
+            "explanation": "「方法」 berarti cara atau metode melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「手段」</span>",
+            "options": [
+                  "sarana atau cara untuk mencapai tujuan",
+                  "hasil akhir",
+                  "hak pribadi",
+                  "perasaan cemas"
+            ],
+            "answer": "sarana atau cara untuk mencapai tujuan",
+            "explanation": "「手段」 berarti sarana atau cara untuk mencapai tujuan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「手続き」</span>",
+            "options": [
+                  "perasaan pribadi",
+                  "kerugian besar",
+                  "jawaban salah",
+                  "prosedur atau urusan administrasi"
+            ],
+            "answer": "prosedur atau urusan administrasi",
+            "explanation": "「手続き」 berarti prosedur atau langkah administrasi."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「申請」</span>",
+            "options": [
+                  "pembatalan acara",
+                  "pembayaran tunai",
+                  "pengajuan permohonan",
+                  "penolakan otomatis"
+            ],
+            "answer": "pengajuan permohonan",
+            "explanation": "「申請」 berarti mengajukan permohonan secara resmi."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「許可」</span>",
+            "options": [
+                  "tanggung jawab",
+                  "izin",
+                  "larangan",
+                  "kesalahan"
+            ],
+            "answer": "izin",
+            "explanation": "「許可」 berarti izin atau persetujuan untuk melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「連絡」</span>",
+            "options": [
+                  "kontak atau pemberitahuan",
+                  "persaingan",
+                  "perbaikan",
+                  "keuntungan"
+            ],
+            "answer": "kontak atau pemberitahuan",
+            "explanation": "「連絡」 berarti menghubungi atau memberikan kabar."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「報告」</span>",
+            "options": [
+                  "permintaan diam-diam",
+                  "hadiah kecil",
+                  "pengurangan biaya",
+                  "laporan atau melaporkan"
+            ],
+            "answer": "laporan atau melaporkan",
+            "explanation": "「報告」 berarti laporan atau tindakan melaporkan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「相談」</span>",
+            "options": [
+                  "pemesanan barang",
+                  "penyimpanan data",
+                  "konsultasi atau diskusi untuk mencari solusi",
+                  "keputusan sepihak"
+            ],
+            "answer": "konsultasi atau diskusi untuk mencari solusi",
+            "explanation": "「相談」 berarti berkonsultasi atau berdiskusi untuk mencari solusi."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「提案」</span>",
+            "options": [
+                  "kerusakan",
+                  "usulan atau proposal",
+                  "keluhan",
+                  "pembayaran"
+            ],
+            "answer": "usulan atau proposal",
+            "explanation": "「提案」 berarti usulan atau proposal."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「依頼」</span>",
+            "options": [
+                  "permintaan bantuan atau tugas",
+                  "penolakan resmi",
+                  "pengaruh buruk",
+                  "pendapatan"
+            ],
+            "answer": "permintaan bantuan atau tugas",
+            "explanation": "「依頼」 berarti meminta bantuan atau meminta seseorang melakukan sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「注文」</span>",
+            "options": [
+                  "pembatalan",
+                  "laporan",
+                  "pembuktian",
+                  "pesanan atau memesan"
+            ],
+            "answer": "pesanan atau memesan",
+            "explanation": "「注文」 berarti pesanan atau tindakan memesan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「請求」</span>",
+            "options": [
+                  "surat izin",
+                  "hasil rapat",
+                  "tagihan atau permintaan pembayaran",
+                  "diskon besar"
+            ],
+            "answer": "tagihan atau permintaan pembayaran",
+            "explanation": "「請求」 berarti tagihan atau permintaan pembayaran."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「支払い」</span>",
+            "options": [
+                  "penolakan",
+                  "pembayaran",
+                  "peminjaman",
+                  "penyimpanan"
+            ],
+            "answer": "pembayaran",
+            "explanation": "「支払い」 berarti pembayaran."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「費用」</span>",
+            "options": [
+                  "biaya atau pengeluaran yang diperlukan",
+                  "keuntungan bersih",
+                  "jumlah peserta",
+                  "perasaan puas"
+            ],
+            "answer": "biaya atau pengeluaran yang diperlukan",
+            "explanation": "「費用」 berarti biaya yang diperlukan untuk sesuatu."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「料金」</span>",
+            "options": [
+                  "gaji pokok",
+                  "aturan hukum",
+                  "surat bukti",
+                  "tarif atau biaya layanan"
+            ],
+            "answer": "tarif atau biaya layanan",
+            "explanation": "「料金」 berarti tarif atau biaya layanan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「税金」</span>",
+            "options": [
+                  "biaya masuk",
+                  "uang kembali",
+                  "pajak",
+                  "upah tambahan"
+            ],
+            "answer": "pajak",
+            "explanation": "「税金」 berarti pajak yang dibayarkan kepada negara/pemerintah."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「収入」</span>",
+            "options": [
+                  "tagihan",
+                  "pendapatan",
+                  "pengeluaran",
+                  "kerugian"
+            ],
+            "answer": "pendapatan",
+            "explanation": "「収入」 berarti pendapatan atau pemasukan uang."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「支出」</span>",
+            "options": [
+                  "pengeluaran",
+                  "pendapatan",
+                  "keuntungan",
+                  "tabungan"
+            ],
+            "answer": "pengeluaran",
+            "explanation": "「支出」 berarti pengeluaran uang."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「利益」</span>",
+            "options": [
+                  "kerugian",
+                  "denda",
+                  "utang",
+                  "keuntungan atau laba"
+            ],
+            "answer": "keuntungan atau laba",
+            "explanation": "「利益」 berarti keuntungan atau laba."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「損害」</span>",
+            "options": [
+                  "pemasukan",
+                  "izin resmi",
+                  "kerugian atau kerusakan",
+                  "keuntungan"
+            ],
+            "answer": "kerugian atau kerusakan",
+            "explanation": "「損害」 berarti kerugian atau kerusakan yang dialami."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「競争」</span>",
+            "options": [
+                  "pemesanan",
+                  "persaingan",
+                  "kerja sama",
+                  "penjelasan"
+            ],
+            "answer": "persaingan",
+            "explanation": "「競争」 berarti persaingan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「比較」</span>",
+            "options": [
+                  "perbandingan",
+                  "peningkatan",
+                  "permintaan",
+                  "pengawasan"
+            ],
+            "answer": "perbandingan",
+            "explanation": "「比較」 berarti membandingkan beberapa hal."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「増加」</span>",
+            "options": [
+                  "penurunan",
+                  "penghapusan",
+                  "pembatalan",
+                  "peningkatan atau pertambahan"
+            ],
+            "answer": "peningkatan atau pertambahan",
+            "explanation": "「増加」 berarti bertambah atau meningkat."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「減少」</span>",
+            "options": [
+                  "perbaikan",
+                  "persetujuan",
+                  "penurunan atau pengurangan jumlah",
+                  "peningkatan"
+            ],
+            "answer": "penurunan atau pengurangan jumlah",
+            "explanation": "「減少」 berarti jumlahnya berkurang atau menurun."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「変化」</span>",
+            "options": [
+                  "surat izin",
+                  "perubahan",
+                  "kebiasaan tetap",
+                  "tujuan akhir"
+            ],
+            "answer": "perubahan",
+            "explanation": "「変化」 berarti perubahan keadaan atau bentuk."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「発展」</span>",
+            "options": [
+                  "perkembangan atau kemajuan",
+                  "kemunduran",
+                  "penundaan",
+                  "pembatalan"
+            ],
+            "answer": "perkembangan atau kemajuan",
+            "explanation": "「発展」 berarti berkembang atau maju."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「成長」</span>",
+            "options": [
+                  "kerusakan",
+                  "pembayaran",
+                  "perbandingan",
+                  "pertumbuhan"
+            ],
+            "answer": "pertumbuhan",
+            "explanation": "「成長」 berarti pertumbuhan atau perkembangan menjadi lebih besar/dewasa."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「進歩」</span>",
+            "options": [
+                  "pengeluaran",
+                  "ketidakpuasan",
+                  "kemajuan",
+                  "kemunduran"
+            ],
+            "answer": "kemajuan",
+            "explanation": "「進歩」 berarti kemajuan dalam kemampuan atau keadaan."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「建設」</span>",
+            "options": [
+                  "pemilihan umum",
+                  "pembangunan atau konstruksi",
+                  "penghancuran",
+                  "perawatan medis"
+            ],
+            "answer": "pembangunan atau konstruksi",
+            "explanation": "「建設」 berarti pembangunan atau konstruksi bangunan/fasilitas."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「完成」</span>",
+            "options": [
+                  "selesai atau rampung",
+                  "awal mula",
+                  "penundaan",
+                  "kerusakan"
+            ],
+            "answer": "selesai atau rampung",
+            "explanation": "「完成」 berarti selesai dibuat atau rampung."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「製造」</span>",
+            "options": [
+                  "penjualan tiket",
+                  "pembayaran pajak",
+                  "penjelasan singkat",
+                  "produksi atau pembuatan barang"
+            ],
+            "answer": "produksi atau pembuatan barang",
+            "explanation": "「製造」 berarti memproduksi atau membuat barang."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「生産」</span>",
+            "options": [
+                  "pembatalan",
+                  "pengiriman",
+                  "produksi",
+                  "konsumsi"
+            ],
+            "answer": "produksi",
+            "explanation": "「生産」 berarti produksi barang atau hasil."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「消費」</span>",
+            "options": [
+                  "penyimpanan",
+                  "konsumsi atau penggunaan",
+                  "produksi",
+                  "penghasilan"
+            ],
+            "answer": "konsumsi atau penggunaan",
+            "explanation": "「消費」 berarti memakai atau mengonsumsi barang/energi/uang."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「流行」</span>",
+            "options": [
+                  "tren atau sesuatu yang sedang populer",
+                  "aturan lama",
+                  "hasil akhir",
+                  "pajak tahunan"
+            ],
+            "answer": "tren atau sesuatu yang sedang populer",
+            "explanation": "「流行」 berarti tren atau hal yang sedang populer."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「広告」</span>",
+            "options": [
+                  "kontrak",
+                  "bukti",
+                  "tujuan",
+                  "iklan"
+            ],
+            "answer": "iklan",
+            "explanation": "「広告」 berarti iklan atau promosi."
+      },
+      {
+            "question": "意味はどれですか。<br><span class=\"question-target\">「情報」</span>",
+            "options": [
+                  "hak",
+                  "kerugian",
+                  "informasi",
                   "biaya"
             ],
-            "answer": "masa lalu",
-            "explanation": "「過去」 berarti masa lalu."
+            "answer": "informasi",
+            "explanation": "「情報」 berarti informasi atau data yang diketahui."
       },
       {
-            "question": "意味はどれですか。\n「未来」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「資料」</span>",
             "options": [
-                  "masa depan",
-                  "alamat",
-                  "lingkungan",
-                  "masa lalu"
+                  "perasaan",
+                  "bahan, data, atau dokumen",
+                  "kerugian",
+                  "jadwal libur"
             ],
-            "answer": "masa depan",
-            "explanation": "「未来」 berarti masa depan."
+            "answer": "bahan, data, atau dokumen",
+            "explanation": "「資料」 berarti bahan, data, atau dokumen untuk referensi."
       },
       {
-            "question": "意味はどれですか。\n「周囲」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「記事」</span>",
             "options": [
-                  "kesalahan",
-                  "sekitar / sekeliling",
-                  "keputusan",
-                  "pemesanan"
+                  "artikel atau berita tertulis",
+                  "peraturan",
+                  "biaya masuk",
+                  "alat kerja"
             ],
-            "answer": "sekitar / sekeliling",
-            "explanation": "「周囲」 berarti sekitar atau sekeliling."
+            "answer": "artikel atau berita tertulis",
+            "explanation": "「記事」 berarti artikel atau tulisan berita."
       },
       {
-            "question": "意味はどれですか。\n「近所」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「記録」</span>",
             "options": [
-                  "ruang kelas",
-                  "lingkungan sekitar / tetangga",
-                  "pemerintah",
-                  "pencarian"
+                  "tujuan",
+                  "pajak",
+                  "izin",
+                  "catatan atau rekaman"
             ],
-            "answer": "lingkungan sekitar / tetangga",
-            "explanation": "「近所」 berarti lingkungan sekitar atau tetangga."
+            "answer": "catatan atau rekaman",
+            "explanation": "「記録」 berarti catatan atau rekaman suatu kejadian/data."
       },
       {
-            "question": "意味はどれですか。\n「住所」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「証明」</span>",
             "options": [
-                  "kartu pos",
-                  "kehadiran",
-                  "gedung",
-                  "alamat"
+                  "pemesanan",
+                  "pengurangan",
+                  "bukti atau pembuktian",
+                  "penolakan"
             ],
-            "answer": "alamat",
-            "explanation": "「住所」 berarti alamat."
+            "answer": "bukti atau pembuktian",
+            "explanation": "「証明」 berarti bukti atau pembuktian bahwa sesuatu benar."
       },
       {
-            "question": "意味はどれですか。\n「出席」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「契約」</span>",
             "options": [
-                  "masuk sekolah",
-                  "lulus",
-                  "absen",
-                  "hadir / kehadiran"
+                  "pembayaran kecil",
+                  "kontrak atau perjanjian",
+                  "keluhan",
+                  "hadiah"
             ],
-            "answer": "hadir / kehadiran",
-            "explanation": "「出席」 berarti hadir atau kehadiran."
+            "answer": "kontrak atau perjanjian",
+            "explanation": "「契約」 berarti kontrak atau perjanjian resmi."
       },
       {
-            "question": "意味はどれですか。\n「欠席」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「制度」</span>",
             "options": [
-                  "mendaftar",
-                  "lulus",
-                  "absen / tidak hadir",
-                  "hadir"
+                  "sistem atau aturan kelembagaan",
+                  "perasaan pribadi",
+                  "hasil ujian",
+                  "cara memasak"
             ],
-            "answer": "absen / tidak hadir",
-            "explanation": "「欠席」 berarti absen atau tidak hadir."
+            "answer": "sistem atau aturan kelembagaan",
+            "explanation": "「制度」 berarti sistem atau aturan yang berlaku dalam masyarakat/organisasi."
       },
       {
-            "question": "意味はどれですか。\n「卒業」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「法律」</span>",
             "options": [
-                  "lulus",
-                  "masuk sekolah",
-                  "belajar kelompok",
-                  "izin sakit"
+                  "kebiasaan pribadi",
+                  "harga barang",
+                  "rencana harian",
+                  "hukum atau undang-undang"
             ],
-            "answer": "lulus",
-            "explanation": "「卒業」 berarti lulus dari sekolah/universitas."
+            "answer": "hukum atau undang-undang",
+            "explanation": "「法律」 berarti hukum atau undang-undang."
       },
       {
-            "question": "意味はどれですか。\n「入学」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「規則」</span>",
             "options": [
-                  "mengulang",
-                  "masuk sekolah/universitas",
-                  "pindah rumah",
-                  "lulus"
+                  "perasaan",
+                  "kebebasan",
+                  "aturan",
+                  "keuntungan"
             ],
-            "answer": "masuk sekolah/universitas",
-            "explanation": "「入学」 berarti masuk sekolah atau universitas."
+            "answer": "aturan",
+            "explanation": "「規則」 berarti aturan atau tata tertib."
       },
       {
-            "question": "意味はどれですか。\n「就職」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「違反」</span>",
             "options": [
-                  "liburan",
-                  "berhenti sekolah",
-                  "mendapat pekerjaan",
-                  "wawancara teman"
+                  "penghematan",
+                  "pelanggaran",
+                  "persetujuan",
+                  "perbaikan"
             ],
-            "answer": "mendapat pekerjaan",
-            "explanation": "「就職」 berarti mendapatkan pekerjaan atau mulai bekerja."
+            "answer": "pelanggaran",
+            "explanation": "「違反」 berarti melanggar aturan atau hukum."
       },
       {
-            "question": "意味はどれですか。\n「面接」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「禁止」</span>",
             "options": [
-                  "rapat umum",
-                  "ujian tulis",
-                  "upacara",
-                  "wawancara"
+                  "larangan",
+                  "izin",
+                  "keuntungan",
+                  "penjelasan"
             ],
-            "answer": "wawancara",
-            "explanation": "「面接」 berarti wawancara, terutama wawancara kerja/sekolah."
+            "answer": "larangan",
+            "explanation": "「禁止」 berarti larangan melakukan sesuatu."
       },
       {
-            "question": "意味はどれですか。\n「給料」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「可能」</span>",
             "options": [
-                  "bahan pelajaran",
-                  "diskon",
-                  "gaji",
-                  "biaya masuk"
+                  "mustahil",
+                  "wajib",
+                  "gratis",
+                  "kemungkinan atau dapat dilakukan"
             ],
-            "answer": "gaji",
-            "explanation": "「給料」 berarti gaji."
+            "answer": "kemungkinan atau dapat dilakukan",
+            "explanation": "「可能」 berarti mungkin atau dapat dilakukan."
       },
       {
-            "question": "意味はどれですか。\n「残業」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不可能」</span>",
             "options": [
-                  "kerja paruh waktu",
-                  "lembur",
-                  "rapat pagi",
-                  "cuti"
+                  "perlu",
+                  "menguntungkan",
+                  "tidak mungkin atau tidak dapat dilakukan",
+                  "mungkin"
             ],
-            "answer": "lembur",
-            "explanation": "「残業」 berarti lembur."
+            "answer": "tidak mungkin atau tidak dapat dilakukan",
+            "explanation": "「不可能」 berarti tidak mungkin atau tidak dapat dilakukan."
       },
       {
-            "question": "意味はどれですか。\n「会議」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「確認」</span>",
             "options": [
-                  "tiket",
-                  "alamat",
-                  "rapat",
-                  "janji dokter"
+                  "keluhan",
+                  "konfirmasi atau pengecekan",
+                  "pembatalan",
+                  "pembayaran"
             ],
-            "answer": "rapat",
-            "explanation": "「会議」 berarti rapat atau pertemuan resmi."
+            "answer": "konfirmasi atau pengecekan",
+            "explanation": "「確認」 berarti memastikan atau mengecek kembali."
       },
       {
-            "question": "意味はどれですか。\n「報告」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「検討」</span>",
             "options": [
-                  "memesan tiket",
-                  "menerima gaji",
-                  "laporan / melaporkan",
-                  "mengurangi biaya"
+                  "mempertimbangkan atau meninjau",
+                  "membayar lunas",
+                  "mencetak dokumen",
+                  "menolak langsung"
             ],
-            "answer": "laporan / melaporkan",
-            "explanation": "「報告」 berarti laporan atau melaporkan."
+            "answer": "mempertimbangkan atau meninjau",
+            "explanation": "「検討」 berarti mempertimbangkan atau meninjau sesuatu dengan saksama."
       },
       {
-            "question": "文に合う言葉はどれですか。会議の時間をもう一度＿＿してください。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「調査」</span>",
             "options": [
-                  "失敗",
-                  "運動",
-                  "卒業",
-                  "確認"
+                  "penjelasan singkat",
+                  "pemesanan barang",
+                  "perasaan senang",
+                  "penyelidikan atau survei"
             ],
-            "answer": "確認",
-            "explanation": "時間をもう一度チェックするので「確認」が合います。"
+            "answer": "penyelidikan atau survei",
+            "explanation": "「調査」 berarti survei atau penyelidikan untuk mencari data."
       },
       {
-            "question": "文に合う言葉はどれですか。旅行の前にホテルを＿＿しておきます。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「分析」</span>",
             "options": [
-                  "欠席",
-                  "増加",
-                  "予約",
-                  "報告"
+                  "izin",
+                  "kerugian",
+                  "analisis",
+                  "iklan"
             ],
-            "answer": "予約",
-            "explanation": "ホテルを前もって取ることは「予約」です。"
+            "answer": "analisis",
+            "explanation": "「分析」 berarti analisis dengan memecah dan memeriksa isi/data."
       },
       {
-            "question": "文に合う言葉はどれですか。予定が変わったので、集合時間を＿＿しました。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「整理」</span>",
             "options": [
-                  "就職",
-                  "変更",
-                  "無料",
-                  "影響"
+                  "membayar pajak",
+                  "merapikan atau mengorganisasi",
+                  "menghapus izin",
+                  "menunda acara"
             ],
-            "answer": "変更",
-            "explanation": "時間や予定を変える時は「変更」を使います。"
+            "answer": "merapikan atau mengorganisasi",
+            "explanation": "「整理」 berarti merapikan, mengatur, atau menyusun."
       },
       {
-            "question": "文に合う言葉はどれですか。この事故の＿＿を調べています。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「保存」</span>",
             "options": [
-                  "制度",
-                  "目的",
-                  "料金",
-                  "原因"
+                  "menyimpan atau melestarikan",
+                  "menghapus",
+                  "membatalkan",
+                  "membandingkan"
             ],
-            "answer": "原因",
-            "explanation": "事故が起きた理由を調べるので「原因」が正しいです。"
+            "answer": "menyimpan atau melestarikan",
+            "explanation": "「保存」 berarti menyimpan data/barang atau melestarikan sesuatu."
       },
       {
-            "question": "文に合う言葉はどれですか。試験の＿＿は来週発表されます。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「削除」</span>",
             "options": [
-                  "関係",
-                  "結果",
-                  "方法",
-                  "途中"
+                  "menyimpan",
+                  "menambah",
+                  "memperbaiki",
+                  "menghapus"
             ],
-            "answer": "結果",
-            "explanation": "試験の点数や合否は「結果」です。"
+            "answer": "menghapus",
+            "explanation": "「削除」 berarti menghapus data atau bagian tertentu."
       },
       {
-            "question": "文に合う言葉はどれですか。日本語を勉強する＿＿は、仕事で使うためです。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「選択」</span>",
             "options": [
-                  "周囲",
-                  "目的",
-                  "影響",
-                  "安全"
+                  "kerusakan",
+                  "penolakan",
+                  "pilihan atau pemilihan",
+                  "pembayaran"
             ],
-            "answer": "目的",
-            "explanation": "何のためにするかを表す言葉は「目的」です。"
+            "answer": "pilihan atau pemilihan",
+            "explanation": "「選択」 berarti memilih dari beberapa pilihan."
       },
       {
-            "question": "文に合う言葉はどれですか。この機械の使い方をもっと簡単な＿＿で教えてください。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「交換」</span>",
             "options": [
-                  "料金",
-                  "未来",
-                  "過去",
-                  "方法"
+                  "pembuktian",
+                  "pertukaran atau menukar",
+                  "penyimpanan",
+                  "penundaan"
             ],
-            "answer": "方法",
-            "explanation": "使い方ややり方には「方法」が合います。"
+            "answer": "pertukaran atau menukar",
+            "explanation": "「交換」 berarti menukar sesuatu dengan yang lain."
       },
       {
-            "question": "文に合う言葉はどれですか。パスポートは海外旅行に＿＿です。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「返却」</span>",
             "options": [
-                  "有料",
-                  "必要",
-                  "普通",
-                  "最近"
+                  "mengembalikan barang pinjaman",
+                  "meminjam baru",
+                  "membeli ulang",
+                  "menghapus data"
             ],
-            "answer": "必要",
-            "explanation": "海外旅行にはパスポートが必要なので「必要」です。"
+            "answer": "mengembalikan barang pinjaman",
+            "explanation": "「返却」 berarti mengembalikan barang yang dipinjam."
       },
       {
-            "question": "文に合う言葉はどれですか。これはとても＿＿な書類なので、なくさないでください。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「修理」</span>",
             "options": [
-                  "現在",
-                  "危険",
-                  "重要",
-                  "無料"
+                  "penjualan",
+                  "pemesanan",
+                  "penolakan",
+                  "perbaikan barang yang rusak"
             ],
-            "answer": "重要",
-            "explanation": "大切な書類という意味で「重要」が合います。"
+            "answer": "perbaikan barang yang rusak",
+            "explanation": "「修理」 berarti memperbaiki barang/mesin yang rusak."
       },
       {
-            "question": "文に合う言葉はどれですか。この道は夜になると暗くて＿＿です。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「変更」</span>",
             "options": [
-                  "無料",
-                  "安全",
-                  "危険",
-                  "特別"
+                  "pembayaran",
+                  "penjelasan",
+                  "perubahan atau pengubahan",
+                  "penetapan tetap"
             ],
-            "answer": "危険",
-            "explanation": "暗くて危ない道なので「危険」です。"
+            "answer": "perubahan atau pengubahan",
+            "explanation": "「変更」 berarti perubahan atau mengubah sesuatu."
       },
       {
-            "question": "文に合う言葉はどれですか。子どもが遊べる＿＿な場所を探しています。",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「延期」</span>",
             "options": [
-                  "過去",
-                  "有料",
-                  "途中",
-                  "安全"
+                  "pembayaran",
+                  "penundaan jadwal",
+                  "percepatan",
+                  "pembatalan total"
             ],
-            "answer": "安全",
-            "explanation": "子どもが安心して遊べる場所には「安全」が合います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。彼とは仕事上の＿＿があります。",
-            "options": [
-                  "関係",
-                  "欠席",
-                  "面接",
-                  "料金"
-            ],
-            "answer": "関係",
-            "explanation": "人や物事のつながりは「関係」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。海外で働いた＿＿があります。",
-            "options": [
-                  "制度",
-                  "会議",
-                  "住所",
-                  "経験"
-            ],
-            "answer": "経験",
-            "explanation": "過去にしたことは「経験」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。毎日の＿＿があったから、試験に合格できました。",
-            "options": [
-                  "努力",
-                  "環境",
-                  "失敗",
-                  "途中"
-            ],
-            "answer": "努力",
-            "explanation": "頑張り続けることは「努力」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。何度も失敗しましたが、最後には＿＿しました。",
-            "options": [
-                  "成功",
-                  "確認",
-                  "欠席",
-                  "有料"
-            ],
-            "answer": "成功",
-            "explanation": "最後にうまくいったので「成功」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。寝不足は仕事に悪い＿＿を与えます。",
-            "options": [
-                  "影響",
-                  "料金",
-                  "住所",
-                  "近所"
-            ],
-            "answer": "影響",
-            "explanation": "悪い効果やダメージを与えるので「影響」が合います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。自然を守るために、＿＿について考える必要があります。",
-            "options": [
-                  "過去",
-                  "会議",
-                  "環境",
-                  "給料"
-            ],
-            "answer": "環境",
-            "explanation": "自然や周りの状態については「環境」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。この国の教育＿＿は大きく変わりました。",
-            "options": [
-                  "制度",
-                  "途中",
-                  "面接",
-                  "資料"
-            ],
-            "answer": "制度",
-            "explanation": "教育の仕組みやルールは「制度」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。会議で使う＿＿をコピーしておいてください。",
-            "options": [
-                  "資料",
-                  "料金",
-                  "未来",
-                  "欠席"
-            ],
-            "answer": "資料",
-            "explanation": "会議で使う文書やデータは「資料」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。このレッスンは＿＿なので、お金はかかりません。",
-            "options": [
-                  "有料",
-                  "無料",
-                  "重要",
-                  "危険"
-            ],
-            "answer": "無料",
-            "explanation": "お金がかからない場合は「無料」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。このサービスは＿＿ですから、先に料金を払ってください。",
-            "options": [
-                  "無料",
-                  "普通",
-                  "安全",
-                  "有料"
-            ],
-            "answer": "有料",
-            "explanation": "料金が必要なサービスは「有料」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。レポートは500字＿＿で書いてください。",
-            "options": [
-                  "現在",
-                  "以内",
-                  "以外",
-                  "途中"
-            ],
-            "answer": "以内",
-            "explanation": "500字を超えない範囲なので「以内」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。学生＿＿はこの部屋に入れません。",
-            "options": [
-                  "以下",
-                  "以内",
-                  "以上",
-                  "以外"
-            ],
-            "answer": "以外",
-            "explanation": "学生ではない人を表すので「学生以外」が正しいです。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。18歳＿＿の人だけが申し込めます。",
-            "options": [
-                  "途中",
-                  "以上",
-                  "以外",
-                  "無料"
-            ],
-            "answer": "以上",
-            "explanation": "18歳より上、または18歳を含むので「以上」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。小学生＿＿の子どもは無料です。",
-            "options": [
-                  "以下",
-                  "以内",
-                  "以上",
-                  "以外"
-            ],
-            "answer": "以下",
-            "explanation": "小学生までを含む範囲なので「以下」が合います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。学校へ行く＿＿で友だちに会いました。",
-            "options": [
-                  "途中",
-                  "影響",
-                  "目的",
-                  "未来"
-            ],
-            "answer": "途中",
-            "explanation": "移動している間なので「途中」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。＿＿、忙しくて本を読む時間がありません。",
-            "options": [
-                  "最近",
-                  "以上",
-                  "未来",
-                  "昔"
-            ],
-            "answer": "最近",
-            "explanation": "今に近い時期の話なので「最近」が合います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。＿＿の生活は、スマートフォンなしでは考えにくいです。",
-            "options": [
-                  "過去",
-                  "現在",
-                  "昔",
-                  "途中"
-            ],
-            "answer": "現在",
-            "explanation": "今の生活を表すので「現在」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。＿＿のことを後悔しても、変えることはできません。",
-            "options": [
-                  "過去",
-                  "未来",
-                  "現在",
-                  "近所"
-            ],
-            "answer": "過去",
-            "explanation": "もう終わったことなので「過去」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。子どもたちの＿＿のために、今できることを考えましょう。",
-            "options": [
-                  "資料",
-                  "料金",
-                  "途中",
-                  "未来"
-            ],
-            "answer": "未来",
-            "explanation": "これから先のことなので「未来」が合います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。大きな音がしたので、＿＿の人が外に出てきました。",
-            "options": [
-                  "結果",
-                  "周囲",
-                  "目的",
-                  "料金"
-            ],
-            "answer": "周囲",
-            "explanation": "周りにいる人たちを表すので「周囲」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。＿＿に新しいスーパーができました。",
-            "options": [
-                  "以上",
-                  "面接",
-                  "過去",
-                  "近所"
-            ],
-            "answer": "近所",
-            "explanation": "家の近くの地域には「近所」を使います。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。申込書に名前と＿＿を書いてください。",
-            "options": [
-                  "給料",
-                  "住所",
-                  "会議",
-                  "卒業"
-            ],
-            "answer": "住所",
-            "explanation": "名前と一緒に書く住んでいる場所は「住所」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。熱があったので、授業を＿＿しました。",
-            "options": [
-                  "欠席",
-                  "出席",
-                  "入学",
-                  "卒業"
-            ],
-            "answer": "欠席",
-            "explanation": "授業に行かなかったので「欠席」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。明日の会議には必ず＿＿してください。",
-            "options": [
-                  "欠席",
-                  "就職",
-                  "出席",
-                  "卒業"
-            ],
-            "answer": "出席",
-            "explanation": "会議に参加している状態は「出席」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。大学を＿＿したら、会社で働くつもりです。",
-            "options": [
-                  "変更",
-                  "入学",
-                  "卒業",
-                  "予約"
-            ],
-            "answer": "卒業",
-            "explanation": "大学を終えて出ることは「卒業」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。春に大学へ＿＿しました。",
-            "options": [
-                  "卒業",
-                  "欠席",
-                  "入学",
-                  "確認"
-            ],
-            "answer": "入学",
-            "explanation": "学校や大学に入ることは「入学」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。来月、第一希望の会社の＿＿を受けます。",
-            "options": [
-                  "近所",
-                  "料金",
-                  "面接",
-                  "過去"
-            ],
-            "answer": "面接",
-            "explanation": "会社で直接質問を受ける試験は「面接」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。新しい会社に＿＿することが決まりました。",
-            "options": [
-                  "就職",
-                  "予約",
-                  "欠席",
-                  "確認"
-            ],
-            "answer": "就職",
-            "explanation": "会社で働くことが決まるので「就職」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。今月の＿＿は来週銀行に入ります。",
-            "options": [
-                  "資料",
-                  "結果",
-                  "会議",
-                  "給料"
-            ],
-            "answer": "給料",
-            "explanation": "働いた分のお金は「給料」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。仕事が終わらなかったので、今日は＿＿しました。",
-            "options": [
-                  "残業",
-                  "無料",
-                  "卒業",
-                  "入学"
-            ],
-            "answer": "残業",
-            "explanation": "決まった時間の後も働くことは「残業」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。午後3時からプロジェクトの＿＿があります。",
-            "options": [
-                  "会議",
-                  "未来",
-                  "欠席",
-                  "料金"
-            ],
-            "answer": "会議",
-            "explanation": "仕事などの話し合いは「会議」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。上司に仕事の進み具合を＿＿しました。",
-            "options": [
-                  "報告",
-                  "減少",
-                  "出席",
-                  "予約"
-            ],
-            "answer": "報告",
-            "explanation": "状況を伝えることは「報告」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。この問題について先生に＿＿しました。",
-            "options": [
-                  "料金",
-                  "確認",
-                  "周囲",
-                  "相談"
-            ],
-            "answer": "相談",
-            "explanation": "困ったことを話して助言をもらうので「相談」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。人口が毎年少しずつ＿＿しています。",
-            "options": [
-                  "予約",
-                  "増加",
-                  "無料",
-                  "欠席"
-            ],
-            "answer": "増加",
-            "explanation": "数が増えることは「増加」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。売り上げが先月より＿＿しました。",
-            "options": [
-                  "成功",
-                  "影響",
-                  "出席",
-                  "減少"
-            ],
-            "answer": "減少",
-            "explanation": "数や量が減ることは「減少」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。AとBを＿＿して、よいほうを選びます。",
-            "options": [
-                  "準備",
-                  "比較",
-                  "報告",
-                  "卒業"
-            ],
-            "answer": "比較",
-            "explanation": "二つ以上のものを比べることは「比較」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。駅までの＿＿を地図で調べました。",
-            "options": [
-                  "道順",
-                  "制度",
-                  "給料",
-                  "会議"
-            ],
-            "answer": "道順",
-            "explanation": "目的地までの行き方やルートは「道順」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。大事な書類なので、なくさないように＿＿してください。",
-            "options": [
-                  "就職",
-                  "注意",
-                  "過去",
-                  "無料"
-            ],
-            "answer": "注意",
-            "explanation": "気をつけることは「注意」です。"
-      },
-      {
-            "question": "文に合う言葉はどれですか。駅の前に自転車を＿＿しないでください。",
-            "options": [
-                  "相談",
-                  "成功",
-                  "駐車",
-                  "報告"
-            ],
-            "answer": "駐車",
-            "explanation": "乗り物を止めて置くことは「駐車」です。自転車にも使われます。"
+            "answer": "penundaan jadwal",
+            "explanation": "「延期」 berarti menunda jadwal ke waktu yang lebih lambat."
       }
 ];
 
@@ -2948,20 +2960,10 @@ const screens = {
 
     function getSavedUsername() {
       const username = cleanUsername(localStorage.getItem("nihongoUsername"));
-
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
-
       return "";
-    }
-
-    function updateResultUserName() {
-      const resultUserName = document.getElementById("resultUserName");
-
-      if (resultUserName) {
-        resultUserName.textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
-      }
     }
 
     function handleStartQuiz() {
@@ -2969,7 +2971,12 @@ const screens = {
 
       if (savedUsername) {
         currentUsername = savedUsername;
-        updateResultUserName();
+
+        const resultUserName = document.getElementById("resultUserName");
+        if (resultUserName) {
+          resultUserName.textContent = "Peserta: " + currentUsername;
+        }
+
         startQuiz();
         return;
       }
@@ -2985,18 +2992,18 @@ const screens = {
       if (error) {
         error.textContent = "";
       }
-
       if (input) {
         input.value = "";
-        input.setAttribute("maxlength", "8");
+        input.maxLength = 8;
       }
-
       modal.classList.add("active");
       modal.setAttribute("aria-hidden", "false");
 
-      if (input) {
-        setTimeout(() => input.focus(), 80);
-      }
+      setTimeout(() => {
+        if (input) {
+          input.focus();
+        }
+      }, 80);
     }
 
     function closeUsernameModal() {
@@ -3014,17 +3021,20 @@ const screens = {
         if (error) {
           error.textContent = "Username wajib diisi.";
         }
-
         if (input) {
           input.focus();
         }
-
         return;
       }
 
       localStorage.setItem("nihongoUsername", username);
       currentUsername = username;
-      updateResultUserName();
+
+      const resultUserName = document.getElementById("resultUserName");
+      if (resultUserName) {
+        resultUserName.textContent = "Peserta: " + currentUsername;
+      }
+
       closeUsernameModal();
       startQuiz();
     }
@@ -3194,7 +3204,7 @@ const screens = {
 
       document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
       document.getElementById("progressFill").style.width = `${progressPercent}%`;
-      document.getElementById("questionText").textContent = q.question;
+      document.getElementById("questionText").innerHTML = q.question;
       document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
 
       const quizNextBtn = document.getElementById("quizNextBtn");
@@ -3298,17 +3308,17 @@ const screens = {
 let message;
 
       if (percentage >= 85) {
-        message = "Hebat! Pemahaman N3 kamu sudah kuat.";
+        message = "Luar biasa! Kosakata JLPT N3 Super Hard kamu sudah sangat kuat.";
       } else if (percentage >= 70) {
-        message = "Bagus! Terus latih tata bahasa dan kosakata.";
+        message = "Bagus! Kamu sudah cukup paham. Latih lagi kosakata abstrak, administrasi, dan istilah formal yang mirip.";
       } else if (percentage >= 50) {
-        message = "Cukup baik. Ayo perkuat lagi materi N3.";
+        message = "Hampir sampai! Cukup baik. Perbanyak latihan kosakata N3 Super Hard dan bedakan makna kata yang mirip.";
       } else {
-        message = "Tetap semangat. Ulangi materi dasar secara bertahap.";
+        message = "Tetap semangat! Mulai ulang dari kosakata N4, lalu naik bertahap ke N3.";
       }
 
       document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
-      updateResultUserName();
+      document.getElementById("resultUserName").textContent = `Peserta: ${currentUsername || "Tanpa Nama"}`;
       document.getElementById("resultMessage").textContent = message;
       document.getElementById("correctCount").textContent = score;
       document.getElementById("incorrectCount").textContent = incorrect;
@@ -3341,16 +3351,25 @@ let message;
       setScreen("start");
     }
 
-    document.getElementById("usernameInput")?.addEventListener("input", function() {
-      this.value = cleanUsername(this.value);
-    });
-
     document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         confirmUsername();
       }
     });
-
+    window.openUsernameModal = openUsernameModal;
+    window.closeUsernameModal = closeUsernameModal;
+    window.confirmUsername = confirmUsername;
+    window.handleStartQuiz = handleStartQuiz;
+    window.startQuiz = startQuiz;
+    window.goHome = goHome;
+    window.showQuizAgain = showQuizAgain;
+    window.nextQuestion = nextQuestion;
+    window.showReview = showReview;
+    window.showResult = showResult;
+    window.restartQuiz = restartQuiz;
+    window.openRankingModal = openRankingModal;
+    window.closeRankingModal = closeRankingModal;
+    window.clearRanking = clearRanking;
 
 
     // Hanya izinkan klik kanan pada teks dan input
@@ -3418,20 +3437,6 @@ let message;
       // Jangan blok Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X agar teks/input tetap bisa dipakai
     });
 
-    window.openUsernameModal = openUsernameModal;
-    window.closeUsernameModal = closeUsernameModal;
-    window.confirmUsername = confirmUsername;
-    window.handleStartQuiz = handleStartQuiz;
-    window.startQuiz = startQuiz;
-    window.goHome = goHome;
-    window.showQuizAgain = showQuizAgain;
-    window.nextQuestion = nextQuestion;
-    window.showReview = showReview;
-    window.showResult = showResult;
-    window.restartQuiz = restartQuiz;
-    window.openRankingModal = openRankingModal;
-    window.closeRankingModal = closeRankingModal;
-    window.clearRanking = clearRanking;
 
   </script>
 </body>
