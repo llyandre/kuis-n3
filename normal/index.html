@@ -1439,18 +1439,6 @@
       line-height: 1.1;
     }
 
-    .quiz-user-greeting {
-      display: block;
-      max-width: 140px;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
 
 
     .result-button-row {
@@ -1698,7 +1686,6 @@
         <button class="icon-btn" type="button" onclick="goHome()" aria-label="Kembali ke halaman awal">←</button>
         <div class="topbar-title-wrap">
           <h2 class="screen-title">Kuis Jepang</h2>
-          <small class="quiz-user-greeting">Hai, Pengguna</small>
         </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
@@ -1728,7 +1715,6 @@
         <button class="icon-btn" type="button" onclick="showQuizAgain()" aria-label="Kembali melihat soal">←</button>
         <div class="topbar-title-wrap">
           <h2 class="screen-title">Kuis Jepang</h2>
-          <small class="quiz-user-greeting">Hai, Pengguna</small>
         </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
@@ -1746,7 +1732,6 @@
         <span></span>
         <div class="topbar-title-wrap">
           <h2 class="screen-title">Hasil Kuis</h2>
-          <small class="quiz-user-greeting">Hai, Pengguna</small>
         </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
@@ -1789,7 +1774,6 @@
         <button class="icon-btn" type="button" onclick="showResult()" aria-label="Kembali ke hasil">←</button>
         <div class="topbar-title-wrap">
           <h2 class="screen-title">Pembahasan Jawaban</h2>
-          <small class="quiz-user-greeting">Hai, Pengguna</small>
         </div>
         <div class="logo-mark" aria-label="Logo NihongoGO"><svg viewBox="0 0 64 64" role="img" aria-hidden="true"><path class="enso-soft" d="M18 49c8 7 23 8 34-1"/><path class="enso-main" d="M49 13c-9-6-23-4-31 5-9 10-8 25 2 33 10 8 25 6 33-4"/><path class="enso-main" d="M48 13c7 3 10 9 7 14-3 5-10 5-15 1"/><path class="enso-red" d="M20 50c9 6 22 6 31-1"/></svg></div>
       </div>
@@ -1961,11 +1945,8 @@
     }
 
     function updateUsernameDisplay(username) {
-      const displayName = isValidUsername(username) ? cleanUsername(username) : "Pengguna";
-      document.querySelectorAll(".quiz-user-greeting").forEach(item => {
-        item.textContent = `Hai, ${displayName}`;
-        item.setAttribute("title", `Hai, ${displayName}`);
-      });
+      // Username tetap disimpan dan dipakai untuk hasil/ranking,
+      // tetapi tidak ditampilkan di bawah judul Kuis Jepang.
     }
 
     function updateResultUsername(username) {
