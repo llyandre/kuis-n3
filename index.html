@@ -1389,6 +1389,59 @@
       }
     }
 
+
+    /* =========================
+       PROTEKSI KLIK KANAN / SELECT / DRAG
+    ========================= */
+
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    img,
+    svg {
+      -webkit-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
+    input,
+    textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+      pointer-events: auto;
+    }
+
+    .protection-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 10000;
+      max-width: calc(100% - 32px);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(16, 33, 59, 0.92);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+      box-shadow: 0 14px 32px rgba(16, 33, 59, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(12px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .protection-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* =========================
        USERNAME MODAL
     ========================= */
@@ -1858,6 +1911,90 @@
 </div>
 
 <script>
+
+    (function () {
+      let protectionToastTimer = null;
+
+      function showProtectionToast(message) {
+        let toast = document.getElementById("protectionToast");
+
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.id = "protectionToast";
+          toast.className = "protection-toast";
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(protectionToastTimer);
+        protectionToastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1200);
+      }
+
+      function blockProtectedEvent(event, message) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (message) {
+          showProtectionToast(message);
+        }
+
+        return false;
+      }
+
+      document.addEventListener("contextmenu", function (event) {
+        return blockProtectedEvent(event, "Akses klik kanan dinonaktifkan.");
+      }, true);
+
+      document.addEventListener("keydown", function (event) {
+        const key = String(event.key || "").toLowerCase();
+        const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+        if (
+          event.key === "F12" ||
+          (ctrlOrMeta && event.shiftKey && key === "i") ||
+          (ctrlOrMeta && event.shiftKey && key === "j") ||
+          (ctrlOrMeta && event.shiftKey && key === "c") ||
+          (ctrlOrMeta && event.shiftKey && key === "k") ||
+          (ctrlOrMeta && key === "u") ||
+          (ctrlOrMeta && key === "s") ||
+          (ctrlOrMeta && key === "p")
+        ) {
+          return blockProtectedEvent(event, "Shortcut ini dinonaktifkan.");
+        }
+      }, true);
+
+      document.addEventListener("copy", function (event) {
+        return blockProtectedEvent(event);
+      }, true);
+
+      document.addEventListener("cut", function (event) {
+        return blockProtectedEvent(event);
+      }, true);
+
+      document.addEventListener("paste", function (event) {
+        return blockProtectedEvent(event);
+      }, true);
+
+      document.addEventListener("selectstart", function (event) {
+        const tagName = event.target && event.target.tagName;
+
+        if (
+          tagName !== "INPUT" &&
+          tagName !== "TEXTAREA"
+        ) {
+          return blockProtectedEvent(event);
+        }
+      }, true);
+
+      document.addEventListener("dragstart", function (event) {
+        return blockProtectedEvent(event);
+      }, true);
+    })();
+
     document.addEventListener("DOMContentLoaded", function () {
       const storageKey = "nihongoUsername";
       const maxLength = 8;
