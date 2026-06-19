@@ -2232,6 +2232,12 @@
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+    const QUIZ_ID = "dokkai-jlpt-n3-30-soal";
+    const QUIZ_TITLE = "Dokkai JLPT N3 - 30 Soal";
+    const QUIZ_CATEGORY = "Dokkai JLPT N3";
+    const QUIZ_LEVEL = "30 Soal";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
@@ -2262,7 +2268,7 @@ const screens = {
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
@@ -2333,13 +2339,81 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
       updateResultUserName();
 
       closeUsernameModal();
       startQuiz();
     }
+    function getStoredQuizResults() {
+      try {
+        const data = JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    async function syncLatestQuizRankFromFirebase(savedResult) {
+      if (!savedResult) return;
+
+      const ranking = await getRankingData();
+      const rankIndex = ranking.findIndex(function (item) {
+        return item.name === savedResult.name &&
+          Number(item.score) === Number(savedResult.score) &&
+          Number(item.total) === Number(savedResult.total) &&
+          Number(item.createdAt || 0) === Number(savedResult.createdAt || 0);
+      });
+
+      if (rankIndex >= 0) {
+        updateLatestQuizRank(rankIndex + 1);
+      }
+    }
+
     async function saveUserRanking() {
       const userResult = {
         name: currentUsername || "Tanpa Nama",
@@ -2361,6 +2435,8 @@ const screens = {
       if (!response.ok) {
         throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
       }
+
+      return userResult;
     }
 
     async function getRankingData() {
@@ -2631,9 +2707,14 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
+        saveUserRanking()
+          .then(function (savedResult) {
+            return syncLatestQuizRankFromFirebase(savedResult);
+          })
+          .catch(function (error) {
+            console.error("Gagal menyimpan atau memperbarui ranking:", error);
+          });
         resultSaved = true;
       }
 
