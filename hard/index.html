@@ -2130,6 +2130,12 @@
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+    const QUIZ_ID = "tata-bahasa-n3-hard";
+    const QUIZ_TITLE = "Tata Bahasa N3 - Hard";
+    const QUIZ_CATEGORY = "Tata Bahasa";
+    const QUIZ_LEVEL = "Hard";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
@@ -2161,7 +2167,7 @@ const screens = {
 
     function getSavedUsername() {
       try {
-        const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+        const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
         if (username && username.toLowerCase() !== "pengguna") {
           return username;
         }
@@ -2236,7 +2242,7 @@ const screens = {
       }
 
       try {
-        localStorage.setItem("nihongoUsername", username);
+        localStorage.setItem(USERNAME_STORAGE_KEY, username);
       } catch (error) {
         console.warn("Username tidak bisa disimpan ke localStorage:", error);
       }
@@ -2246,6 +2252,75 @@ const screens = {
 
       closeUsernameModal();
       startQuiz();
+    }
+
+    function getStoredQuizResults() {
+      try {
+        const data = JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      if (!rankValue) return;
+
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function resolveCurrentRank(ranking) {
+      if (!Array.isArray(ranking) || !ranking.length) return null;
+
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      if (!username) return null;
+
+      const targetIndex = ranking.findIndex(function (item) {
+        return String(item && item.name || "").trim().slice(0, 8) === username &&
+          Number(item && item.score) === Number(score) &&
+          Number(item && item.total) === Number(quiz.length);
+      });
+
+      return targetIndex >= 0 ? targetIndex + 1 : null;
     }
 
     async function saveUserRanking() {
@@ -2344,6 +2419,11 @@ const screens = {
       try {
         const ranking = await getRankingData();
         renderRankingList(ranking);
+
+        const currentRank = resolveCurrentRank(ranking);
+        if (currentRank) {
+          updateLatestQuizRank(currentRank);
+        }
       } catch (error) {
         console.error("Ranking REST API error:", error);
 
@@ -2519,10 +2599,20 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
         resultSaved = true;
+
+        saveUserRanking()
+          .then(() => getRankingData())
+          .then(ranking => {
+            const currentRank = resolveCurrentRank(ranking);
+            if (currentRank) {
+              updateLatestQuizRank(currentRank);
+            }
+          })
+          .catch(error => {
+            console.error("Gagal menyimpan ranking:", error);
+          });
       }
 
 let message;
