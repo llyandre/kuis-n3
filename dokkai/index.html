@@ -2099,6 +2099,12 @@
     let selectedAnswers = [];
     let currentUsername = "";
     let resultSaved = false;
+    const QUIZ_ID = "jlpt-n3-dokkai-final";
+    const QUIZ_TITLE = "JLPT N3 - Dokkai Final";
+    const QUIZ_CATEGORY = "JLPT N3 Dokkai";
+    const QUIZ_LEVEL = "Final";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
@@ -2132,11 +2138,79 @@ const screens = {
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
       return "";
+    }
+
+    function getStoredQuizResults() {
+      try {
+        const data = JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function updateLatestQuizRankFromRanking(ranking, createdAtValue) {
+      if (!ranking || !ranking.length) return;
+
+      const username = cleanUsername(currentUsername || getSavedUsername());
+      const targetIndex = ranking.findIndex(function (item) {
+        return cleanUsername(item && item.name) === username &&
+          Number(item && item.score) === Number(score) &&
+          Number(item && item.total) === Number(quiz.length) &&
+          Number(item && item.createdAt) === Number(createdAtValue);
+      });
+
+      if (targetIndex >= 0) {
+        updateLatestQuizRank(targetIndex + 1);
+      }
     }
 
     function updateResultUserName() {
@@ -2203,7 +2277,7 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
       updateResultUserName();
 
@@ -2232,6 +2306,8 @@ const screens = {
       if (!response.ok) {
         throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
       }
+
+      return userResult;
     }
 
     async function getRankingData() {
@@ -2502,13 +2578,22 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
+
+        saveUserRanking()
+          .then(function (savedRankingItem) {
+            return getRankingData().then(function (ranking) {
+              updateLatestQuizRankFromRanking(ranking, savedRankingItem.createdAt);
+            });
+          })
+          .catch(function (error) {
+            console.error("Gagal menyimpan atau memperbarui ranking lokal:", error);
+          });
+
         resultSaved = true;
       }
 
-let message;
+      let message;
 
       if (percentage >= 85) {
         message = "Hebat! Pemahaman N3 kamu sudah kuat.";
