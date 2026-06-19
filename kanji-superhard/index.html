@@ -2919,6 +2919,12 @@
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+    const QUIZ_ID = "kanji-jlpt-n3-super-hard";
+    const QUIZ_TITLE = "Kanji JLPT N3 - Super Hard";
+    const QUIZ_CATEGORY = "Kanji";
+    const QUIZ_LEVEL = "Super Hard";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
@@ -2928,6 +2934,73 @@
         ...options,
         signal: controller.signal
       }).finally(() => clearTimeout(timer));
+    }
+
+    function getStoredQuizResults() {
+      try {
+        return JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function findCurrentUserRank(ranking) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+
+      if (!username || !Array.isArray(ranking)) {
+        return null;
+      }
+
+      const index = ranking.findIndex(function (item) {
+        return String(item && item.name || "").trim().slice(0, 8) === username &&
+          Number(item && item.score) === Number(score) &&
+          Number(item && item.total) === Number(quiz.length);
+      });
+
+      return index >= 0 ? index + 1 : null;
     }
 
 
@@ -2949,7 +3022,7 @@ const screens = {
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
 
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
@@ -3024,7 +3097,7 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
       updateResultUserName();
       closeUsernameModal();
@@ -3291,13 +3364,25 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
         resultSaved = true;
+
+        saveUserRanking()
+          .then(function () {
+            return getRankingData();
+          })
+          .then(function (ranking) {
+            const currentRank = findCurrentUserRank(ranking);
+            if (currentRank) {
+              updateLatestQuizRank(currentRank);
+            }
+          })
+          .catch(error => {
+            console.error("Gagal menyimpan atau memperbarui ranking:", error);
+          });
       }
 
-let message;
+      let message;
 
       if (percentage >= 85) {
         message = "Sangat baik! Kemampuan membaca Kanji N3 tingkat sangat sulit kamu sudah kuat.";
