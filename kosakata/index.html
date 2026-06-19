@@ -2930,6 +2930,13 @@
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
 
+    const QUIZ_ID = "kosakata-n3-super-hard";
+    const QUIZ_TITLE = "Kosakata N3 - Super Hard";
+    const QUIZ_CATEGORY = "Kosakata";
+    const QUIZ_LEVEL = "Super Hard";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
+
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), timeout);
@@ -2959,7 +2966,7 @@ const screens = {
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
@@ -3027,7 +3034,7 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
 
       const resultUserName = document.getElementById("resultUserName");
@@ -3038,6 +3045,89 @@ const screens = {
       closeUsernameModal();
       startQuiz();
     }
+    function getStoredQuizResults() {
+      try {
+        return JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function resolveCurrentRank(ranking, savedRankData) {
+      if (!Array.isArray(ranking) || !ranking.length) return null;
+
+      const savedId = savedRankData && savedRankData.firebaseId;
+      if (savedId) {
+        const indexById = ranking.findIndex(function (item) {
+          return item.id === savedId;
+        });
+        if (indexById !== -1) return indexById + 1;
+      }
+
+      const savedCreatedAt = savedRankData && savedRankData.createdAt;
+      const savedName = savedRankData && savedRankData.name;
+
+      const indexByExactData = ranking.findIndex(function (item) {
+        return String(item.name || "") === String(savedName || currentUsername || "Tanpa Nama") &&
+          Number(item.score) === Number(score) &&
+          Number(item.total) === Number(quiz.length) &&
+          Number(item.createdAt || 0) === Number(savedCreatedAt || 0);
+      });
+
+      if (indexByExactData !== -1) return indexByExactData + 1;
+
+      const indexByLatestUserScore = ranking.findIndex(function (item) {
+        return String(item.name || "") === String(currentUsername || "Tanpa Nama") &&
+          Number(item.score) === Number(score) &&
+          Number(item.total) === Number(quiz.length);
+      });
+
+      return indexByLatestUserScore !== -1 ? indexByLatestUserScore + 1 : null;
+    }
+
     async function saveUserRanking() {
       const userResult = {
         name: currentUsername || "Tanpa Nama",
@@ -3059,6 +3149,15 @@ const screens = {
       if (!response.ok) {
         throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
       }
+
+      const savedData = await response.json().catch(function () {
+        return null;
+      });
+
+      return {
+        ...userResult,
+        firebaseId: savedData && savedData.name ? savedData.name : null
+      };
     }
 
     async function getRankingData() {
@@ -3134,6 +3233,11 @@ const screens = {
       try {
         const ranking = await getRankingData();
         renderRankingList(ranking);
+
+        const currentRank = resolveCurrentRank(ranking);
+        if (currentRank) {
+          updateLatestQuizRank(currentRank);
+        }
       } catch (error) {
         console.error("Ranking REST API error:", error);
 
@@ -3299,13 +3403,25 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
+
+        saveUserRanking()
+          .then(function (savedRankData) {
+            return getRankingData().then(function (ranking) {
+              const currentRank = resolveCurrentRank(ranking, savedRankData);
+              if (currentRank) {
+                updateLatestQuizRank(currentRank);
+              }
+            });
+          })
+          .catch(function (error) {
+            console.error("Gagal menyimpan atau memperbarui ranking:", error);
+          });
+
         resultSaved = true;
       }
 
-let message;
+      let message;
 
       if (percentage >= 85) {
         message = "Luar biasa! Kosakata JLPT N3 Super Hard kamu sudah sangat kuat.";
