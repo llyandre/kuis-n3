@@ -658,6 +658,18 @@
       font-weight: 700;
     }
 
+
+    .question-target {
+      display: block;
+      margin-top: 12px;
+      color: var(--red-dark);
+      font-family: "Noto Serif JP", Georgia, serif;
+      font-size: clamp(30px, 9vw, 42px);
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
     .options {
       display: grid;
       gap: 12px;
@@ -1643,7 +1655,7 @@
       -webkit-user-select: none;
     }
 
-</style>
+  </style>
 </head>
 
 <body>
@@ -1677,10 +1689,10 @@
       </div>
 
       <div class="meta-row">
-        <span id="progressText">Soal 1 dari ...</span>
+        <span id="progressText">Soal 1 dari 15</span>
         <div class="meta-right">
           <span class="level-label">JLPT N3</span>
-          <span class="score-pill" id="scorePill">Skor: 0 / ...</span>
+          <span class="score-pill" id="scorePill">Skor: 0 / 15</span>
         </div>
       </div>
       <div class="progress-track" aria-hidden="true">
@@ -1728,7 +1740,7 @@
 
       <h2 class="result-heading">Skor Kamu</h2>
       <p class="result-user" id="resultUserName"></p>
-      <div class="result-score" id="finalScore">0 / ...</div>
+      <div class="result-score" id="finalScore">0 / 15</div>
       <p class="result-message" id="resultMessage"></p>
 
       <div class="stats-card">
@@ -1808,1104 +1820,1104 @@
 
     const quiz = [
       {
-            "question": "読み方はどれですか。\n「改善」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「確率」</span>",
             "options": [
-                  "かいせん",
-                  "かいぜん",
-                  "がいぜん",
-                  "かいざん"
+                  "kemungkinan atau probabilitas",
+                  "kepastian mutlak",
+                  "perbandingan harga",
+                  "perubahan jadwal"
             ],
-            "answer": "かいぜん",
-            "explanation": "「改善」 dibaca かいぜん, artinya perbaikan."
+            "answer": "kemungkinan atau probabilitas",
+            "explanation": "「確率」 berarti kemungkinan atau probabilitas terjadinya sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「検討」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「傾向」</span>",
             "options": [
-                  "けんとう",
-                  "けんどう",
-                  "げんとう",
-                  "けんと"
+                  "keputusan resmi",
+                  "perbandingan angka",
+                  "pengaruh langsung",
+                  "kecenderungan"
             ],
-            "answer": "けんとう",
-            "explanation": "「検討」 dibaca けんとう, artinya pertimbangan/pemeriksaan."
+            "answer": "kecenderungan",
+            "explanation": "「傾向」 berarti kecenderungan atau arah umum suatu keadaan."
       },
       {
-            "question": "読み方はどれですか。\n「提案」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「方針」</span>",
             "options": [
-                  "だいあん",
-                  "ていなん",
-                  "たいあん",
-                  "ていあん"
+                  "perasaan pribadi",
+                  "biaya tambahan",
+                  "kebijakan atau arah tindakan",
+                  "hasil akhir"
             ],
-            "answer": "ていあん",
-            "explanation": "「提案」 dibaca ていあん, artinya usulan/proposal."
+            "answer": "kebijakan atau arah tindakan",
+            "explanation": "「方針」 berarti kebijakan, prinsip, atau arah tindakan."
       },
       {
-            "question": "読み方はどれですか。\n「判断」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「事情」</span>",
             "options": [
-                  "はんたん",
-                  "ばんだん",
-                  "はんだん",
-                  "はんろん"
+                  "biaya perjalanan",
+                  "keadaan atau latar belakang situasi",
+                  "jadwal harian",
+                  "peraturan sekolah"
             ],
-            "answer": "はんだん",
-            "explanation": "「判断」 dibaca はんだん, artinya penilaian/keputusan."
+            "answer": "keadaan atau latar belakang situasi",
+            "explanation": "「事情」 berarti keadaan, alasan, atau latar belakang suatu situasi."
       },
       {
-            "question": "読み方はどれですか。\n「責任」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「状況」</span>",
             "options": [
-                  "せっにん",
-                  "せきにん",
-                  "せきじん",
-                  "せきねん"
+                  "situasi atau kondisi yang sedang terjadi",
+                  "tujuan pribadi",
+                  "metode pembayaran",
+                  "pengalaman masa lalu"
             ],
-            "answer": "せきにん",
-            "explanation": "「責任」 dibaca せきにん, artinya tanggung jawab."
+            "answer": "situasi atau kondisi yang sedang terjadi",
+            "explanation": "「状況」 berarti situasi atau kondisi yang sedang berlangsung."
       },
       {
-            "question": "読み方はどれですか。\n「状況」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「条件」</span>",
             "options": [
-                  "じょうきょう",
-                  "しょうきょう",
-                  "じょうこう",
-                  "じょうけい"
+                  "hasil penelitian",
+                  "pendapat umum",
+                  "biaya bulanan",
+                  "syarat atau kondisi"
             ],
-            "answer": "じょうきょう",
-            "explanation": "「状況」 dibaca じょうきょう, artinya situasi/kondisi."
+            "answer": "syarat atau kondisi",
+            "explanation": "「条件」 berarti syarat atau kondisi yang harus dipenuhi."
       },
       {
-            "question": "読み方はどれですか。\n「条件」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「対象」</span>",
             "options": [
-                  "しょうけん",
-                  "じょうげん",
-                  "じょうかん",
-                  "じょうけん"
+                  "hasil akhir",
+                  "aturan lama",
+                  "target atau objek yang dituju",
+                  "perasaan kecewa"
             ],
-            "answer": "じょうけん",
-            "explanation": "「条件」 dibaca じょうけん, artinya syarat/kondisi."
+            "answer": "target atau objek yang dituju",
+            "explanation": "「対象」 berarti sasaran, target, atau objek pembahasan."
       },
       {
-            "question": "読み方はどれですか。\n「影響」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「価値」</span>",
             "options": [
-                  "えいこう",
-                  "えきょう",
-                  "えいきょう",
-                  "いんきょう"
+                  "batas waktu",
+                  "nilai atau harga penting sesuatu",
+                  "jumlah peserta",
+                  "cara pemakaian"
             ],
-            "answer": "えいきょう",
-            "explanation": "「影響」 dibaca えいきょう, artinya pengaruh."
+            "answer": "nilai atau harga penting sesuatu",
+            "explanation": "「価値」 berarti nilai, baik nilai benda maupun nilai pentingnya sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「関係」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「役割」</span>",
             "options": [
-                  "かんきょう",
-                  "かんけい",
-                  "せきけい",
-                  "かんげい"
+                  "peran atau tugas dalam suatu posisi",
+                  "kesalahan kecil",
+                  "biaya tambahan",
+                  "ruang kosong"
             ],
-            "answer": "かんけい",
-            "explanation": "「関係」 dibaca かんけい, artinya hubungan."
+            "answer": "peran atau tugas dalam suatu posisi",
+            "explanation": "「役割」 berarti peran atau fungsi seseorang/sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「企業」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「責任」</span>",
             "options": [
-                  "きぎょう",
-                  "きごう",
-                  "ぎぎょう",
-                  "きょうぎょう"
+                  "hak pribadi",
+                  "kebiasaan kecil",
+                  "rencana liburan",
+                  "tanggung jawab"
             ],
-            "answer": "きぎょう",
-            "explanation": "「企業」 dibaca きぎょう, artinya perusahaan."
+            "answer": "tanggung jawab",
+            "explanation": "「責任」 berarti tanggung jawab atas suatu tugas atau akibat."
       },
       {
-            "question": "読み方はどれですか。\n「就職」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「権利」</span>",
             "options": [
-                  "しゅしょく",
-                  "じゅうしょく",
-                  "しゅうじょく",
-                  "しゅうしょく"
+                  "larangan",
+                  "kesalahan",
+                  "hak",
+                  "kewajiban"
             ],
-            "answer": "しゅうしょく",
-            "explanation": "「就職」 dibaca しゅうしょく, artinya mendapat pekerjaan."
+            "answer": "hak",
+            "explanation": "「権利」 berarti hak yang dimiliki seseorang."
       },
       {
-            "question": "読み方はどれですか。\n「面接」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「義務」</span>",
             "options": [
-                  "めんぜつ",
-                  "めいせつ",
-                  "めんせつ",
-                  "もんせつ"
+                  "biaya ringan",
+                  "kewajiban",
+                  "hak khusus",
+                  "keinginan bebas"
             ],
-            "answer": "めんせつ",
-            "explanation": "「面接」 dibaca めんせつ, artinya wawancara."
+            "answer": "kewajiban",
+            "explanation": "「義務」 berarti kewajiban yang harus dilakukan."
       },
       {
-            "question": "読み方はどれですか。\n「履歴書」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「意識」</span>",
             "options": [
-                  "りれきじょ",
-                  "りれきしょ",
-                  "りりょくしょ",
-                  "れきれきしょ"
+                  "kesadaran atau perhatian",
+                  "hasil pembayaran",
+                  "jumlah barang",
+                  "surat izin"
             ],
-            "answer": "りれきしょ",
-            "explanation": "「履歴書」 dibaca りれきしょ, artinya daftar riwayat hidup/CV."
+            "answer": "kesadaran atau perhatian",
+            "explanation": "「意識」 berarti kesadaran, perhatian, atau pikiran terhadap sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「給料」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「判断」</span>",
             "options": [
-                  "きゅうりょう",
-                  "きょうりょう",
-                  "きゅうりょ",
-                  "きゅりょう"
+                  "pengiriman barang",
+                  "pemandangan alam",
+                  "perubahan cuaca",
+                  "penilaian atau keputusan setelah berpikir"
             ],
-            "answer": "きゅうりょう",
-            "explanation": "「給料」 dibaca きゅうりょう, artinya gaji."
+            "answer": "penilaian atau keputusan setelah berpikir",
+            "explanation": "「判断」 berarti menilai atau memutuskan berdasarkan informasi."
       },
       {
-            "question": "読み方はどれですか。\n「残業」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「評価」</span>",
             "options": [
-                  "さんぎょう",
-                  "ざんごう",
-                  "ざんきょう",
-                  "ざんぎょう"
+                  "pembatalan acara",
+                  "pengeluaran uang",
+                  "evaluasi atau penilaian",
+                  "permintaan bantuan"
             ],
-            "answer": "ざんぎょう",
-            "explanation": "「残業」 dibaca ざんぎょう, artinya lembur."
+            "answer": "evaluasi atau penilaian",
+            "explanation": "「評価」 berarti evaluasi atau penilaian terhadap sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「出張」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「表情」</span>",
             "options": [
-                  "しゅつちょう",
-                  "しゅっしょう",
-                  "しゅっちょう",
-                  "でばり"
+                  "jadwal kerja",
+                  "ekspresi wajah",
+                  "isi laporan",
+                  "hasil rapat"
             ],
-            "answer": "しゅっちょう",
-            "explanation": "「出張」 dibaca しゅっちょう, artinya perjalanan dinas."
+            "answer": "ekspresi wajah",
+            "explanation": "「表情」 berarti ekspresi atau raut wajah."
       },
       {
-            "question": "読み方はどれですか。\n「会議」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「態度」</span>",
             "options": [
-                  "かいご",
-                  "かいぎ",
-                  "えぎ",
-                  "あいぎ"
+                  "sikap",
+                  "alat tulis",
+                  "biaya masuk",
+                  "perubahan warna"
             ],
-            "answer": "かいぎ",
-            "explanation": "「会議」 dibaca かいぎ, artinya rapat."
+            "answer": "sikap",
+            "explanation": "「態度」 berarti sikap atau cara seseorang bertindak."
       },
       {
-            "question": "読み方はどれですか。\n「報告」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「印象」</span>",
             "options": [
-                  "ほうこく",
-                  "ほうごく",
-                  "ぼうこく",
-                  "ほこく"
+                  "persetujuan resmi",
+                  "pendapatan tetap",
+                  "cara memasak",
+                  "kesan"
             ],
-            "answer": "ほうこく",
-            "explanation": "「報告」 dibaca ほうこく, artinya laporan."
+            "answer": "kesan",
+            "explanation": "「印象」 berarti kesan yang muncul terhadap seseorang/sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「連絡」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「感情」</span>",
             "options": [
-                  "れんがく",
-                  "ねんらく",
-                  "れんろく",
-                  "れんらく"
+                  "biaya layanan",
+                  "dokumen resmi",
+                  "perasaan atau emosi",
+                  "batas waktu"
             ],
-            "answer": "れんらく",
-            "explanation": "「連絡」 dibaca れんらく, artinya kontak/menghubungi."
+            "answer": "perasaan atau emosi",
+            "explanation": "「感情」 berarti perasaan atau emosi."
       },
       {
-            "question": "読み方はどれですか。\n「確認」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「関心」</span>",
             "options": [
-                  "かくねん",
-                  "がくにん",
-                  "かくにん",
-                  "かくじん"
+                  "hasil ujian",
+                  "minat atau ketertarikan",
+                  "kerugian besar",
+                  "syarat masuk"
             ],
-            "answer": "かくにん",
-            "explanation": "「確認」 dibaca かくにん, artinya konfirmasi/memastikan."
+            "answer": "minat atau ketertarikan",
+            "explanation": "「関心」 berarti minat atau perhatian terhadap suatu hal."
       },
       {
-            "question": "読み方はどれですか。\n「申込」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「期待」</span>",
             "options": [
-                  "もうしごみ",
-                  "もうしこみ",
-                  "しんこみ",
-                  "もうこみ"
+                  "harapan atau ekspektasi",
+                  "penolakan",
+                  "biaya",
+                  "kebiasaan"
             ],
-            "answer": "もうしこみ",
-            "explanation": "「申込」 dibaca もうしこみ, artinya pendaftaran/permohonan."
+            "answer": "harapan atau ekspektasi",
+            "explanation": "「期待」 berarti harapan atau ekspektasi terhadap sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「受付」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不満」</span>",
             "options": [
-                  "うけつけ",
-                  "うけづけ",
-                  "じゅけつけ",
-                  "うけふ"
+                  "rasa aman",
+                  "kesempatan kerja",
+                  "pembayaran selesai",
+                  "rasa tidak puas"
             ],
-            "answer": "うけつけ",
-            "explanation": "「受付」 dibaca うけつけ, artinya resepsionis/penerimaan."
+            "answer": "rasa tidak puas",
+            "explanation": "「不満」 berarti ketidakpuasan terhadap keadaan."
       },
       {
-            "question": "読み方はどれですか。\n「期限」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不安」</span>",
             "options": [
-                  "きかん",
-                  "ぎげん",
-                  "きげんり",
-                  "きげん"
+                  "aturan baru",
+                  "keuntungan besar",
+                  "rasa cemas atau khawatir",
+                  "rasa puas"
             ],
-            "answer": "きげん",
-            "explanation": "「期限」 dibaca きげん, artinya batas waktu."
+            "answer": "rasa cemas atau khawatir",
+            "explanation": "「不安」 berarti rasa cemas, gelisah, atau khawatir."
       },
       {
-            "question": "読み方はどれですか。\n「延期」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「苦労」</span>",
             "options": [
-                  "えんぎ",
-                  "えんご",
-                  "えんき",
-                  "のべき"
+                  "hadiah",
+                  "kesulitan atau perjuangan",
+                  "hiburan",
+                  "keuntungan"
             ],
-            "answer": "えんき",
-            "explanation": "「延期」 dibaca えんき, artinya penundaan."
+            "answer": "kesulitan atau perjuangan",
+            "explanation": "「苦労」 berarti kesulitan, perjuangan, atau kerja keras yang berat."
       },
       {
-            "question": "読み方はどれですか。\n「中止」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「我慢」</span>",
             "options": [
-                  "じゅうし",
-                  "ちゅうし",
-                  "ちゅうじ",
-                  "なかどめ"
+                  "menahan diri atau bersabar",
+                  "menyerah total",
+                  "meminta izin",
+                  "mengirim barang"
             ],
-            "answer": "ちゅうし",
-            "explanation": "「中止」 dibaca ちゅうし, artinya pembatalan/penghentian."
+            "answer": "menahan diri atau bersabar",
+            "explanation": "「我慢」 berarti menahan diri, menahan rasa sakit, atau bersabar."
       },
       {
-            "question": "読み方はどれですか。\n「変更」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「遠慮」</span>",
             "options": [
-                  "へんこう",
-                  "へんごう",
-                  "べんこう",
-                  "へんきょう"
+                  "kesombongan",
+                  "pengumuman",
+                  "kewajiban",
+                  "sungkan atau menahan diri karena sopan"
             ],
-            "answer": "へんこう",
-            "explanation": "「変更」 dibaca へんこう, artinya perubahan."
+            "answer": "sungkan atau menahan diri karena sopan",
+            "explanation": "「遠慮」 berarti sungkan, segan, atau menahan diri demi sopan santun."
       },
       {
-            "question": "読み方はどれですか。\n「予約」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「誤解」</span>",
             "options": [
-                  "ようやく",
-                  "よおやく",
-                  "やくよ",
-                  "よやく"
+                  "kebiasaan",
+                  "keberhasilan",
+                  "salah paham",
+                  "kesepakatan"
             ],
-            "answer": "よやく",
-            "explanation": "「予約」 dibaca よやく, artinya reservasi."
+            "answer": "salah paham",
+            "explanation": "「誤解」 berarti salah paham terhadap maksud atau keadaan."
       },
       {
-            "question": "読み方はどれですか。\n「準備」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「理解」</span>",
             "options": [
-                  "じゅんぴ",
-                  "しゅんび",
-                  "じゅんび",
-                  "じゅうび"
+                  "larangan",
+                  "pemahaman",
+                  "penolakan",
+                  "pembayaran"
             ],
-            "answer": "じゅんび",
-            "explanation": "「準備」 dibaca じゅんび, artinya persiapan."
+            "answer": "pemahaman",
+            "explanation": "「理解」 berarti pemahaman terhadap isi atau maksud sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「資料」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「納得」</span>",
             "options": [
-                  "じりょう",
-                  "しりょう",
-                  "しりょ",
-                  "しりゅう"
+                  "menerima karena paham atau merasa masuk akal",
+                  "menolak tanpa alasan",
+                  "membayar biaya",
+                  "membatalkan jadwal"
             ],
-            "answer": "しりょう",
-            "explanation": "「資料」 dibaca しりょう, artinya materi/dokumen."
+            "answer": "menerima karena paham atau merasa masuk akal",
+            "explanation": "「納得」 berarti memahami dan menerima sesuatu sebagai masuk akal."
       },
       {
-            "question": "読み方はどれですか。\n「説明」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「反省」</span>",
             "options": [
-                  "せつめい",
-                  "せちめい",
-                  "せつみょう",
-                  "せっめい"
+                  "promosi barang",
+                  "perbaikan mesin",
+                  "pemesanan tiket",
+                  "introspeksi atau refleksi diri"
             ],
-            "answer": "せつめい",
-            "explanation": "「説明」 dibaca せつめい, artinya penjelasan."
+            "answer": "introspeksi atau refleksi diri",
+            "explanation": "「反省」 berarti melihat kembali kesalahan diri untuk memperbaiki."
       },
       {
-            "question": "読み方はどれですか。\n「案内」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「改善」</span>",
             "options": [
-                  "あんうち",
-                  "あない",
-                  "あんだい",
-                  "あんない"
+                  "pengiriman",
+                  "penurunan harga",
+                  "perbaikan",
+                  "kerusakan"
             ],
-            "answer": "あんない",
-            "explanation": "「案内」 dibaca あんない, artinya panduan/informasi."
+            "answer": "perbaikan",
+            "explanation": "「改善」 berarti memperbaiki keadaan agar menjadi lebih baik."
       },
       {
-            "question": "読み方はどれですか。\n「注意」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「解決」</span>",
             "options": [
-                  "じゅうい",
-                  "ちゅい",
-                  "ちゅうい",
-                  "ちゅうぎ"
+                  "pembagian tugas",
+                  "penyelesaian masalah",
+                  "permulaan masalah",
+                  "penambahan biaya"
             ],
-            "answer": "ちゅうい",
-            "explanation": "「注意」 dibaca ちゅうい, artinya perhatian/peringatan."
+            "answer": "penyelesaian masalah",
+            "explanation": "「解決」 berarti menyelesaikan masalah."
       },
       {
-            "question": "読み方はどれですか。\n「失敗」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「対策」</span>",
             "options": [
-                  "しつはい",
-                  "しっぱい",
-                  "しっぱいん",
-                  "じっぱい"
+                  "langkah penanggulangan",
+                  "tujuan umum",
+                  "jadwal tetap",
+                  "pendapat pribadi"
             ],
-            "answer": "しっぱい",
-            "explanation": "「失敗」 dibaca しっぱい, artinya kegagalan."
+            "answer": "langkah penanggulangan",
+            "explanation": "「対策」 berarti cara atau langkah untuk menghadapi masalah."
       },
       {
-            "question": "読み方はどれですか。\n「成功」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「影響」</span>",
             "options": [
-                  "せいこう",
-                  "せいごう",
-                  "しょうこう",
-                  "せいきょう"
+                  "pembayaran",
+                  "pemandangan",
+                  "pemesanan",
+                  "pengaruh"
             ],
-            "answer": "せいこう",
-            "explanation": "「成功」 dibaca せいこう, artinya keberhasilan."
+            "answer": "pengaruh",
+            "explanation": "「影響」 berarti pengaruh yang diberikan kepada sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「経験」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「効果」</span>",
             "options": [
-                  "けんけい",
-                  "きょうけん",
-                  "けいげん",
-                  "けいけん"
+                  "biaya masuk",
+                  "alamat rumah",
+                  "efek atau hasil manfaat",
+                  "penyebab awal"
             ],
-            "answer": "けいけん",
-            "explanation": "「経験」 dibaca けいけん, artinya pengalaman."
+            "answer": "efek atau hasil manfaat",
+            "explanation": "「効果」 berarti efek, hasil, atau manfaat dari suatu tindakan."
       },
       {
-            "question": "読み方はどれですか。\n「成長」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「結果」</span>",
             "options": [
-                  "せいじょう",
-                  "せいなが",
-                  "せいちょう",
-                  "しょうちょう"
+                  "alasan",
+                  "hasil",
+                  "tujuan",
+                  "cara"
             ],
-            "answer": "せいちょう",
-            "explanation": "「成長」 dibaca せいちょう, artinya pertumbuhan/perkembangan."
+            "answer": "hasil",
+            "explanation": "「結果」 berarti hasil dari suatu proses atau tindakan."
       },
       {
-            "question": "読み方はどれですか。\n「目標」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「原因」</span>",
             "options": [
-                  "もくびょう",
-                  "もくひょう",
-                  "めひょう",
-                  "もくしょう"
+                  "penyebab",
+                  "hasil akhir",
+                  "batas waktu",
+                  "perasaan senang"
             ],
-            "answer": "もくひょう",
-            "explanation": "「目標」 dibaca もくひょう, artinya target/tujuan."
+            "answer": "penyebab",
+            "explanation": "「原因」 berarti penyebab terjadinya sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「努力」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「理由」</span>",
             "options": [
-                  "どりょく",
-                  "どうりょく",
-                  "のうりょく",
-                  "どりき"
+                  "kesimpulan",
+                  "barang bukti",
+                  "pengeluaran",
+                  "alasan"
             ],
-            "answer": "どりょく",
-            "explanation": "「努力」 dibaca どりょく, artinya usaha keras."
+            "answer": "alasan",
+            "explanation": "「理由」 berarti alasan mengapa sesuatu terjadi atau dilakukan."
       },
       {
-            "question": "読み方はどれですか。\n「能力」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「目的」</span>",
             "options": [
-                  "どうりょく",
-                  "のうりき",
-                  "のりょく",
-                  "のうりょく"
+                  "biaya",
+                  "aturan",
+                  "tujuan",
+                  "cara"
             ],
-            "answer": "のうりょく",
-            "explanation": "「能力」 dibaca のうりょく, artinya kemampuan."
+            "answer": "tujuan",
+            "explanation": "「目的」 berarti tujuan yang ingin dicapai."
       },
       {
-            "question": "読み方はどれですか。\n「技術」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「方法」</span>",
             "options": [
-                  "ぎしゅつ",
-                  "きじゅつ",
-                  "ぎじゅつ",
-                  "ぎじつ"
+                  "kewajiban",
+                  "cara atau metode",
+                  "tujuan utama",
+                  "hasil akhir"
             ],
-            "answer": "ぎじゅつ",
-            "explanation": "「技術」 dibaca ぎじゅつ, artinya teknik/keahlian."
+            "answer": "cara atau metode",
+            "explanation": "「方法」 berarti cara atau metode melakukan sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「知識」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「手段」</span>",
             "options": [
-                  "ししき",
-                  "ちしき",
-                  "ちじき",
-                  "ちいき"
+                  "sarana atau cara untuk mencapai tujuan",
+                  "hasil akhir",
+                  "hak pribadi",
+                  "perasaan cemas"
             ],
-            "answer": "ちしき",
-            "explanation": "「知識」 dibaca ちしき, artinya pengetahuan."
+            "answer": "sarana atau cara untuk mencapai tujuan",
+            "explanation": "「手段」 berarti sarana atau cara untuk mencapai tujuan."
       },
       {
-            "question": "読み方はどれですか。\n「記憶」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「手続き」</span>",
             "options": [
-                  "きおく",
-                  "きよく",
-                  "けおく",
-                  "きおう"
+                  "perasaan pribadi",
+                  "kerugian besar",
+                  "jawaban salah",
+                  "prosedur atau urusan administrasi"
             ],
-            "answer": "きおく",
-            "explanation": "「記憶」 dibaca きおく, artinya ingatan/memori."
+            "answer": "prosedur atau urusan administrasi",
+            "explanation": "「手続き」 berarti prosedur atau langkah administrasi."
       },
       {
-            "question": "読み方はどれですか。\n「感情」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「申請」</span>",
             "options": [
-                  "かんしょう",
-                  "がんじょう",
-                  "かんせい",
-                  "かんじょう"
+                  "pembatalan acara",
+                  "pembayaran tunai",
+                  "pengajuan permohonan",
+                  "penolakan otomatis"
             ],
-            "answer": "かんじょう",
-            "explanation": "「感情」 dibaca かんじょう, artinya perasaan/emosi."
+            "answer": "pengajuan permohonan",
+            "explanation": "「申請」 berarti mengajukan permohonan secara resmi."
       },
       {
-            "question": "読み方はどれですか。\n「表情」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「許可」</span>",
             "options": [
-                  "ひょうしょう",
-                  "びょうじょう",
-                  "ひょうじょう",
-                  "ひょうせい"
+                  "tanggung jawab",
+                  "izin",
+                  "larangan",
+                  "kesalahan"
             ],
-            "answer": "ひょうじょう",
-            "explanation": "「表情」 dibaca ひょうじょう, artinya ekspresi wajah."
+            "answer": "izin",
+            "explanation": "「許可」 berarti izin atau persetujuan untuk melakukan sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「態度」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「連絡」</span>",
             "options": [
-                  "たいと",
-                  "たいど",
-                  "たくど",
-                  "たいどう"
+                  "kontak atau pemberitahuan",
+                  "persaingan",
+                  "perbaikan",
+                  "keuntungan"
             ],
-            "answer": "たいど",
-            "explanation": "「態度」 dibaca たいど, artinya sikap."
+            "answer": "kontak atau pemberitahuan",
+            "explanation": "「連絡」 berarti menghubungi atau memberikan kabar."
       },
       {
-            "question": "読み方はどれですか。\n「意見」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「報告」</span>",
             "options": [
-                  "いけん",
-                  "いげん",
-                  "いみ",
-                  "けんい"
+                  "permintaan diam-diam",
+                  "hadiah kecil",
+                  "pengurangan biaya",
+                  "laporan atau melaporkan"
             ],
-            "answer": "いけん",
-            "explanation": "「意見」 dibaca いけん, artinya pendapat."
+            "answer": "laporan atau melaporkan",
+            "explanation": "「報告」 berarti laporan atau tindakan melaporkan."
       },
       {
-            "question": "読み方はどれですか。\n「反対」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「相談」</span>",
             "options": [
-                  "ばんたい",
-                  "はんだい",
-                  "はんつい",
-                  "はんたい"
+                  "pemesanan barang",
+                  "penyimpanan data",
+                  "konsultasi atau diskusi untuk mencari solusi",
+                  "keputusan sepihak"
             ],
-            "answer": "はんたい",
-            "explanation": "「反対」 dibaca はんたい, artinya oposisi/berlawanan."
+            "answer": "konsultasi atau diskusi untuk mencari solusi",
+            "explanation": "「相談」 berarti berkonsultasi atau berdiskusi untuk mencari solusi."
       },
       {
-            "question": "読み方はどれですか。\n「賛成」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「提案」</span>",
             "options": [
-                  "さんじょう",
-                  "ざんせい",
-                  "さんせい",
-                  "さんしょう"
+                  "kerusakan",
+                  "usulan atau proposal",
+                  "keluhan",
+                  "pembayaran"
             ],
-            "answer": "さんせい",
-            "explanation": "「賛成」 dibaca さんせい, artinya setuju."
+            "answer": "usulan atau proposal",
+            "explanation": "「提案」 berarti usulan atau proposal."
       },
       {
-            "question": "読み方はどれですか。\n「比較」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「依頼」</span>",
             "options": [
-                  "ひこう",
-                  "ひかく",
-                  "びかく",
-                  "ひきゃく"
+                  "permintaan bantuan atau tugas",
+                  "penolakan resmi",
+                  "pengaruh buruk",
+                  "pendapatan"
             ],
-            "answer": "ひかく",
-            "explanation": "「比較」 dibaca ひかく, artinya perbandingan."
+            "answer": "permintaan bantuan atau tugas",
+            "explanation": "「依頼」 berarti meminta bantuan atau meminta seseorang melakukan sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「選択」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「注文」</span>",
             "options": [
-                  "せんたく",
-                  "せんだく",
-                  "せんとう",
-                  "えらたく"
+                  "pembatalan",
+                  "laporan",
+                  "pembuktian",
+                  "pesanan atau memesan"
             ],
-            "answer": "せんたく",
-            "explanation": "「選択」 dibaca せんたく, artinya pilihan."
+            "answer": "pesanan atau memesan",
+            "explanation": "「注文」 berarti pesanan atau tindakan memesan."
       },
       {
-            "question": "読み方はどれですか。\n「必要」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「請求」</span>",
             "options": [
-                  "ひっよう",
-                  "ひつよ",
-                  "ひつじょう",
-                  "ひつよう"
+                  "surat izin",
+                  "hasil rapat",
+                  "tagihan atau permintaan pembayaran",
+                  "diskon besar"
             ],
-            "answer": "ひつよう",
-            "explanation": "「必要」 dibaca ひつよう, artinya perlu/penting."
+            "answer": "tagihan atau permintaan pembayaran",
+            "explanation": "「請求」 berarti tagihan atau permintaan pembayaran."
       },
       {
-            "question": "読み方はどれですか。\n「重要」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「支払い」</span>",
             "options": [
-                  "しゅうよう",
-                  "じゅよう",
-                  "じゅうよう",
-                  "じゅうよ"
+                  "penolakan",
+                  "pembayaran",
+                  "peminjaman",
+                  "penyimpanan"
             ],
-            "answer": "じゅうよう",
-            "explanation": "「重要」 dibaca じゅうよう, artinya penting."
+            "answer": "pembayaran",
+            "explanation": "「支払い」 berarti pembayaran."
       },
       {
-            "question": "読み方はどれですか。\n「普通」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「費用」</span>",
             "options": [
-                  "ふどう",
-                  "ふつう",
-                  "ぶつう",
-                  "ふつ"
+                  "biaya atau pengeluaran yang diperlukan",
+                  "keuntungan bersih",
+                  "jumlah peserta",
+                  "perasaan puas"
             ],
-            "answer": "ふつう",
-            "explanation": "「普通」 dibaca ふつう, artinya biasa/normal."
+            "answer": "biaya atau pengeluaran yang diperlukan",
+            "explanation": "「費用」 berarti biaya yang diperlukan untuk sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「特別」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「料金」</span>",
             "options": [
-                  "とくべつ",
-                  "どくべつ",
-                  "とくべち",
-                  "とくびょう"
+                  "gaji pokok",
+                  "aturan hukum",
+                  "surat bukti",
+                  "tarif atau biaya layanan"
             ],
-            "answer": "とくべつ",
-            "explanation": "「特別」 dibaca とくべつ, artinya khusus/istimewa."
+            "answer": "tarif atau biaya layanan",
+            "explanation": "「料金」 berarti tarif atau biaya layanan."
       },
       {
-            "question": "読み方はどれですか。\n「可能」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「税金」</span>",
             "options": [
-                  "かんのう",
-                  "かの",
-                  "かどう",
-                  "かのう"
+                  "biaya masuk",
+                  "uang kembali",
+                  "pajak",
+                  "upah tambahan"
             ],
-            "answer": "かのう",
-            "explanation": "「可能」 dibaca かのう, artinya mungkin/bisa."
+            "answer": "pajak",
+            "explanation": "「税金」 berarti pajak yang dibayarkan kepada negara/pemerintah."
       },
       {
-            "question": "読み方はどれですか。\n「不可能」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「収入」</span>",
             "options": [
-                  "ぶかのう",
-                  "ふかんのう",
-                  "ふかのう",
-                  "ふこうのう"
+                  "tagihan",
+                  "pendapatan",
+                  "pengeluaran",
+                  "kerugian"
             ],
-            "answer": "ふかのう",
-            "explanation": "「不可能」 dibaca ふかのう, artinya tidak mungkin."
+            "answer": "pendapatan",
+            "explanation": "「収入」 berarti pendapatan atau pemasukan uang."
       },
       {
-            "question": "読み方はどれですか。\n「安全」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「支出」</span>",
             "options": [
-                  "あんせん",
-                  "あんぜん",
-                  "あんぜ",
-                  "あんぜい"
+                  "pengeluaran",
+                  "pendapatan",
+                  "keuntungan",
+                  "tabungan"
             ],
-            "answer": "あんぜん",
-            "explanation": "「安全」 dibaca あんぜん, artinya aman/keselamatan."
+            "answer": "pengeluaran",
+            "explanation": "「支出」 berarti pengeluaran uang."
       },
       {
-            "question": "読み方はどれですか。\n「危険」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「利益」</span>",
             "options": [
-                  "きけん",
-                  "ぎけん",
-                  "きげん",
-                  "あぶけん"
+                  "kerugian",
+                  "denda",
+                  "utang",
+                  "keuntungan atau laba"
             ],
-            "answer": "きけん",
-            "explanation": "「危険」 dibaca きけん, artinya bahaya."
+            "answer": "keuntungan atau laba",
+            "explanation": "「利益」 berarti keuntungan atau laba."
       },
       {
-            "question": "読み方はどれですか。\n「原因」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「損害」</span>",
             "options": [
-                  "げいいん",
-                  "けんいん",
-                  "げんえん",
-                  "げんいん"
+                  "pemasukan",
+                  "izin resmi",
+                  "kerugian atau kerusakan",
+                  "keuntungan"
             ],
-            "answer": "げんいん",
-            "explanation": "「原因」 dibaca げんいん, artinya penyebab."
+            "answer": "kerugian atau kerusakan",
+            "explanation": "「損害」 berarti kerugian atau kerusakan yang dialami."
       },
       {
-            "question": "読み方はどれですか。\n「結果」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「競争」</span>",
             "options": [
-                  "けつか",
-                  "げっか",
-                  "けっか",
-                  "けっこう"
+                  "pemesanan",
+                  "persaingan",
+                  "kerja sama",
+                  "penjelasan"
             ],
-            "answer": "けっか",
-            "explanation": "「結果」 dibaca けっか, artinya hasil."
+            "answer": "persaingan",
+            "explanation": "「競争」 berarti persaingan."
       },
       {
-            "question": "読み方はどれですか。\n「解決」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「比較」</span>",
             "options": [
-                  "かいげつ",
-                  "かいけつ",
-                  "かいせつ",
-                  "げけつ"
+                  "perbandingan",
+                  "peningkatan",
+                  "permintaan",
+                  "pengawasan"
             ],
-            "answer": "かいけつ",
-            "explanation": "「解決」 dibaca かいけつ, artinya penyelesaian."
+            "answer": "perbandingan",
+            "explanation": "「比較」 berarti membandingkan beberapa hal."
       },
       {
-            "question": "読み方はどれですか。\n「問題」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「増加」</span>",
             "options": [
-                  "もんだい",
-                  "もんたい",
-                  "ぶんだい",
-                  "もんでい"
+                  "penurunan",
+                  "penghapusan",
+                  "pembatalan",
+                  "peningkatan atau pertambahan"
             ],
-            "answer": "もんだい",
-            "explanation": "「問題」 dibaca もんだい, artinya masalah/soal."
+            "answer": "peningkatan atau pertambahan",
+            "explanation": "「増加」 berarti bertambah atau meningkat."
       },
       {
-            "question": "読み方はどれですか。\n「課題」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「減少」</span>",
             "options": [
-                  "かたい",
-                  "がだい",
-                  "かてい",
-                  "かだい"
+                  "perbaikan",
+                  "persetujuan",
+                  "penurunan atau pengurangan jumlah",
+                  "peningkatan"
             ],
-            "answer": "かだい",
-            "explanation": "「課題」 dibaca かだい, artinya tugas/masalah yang harus diselesaikan."
+            "answer": "penurunan atau pengurangan jumlah",
+            "explanation": "「減少」 berarti jumlahnya berkurang atau menurun."
       },
       {
-            "question": "読み方はどれですか。\n「目的」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「変化」</span>",
             "options": [
-                  "もくでき",
-                  "もくてい",
-                  "もくてき",
-                  "めてき"
+                  "surat izin",
+                  "perubahan",
+                  "kebiasaan tetap",
+                  "tujuan akhir"
             ],
-            "answer": "もくてき",
-            "explanation": "「目的」 dibaca もくてき, artinya tujuan."
+            "answer": "perubahan",
+            "explanation": "「変化」 berarti perubahan keadaan atau bentuk."
       },
       {
-            "question": "読み方はどれですか。\n「理由」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「発展」</span>",
             "options": [
-                  "りよう",
-                  "りゆう",
-                  "りゆ",
-                  "わけゆう"
+                  "perkembangan atau kemajuan",
+                  "kemunduran",
+                  "penundaan",
+                  "pembatalan"
             ],
-            "answer": "りゆう",
-            "explanation": "「理由」 dibaca りゆう, artinya alasan."
+            "answer": "perkembangan atau kemajuan",
+            "explanation": "「発展」 berarti berkembang atau maju."
       },
       {
-            "question": "読み方はどれですか。\n「方法」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「成長」</span>",
             "options": [
-                  "ほうほう",
-                  "ほうぼう",
-                  "ぼうほう",
-                  "ほほう"
+                  "kerusakan",
+                  "pembayaran",
+                  "perbandingan",
+                  "pertumbuhan"
             ],
-            "answer": "ほうほう",
-            "explanation": "「方法」 dibaca ほうほう, artinya metode/cara."
+            "answer": "pertumbuhan",
+            "explanation": "「成長」 berarti pertumbuhan atau perkembangan menjadi lebih besar/dewasa."
       },
       {
-            "question": "読み方はどれですか。\n「場合」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「進歩」</span>",
             "options": [
-                  "ばごう",
-                  "ばあごう",
-                  "じょうあい",
-                  "ばあい"
+                  "pengeluaran",
+                  "ketidakpuasan",
+                  "kemajuan",
+                  "kemunduran"
             ],
-            "answer": "ばあい",
-            "explanation": "「場合」 dibaca ばあい, artinya kasus/keadaan."
+            "answer": "kemajuan",
+            "explanation": "「進歩」 berarti kemajuan dalam kemampuan atau keadaan."
       },
       {
-            "question": "読み方はどれですか。\n「機会」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「建設」</span>",
             "options": [
-                  "きがい",
-                  "きえ",
-                  "きかい",
-                  "きかえ"
+                  "pemilihan umum",
+                  "pembangunan atau konstruksi",
+                  "penghancuran",
+                  "perawatan medis"
             ],
-            "answer": "きかい",
-            "explanation": "「機会」 dibaca きかい, artinya kesempatan."
+            "answer": "pembangunan atau konstruksi",
+            "explanation": "「建設」 berarti pembangunan atau konstruksi bangunan/fasilitas."
       },
       {
-            "question": "読み方はどれですか。\n「社会」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「完成」</span>",
             "options": [
-                  "じゃかい",
-                  "しゃかい",
-                  "しゃがい",
-                  "しゃえ"
+                  "selesai atau rampung",
+                  "awal mula",
+                  "penundaan",
+                  "kerusakan"
             ],
-            "answer": "しゃかい",
-            "explanation": "「社会」 dibaca しゃかい, artinya masyarakat."
+            "answer": "selesai atau rampung",
+            "explanation": "「完成」 berarti selesai dibuat atau rampung."
       },
       {
-            "question": "読み方はどれですか。\n「政治」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「製造」</span>",
             "options": [
-                  "せいじ",
-                  "せいち",
-                  "しょうじ",
-                  "せじ"
+                  "penjualan tiket",
+                  "pembayaran pajak",
+                  "penjelasan singkat",
+                  "produksi atau pembuatan barang"
             ],
-            "answer": "せいじ",
-            "explanation": "「政治」 dibaca せいじ, artinya politik."
+            "answer": "produksi atau pembuatan barang",
+            "explanation": "「製造」 berarti memproduksi atau membuat barang."
       },
       {
-            "question": "読み方はどれですか。\n「経済」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「生産」</span>",
             "options": [
-                  "けいさい",
-                  "きょうざい",
-                  "けざい",
-                  "けいざい"
+                  "pembatalan",
+                  "pengiriman",
+                  "produksi",
+                  "konsumsi"
             ],
-            "answer": "けいざい",
-            "explanation": "「経済」 dibaca けいざい, artinya ekonomi."
+            "answer": "produksi",
+            "explanation": "「生産」 berarti produksi barang atau hasil."
       },
       {
-            "question": "読み方はどれですか。\n「文化」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「消費」</span>",
             "options": [
-                  "もんか",
-                  "ぶんが",
-                  "ぶんか",
-                  "ふんか"
+                  "penyimpanan",
+                  "konsumsi atau penggunaan",
+                  "produksi",
+                  "penghasilan"
             ],
-            "answer": "ぶんか",
-            "explanation": "「文化」 dibaca ぶんか, artinya budaya."
+            "answer": "konsumsi atau penggunaan",
+            "explanation": "「消費」 berarti memakai atau mengonsumsi barang/energi/uang."
       },
       {
-            "question": "読み方はどれですか。\n「歴史」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「流行」</span>",
             "options": [
-                  "れっし",
-                  "れきし",
-                  "りきし",
-                  "れきじ"
+                  "tren atau sesuatu yang sedang populer",
+                  "aturan lama",
+                  "hasil akhir",
+                  "pajak tahunan"
             ],
-            "answer": "れきし",
-            "explanation": "「歴史」 dibaca れきし, artinya sejarah."
+            "answer": "tren atau sesuatu yang sedang populer",
+            "explanation": "「流行」 berarti tren atau hal yang sedang populer."
       },
       {
-            "question": "読み方はどれですか。\n「国際」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「広告」</span>",
             "options": [
-                  "こくさい",
-                  "こくざい",
-                  "こくせい",
-                  "くにさい"
+                  "kontrak",
+                  "bukti",
+                  "tujuan",
+                  "iklan"
             ],
-            "answer": "こくさい",
-            "explanation": "「国際」 dibaca こくさい, artinya internasional."
+            "answer": "iklan",
+            "explanation": "「広告」 berarti iklan atau promosi."
       },
       {
-            "question": "読み方はどれですか。\n「環境」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「情報」</span>",
             "options": [
-                  "かんけい",
-                  "かんこう",
-                  "けんきょう",
-                  "かんきょう"
+                  "hak",
+                  "kerugian",
+                  "informasi",
+                  "biaya"
             ],
-            "answer": "かんきょう",
-            "explanation": "「環境」 dibaca かんきょう, artinya lingkungan."
+            "answer": "informasi",
+            "explanation": "「情報」 berarti informasi atau data yang diketahui."
       },
       {
-            "question": "読み方はどれですか。\n「自然」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「資料」</span>",
             "options": [
-                  "じねん",
-                  "しねん",
-                  "しぜん",
-                  "じぜん"
+                  "perasaan",
+                  "bahan, data, atau dokumen",
+                  "kerugian",
+                  "jadwal libur"
             ],
-            "answer": "しぜん",
-            "explanation": "「自然」 dibaca しぜん, artinya alam."
+            "answer": "bahan, data, atau dokumen",
+            "explanation": "「資料」 berarti bahan, data, atau dokumen untuk referensi."
       },
       {
-            "question": "読み方はどれですか。\n「地域」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「記事」</span>",
             "options": [
-                  "じいき",
-                  "ちいき",
-                  "ちえき",
-                  "ちいぎ"
+                  "artikel atau berita tertulis",
+                  "peraturan",
+                  "biaya masuk",
+                  "alat kerja"
             ],
-            "answer": "ちいき",
-            "explanation": "「地域」 dibaca ちいき, artinya wilayah/daerah."
+            "answer": "artikel atau berita tertulis",
+            "explanation": "「記事」 berarti artikel atau tulisan berita."
       },
       {
-            "question": "読み方はどれですか。\n「都市」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「記録」</span>",
             "options": [
-                  "とし",
-                  "とうし",
-                  "どし",
-                  "みやこし"
+                  "tujuan",
+                  "pajak",
+                  "izin",
+                  "catatan atau rekaman"
             ],
-            "answer": "とし",
-            "explanation": "「都市」 dibaca とし, artinya kota."
+            "answer": "catatan atau rekaman",
+            "explanation": "「記録」 berarti catatan atau rekaman suatu kejadian/data."
       },
       {
-            "question": "読み方はどれですか。\n「交通」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「証明」</span>",
             "options": [
-                  "こうどう",
-                  "ごうつう",
-                  "こうつ",
-                  "こうつう"
+                  "pemesanan",
+                  "pengurangan",
+                  "bukti atau pembuktian",
+                  "penolakan"
             ],
-            "answer": "こうつう",
-            "explanation": "「交通」 dibaca こうつう, artinya transportasi/lalu lintas."
+            "answer": "bukti atau pembuktian",
+            "explanation": "「証明」 berarti bukti atau pembuktian bahwa sesuatu benar."
       },
       {
-            "question": "読み方はどれですか。\n「事故」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「契約」</span>",
             "options": [
-                  "しこ",
-                  "じこう",
-                  "じこ",
-                  "じご"
+                  "pembayaran kecil",
+                  "kontrak atau perjanjian",
+                  "keluhan",
+                  "hadiah"
             ],
-            "answer": "じこ",
-            "explanation": "「事故」 dibaca じこ, artinya kecelakaan."
+            "answer": "kontrak atau perjanjian",
+            "explanation": "「契約」 berarti kontrak atau perjanjian resmi."
       },
       {
-            "question": "読み方はどれですか。\n「故障」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「制度」</span>",
             "options": [
-                  "ごしょう",
-                  "こしょう",
-                  "こじょう",
-                  "こしょ"
+                  "sistem atau aturan kelembagaan",
+                  "perasaan pribadi",
+                  "hasil ujian",
+                  "cara memasak"
             ],
-            "answer": "こしょう",
-            "explanation": "「故障」 dibaca こしょう, artinya kerusakan."
+            "answer": "sistem atau aturan kelembagaan",
+            "explanation": "「制度」 berarti sistem atau aturan yang berlaku dalam masyarakat/organisasi."
       },
       {
-            "question": "読み方はどれですか。\n「修理」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「法律」</span>",
             "options": [
-                  "しゅうり",
-                  "しゅり",
-                  "しょうり",
-                  "しゅうれい"
+                  "kebiasaan pribadi",
+                  "harga barang",
+                  "rencana harian",
+                  "hukum atau undang-undang"
             ],
-            "answer": "しゅうり",
-            "explanation": "「修理」 dibaca しゅうり, artinya perbaikan."
+            "answer": "hukum atau undang-undang",
+            "explanation": "「法律」 berarti hukum atau undang-undang."
       },
       {
-            "question": "読み方はどれですか。\n「運転」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「規則」</span>",
             "options": [
-                  "うんでん",
-                  "うんどう",
-                  "うてん",
-                  "うんてん"
+                  "perasaan",
+                  "kebebasan",
+                  "aturan",
+                  "keuntungan"
             ],
-            "answer": "うんてん",
-            "explanation": "「運転」 dibaca うんてん, artinya mengemudi."
+            "answer": "aturan",
+            "explanation": "「規則」 berarti aturan atau tata tertib."
       },
       {
-            "question": "読み方はどれですか。\n「速度」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「違反」</span>",
             "options": [
-                  "そくと",
-                  "はやど",
-                  "そくど",
-                  "ぞくど"
+                  "penghematan",
+                  "pelanggaran",
+                  "persetujuan",
+                  "perbaikan"
             ],
-            "answer": "そくど",
-            "explanation": "「速度」 dibaca そくど, artinya kecepatan."
+            "answer": "pelanggaran",
+            "explanation": "「違反」 berarti melanggar aturan atau hukum."
       },
       {
-            "question": "読み方はどれですか。\n「温度」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「禁止」</span>",
             "options": [
-                  "おんと",
-                  "おんど",
-                  "うんど",
-                  "おんどう"
+                  "larangan",
+                  "izin",
+                  "keuntungan",
+                  "penjelasan"
             ],
-            "answer": "おんど",
-            "explanation": "「温度」 dibaca おんど, artinya suhu."
+            "answer": "larangan",
+            "explanation": "「禁止」 berarti larangan melakukan sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「湿度」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「可能」</span>",
             "options": [
-                  "しつど",
-                  "しっと",
-                  "しつと",
-                  "しめど"
+                  "mustahil",
+                  "wajib",
+                  "gratis",
+                  "kemungkinan atau dapat dilakukan"
             ],
-            "answer": "しつど",
-            "explanation": "「湿度」 dibaca しつど, artinya kelembapan."
+            "answer": "kemungkinan atau dapat dilakukan",
+            "explanation": "「可能」 berarti mungkin atau dapat dilakukan."
       },
       {
-            "question": "読み方はどれですか。\n「天候」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「不可能」</span>",
             "options": [
-                  "てんごう",
-                  "てんきょう",
-                  "あまこう",
-                  "てんこう"
+                  "perlu",
+                  "menguntungkan",
+                  "tidak mungkin atau tidak dapat dilakukan",
+                  "mungkin"
             ],
-            "answer": "てんこう",
-            "explanation": "「天候」 dibaca てんこう, artinya cuaca."
+            "answer": "tidak mungkin atau tidak dapat dilakukan",
+            "explanation": "「不可能」 berarti tidak mungkin atau tidak dapat dilakukan."
       },
       {
-            "question": "読み方はどれですか。\n「季節」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「確認」</span>",
             "options": [
-                  "きせち",
-                  "きぜつ",
-                  "きせつ",
-                  "きしょう"
+                  "keluhan",
+                  "konfirmasi atau pengecekan",
+                  "pembatalan",
+                  "pembayaran"
             ],
-            "answer": "きせつ",
-            "explanation": "「季節」 dibaca きせつ, artinya musim."
+            "answer": "konfirmasi atau pengecekan",
+            "explanation": "「確認」 berarti memastikan atau mengecek kembali."
       },
       {
-            "question": "読み方はどれですか。\n「台風」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「検討」</span>",
             "options": [
-                  "だいふう",
-                  "たいふう",
-                  "たいかぜ",
-                  "たいほう"
+                  "mempertimbangkan atau meninjau",
+                  "membayar lunas",
+                  "mencetak dokumen",
+                  "menolak langsung"
             ],
-            "answer": "たいふう",
-            "explanation": "「台風」 dibaca たいふう, artinya topan."
+            "answer": "mempertimbangkan atau meninjau",
+            "explanation": "「検討」 berarti mempertimbangkan atau meninjau sesuatu dengan saksama."
       },
       {
-            "question": "読み方はどれですか。\n「地震」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「調査」</span>",
             "options": [
-                  "じしん",
-                  "ちしん",
-                  "じじん",
-                  "じふる"
+                  "penjelasan singkat",
+                  "pemesanan barang",
+                  "perasaan senang",
+                  "penyelidikan atau survei"
             ],
-            "answer": "じしん",
-            "explanation": "「地震」 dibaca じしん, artinya gempa bumi."
+            "answer": "penyelidikan atau survei",
+            "explanation": "「調査」 berarti survei atau penyelidikan untuk mencari data."
       },
       {
-            "question": "読み方はどれですか。\n「災害」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「分析」</span>",
             "options": [
-                  "さいかい",
-                  "ざいがい",
-                  "さいげい",
-                  "さいがい"
+                  "izin",
+                  "kerugian",
+                  "analisis",
+                  "iklan"
             ],
-            "answer": "さいがい",
-            "explanation": "「災害」 dibaca さいがい, artinya bencana."
+            "answer": "analisis",
+            "explanation": "「分析」 berarti analisis dengan memecah dan memeriksa isi/data."
       },
       {
-            "question": "読み方はどれですか。\n「防災」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「整理」</span>",
             "options": [
-                  "ほうさい",
-                  "ぼうざい",
-                  "ぼうさい",
-                  "ぼうがい"
+                  "membayar pajak",
+                  "merapikan atau mengorganisasi",
+                  "menghapus izin",
+                  "menunda acara"
             ],
-            "answer": "ぼうさい",
-            "explanation": "「防災」 dibaca ぼうさい, artinya pencegahan bencana."
+            "answer": "merapikan atau mengorganisasi",
+            "explanation": "「整理」 berarti merapikan, mengatur, atau menyusun."
       },
       {
-            "question": "読み方はどれですか。\n「健康」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「保存」</span>",
             "options": [
-                  "げんこう",
-                  "けんこう",
-                  "けんごう",
-                  "けんきょう"
+                  "menyimpan atau melestarikan",
+                  "menghapus",
+                  "membatalkan",
+                  "membandingkan"
             ],
-            "answer": "けんこう",
-            "explanation": "「健康」 dibaca けんこう, artinya kesehatan."
+            "answer": "menyimpan atau melestarikan",
+            "explanation": "「保存」 berarti menyimpan data/barang atau melestarikan sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「病気」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「削除」</span>",
             "options": [
-                  "びょうき",
-                  "びょき",
-                  "ひょうき",
-                  "びょうけ"
+                  "menyimpan",
+                  "menambah",
+                  "memperbaiki",
+                  "menghapus"
             ],
-            "answer": "びょうき",
-            "explanation": "「病気」 dibaca びょうき, artinya sakit/penyakit."
+            "answer": "menghapus",
+            "explanation": "「削除」 berarti menghapus data atau bagian tertentu."
       },
       {
-            "question": "読み方はどれですか。\n「症状」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「選択」</span>",
             "options": [
-                  "しょうしょう",
-                  "じょうじょう",
-                  "しょうこう",
-                  "しょうじょう"
+                  "kerusakan",
+                  "penolakan",
+                  "pilihan atau pemilihan",
+                  "pembayaran"
             ],
-            "answer": "しょうじょう",
-            "explanation": "「症状」 dibaca しょうじょう, artinya gejala."
+            "answer": "pilihan atau pemilihan",
+            "explanation": "「選択」 berarti memilih dari beberapa pilihan."
       },
       {
-            "question": "読み方はどれですか。\n「治療」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「交換」</span>",
             "options": [
-                  "じりょう",
-                  "ちりょ",
-                  "ちりょう",
-                  "なおりょう"
+                  "pembuktian",
+                  "pertukaran atau menukar",
+                  "penyimpanan",
+                  "penundaan"
             ],
-            "answer": "ちりょう",
-            "explanation": "「治療」 dibaca ちりょう, artinya perawatan/pengobatan."
+            "answer": "pertukaran atau menukar",
+            "explanation": "「交換」 berarti menukar sesuatu dengan yang lain."
       },
       {
-            "question": "読み方はどれですか。\n「薬局」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「返却」</span>",
             "options": [
-                  "やくきょく",
-                  "やっきょく",
-                  "やっきょ",
-                  "くすりきょく"
+                  "mengembalikan barang pinjaman",
+                  "meminjam baru",
+                  "membeli ulang",
+                  "menghapus data"
             ],
-            "answer": "やっきょく",
-            "explanation": "「薬局」 dibaca やっきょく, artinya apotek."
+            "answer": "mengembalikan barang pinjaman",
+            "explanation": "「返却」 berarti mengembalikan barang yang dipinjam."
       },
       {
-            "question": "読み方はどれですか。\n「栄養」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「修理」</span>",
             "options": [
-                  "えいよう",
-                  "えよう",
-                  "えいりょう",
-                  "さかよう"
+                  "penjualan",
+                  "pemesanan",
+                  "penolakan",
+                  "perbaikan barang yang rusak"
             ],
-            "answer": "えいよう",
-            "explanation": "「栄養」 dibaca えいよう, artinya nutrisi."
+            "answer": "perbaikan barang yang rusak",
+            "explanation": "「修理」 berarti memperbaiki barang/mesin yang rusak."
       },
       {
-            "question": "読み方はどれですか。\n「運動」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「変更」</span>",
             "options": [
-                  "うんとう",
-                  "うんてん",
-                  "うどう",
-                  "うんどう"
+                  "pembayaran",
+                  "penjelasan",
+                  "perubahan atau pengubahan",
+                  "penetapan tetap"
             ],
-            "answer": "うんどう",
-            "explanation": "「運動」 dibaca うんどう, artinya olahraga/gerak."
+            "answer": "perubahan atau pengubahan",
+            "explanation": "「変更」 berarti perubahan atau mengubah sesuatu."
       },
       {
-            "question": "読み方はどれですか。\n「睡眠」",
+            "question": "意味はどれですか。<br><span class=\"question-target\">「延期」</span>",
             "options": [
-                  "すいめん",
-                  "すみん",
-                  "すいみん",
-                  "ねむみん"
+                  "pembayaran",
+                  "penundaan jadwal",
+                  "percepatan",
+                  "pembatalan total"
             ],
-            "answer": "すいみん",
-            "explanation": "「睡眠」 dibaca すいみん, artinya tidur."
+            "answer": "penundaan jadwal",
+            "explanation": "「延期」 berarti menunda jadwal ke waktu yang lebih lambat."
       }
 ];
 
@@ -2917,6 +2929,13 @@
     const FIREBASE_DATABASE_URL = "https://nihongogo-quiz-n3-default-rtdb.firebaseio.com";
     const RANKING_PATH = "nihongoGO_N3_ranking";
     const RANKING_API_URL = `${FIREBASE_DATABASE_URL}/${RANKING_PATH}.json`;
+
+    const QUIZ_ID = "kosakata-n3-super-hard";
+    const QUIZ_TITLE = "Kosakata N3 - Super Hard";
+    const QUIZ_CATEGORY = "Kosakata";
+    const QUIZ_LEVEL = "Super Hard";
+    const QUIZ_RESULT_HISTORY_KEY = "nihongoQuizResultHistory";
+    const USERNAME_STORAGE_KEY = "nihongoUsername";
 
     function fetchWithTimeout(url, options = {}, timeout = 8000) {
       const controller = new AbortController();
@@ -2947,7 +2966,7 @@ const screens = {
     }
 
     function getSavedUsername() {
-      const username = cleanUsername(localStorage.getItem("nihongoUsername"));
+      const username = cleanUsername(localStorage.getItem(USERNAME_STORAGE_KEY));
       if (username && username.toLowerCase() !== "pengguna") {
         return username;
       }
@@ -3015,7 +3034,7 @@ const screens = {
         return;
       }
 
-      localStorage.setItem("nihongoUsername", username);
+      localStorage.setItem(USERNAME_STORAGE_KEY, username);
       currentUsername = username;
 
       const resultUserName = document.getElementById("resultUserName");
@@ -3026,6 +3045,89 @@ const screens = {
       closeUsernameModal();
       startQuiz();
     }
+    function getStoredQuizResults() {
+      try {
+        return JSON.parse(localStorage.getItem(QUIZ_RESULT_HISTORY_KEY)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveQuizResultSummary(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "Pengguna").trim().slice(0, 8);
+      const correct = score;
+      const total = quiz.length;
+      const wrong = total - correct;
+
+      const resultItem = {
+        id: Date.now(),
+        username: username,
+        quizId: QUIZ_ID,
+        quizTitle: QUIZ_TITLE,
+        category: QUIZ_CATEGORY,
+        level: QUIZ_LEVEL,
+        correct: correct,
+        wrong: wrong,
+        total: total,
+        rank: rankValue || null,
+        finishedAt: new Date().toISOString()
+      };
+
+      const results = getStoredQuizResults();
+      results.unshift(resultItem);
+
+      localStorage.setItem(
+        QUIZ_RESULT_HISTORY_KEY,
+        JSON.stringify(results.slice(0, 50))
+      );
+    }
+
+    function updateLatestQuizRank(rankValue) {
+      const username = String(localStorage.getItem(USERNAME_STORAGE_KEY) || currentUsername || "").trim().slice(0, 8);
+      const results = getStoredQuizResults();
+
+      const target = results.find(function (item) {
+        return item.username === username && item.quizId === QUIZ_ID && !item.rank;
+      });
+
+      if (target) {
+        target.rank = rankValue;
+        localStorage.setItem(QUIZ_RESULT_HISTORY_KEY, JSON.stringify(results));
+      }
+    }
+
+    function resolveCurrentRank(ranking, savedRankData) {
+      if (!Array.isArray(ranking) || !ranking.length) return null;
+
+      const savedId = savedRankData && savedRankData.firebaseId;
+      if (savedId) {
+        const indexById = ranking.findIndex(function (item) {
+          return item.id === savedId;
+        });
+        if (indexById !== -1) return indexById + 1;
+      }
+
+      const savedCreatedAt = savedRankData && savedRankData.createdAt;
+      const savedName = savedRankData && savedRankData.name;
+
+      const indexByExactData = ranking.findIndex(function (item) {
+        return String(item.name || "") === String(savedName || currentUsername || "Tanpa Nama") &&
+          Number(item.score) === Number(score) &&
+          Number(item.total) === Number(quiz.length) &&
+          Number(item.createdAt || 0) === Number(savedCreatedAt || 0);
+      });
+
+      if (indexByExactData !== -1) return indexByExactData + 1;
+
+      const indexByLatestUserScore = ranking.findIndex(function (item) {
+        return String(item.name || "") === String(currentUsername || "Tanpa Nama") &&
+          Number(item.score) === Number(score) &&
+          Number(item.total) === Number(quiz.length);
+      });
+
+      return indexByLatestUserScore !== -1 ? indexByLatestUserScore + 1 : null;
+    }
+
     async function saveUserRanking() {
       const userResult = {
         name: currentUsername || "Tanpa Nama",
@@ -3047,6 +3149,15 @@ const screens = {
       if (!response.ok) {
         throw new Error(`Gagal menyimpan ranking. Status: ${response.status}`);
       }
+
+      const savedData = await response.json().catch(function () {
+        return null;
+      });
+
+      return {
+        ...userResult,
+        firebaseId: savedData && savedData.name ? savedData.name : null
+      };
     }
 
     async function getRankingData() {
@@ -3087,10 +3198,6 @@ const screens = {
         .replace(/'/g, "&#039;");
     }
 
-    function formatQuizText(value) {
-      return String(value ?? "").replace(/\n/g, "<br>");
-    }
-
     function renderRankingList(ranking) {
       const list = document.getElementById("rankingList");
       list.innerHTML = "";
@@ -3126,6 +3233,11 @@ const screens = {
       try {
         const ranking = await getRankingData();
         renderRankingList(ranking);
+
+        const currentRank = resolveCurrentRank(ranking);
+        if (currentRank) {
+          updateLatestQuizRank(currentRank);
+        }
       } catch (error) {
         console.error("Ranking REST API error:", error);
 
@@ -3177,17 +3289,6 @@ const screens = {
       }
     }
 
-
-    function initializeQuizDisplay() {
-      const progressText = document.getElementById("progressText");
-      const scorePill = document.getElementById("scorePill");
-      const finalScore = document.getElementById("finalScore");
-
-      if (progressText) progressText.textContent = `Soal 1 dari ${quiz.length}`;
-      if (scorePill) scorePill.textContent = `Skor: 0 / ${quiz.length}`;
-      if (finalScore) finalScore.textContent = `0 / ${quiz.length}`;
-    }
-
     function startQuiz() {
       currentQuestion = 0;
       score = 0;
@@ -3207,7 +3308,7 @@ const screens = {
 
       document.getElementById("progressText").textContent = `Soal ${currentQuestion + 1} dari ${quiz.length}`;
       document.getElementById("progressFill").style.width = `${progressPercent}%`;
-      document.getElementById("questionText").innerHTML = formatQuizText(q.question);
+      document.getElementById("questionText").innerHTML = q.question;
       document.getElementById("scorePill").textContent = `Skor: ${score} / ${quiz.length}`;
 
       const quizNextBtn = document.getElementById("quizNextBtn");
@@ -3221,7 +3322,7 @@ const screens = {
         const button = document.createElement("button");
         button.className = "option";
         button.type = "button";
-        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${formatQuizText(option)}</span>`;
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${option}</span>`;
         button.onclick = () => checkAnswer(option, button);
         optionsBox.appendChild(button);
       });
@@ -3242,9 +3343,10 @@ const screens = {
       if (isCorrect) score++;
 
       const optionButtons = document.querySelectorAll(".option");
-      optionButtons.forEach((btn, index) => {
+      optionButtons.forEach(btn => {
         btn.disabled = true;
-        if (q.options[index] === q.answer) btn.classList.add("correct");
+        const text = btn.innerText.slice(1).trim();
+        if (text === q.answer) btn.classList.add("correct");
       });
 
       button.classList.add(isCorrect ? "correct" : "wrong");
@@ -3278,8 +3380,8 @@ const screens = {
       title.textContent = isCorrect ? "Benar!" : "Belum tepat.";
       title.className = `feedback-title ${isCorrect ? "correct-text" : ""}`;
       text.innerHTML = isCorrect
-        ? `<strong>Jawaban kamu benar.</strong><br>${formatQuizText(explanation)}`
-        : `Jawaban yang benar adalah <strong>${formatQuizText(answer)}</strong>.<br>${formatQuizText(explanation)}`;
+        ? `<strong>Jawaban kamu benar.</strong><br>${explanation}`
+        : `Jawaban yang benar adalah <strong>${answer}</strong>.<br>${explanation}`;
       nextBtn.innerHTML = currentQuestion === quiz.length - 1 ? "Lihat Hasil&nbsp; →" : "Soal Berikutnya&nbsp; →";
     }
 
@@ -3301,22 +3403,34 @@ const screens = {
       const incorrect = quiz.length - score;
       const percentage = (score / quiz.length) * 100;
       if (!resultSaved) {
-        saveUserRanking().catch(error => {
-          console.error("Gagal menyimpan ranking:", error);
-        });
+        saveQuizResultSummary(null);
+
+        saveUserRanking()
+          .then(function (savedRankData) {
+            return getRankingData().then(function (ranking) {
+              const currentRank = resolveCurrentRank(ranking, savedRankData);
+              if (currentRank) {
+                updateLatestQuizRank(currentRank);
+              }
+            });
+          })
+          .catch(function (error) {
+            console.error("Gagal menyimpan atau memperbarui ranking:", error);
+          });
+
         resultSaved = true;
       }
 
-let message;
+      let message;
 
       if (percentage >= 85) {
-        message = "Hebat! Pemahaman N3 kamu sudah kuat.";
+        message = "Luar biasa! Kosakata JLPT N3 Super Hard kamu sudah sangat kuat.";
       } else if (percentage >= 70) {
-        message = "Bagus! Terus latih tata bahasa dan kosakata.";
+        message = "Bagus! Kamu sudah cukup paham. Latih lagi kosakata abstrak, administrasi, dan istilah formal yang mirip.";
       } else if (percentage >= 50) {
-        message = "Cukup baik. Ayo perkuat lagi materi N3.";
+        message = "Hampir sampai! Cukup baik. Perbanyak latihan kosakata N3 Super Hard dan bedakan makna kata yang mirip.";
       } else {
-        message = "Tetap semangat. Ulangi materi dasar secara bertahap.";
+        message = "Tetap semangat! Mulai ulang dari kosakata N4, lalu naik bertahap ke N3.";
       }
 
       document.getElementById("finalScore").textContent = `${score} / ${quiz.length}`;
@@ -3335,7 +3449,7 @@ let message;
         const row = document.createElement("article");
         row.className = "review-item";
         row.innerHTML = `
-          <p><strong>${index + 1}.</strong> ${formatQuizText(item.question)}<br><small>Jawaban kamu: ${formatQuizText(item.selected)}</small></p>
+          <p><strong>${index + 1}.</strong> ${item.question}<br><small>Jawaban kamu: ${item.selected}</small></p>
           <span class="badge ${item.correct ? "ok" : "no"}">${item.correct ? "✓" : "×"}</span>
         `;
         reviewList.appendChild(row);
@@ -3353,17 +3467,15 @@ let message;
       setScreen("start");
     }
 
-    initializeQuizDisplay();
-
     document.getElementById("usernameInput")?.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         confirmUsername();
       }
     });
-window.handleStartQuiz = handleStartQuiz;
-window.openUsernameModal = openUsernameModal;
+    window.openUsernameModal = openUsernameModal;
     window.closeUsernameModal = closeUsernameModal;
     window.confirmUsername = confirmUsername;
+    window.handleStartQuiz = handleStartQuiz;
     window.startQuiz = startQuiz;
     window.goHome = goHome;
     window.showQuizAgain = showQuizAgain;
@@ -3374,12 +3486,6 @@ window.openUsernameModal = openUsernameModal;
     window.openRankingModal = openRankingModal;
     window.closeRankingModal = closeRankingModal;
     window.clearRanking = clearRanking;
-
-    window.renderQuestion = renderQuestion;
-
-    window.checkAnswer = checkAnswer;
-
-    window.renderFeedback = renderFeedback;
 
 
     // Hanya izinkan klik kanan pada teks dan input
